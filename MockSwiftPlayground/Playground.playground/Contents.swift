@@ -1,4 +1,4 @@
 import UIKit
 import MockSwift
 
-MockSwift().text
+print("Hello world!")
