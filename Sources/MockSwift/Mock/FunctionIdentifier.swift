@@ -27,7 +27,7 @@ import Foundation
 
 struct FunctionIdentifier: Equatable, Hashable {
   private var identifier: String
-  
+
   init<ReturnType>(function: String, return: ReturnType.Type) {
     self.identifier = "\(function) -> \(ReturnType.self)"
   }

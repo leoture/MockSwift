@@ -27,7 +27,7 @@ import Foundation
 
 @propertyWrapper
 public class Mock<WrappedType> {
-  
+
   private let callRegister: CallRegister
   private let behaviourRegister: BehaviourRegister
 
@@ -37,16 +37,20 @@ public class Mock<WrappedType> {
   }
 
   public var wrappedValue: WrappedType {
-    self as! WrappedType
+    guard let value = self as? WrappedType else {
+      //TODO: handle error
+      fatalError()
+    }
+    return value
   }
 
-  public func mocked(_ parameters: Any... , function: String = #function) {
+  public func mocked(_ parameters: Any..., function: String = #function) {
     let identifier = FunctionIdentifier(function: function, return: Void.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
   }
-  
-  public func mocked<ReturnType>(_ parameters: Any... , function: String = #function) -> ReturnType {
+
+  public func mocked<ReturnType>(_ parameters: Any..., function: String = #function) -> ReturnType {
     let identifier = FunctionIdentifier(function: function, return: ReturnType.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
@@ -60,7 +64,12 @@ public class Mock<WrappedType> {
     let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
 
     switch behaviours.count {
-    case 1: return behaviours[0].onReceive(parameters) as! ReturnType
+    case 1:
+      guard let result = behaviours[0].onReceive(parameters) as? ReturnType else {
+        //TODO: handle error
+        fatalError()
+      }
+      return result
     //TODO: handle error
     case 0: fatalError()
     //TODO: handle error

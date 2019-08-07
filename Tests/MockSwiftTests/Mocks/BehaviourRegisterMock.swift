@@ -36,5 +36,4 @@ class BehaviourRegisterMock: BehaviourRegister {
     return recordedBehavioursReturn
   }
 
-  
 }

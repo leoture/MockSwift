@@ -32,7 +32,7 @@ final class MockSwiftTests: XCTestCase {
   private var mock: Mock<AnyProtocol>!
   private var callRegister: CallRegisterMock!
   private var behaviourRegister: BehaviourRegisterMock!
-  
+
   override func setUp() {
     callRegister = CallRegisterMock()
     behaviourRegister = BehaviourRegisterMock()
@@ -42,7 +42,7 @@ final class MockSwiftTests: XCTestCase {
   func test_mocked_shouldRecordCallIntoCallRegister() {
     // Given
     let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2:Int) -> String {
+    func function(parameter1: String, parameter2: Int) -> String {
       mock.mocked(parameter1, parameter2)
     }
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" }]
@@ -62,16 +62,16 @@ final class MockSwiftTests: XCTestCase {
   func test_mocked_shouldReturnValueFromBehaviour() {
     // Given
     let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2:Int) -> String {
+    func function(parameter1: String, parameter2: Int) -> String {
       mock.mocked(parameter1, parameter2)
     }
     let uuid = UUID().uuidString
     let functionBehaviour = FunctionBehaviour { _ in uuid }
     behaviourRegister.recordedBehavioursReturn = [functionBehaviour]
-    
+
     // When
     let result = function(parameter1: "parameter1", parameter2: 2)
-    
+
     //Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
@@ -84,7 +84,7 @@ final class MockSwiftTests: XCTestCase {
   func test_mockedVoid_shouldRecordCallIntoCallRegister() {
     // Given
     let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2:Int) {
+    func function(parameter1: String, parameter2: Int) {
       mock.mocked(parameter1, parameter2)
     }
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
@@ -104,7 +104,7 @@ final class MockSwiftTests: XCTestCase {
   func test_mockedVoid_shouldCallBehaviour() {
     // Given
     let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2:Int) {
+    func function(parameter1: String, parameter2: Int) {
       mock.mocked(parameter1, parameter2)
     }
 
