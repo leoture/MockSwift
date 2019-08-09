@@ -1,4 +1,4 @@
-//XCTestManifests.swift
+//DefaultFunctionBehaviour.swift
 /*
  MIT License
 
@@ -22,16 +22,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
-  return [
-    testCase(MockTests.allTests),
-    testCase(FunctionBehaviourRegisterTests.allTests),
-    testCase(FunctionBehaviourTests.allTests),
-    testCase(DefaultFunctionBehaviourTests.allTests),
-    testCase(DefaultReturnTypeBehavioursTests.allTests)
-  ]
+import Foundation
+
+class DefaultFunctionBehaviour {
 }
-#endif
+
+extension DefaultFunctionBehaviour: Behaviour {
+  func handle<ReturnType>(with parameters: [Any]) -> ReturnType? {
+    nil
+  }
+
+  func handle<ReturnType: DefaultReturnTypeBehaviour>(with parameters: [Any]) -> ReturnType? {
+    ReturnType.default()
+  }
+}

@@ -65,7 +65,7 @@ public class Mock<WrappedType> {
 
     switch behaviours.count {
     case 1:
-      guard let result = behaviours[0].onReceive(parameters) as? ReturnType else {
+      guard let result: ReturnType = behaviours[0].handle(with: parameters) else {
         //TODO: handle error
         fatalError()
       }

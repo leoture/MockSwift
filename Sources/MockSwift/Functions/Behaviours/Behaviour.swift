@@ -1,4 +1,4 @@
-//FunctionBehaviour.swift
+//Behaviour.swift
 /*
  MIT License
 
@@ -25,15 +25,6 @@
 
 import Foundation
 
-class FunctionBehaviour {
-  typealias Behaviour = ([Any]) -> Any
-  private let block: Behaviour
-
-  init(block: @escaping Behaviour) {
-    self.block = block
-  }
-
-  func onReceive(_ parameters: [Any]) -> Any {
-    block(parameters)
-  }
+protocol Behaviour {
+  func handle<ReturnType>(with parameters: [Any]) -> ReturnType?
 }

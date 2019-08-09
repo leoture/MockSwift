@@ -1,4 +1,4 @@
-//BehaviourRegisterMock.swift
+//DefaultFunctionBehaviourTests.swift
 /*
  MIT License
 
@@ -23,17 +23,44 @@
  SOFTWARE.
  */
 
-import Foundation
+import XCTest
 @testable import MockSwift
 
-class BehaviourRegisterMock: BehaviourRegister {
-
-  var recordedBehavioursReturn: [FunctionBehaviour] = []
-  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [Any]) -> [FunctionBehaviour] {
-    recordedBehavioursReceived.append((identifier, parameters))
-    return recordedBehavioursReturn
+private class Custom: DefaultReturnTypeBehaviour {
+  static func `default`() -> Self {
+    self.init("default")
   }
 
+  let identifier: String
+  required init(_ identifier: String) {
+    self.identifier = identifier
+  }
+}
+
+private protocol AnyProtocol {}
+
+class DefaultFunctionBehaviourTests: XCTestCase {
+  private var defaultFunctionBehaviour: DefaultFunctionBehaviour!
+
+  override func setUp() {
+    defaultFunctionBehaviour = DefaultFunctionBehaviour()
+  }
+
+  func test_handle_shouldReturnCustomDefaultReturnTypeBehaviour() {
+    let custom: Custom? = defaultFunctionBehaviour.handle(with: [])
+    XCTAssertEqual(custom?.identifier, "default")
+  }
+
+  func test_handle_shouldReturnNullOnUnknownType() {
+    let result: AnyProtocol? = defaultFunctionBehaviour.handle(with: [])
+    XCTAssertNil(result)
+  }
+
+  static var allTests = [
+    ("test_handle_shouldReturnCustomDefaultReturnTypeBehaviour",
+     test_handle_shouldReturnCustomDefaultReturnTypeBehaviour),
+
+    ("test_handle_shouldReturnNullOnUnknownType",
+     test_handle_shouldReturnNullOnUnknownType)
+  ]
 }

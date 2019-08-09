@@ -1,4 +1,4 @@
-//XCTestManifests.swift
+//BehaviourRegister.swift
 /*
  MIT License
 
@@ -22,16 +22,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
-  return [
-    testCase(MockTests.allTests),
-    testCase(FunctionBehaviourRegisterTests.allTests),
-    testCase(FunctionBehaviourTests.allTests),
-    testCase(DefaultFunctionBehaviourTests.allTests),
-    testCase(DefaultReturnTypeBehavioursTests.allTests)
-  ]
+import Foundation
+
+protocol BehaviourRegister {
+  func recordedBehaviours(for identifier: FunctionIdentifier,
+                          concernedBy parameters: [Any]) -> [Behaviour]
 }
-#endif
+
+class FunctionBehaviourRegister: BehaviourRegister {
+  func recordedBehaviours(for identifier: FunctionIdentifier,
+                          concernedBy parameters: [Any]) -> [Behaviour] {
+    [DefaultFunctionBehaviour()]
+  }
+}

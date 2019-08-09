@@ -1,4 +1,4 @@
-//XCTestManifests.swift
+//FunctionIdentifierStub.swift
 /*
  MIT License
 
@@ -22,16 +22,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
-  return [
-    testCase(MockTests.allTests),
-    testCase(FunctionBehaviourRegisterTests.allTests),
-    testCase(FunctionBehaviourTests.allTests),
-    testCase(DefaultFunctionBehaviourTests.allTests),
-    testCase(DefaultReturnTypeBehavioursTests.allTests)
-  ]
+import Foundation
+@testable import MockSwift
+
+extension FunctionIdentifier {
+  static func stub() -> FunctionIdentifier {
+    stub(returnType: Void.self)
+  }
+
+  static func stub<ReturnType>(function: String = "",
+                               returnType: ReturnType.Type = ReturnType.self) -> FunctionIdentifier {
+    return FunctionIdentifier(function: function, return: returnType)
+  }
 }
-#endif

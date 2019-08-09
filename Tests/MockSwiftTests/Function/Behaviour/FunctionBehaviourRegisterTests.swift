@@ -1,4 +1,4 @@
-//XCTestManifests.swift
+//FunctionBehaviourRegisterTests.swift
 /*
  MIT License
 
@@ -22,16 +22,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
-  return [
-    testCase(MockTests.allTests),
-    testCase(FunctionBehaviourRegisterTests.allTests),
-    testCase(FunctionBehaviourTests.allTests),
-    testCase(DefaultFunctionBehaviourTests.allTests),
-    testCase(DefaultReturnTypeBehavioursTests.allTests)
+import XCTest
+@testable import MockSwift
+
+class FunctionBehaviourRegisterTests: XCTestCase {
+  private var functionBehaviourRegister: FunctionBehaviourRegister!
+
+  override func setUp() {
+    functionBehaviourRegister = FunctionBehaviourRegister()
+  }
+
+  func test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour() {
+    // Given
+
+    // When
+    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [])
+
+    //Then
+    XCTAssertEqual(behaviours.count, 1)
+    XCTAssertTrue(behaviours[0] is DefaultFunctionBehaviour)
+  }
+
+  static var allTests = [
+    ("test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour",
+     test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour)
   ]
 }
-#endif

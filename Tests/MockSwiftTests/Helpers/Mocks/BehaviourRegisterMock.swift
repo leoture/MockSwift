@@ -1,4 +1,4 @@
-//BehaviourRegister.swift
+//BehaviourRegisterMock.swift
 /*
  MIT License
 
@@ -24,8 +24,16 @@
  */
 
 import Foundation
+@testable import MockSwift
 
-protocol BehaviourRegister {
+class BehaviourRegisterMock: BehaviourRegister {
+
+  var recordedBehavioursReturn: [Behaviour] = []
+  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
   func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [Any]) -> [FunctionBehaviour]
+                          concernedBy parameters: [Any]) -> [Behaviour] {
+    recordedBehavioursReceived.append((identifier, parameters))
+    return recordedBehavioursReturn
+  }
+
 }

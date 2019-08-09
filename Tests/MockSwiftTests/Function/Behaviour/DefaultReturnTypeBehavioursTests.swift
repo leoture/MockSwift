@@ -1,4 +1,4 @@
-//XCTestManifests.swift
+//DefaultReturnTypeBehavioursTests.swift
 /*
  MIT License
 
@@ -22,16 +22,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import XCTest
 
-#if !canImport(ObjectiveC)
-public func allTests() -> [XCTestCaseEntry] {
-  return [
-    testCase(MockTests.allTests),
-    testCase(FunctionBehaviourRegisterTests.allTests),
-    testCase(FunctionBehaviourTests.allTests),
-    testCase(DefaultFunctionBehaviourTests.allTests),
-    testCase(DefaultReturnTypeBehavioursTests.allTests)
+import XCTest
+@testable import MockSwift
+
+class DefaultReturnTypeBehavioursTests: XCTestCase {
+
+  func test_default_String() { XCTAssertEqual(String.default(), "") }
+
+  func test_default_Int() { XCTAssertEqual(Int.default(), 0) }
+
+  func test_default_Bool() { XCTAssertEqual(Bool.default(), false) }
+
+  static var allTests = [
+    ("test_default_String",
+     test_default_String),
+
+    ("test_default_Int",
+     test_default_Int),
+
+    ("test_default_Bool",
+     test_default_Bool)
   ]
 }
-#endif
