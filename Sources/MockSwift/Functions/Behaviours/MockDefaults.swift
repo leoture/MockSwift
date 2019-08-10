@@ -1,4 +1,4 @@
-//DefaultReturnTypeBehaviours.swift
+//MockDefaults.swift
 /*
  MIT License
 
@@ -25,18 +25,18 @@
 
 import Foundation
 
-protocol DefaultReturnTypeBehaviour {
+public protocol MockDefault {
   static func `default`() -> Self
 }
 
-extension String: DefaultReturnTypeBehaviour {
-  static func `default`() -> String { "" }
+extension String: MockDefault {
+  public static func `default`() -> String { "" }
 }
 
-extension Int: DefaultReturnTypeBehaviour {
-  static func `default`() -> Int { 0 }
+extension Int: MockDefault {
+  public static func `default`() -> Int { 0 }
 }
 
-extension Bool: DefaultReturnTypeBehaviour {
-  static func `default`() -> Bool { false }
+extension Bool: MockDefault {
+  public static func `default`() -> Bool { false }
 }

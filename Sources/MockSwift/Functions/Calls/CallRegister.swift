@@ -28,3 +28,8 @@ import Foundation
 protocol CallRegister {
   func recordCall(for identifier: FunctionIdentifier, with parameters: [Any])
 }
+
+class FunctionCallRegister: CallRegister {
+  func recordCall(for identifier: FunctionIdentifier, with parameters: [Any]) {
+  }
+}

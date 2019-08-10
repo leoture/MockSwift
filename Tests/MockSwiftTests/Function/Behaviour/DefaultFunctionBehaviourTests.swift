@@ -26,7 +26,7 @@
 import XCTest
 @testable import MockSwift
 
-private class Custom: DefaultReturnTypeBehaviour {
+private class Custom: MockDefault {
   static func `default`() -> Self {
     self.init("default")
   }
@@ -46,7 +46,7 @@ class DefaultFunctionBehaviourTests: XCTestCase {
     defaultFunctionBehaviour = DefaultFunctionBehaviour()
   }
 
-  func test_handle_shouldReturnCustomDefaultReturnTypeBehaviour() {
+  func test_handle_shouldReturnDefaultCustom() {
     let custom: Custom? = defaultFunctionBehaviour.handle(with: [])
     XCTAssertEqual(custom?.identifier, "default")
   }
@@ -57,8 +57,8 @@ class DefaultFunctionBehaviourTests: XCTestCase {
   }
 
   static var allTests = [
-    ("test_handle_shouldReturnCustomDefaultReturnTypeBehaviour",
-     test_handle_shouldReturnCustomDefaultReturnTypeBehaviour),
+    ("test_handle_shouldReturnDefaultCustom",
+     test_handle_shouldReturnDefaultCustom),
 
     ("test_handle_shouldReturnNullOnUnknownType",
      test_handle_shouldReturnNullOnUnknownType)

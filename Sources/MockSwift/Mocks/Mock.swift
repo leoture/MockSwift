@@ -28,10 +28,14 @@ import Foundation
 @propertyWrapper
 public class Mock<WrappedType> {
 
+  public convenience init() {
+    self.init(callRegister: FunctionCallRegister(), behaviourRegister: FunctionBehaviourRegister())
+  }
+
   private let callRegister: CallRegister
   private let behaviourRegister: BehaviourRegister
 
-  init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
+  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
     self.callRegister = callRegister
     self.behaviourRegister = behaviourRegister
   }

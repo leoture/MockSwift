@@ -1,4 +1,4 @@
-//DefaultReturnTypeBehavioursTests.swift
+//MockDefaultExtensionTests.swift
 /*
  MIT License
 
@@ -26,22 +26,20 @@
 import XCTest
 @testable import MockSwift
 
-class DefaultReturnTypeBehavioursTests: XCTestCase {
-
-  func test_default_String() { XCTAssertEqual(String.default(), "") }
-
-  func test_default_Int() { XCTAssertEqual(Int.default(), 0) }
+class MockDefaultExtensionTests: XCTestCase {
 
   func test_default_Bool() { XCTAssertEqual(Bool.default(), false) }
+  func test_default_Int() { XCTAssertEqual(Int.default(), 0) }
+  func test_default_String() { XCTAssertEqual(String.default(), "") }
 
   static var allTests = [
-    ("test_default_String",
-     test_default_String),
+    ("test_default_Bool",
+     test_default_Bool),
 
     ("test_default_Int",
      test_default_Int),
 
-    ("test_default_Bool",
-     test_default_Bool)
+    ("test_default_String",
+     test_default_String)
   ]
 }

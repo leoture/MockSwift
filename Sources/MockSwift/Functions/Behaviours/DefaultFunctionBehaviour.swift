@@ -30,10 +30,9 @@ class DefaultFunctionBehaviour {
 
 extension DefaultFunctionBehaviour: Behaviour {
   func handle<ReturnType>(with parameters: [Any]) -> ReturnType? {
-    nil
-  }
-
-  func handle<ReturnType: DefaultReturnTypeBehaviour>(with parameters: [Any]) -> ReturnType? {
-    ReturnType.default()
+    if ReturnType.self is Void.Type {
+      return () as? ReturnType
+    }
+    return (ReturnType.self as? MockDefault.Type)?.default() as? ReturnType
   }
 }
