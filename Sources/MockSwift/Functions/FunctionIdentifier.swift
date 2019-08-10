@@ -32,3 +32,9 @@ struct FunctionIdentifier: Equatable, Hashable {
     self.identifier = "\(function) -> \(ReturnType.self)"
   }
 }
+
+extension FunctionIdentifier: CustomStringConvertible {
+  var description: String {
+    identifier
+  }
+}

@@ -42,8 +42,7 @@ public class Mock<WrappedType> {
 
   public var wrappedValue: WrappedType {
     guard let value = self as? WrappedType else {
-      //TODO: handle error
-      fatalError()
+      fatalError("Mock can not be cast to \(WrappedType.self)")
     }
     return value
   }
@@ -70,14 +69,17 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       guard let result: ReturnType = behaviours[0].handle(with: parameters) else {
-        //TODO: handle error
-        fatalError()
+        fatalError("Attempt to call \(function)" +
+          " with parameters \(parameters)" +
+          " but there is no defined behaviour for this call")
       }
       return result
-    //TODO: handle error
-    case 0: fatalError()
-    //TODO: handle error
-    default: fatalError()
+    case 0: fatalError("Attempt to call \(function)" +
+      " with parameters \(parameters)" +
+      " but there is no defined behaviour for this call")
+    default: fatalError("Attempt to call \(function)" +
+      " with parameters \(parameters)" +
+      " but there too much defined behaviours: \(behaviours)")
     }
   }
 }
