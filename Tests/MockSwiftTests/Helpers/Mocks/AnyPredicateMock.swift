@@ -1,4 +1,4 @@
-//FunctionBehaviourTests.swift
+//AnyPredicateMock.swift
 /*
  MIT License
 
@@ -23,43 +23,15 @@
  SOFTWARE.
  */
 
-import XCTest
+import Foundation
 @testable import MockSwift
 
-class FunctionBehaviourTests: XCTestCase {
+class AnyPredicateMock: AnyPredicate {
 
-  func test_handle_shouldCallHandlerWithCorrectParameters() {
-    // Given
-    var capture: [Any]?
-    let behaviour = FunctionBehaviour { parameters in  capture = parameters}
-
-    // When
-    behaviour.handle(with: ["first", 1, true]) as Void?
-
-    //Then
-    XCTAssertEqual(capture?.count, 3)
-    XCTAssertEqual(capture?[0] as? String, "first")
-    XCTAssertEqual(capture?[1] as? Int, 1)
-    XCTAssertEqual(capture?[2] as? Bool, true)
+  var satisfyReturn: Bool!
+  var satisfyReceived: [Any] = []
+  func satisfy(by element: Any) -> Bool {
+    satisfyReceived.append(element)
+    return satisfyReturn
   }
-
-  func test_handle_shouldReturnValueFormHandler() {
-    // Given
-    let uuid = UUID()
-    let behaviour = FunctionBehaviour { _ in uuid }
-
-    // When
-    let value: UUID? = behaviour.handle(with: [])
-
-    //Then
-    XCTAssertEqual(value, uuid)
-  }
-
-  static var allTests = [
-    ("test_handle_shouldCallHandlerWithCorrectParameters",
-     test_handle_shouldCallHandlerWithCorrectParameters),
-
-    ("test_handle_shouldReturnValueFormHandler",
-     test_handle_shouldReturnValueFormHandler)
-  ]
 }

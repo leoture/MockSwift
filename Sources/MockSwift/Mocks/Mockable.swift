@@ -1,4 +1,4 @@
-//FunctionBehaviourTests.swift
+//Mockable.swift
 /*
  MIT License
 
@@ -23,43 +23,30 @@
  SOFTWARE.
  */
 
-import XCTest
-@testable import MockSwift
+import Foundation
 
-class FunctionBehaviourTests: XCTestCase {
+public class Mockable<ReturnType> {
+  private let behaviourRegister: BehaviourRegister
+  private let functionIdentifier: FunctionIdentifier
+  private let parametersPredicates: [AnyPredicate]
 
-  func test_handle_shouldCallHandlerWithCorrectParameters() {
-    // Given
-    var capture: [Any]?
-    let behaviour = FunctionBehaviour { parameters in  capture = parameters}
-
-    // When
-    behaviour.handle(with: ["first", 1, true]) as Void?
-
-    //Then
-    XCTAssertEqual(capture?.count, 3)
-    XCTAssertEqual(capture?[0] as? String, "first")
-    XCTAssertEqual(capture?[1] as? Int, 1)
-    XCTAssertEqual(capture?[2] as? Bool, true)
+  init(_ behaviourRegister: BehaviourRegister,
+       _ functionIdentifier: FunctionIdentifier,
+       _ parametersPredicates: [AnyPredicate]) {
+    self.behaviourRegister = behaviourRegister
+    self.functionIdentifier = functionIdentifier
+    self.parametersPredicates = parametersPredicates
   }
 
-  func test_handle_shouldReturnValueFormHandler() {
-    // Given
-    let uuid = UUID()
-    let behaviour = FunctionBehaviour { _ in uuid }
-
-    // When
-    let value: UUID? = behaviour.handle(with: [])
-
-    //Then
-    XCTAssertEqual(value, uuid)
+  public func willReturn(_ value: ReturnType) {
+    let behaviour = FunctionBehaviour { _ in value }
+    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
 
-  static var allTests = [
-    ("test_handle_shouldCallHandlerWithCorrectParameters",
-     test_handle_shouldCallHandlerWithCorrectParameters),
+  public  func disambiguate(with type: ReturnType.Type) -> Self { self }
 
-    ("test_handle_shouldReturnValueFormHandler",
-     test_handle_shouldReturnValueFormHandler)
-  ]
+  public func will(_ completion: @escaping ([Any]) -> ReturnType) {
+    let behaviour = FunctionBehaviour(handler: completion)
+    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  }
 }

@@ -33,7 +33,7 @@ public class Mock<WrappedType> {
   }
 
   private let callRegister: CallRegister
-  private let behaviourRegister: BehaviourRegister
+  let behaviourRegister: BehaviourRegister
 
   required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
     self.callRegister = callRegister

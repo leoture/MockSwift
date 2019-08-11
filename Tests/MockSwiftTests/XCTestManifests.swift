@@ -32,7 +32,8 @@ public func allTests() -> [XCTestCaseEntry] {
     testCase(FunctionBehaviourTests.allTests),
     testCase(DefaultFunctionBehaviourTests.allTests),
     testCase(MockDefaultExtensionTests.allTests),
-    testCase(MockDefaultTests.allTests)
+    testCase(MockDefaultTests.allTests),
+    testCase(MockableTests.allTests)
   ]
 }
 #endif

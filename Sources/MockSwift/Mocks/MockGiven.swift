@@ -1,4 +1,4 @@
-//FunctionBehaviourTests.swift
+//MockGiven.swift
 /*
  MIT License
 
@@ -23,43 +23,21 @@
  SOFTWARE.
  */
 
-import XCTest
-@testable import MockSwift
+import Foundation
 
-class FunctionBehaviourTests: XCTestCase {
+public func given<WrappedType>(_ mock: Mock<WrappedType>) -> MockGiven<WrappedType> {
+  MockGiven(mock.behaviourRegister)
+}
 
-  func test_handle_shouldCallHandlerWithCorrectParameters() {
-    // Given
-    var capture: [Any]?
-    let behaviour = FunctionBehaviour { parameters in  capture = parameters}
+public class MockGiven<WrappedType> {
+  private let behaviourRegister: BehaviourRegister
 
-    // When
-    behaviour.handle(with: ["first", 1, true]) as Void?
-
-    //Then
-    XCTAssertEqual(capture?.count, 3)
-    XCTAssertEqual(capture?[0] as? String, "first")
-    XCTAssertEqual(capture?[1] as? Int, 1)
-    XCTAssertEqual(capture?[2] as? Bool, true)
+  fileprivate init(_ behaviourRegister: BehaviourRegister) {
+    self.behaviourRegister = behaviourRegister
   }
 
-  func test_handle_shouldReturnValueFormHandler() {
-    // Given
-    let uuid = UUID()
-    let behaviour = FunctionBehaviour { _ in uuid }
-
-    // When
-    let value: UUID? = behaviour.handle(with: [])
-
-    //Then
-    XCTAssertEqual(value, uuid)
+  public func mockable<ReturnType>(_ parametersPredicates: AnyPredicate...,
+                                   function: String = #function) -> Mockable<ReturnType> {
+    Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), parametersPredicates)
   }
-
-  static var allTests = [
-    ("test_handle_shouldCallHandlerWithCorrectParameters",
-     test_handle_shouldCallHandlerWithCorrectParameters),
-
-    ("test_handle_shouldReturnValueFormHandler",
-     test_handle_shouldReturnValueFormHandler)
-  ]
 }

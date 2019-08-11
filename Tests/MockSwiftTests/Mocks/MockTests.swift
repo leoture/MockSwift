@@ -62,10 +62,10 @@ final class MockSwiftTests: XCTestCase {
   func test_mocked_shouldReturnValueFromBehaviour() {
     // Given
     let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2: Int) -> String {
+    func function(parameter1: String, parameter2: Int) -> UUID {
       mock.mocked(parameter1, parameter2)
     }
-    let uuid = UUID().uuidString
+    let uuid = UUID()
     let functionBehaviour = FunctionBehaviour { _ in uuid }
     behaviourRegister.recordedBehavioursReturn = [functionBehaviour]
 
@@ -75,7 +75,7 @@ final class MockSwiftTests: XCTestCase {
     //Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
-    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
+    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
     XCTAssertEqual(result, uuid)

@@ -26,9 +26,10 @@
 import Foundation
 @testable import MockSwift
 
+// swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
 
-  var recordedBehavioursReturn: [Behaviour] = []
+  var recordedBehavioursReturn: [Behaviour]!
   var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
   func recordedBehaviours(for identifier: FunctionIdentifier,
                           concernedBy parameters: [Any]) -> [Behaviour] {
@@ -36,4 +37,8 @@ class BehaviourRegisterMock: BehaviourRegister {
     return recordedBehavioursReturn
   }
 
+  var recordeReceived: [(behaviour: Behaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+  func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
+    recordeReceived.append((behaviour, identifier, matchs))
+  }
 }

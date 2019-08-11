@@ -37,6 +37,7 @@ private protocol Custom {
   func functionInt() -> Int
   func functionString() -> String
 }
+
 extension CustomReturnType: MockDefault {
   static func `default`() -> CustomReturnType {
     CustomReturnType(identifier: "default")
