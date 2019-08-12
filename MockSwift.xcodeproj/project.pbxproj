@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		9E2372E6230070DD0083396B /* AnyPredicateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2372E5230070DD0083396B /* AnyPredicateMock.swift */; };
+		9E2372E823014A770083396B /* FunctionBehaviourRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2372E723014A770083396B /* FunctionBehaviourRegister.swift */; };
 		9E2F051D22FAF1B900E04F34 /* FunctionBehaviourRegisterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F051C22FAF1B900E04F34 /* FunctionBehaviourRegisterTests.swift */; };
 		9E2F052022FAF54E00E04F34 /* FunctionIdentifierStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F051F22FAF54E00E04F34 /* FunctionIdentifierStub.swift */; };
 		9E2F052222FB32A600E04F34 /* DefaultFunctionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F052122FB32A600E04F34 /* DefaultFunctionBehaviour.swift */; };
@@ -68,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		9E2372E5230070DD0083396B /* AnyPredicateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPredicateMock.swift; sourceTree = "<group>"; };
+		9E2372E723014A770083396B /* FunctionBehaviourRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionBehaviourRegister.swift; sourceTree = "<group>"; };
 		9E2F051C22FAF1B900E04F34 /* FunctionBehaviourRegisterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionBehaviourRegisterTests.swift; sourceTree = "<group>"; };
 		9E2F051F22FAF54E00E04F34 /* FunctionIdentifierStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionIdentifierStub.swift; sourceTree = "<group>"; };
 		9E2F052122FB32A600E04F34 /* DefaultFunctionBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctionBehaviour.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				9E2F052122FB32A600E04F34 /* DefaultFunctionBehaviour.swift */,
 				9E2F052322FB32B200E04F34 /* Behaviour.swift */,
 				9EB5542322FDDDEB00449662 /* MockDefaults.swift */,
+				9E2372E723014A770083396B /* FunctionBehaviourRegister.swift */,
 			);
 			path = Behaviours;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				9EB5542F2300591500449662 /* MockGiven.swift in Sources */,
 				OBJ_37 /* CallRegister.swift in Sources */,
 				OBJ_38 /* FunctionBehaviour.swift in Sources */,
+				9E2372E823014A770083396B /* FunctionBehaviourRegister.swift in Sources */,
 				9E2F052222FB32A600E04F34 /* DefaultFunctionBehaviour.swift in Sources */,
 				9EB55432230059D800449662 /* AnyPredicate.swift in Sources */,
 				OBJ_39 /* FunctionCall.swift in Sources */,

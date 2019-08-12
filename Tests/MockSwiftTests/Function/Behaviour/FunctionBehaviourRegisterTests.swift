@@ -33,19 +33,52 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     functionBehaviourRegister = FunctionBehaviourRegister()
   }
 
-  func test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour() {
+  func test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs() {
     // Given
+    let predicate = AnyPredicateMock()
+    predicate.satisfyReturn = false
+    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in }), for: .stub(), when: [predicate])
 
     // When
-    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [])
+    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
     //Then
     XCTAssertEqual(behaviours.count, 1)
     XCTAssertTrue(behaviours[0] is DefaultFunctionBehaviour)
   }
 
+  func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {
+    // Given
+    let predicateTrue = AnyPredicateMock()
+    predicateTrue.satisfyReturn = true
+    let predicateFalse = AnyPredicateMock()
+    predicateFalse.satisfyReturn = false
+    let firstHandlerReturn = UUID()
+    let secondHandlerReturn = UUID()
+    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in firstHandlerReturn}),
+                                     for: .stub(),
+                                     when: [predicateTrue])
+    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in secondHandlerReturn}),
+                                     for: .stub(),
+                                     when: [predicateTrue])
+    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in }),
+                                     for: .stub(),
+                                     when: [predicateFalse])
+
+    // When
+    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+
+    //Then
+    XCTAssertEqual(behaviours.count, 2)
+    XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
+    XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
+  }
+
   static var allTests = [
-    ("test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour",
-     test_recordedBehaviours_shouldReturnDefaultFunctionBehaviour)
+    ("test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs",
+     test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs),
+
+    ("test_recordedBehaviours_shouldReturnFunctionBehaviourMatched",
+    test_recordedBehaviours_shouldReturnFunctionBehaviourMatched)
   ]
 }
