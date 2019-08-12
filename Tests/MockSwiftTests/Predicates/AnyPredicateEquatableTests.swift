@@ -1,0 +1,94 @@
+//AnyPredicateEquatableTests.swift
+/*
+ MIT License
+
+ Copyright (c) 2019 Jordhan Leoture
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
+import XCTest
+import MockSwift
+
+private class Custom: Equatable {
+  var equalsReceived: (lhs: Custom, rhs: Custom)?
+  var equalsReturn: Bool!
+
+  static func == (lhs: Custom, rhs: Custom) -> Bool {
+    lhs.equalsReceived = (lhs, rhs)
+    return lhs.equalsReturn
+  }
+}
+
+extension Custom: AnyPredicate {}
+class AnyPredicateEquatableTests: XCTestCase {
+
+  func test_satisfy_shouldReturnTrueIfEquals() {
+    // Given
+    let lhsCustom = Custom()
+    let rhsCustom = Custom()
+    lhsCustom.equalsReturn = true
+
+    // When
+    let result = lhsCustom.satisfy(by: rhsCustom)
+
+    //Then
+    XCTAssertTrue(result)
+    let argument = lhsCustom.equalsReceived
+    XCTAssertTrue(argument?.lhs === lhsCustom)
+    XCTAssertTrue(argument?.rhs === rhsCustom)
+  }
+
+  func test_satisfy_shouldReturnFalseIfNotEquals() {
+    // Given
+    let lhsCustom = Custom()
+    let rhsCustom = Custom()
+    lhsCustom.equalsReturn = false
+
+    // When
+    let result = lhsCustom.satisfy(by: rhsCustom)
+
+    //Then
+    XCTAssertFalse(result)
+    let argument = lhsCustom.equalsReceived
+    XCTAssertTrue(argument?.lhs === lhsCustom)
+    XCTAssertTrue(argument?.rhs === rhsCustom)
+  }
+
+  func test_satify_Bool() { XCTAssertTrue(false.satisfy(by: false)) }
+  func test_satify_Int() { XCTAssertTrue(0.satisfy(by: 0)) }
+  func test_satify_String() { XCTAssertTrue("value".satisfy(by: "value")) }
+
+  static var allTests = [
+    ("test_satisfy_shouldReturnTrueIfEquals",
+     test_satisfy_shouldReturnTrueIfEquals),
+
+    ("test_satisfy_shouldReturnFalseIfNotEquals",
+     test_satisfy_shouldReturnFalseIfNotEquals),
+
+    ("test_satify_Bool",
+    test_satify_Bool),
+
+    ("test_satify_Int",
+    test_satify_Int),
+
+    ("test_satify_String",
+    test_satify_String)
+  ]
+}

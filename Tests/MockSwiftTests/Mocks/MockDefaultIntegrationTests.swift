@@ -1,4 +1,4 @@
-//MockDefaultTests.swift
+//MockDefaultIntegrationTests.swift
 /*
  MIT License
 
@@ -52,7 +52,7 @@ extension Mock: Custom where WrappedType == Custom {
   func functionString() -> String { mocked() }
 }
 
-class MockDefaultTests: XCTestCase {
+class MockDefaultIntegrationTests: XCTestCase {
   @Mock private var custom: Custom
 
   func test_function_shouldReturnDefaultCustom() {
