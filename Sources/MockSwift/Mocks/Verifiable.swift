@@ -1,19 +1,19 @@
-//CallRegister.swift
+//Verifiable.swift
 /*
  MIT License
- 
+
  Copyright (c) 2019 Jordhan Leoture
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,7 +25,24 @@
 
 import Foundation
 
-protocol CallRegister {
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [Any])
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]
+public class Verifiable<ReturnType> {
+  private let callRegister: CallRegister
+  private let functionIdentifier: FunctionIdentifier
+  private let parametersPredicates: [AnyPredicate]
+
+  init(_ callRegister: CallRegister, _ functionIdentifier: FunctionIdentifier, _ parametersPredicates: [AnyPredicate]) {
+    self.callRegister = callRegister
+    self.functionIdentifier = functionIdentifier
+    self.parametersPredicates = parametersPredicates
+  }
+
+  public  func disambiguate(with type: ReturnType.Type) -> Self { self }
+
+  public  func called(times: Predicate<Int> = >0) -> Bool {
+    times.satisfy(by: callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count)
+  }
+
+  public  func called(times: Int) -> Bool {
+    called(times: ==times)
+  }
 }

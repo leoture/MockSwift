@@ -27,8 +27,16 @@ import Foundation
 @testable import MockSwift
 
 class CallRegisterMock: CallRegister {
+
   var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
   func recordCall(for identifier: FunctionIdentifier, with parameters: [Any]) {
     recordCallReceived.append((identifier, parameters))
+  }
+
+  var recordedCallReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+  var recordedCallReturn: [FunctionCall]!
+  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+    recordedCallReceived.append((identifier, matchs))
+    return recordedCallReturn
   }
 }

@@ -32,7 +32,7 @@ public class Mock<WrappedType> {
     self.init(callRegister: FunctionCallRegister(), behaviourRegister: FunctionBehaviourRegister())
   }
 
-  private let callRegister: CallRegister
+  let callRegister: CallRegister
   let behaviourRegister: BehaviourRegister
 
   required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
