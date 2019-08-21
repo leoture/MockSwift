@@ -29,20 +29,35 @@ public class Verifiable<ReturnType> {
   private let callRegister: CallRegister
   private let functionIdentifier: FunctionIdentifier
   private let parametersPredicates: [AnyPredicate]
+  private let failureRecorder: FailureRecorder
 
-  init(_ callRegister: CallRegister, _ functionIdentifier: FunctionIdentifier, _ parametersPredicates: [AnyPredicate]) {
+  init(callRegister: CallRegister,
+       functionIdentifier: FunctionIdentifier,
+       parametersPredicates: [AnyPredicate],
+       failureRecorder: FailureRecorder) {
     self.callRegister = callRegister
     self.functionIdentifier = functionIdentifier
     self.parametersPredicates = parametersPredicates
+    self.failureRecorder = failureRecorder
   }
 
   public  func disambiguate(with type: ReturnType.Type) -> Self { self }
 
-  public  func called(times: Predicate<Int> = >0) -> Bool {
-    times.satisfy(by: callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count)
+  public  func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
+    let count = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count
+    if !times.satisfy(by: count) {
+      failureRecorder.recordFailure(message: callFailureMessage(expectedCalls: times, actualCalls: count),
+                             file: file,
+                             line: line)
+    }
   }
 
-  public  func called(times: Int) -> Bool {
-    called(times: ==times)
+  public  func called(times: Int, file: StaticString = #file, line: UInt = #line) {
+    called(times: ==times, file: file, line: line)
+  }
+
+  private func callFailureMessage(expectedCalls: Predicate<Int>, actualCalls: Int) -> String {
+    let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
+    return "\(callDescription) expect to be call \(expectedCalls) time(s) but is call \(actualCalls) time(s)"
   }
 }

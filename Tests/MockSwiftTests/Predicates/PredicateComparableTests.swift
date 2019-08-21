@@ -26,9 +26,10 @@
 import XCTest
 import MockSwift
 
-private class Custom: Comparable {
+private class Custom: Comparable, CustomStringConvertible {
   var comparisonReceived: Custom?
   var comparisonReturn: Bool!
+  var description: String = ""
 
   static func < (lhs: Custom, rhs: Custom) -> Bool {
     lhs.comparisonReceived = rhs
@@ -76,6 +77,18 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
+  func test_equals_description() {
+    // Given
+    let customCompared = Custom()
+    customCompared.description = "description"
+
+    // When
+    let description = (==customCompared).description
+
+    //Then
+    XCTAssertEqual(description, "description")
+  }
+
   func test_superior_shouldReturnFalseIfComparisonReturnFalse() {
     // Given
     let custom = Custom()
@@ -104,6 +117,18 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
+  func test_superior_description() {
+    // Given
+    let customCompared = Custom()
+    customCompared.description = "description"
+
+    // When
+    let description = (>customCompared).description
+
+    //Then
+    XCTAssertEqual(description, "> description")
+  }
+
   static var allTests = [
     ("test_equals_shouldReturnFalseIfComparisonReturnFalse",
      test_equals_shouldReturnFalseIfComparisonReturnFalse),
@@ -111,11 +136,17 @@ class PredicateComparableTests: XCTestCase {
     ("test_equals_shouldReturnTrueIfComparisonReturnTrue",
      test_equals_shouldReturnTrueIfComparisonReturnTrue),
 
+    ("test_equals_description",
+     test_equals_description),
+
     ("test_superior_shouldReturnFalseIfComparisonReturnFalse",
      test_superior_shouldReturnFalseIfComparisonReturnFalse),
 
     ("test_superior_shouldReturnTrueIfComparisonReturnTrue",
-     test_superior_shouldReturnTrueIfComparisonReturnTrue)
+     test_superior_shouldReturnTrueIfComparisonReturnTrue),
+
+    ("test_superior_description",
+     test_superior_description)
 
   ]
 }

@@ -47,30 +47,6 @@ extension MockThen where WrappedType == Custom {
 class MockThenIntegrationTests: XCTestCase {
   @Mock private var custom: Custom
 
-  func test_functionThatReturnInt_shouldNotBeCalled() {
-    // Given
-
-    // When
-    let _: String = custom.function(identifier: "value")
-
-    //Then
-    XCTAssertFalse(then(_custom).function(identifier: .any)
-      .disambiguate(with: Int.self)
-      .called())
-  }
-
-  func test_function_shouldNotBeCalledWhenParametersNotMatched() {
-    // Given
-
-    // When
-    let _: String = custom.function(identifier: "")
-
-    //Then
-    XCTAssertFalse(then(_custom).function(identifier: .match { !$0.isEmpty })
-      .disambiguate(with: String.self)
-      .called())
-  }
-
   func test_function_shouldBeCalledWhenParametersMatched() {
     // Given
 
@@ -79,18 +55,12 @@ class MockThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "value")
 
     //Then
-    XCTAssertTrue(then(_custom).function(identifier: .match { !$0.isEmpty })
+    then(_custom).function(identifier: .match { !$0.isEmpty })
       .disambiguate(with: String.self)
-      .called(times: >1))
+      .called(times: >1)
   }
 
   static var allTests = [
-    ("test_functionThatReturnInt_shouldNotBeCalled",
-     test_functionThatReturnInt_shouldNotBeCalled),
-
-    ("test_function_shouldNotBeCalledWhenParametersNotMatched",
-     test_function_shouldNotBeCalledWhenParametersNotMatched),
-
     ("test_function_shouldBeCalledWhenParametersMatched",
      test_function_shouldBeCalledWhenParametersMatched)
   ]

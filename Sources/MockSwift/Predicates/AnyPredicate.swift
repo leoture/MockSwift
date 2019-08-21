@@ -25,7 +25,7 @@
 
 import Foundation
 
-public protocol AnyPredicate {
+public protocol AnyPredicate: CustomStringConvertible {
   func satisfy(by element: Any) -> Bool
 }
 

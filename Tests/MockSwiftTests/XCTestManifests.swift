@@ -40,7 +40,8 @@ public func allTests() -> [XCTestCaseEntry] {
     testCase(VerifiableTests.allTests),
     testCase(PredicateComparableTests.allTests),
     testCase(MockThenIntegrationTests.allTest),
-    testCase(FunctionCallRegisterTests.allTest)
+    testCase(FunctionCallRegisterTests.allTest),
+    testCase(FunctionIdentifierTests.allTest)
   ]
 }
 #endif

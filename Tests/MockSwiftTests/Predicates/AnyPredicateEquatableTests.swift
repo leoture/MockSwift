@@ -36,7 +36,10 @@ private class Custom: Equatable {
   }
 }
 
-extension Custom: AnyPredicate {}
+extension Custom: AnyPredicate {
+  var description: String { "" }
+}
+
 class AnyPredicateEquatableTests: XCTestCase {
 
   func test_satisfy_shouldReturnTrueIfEquals() {

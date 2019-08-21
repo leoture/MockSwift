@@ -31,10 +31,28 @@ struct FunctionIdentifier: Equatable, Hashable {
   init<ReturnType>(function: String, return: ReturnType.Type) {
     self.identifier = "\(function) -> \(ReturnType.self)"
   }
-}
 
-extension FunctionIdentifier: CustomStringConvertible {
-  var description: String {
-    identifier
+  func callDescription(with parameters: [Any]) -> String {
+    var callDescription: String = ""
+    var currentIndex = 0
+    let separator = ", "
+    var needSeparator = false
+
+    for character in identifier {
+      if needSeparator && character != ")" {
+        callDescription.append(separator)
+      }
+      needSeparator = false
+
+      callDescription.append(character)
+
+      if character == ":" {
+        callDescription.append(" \(parameters[currentIndex])")
+        currentIndex += 1
+        needSeparator = true
+      }
+    }
+
+    return callDescription
   }
 }

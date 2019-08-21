@@ -26,18 +26,24 @@
 import Foundation
 
 public func then<WrappedType>(_ mock: Mock<WrappedType>) -> MockThen<WrappedType> {
-  MockThen(mock.callRegister)
+  MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
 public class MockThen<WrappedType> {
   private let callRegister: CallRegister
+  private let failureRecorder: FailureRecorder
 
-  init(_ callRegister: CallRegister) {
+  init(callRegister: CallRegister,
+       failureRecorder: FailureRecorder) {
     self.callRegister = callRegister
+    self.failureRecorder = failureRecorder
   }
 
   public func verifiable<ReturnType>(_ parametersPredicates: AnyPredicate...,
                                      function: String = #function) -> Verifiable<ReturnType> {
-    Verifiable(callRegister, FunctionIdentifier(function: function, return: ReturnType.self), parametersPredicates)
+    Verifiable(callRegister: callRegister,
+               functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
+               parametersPredicates: parametersPredicates,
+               failureRecorder: failureRecorder)
   }
 }

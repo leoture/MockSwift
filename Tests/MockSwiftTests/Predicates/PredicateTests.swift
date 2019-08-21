@@ -58,8 +58,20 @@ class PredicateTests: XCTestCase {
 
   func test_satisfy_shouldReturnTrue() {
     let predicate: Predicate<String> = .any
-
     XCTAssertTrue(predicate.satisfy(by: ""))
+  }
+
+  func test_description_withMatch() {
+    let predicate: Predicate<String> = .match(description: "description") { _ in
+      true
+    }
+    XCTAssertEqual("\(predicate)", "description")
+  }
+
+  func test_description_withAny() {
+    let predicate: Predicate<String> = .any
+
+    XCTAssertEqual("\(predicate)", "any")
   }
 
   static var allTests = [
@@ -76,6 +88,12 @@ class PredicateTests: XCTestCase {
      test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType),
 
     ("test_satisfy_shouldReturnTrue",
-     test_satisfy_shouldReturnTrue)
+     test_satisfy_shouldReturnTrue),
+
+    ("test_description_withMatch",
+     test_description_withMatch),
+
+    ("test_description_withAny",
+     test_description_withAny)
   ]
 }

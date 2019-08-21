@@ -1,4 +1,4 @@
-//Predicate.swift
+//FailureRecorder.swift
 /*
 MIT License
 
@@ -25,29 +25,6 @@ SOFTWARE.
 
 import Foundation
 
-public class Predicate<Input>: AnyPredicate {
-  public var description: String
-
-  public class func match(description: String = "custom matcher",
-                          _ predicate: @escaping (Input) -> Bool) -> Predicate<Input> {
-    Predicate(description: description, predicate: predicate)
-  }
-
-  public class var any: Predicate<Input> {
-    Self.match(description: "any") { _ in true }
-  }
-
-  private let predicate: (Input) -> Bool
-
-  private init(description: String, predicate: @escaping (Input) -> Bool) {
-    self.description = description
-    self.predicate = predicate
-  }
-
-  public func satisfy(by element: Any) -> Bool {
-    guard let element = element as? Input else {
-      return false
-    }
-    return predicate(element)
-  }
+protocol FailureRecorder {
+  func recordFailure(message: String, file: StaticString, line: UInt)
 }

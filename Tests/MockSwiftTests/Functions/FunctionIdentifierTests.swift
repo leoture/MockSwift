@@ -1,4 +1,4 @@
-//Predicate+Comparable.swift
+//FunctionIdentifierTests.swift
 /*
  MIT License
 
@@ -23,14 +23,27 @@
  SOFTWARE.
  */
 
-import Foundation
+import XCTest
+@testable import MockSwift
 
-prefix operator ==
-public prefix func ==<Input: Comparable>(rhs: Input) -> Predicate<Input> {
-  Predicate.match(description: "\(rhs)") { $0 == rhs }
-}
+class FunctionIdentifierTests: XCTestCase {
 
-prefix operator >
-public prefix func ><Input: Comparable>(rhs: Input) -> Predicate<Input> {
-  Predicate.match(description: "> \(rhs)") { $0 > rhs }
+  func test_callDescription_withNoParameters() {
+    let description = FunctionIdentifier(function: "f()", return: Int.self).callDescription(with: [])
+    XCTAssertEqual(description, "f() -> Int")
+  }
+
+  func test_callDescription_withParameters() {
+    let description = FunctionIdentifier(function: "f(arg1:arg2:)", return: Int.self)
+      .callDescription(with: ["description1", 2])
+    XCTAssertEqual(description, "f(arg1: description1, arg2: 2) -> Int")
+  }
+
+  static var allTests = [
+    ("test_callDescription_withNoParameters",
+     test_callDescription_withNoParameters),
+
+    ("test_callDescription_withParameters",
+     test_callDescription_withParameters)
+  ]
 }

@@ -27,6 +27,7 @@ import Foundation
 @testable import MockSwift
 
 class AnyPredicateMock: AnyPredicate {
+  var description: String = ""
 
   var satisfyReturn: Bool!
   var satisfyReceived: [Any] = []

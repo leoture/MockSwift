@@ -28,9 +28,23 @@ import XCTest
 
 class VerifiableTests: XCTestCase {
 
+  private var callRegister: CallRegisterMock!
+  private var functionIdentifier: FunctionIdentifier!
+  private var failureRecorder: FailureRecorderMock!
+
+  override func setUp() {
+    callRegister = CallRegisterMock()
+    functionIdentifier = .stub(function: "function(arg:)", returnType: Int.self)
+    failureRecorder = FailureRecorderMock()
+  }
+
   func test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType() {
     // Given
-    let verifiable = Verifiable(CallRegisterMock(), .stub(), []).disambiguate(with: String.self)
+    let verifiable = Verifiable(callRegister: callRegister,
+                                functionIdentifier: functionIdentifier,
+                                parametersPredicates: [],
+                                failureRecorder: failureRecorder)
+      .disambiguate(with: String.self)
 
     // When
     let disambiguatedVerifiable: Verifiable<String> = verifiable.disambiguate(with: String.self)
@@ -39,156 +53,184 @@ class VerifiableTests: XCTestCase {
     XCTAssertTrue(disambiguatedVerifiable === verifiable)
   }
 
-  func test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatched() {
+  func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched() {
     // Given
-    let callRegister = CallRegisterMock()
     callRegister.recordedCallReturn = []
     let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
+    predicate.description = "description"
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
 
     // When
-    let result = verifiable.called()
+    verifiable.called(file: "file", line: 42)
 
     //Then
-    XCTAssertFalse(result)
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "function(arg: description) -> Int expect to be call > 0 time(s) but is call 0 time(s)")
+    XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
-  func test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatched() {
+  func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched() {
     // Given
-    let callRegister = CallRegisterMock()
     callRegister.recordedCallReturn = [FunctionCall(parameters: [])]
     let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
 
     // When
-    let result = verifiable.called()
+    verifiable.called()
 
     //Then
-    XCTAssertTrue(result)
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
   }
 
-  func test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimes() {
+  func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    let callRegister = CallRegisterMock()
     callRegister.recordedCallReturn = [
       FunctionCall(parameters: []),
       FunctionCall(parameters: [])
     ]
     let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
+    predicate.description = "description"
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
 
     // When
-    let result = verifiable.called(times: >2)
+    verifiable.called(times: >2, file: "file", line: 42)
 
     //Then
-    XCTAssertFalse(result)
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "function(arg: description) -> Int expect to be call > 2 time(s) but is call 2 time(s)")
+    XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
-  func test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatchedTimes() {
+  func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    let callRegister = CallRegisterMock()
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
-    let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
-
-    // When
-    let result = verifiable.called(times: >2)
-
-    //Then
-    XCTAssertTrue(result)
-    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
-  }
-
-  func test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimesExactly() {
-    // Given
-    let callRegister = CallRegisterMock()
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
-    let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
-
-    // When
-    let result = verifiable.called(times: 3)
-
-    //Then
-    XCTAssertFalse(result)
-    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
-  }
-
-  func test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatchedTimesExactly() {
-    // Given
-    let callRegister = CallRegisterMock()
     callRegister.recordedCallReturn = [
       FunctionCall(parameters: []),
       FunctionCall(parameters: []),
       FunctionCall(parameters: [])
     ]
     let predicate = AnyPredicateMock()
-    let functionIdentifier = FunctionIdentifier.stub()
-    let verifiable: Verifiable<Void> = Verifiable(callRegister, functionIdentifier, [predicate])
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
 
     // When
-    let result = verifiable.called(times: 3)
+    verifiable.called(times: >2)
 
     //Then
-    XCTAssertTrue(result)
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
-    let parameters = callRegister.recordedCallReceived[0]
-    XCTAssertEqual(parameters.identifier, functionIdentifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue(parameters.matchs[0] as? AnyPredicateMock === predicate)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
   }
+
+  func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly() {
+    // Given
+    callRegister.recordedCallReturn = [
+      FunctionCall(parameters: []),
+      FunctionCall(parameters: [])
+    ]
+    let predicate = AnyPredicateMock()
+    predicate.description = "description"
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+
+    // When
+    verifiable.called(times: 3, file: "file", line: 42)
+
+    //Then
+    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "function(arg: description) -> Int expect to be call 3 time(s) but is call 2 time(s)")
+    XCTAssertEqual("\(file) \(line)", "file 42")
+  }
+
+  func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly() {
+    // Given
+    callRegister.recordedCallReturn = [
+      FunctionCall(parameters: []),
+      FunctionCall(parameters: []),
+      FunctionCall(parameters: [])
+    ]
+    let predicate = AnyPredicateMock()
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+
+    // When
+    verifiable.called(times: 3)
+
+    //Then
+    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+  }
+
   static var allTests = [
     ("test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType",
      test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType),
 
-    ("test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatched",
-     test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatched),
+    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched",
+     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched),
 
-    ("test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatched",
-     test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatched),
+    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched",
+     test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched),
 
-    ("test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimes",
-     test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimes),
+    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes",
+     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes),
 
-    ("test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatchedTimes",
-     test_called_shouldReturnTrueWhenFunctionCallFromCallRegisterMatchedTimes),
+    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes",
+    test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes),
 
-    ("test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimesExactly",
-     test_called_shouldReturnFalseWhenNoFunctionCallFromCallRegisterMatchedTimesExactly)
+    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly",
+     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly),
+
+    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly",
+     test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly)
   ]
 }
