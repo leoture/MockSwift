@@ -69,16 +69,13 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       guard let result: ReturnType = behaviours[0].handle(with: parameters) else {
-        fatalError("Attempt to call \(function)" +
-          " with parameters \(parameters)" +
+        fatalError("Attempt to call \(function.callDescription(with: parameters))" +
           " but there is no defined behaviour for this call")
       }
       return result
-    case 0: fatalError("Attempt to call \(function)" +
-      " with parameters \(parameters)" +
+    case 0: fatalError("Attempt to call \(function.callDescription(with: parameters))" +
       " but there is no defined behaviour for this call")
-    default: fatalError("Attempt to call \(function)" +
-      " with parameters \(parameters)" +
+    default: fatalError("Attempt to call \(function.callDescription(with: parameters))" +
       " but there too much defined behaviours: \(behaviours)")
     }
   }

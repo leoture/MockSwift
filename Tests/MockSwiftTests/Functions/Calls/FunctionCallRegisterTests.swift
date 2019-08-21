@@ -34,6 +34,17 @@ class FunctionCallRegisterTests: XCTestCase {
     functionCallRegister = FunctionCallRegister()
   }
 
+  func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall() {
+    // Given
+    let predicate = AnyPredicateMock()
+
+    // When
+    let calls = functionCallRegister.recordedCall(for: .stub(), when: [predicate])
+
+    //Then
+    XCTAssertTrue(calls.isEmpty)
+  }
+
   func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched() {
     // Given
     let predicate = AnyPredicateMock()
@@ -72,6 +83,9 @@ class FunctionCallRegisterTests: XCTestCase {
   }
 
   static var allTest = [
+    ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall",
+     test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall),
+
     ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched",
      test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched),
 
