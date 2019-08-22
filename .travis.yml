@@ -1,0 +1,37 @@
+
+if: (branch = master OR branch = develop OR type = pull_request)
+
+env:
+  global:
+  - SWIFT_BRANCH=swift-5.1-branch
+  - SWIFT_VERSION=swift-5.1-DEVELOPMENT-SNAPSHOT-2019-08-16-a
+jobs:
+  include:
+
+  - stage: Linux test
+    os: linux
+    language: generic
+    dist: trusty
+    sudo: required
+    install:
+    - sudo apt-get install clang libicu-dev
+    - mkdir swift
+    - curl https://swift.org/builds/$SWIFT_BRANCH/ubuntu1404/$SWIFT_VERSION/$SWIFT_VERSION-ubuntu14.04.tar.gz
+      -s | tar xz -C swift &> /dev/null
+    - export PATH="$(pwd)/swift/$SWIFT_VERSION-ubuntu14.04/usr/bin:$PATH"
+    script:
+    - swift package update
+    - swift test
+
+  - stage: OSX test
+    os: osx
+    osx_image: xcode11
+    language: swift
+    sudo: required
+    install:
+    - wget https://swift.org/builds/$SWIFT_BRANCH/xcode/$SWIFT_VERSION/$SWIFT_VERSION-osx.pkg
+    - sudo installer -pkg $SWIFT_VERSION-osx.pkg -target /
+    - export PATH="/Library/Developer/Toolchains/$SWIFT_VERSION.xctoolchain/usr/bin:$PATH"
+    script:
+    - swift package update
+    - swift test
