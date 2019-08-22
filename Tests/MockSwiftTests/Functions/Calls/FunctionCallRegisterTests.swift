@@ -82,7 +82,7 @@ class FunctionCallRegisterTests: XCTestCase {
     XCTAssertEqual(calls[1].parameters[0] as? UUID, secondParameter)
   }
 
-  static var allTest = [
+  static var allTests = [
     ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall",
      test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall),
 

@@ -28,7 +28,7 @@ import XCTest
 
 private protocol AnyProtocol {}
 
-final class MockSwiftTests: XCTestCase {
+final class MockTests: XCTestCase {
   private var mock: Mock<AnyProtocol>!
   private var callRegister: CallRegisterMock!
   private var behaviourRegister: BehaviourRegisterMock!
