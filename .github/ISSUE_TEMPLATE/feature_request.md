@@ -7,14 +7,17 @@ assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+- [ ] I have read the [CONTRIBUTING](https://github.com/leoture/MockSwift/blob/master/CONTRIBUTING.md).  
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Describe the feature you'd like**  
+`A clear and concise description of what you want to happen.`
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Describe the implementation you've considered**  
+`A clear and concise description of any implementation solutions you've considered.`
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**OS:**
+- [ ] macOS
+- [ ] Linux
+
+**Additional information**  
+`Add any other information or screenshots about the feature request here.`
