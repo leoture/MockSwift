@@ -13,7 +13,7 @@
     <a title="MockSwift  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MockSwift Docs</a> (8% documented)</p>
+        <p><a href="index.html">MockSwift Docs</a> (10% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -101,12 +101,99 @@
             
             <h1 id='mockswift' class='heading'>MockSwift</h1>
 
+<p><a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen" alt="Swift Package Manager compatible"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.1-important" alt="Swift"></a>
+<a href="https://github.com/leoture/MockSwift/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="license MIT"></a>  </p>
+
+<p>MockSwift is a Mock library written in Swift.</p>
+<h6 id='table-of-contents' class='heading'>Table of Contents</h6>
+
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#playgrounds">Playgrounds</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h1 id='usage' class='heading'>Usage</h1>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">User</span> <span class="p">{</span>
+  <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+<span class="p">}</span>
+
+<span class="kd">protocol</span> <span class="kt">Service</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">User</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">MyTests</span><span class="p">:</span> <span class="kt">XCTestCase</span> <span class="p">{</span>
+  <span class="kd">@Mock</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">service</span><span class="p">:</span> <span class="kt">Service</span>
+
+  <span class="kd">func</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Given</span>
+    <span class="nf">given</span><span class="p">(</span><span class="n">_service</span><span class="p">)</span>
+      <span class="o">.</span><span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="o">.</span><span class="nf">not</span><span class="p">(\</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">))</span>
+      <span class="o">.</span><span class="nf">willReturn</span><span class="p">(</span><span class="kt">User</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"John"</span><span class="p">))</span>
+
+    <span class="c1">// When</span>
+    <span class="k">let</span> <span class="nv">john</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"id"</span><span class="p">)</span>
+
+    <span class="c1">// Then</span>
+    <span class="nf">then</span><span class="p">(</span><span class="n">_service</span><span class="p">)</span>
+      <span class="o">.</span><span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="o">.</span><span class="n">any</span><span class="p">)</span>
+      <span class="o">.</span><span class="nf">called</span><span class="p">(</span><span class="nv">times</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h4 id='limitations' class='heading'>Limitations</h4>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Mock</span><span class="p">:</span> <span class="kt">Service</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">Service</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">User</span> <span class="p">{</span>
+    <span class="nf">mocked</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">MockGiven</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">Service</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">Predicate</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Mockable</span><span class="o">&lt;</span><span class="kt">User</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nf">mockable</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">MockThen</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">Service</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">function</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">Predicate</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Verifiable</span><span class="o">&lt;</span><span class="kt">User</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nf">verifiable</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h1 id='playgrounds' class='heading'>Playgrounds</h1>
+
+<p>To use playgrounds, open <strong>MockSwift.xcworkspace</strong>, build
+the <strong>MockSwiftPlayground scheme</strong> and choose <strong>View &gt; Debug Area &gt; Show Debug Area</strong>.</p>
+<h1 id='installation' class='heading'>Installation</h1>
+<h2 id='swift-package-manager' class='heading'>Swift Package Manager</h2>
+
 <p>TODO</p>
+<pre class="highlight swift"><code><span class="c1">// swift-tools-version:5.0</span>
+
+<span class="kd">import</span> <span class="kt">PackageDescription</span>
+
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+  <span class="nv">name</span><span class="p">:</span> <span class="s">"MyProject"</span><span class="p">,</span>
+  <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/leoture/MockSwift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"0.1.0"</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">testTarget</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"MyProjectTests"</span><span class="p">,</span> <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="s">"MockSwift"</span><span class="p">])</span>
+  <span class="p">]</span>
+<span class="p">)</span>
+</code></pre>
+<h2 id='manually' class='heading'>Manually</h2>
+
+<p>TODO</p>
+<h1 id='license' class='heading'>License</h1>
+
+<p>MockSwift is released under the MIT license. <a href="https://github.com/leoture/MockSwift/blob/master/LICENSE">See LICENSE</a> for details.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-08-15)</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-08-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

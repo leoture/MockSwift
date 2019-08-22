@@ -107,7 +107,7 @@
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/MockThen.swift",
-      "line": 39,
+      "line": 42,
       "symbol": "MockThen.verifiable(_:function:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -149,22 +149,22 @@
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Verifiable.swift",
-      "line": 39,
+      "line": 44,
       "symbol": "Verifiable.disambiguate(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Verifiable.swift",
-      "line": 41,
-      "symbol": "Verifiable.called(times:)",
+      "line": 46,
+      "symbol": "Verifiable.called(times:file:line:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Verifiable.swift",
-      "line": 45,
-      "symbol": "Verifiable.called(times:)",
+      "line": 55,
+      "symbol": "Verifiable.called(times:file:line:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -219,21 +219,21 @@
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Predicates/Predicate.swift",
-      "line": 29,
-      "symbol": "Predicate.match(_:)",
+      "line": 31,
+      "symbol": "Predicate.match(description:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Predicates/Predicate.swift",
-      "line": 33,
+      "line": 36,
       "symbol": "Predicate.any",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Predicates/Predicate.swift",
-      "line": 43,
+      "line": 47,
       "symbol": "Predicate.satisfy(by:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
