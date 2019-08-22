@@ -7,24 +7,24 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Describe the bug**  
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps or code to reproduce the behavior:
+**To Reproduce**  
+Steps or codes to reproduce the behavior:
 
-**Expected behavior**
+**Expected behavior**  
 A clear and concise description of what you expected to happen.
 
 **OS:**
 - [ ] macOS
 - [ ] Linux
 
-**Swift version:**
+**Swift version:**  
 Specified the version here
 
 **Xcode version:**  
 Specified the version here
 
-**Additional context**
+**Additional context**  
 Add any other context about the problem here.
