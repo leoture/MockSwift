@@ -39,9 +39,9 @@ public func allTests() -> [XCTestCaseEntry] {
     testCase(MockGivenIntegrationTests.allTests),
     testCase(VerifiableTests.allTests),
     testCase(PredicateComparableTests.allTests),
-    testCase(MockThenIntegrationTests.allTest),
-    testCase(FunctionCallRegisterTests.allTest),
-    testCase(FunctionIdentifierTests.allTest)
+    testCase(MockThenIntegrationTests.allTests),
+    testCase(FunctionCallRegisterTests.allTests),
+    testCase(FunctionIdentifierTests.allTests)
   ]
 }
 #endif
