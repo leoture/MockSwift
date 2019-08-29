@@ -1,51 +1,92 @@
-struct User {
-  let name: String
-}
-
-protocol Service {
-  func function(identifier: String) -> User
-}
-
 import XCTest
 import MockSwift
 
-extension Mock: Service where WrappedType == Service {
-  func function(identifier: String) -> User { mocked(identifier) }
+struct User: Equatable {
+  let identifier: String
+  let name: String
 }
 
-extension MockGiven where WrappedType == Service {
-  func function(identifier: Predicate<String>) -> Mockable<User> { mockable(identifier) }
+protocol UserService {
+  func fetch(identifier: String) -> User
+  func fetch(identifier: String) -> String
 }
 
-extension MockThen where WrappedType == Service {
-  func function(identifier: Predicate<String>) -> Verifiable<User> { verifiable(identifier) }
+extension Mock: UserService where WrappedType == UserService {
+  func fetch(identifier: String) -> User { mocked(identifier) }
+  func fetch(identifier: String) -> String { mocked(identifier) }
 }
 
-extension Predicate {
-  static func not(_ keyPath: KeyPath<Input, Bool>) -> Predicate<Input> {
-    .match { !$0[keyPath: keyPath]}
+extension MockGiven where WrappedType == UserService {
+  func fetch(identifier: Predicate<String>) -> Mockable<User> { mockable(identifier) }
+  func fetch(identifier: Predicate<String>) -> Mockable<String> { mockable(identifier) }
+}
+
+extension MockThen where WrappedType == UserService {
+  func fetch(identifier: Predicate<String>) -> Verifiable<User> { verifiable(identifier) }
+  func fetch(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
+}
+
+extension User: MockDefault {
+  static func `default`() -> User {
+    User(identifier: "id", name: "John")
   }
 }
 
 class MyTests: XCTestCase {
-  @Mock private var service: Service
+  @Mock private var service: UserService
 
-  func test() {
+  func test_fetch() {
     // Given
-    let expectedUser = User(name: "John")
+    let expectedUser = User(identifier: "id", name: "John")
 
     given(_service)
-      .function(identifier: .not(\.isEmpty))
+      .fetch(identifier: .any)
       .willReturn(expectedUser)
 
     // When
-    let john = service.function(identifier: "id")
+    let user: User = service.fetch(identifier: "id")
 
     // Then
     then(_service)
-      .function(identifier: .any)
+      .fetch(identifier: .any)
+      .disambiguate(with: User.self)
       .called()
+    XCTAssertEqual(user, expectedUser)
+  }
+
+  func test_fetch_withDefault() {
+    // Given
+    let expectedUser = User(identifier: "id", name: "John")
+
+    // When
+    let user: User = service.fetch(identifier: "id")
+
+    // Then
+    XCTAssertEqual(user, expectedUser)
   }
 }
 
 MyTests.defaultTestSuite.run()
+
+let myPredicate = Predicate<User>.match(description: "User.identifer == id") { user in
+  user.identifier == "id"
+}
+
+myPredicate.satisfy(by: User(identifier: "id", name: "John"))
+myPredicate.satisfy(by: User(identifier: "identifier", name: "John"))
+
+extension User: AnyPredicate {
+  var description: String {
+    "User.identifer == \(identifier)"
+  }
+
+  func satisfy(by element: Any) -> Bool {
+    guard let element = element as? User  else {
+      return false
+    }
+    return identifier == element.identifier
+  }
+}
+
+User(identifier: "id", name: "").satisfy(by: User(identifier: "id", name: "John"))
+User(identifier: "id", name: "").satisfy(by: User(identifier: "identifier", name: "John"))
