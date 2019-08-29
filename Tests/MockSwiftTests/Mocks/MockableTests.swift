@@ -85,15 +85,4 @@ class MockableTests: XCTestCase {
     //Then
     XCTAssertTrue(disambiguatedMockable === mockable)
   }
-
-  static var allTests = [
-    ("test_willReturn_shouldCorrectlyRegisterBahaviour",
-     test_willReturn_shouldCorrectlyRegisterBahaviour),
-
-    ("test_will_shouldCorrectlyRegisterBahaviour",
-     test_will_shouldCorrectlyRegisterBahaviour),
-
-    ("test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType",
-     test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType)
-  ]
 }

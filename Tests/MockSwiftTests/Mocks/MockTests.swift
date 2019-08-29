@@ -121,18 +121,4 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
   }
-
-  static var allTests = [
-    ("test_mocked_shouldRecordCallIntoCallRegister",
-     test_mocked_shouldRecordCallIntoCallRegister),
-
-    ("test_mocked_shouldReturnValueFromBehaviour",
-     test_mocked_shouldReturnValueFromBehaviour),
-
-    ("test_mockedVoid_shouldRecordCallIntoCallRegister",
-     test_mockedVoid_shouldRecordCallIntoCallRegister),
-
-    ("test_mockedVoid_shouldCallBehaviour",
-     test_mockedVoid_shouldCallBehaviour)
-  ]
 }

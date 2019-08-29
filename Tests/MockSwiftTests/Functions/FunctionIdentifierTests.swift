@@ -38,12 +38,4 @@ class FunctionIdentifierTests: XCTestCase {
       .callDescription(with: ["description1", 2])
     XCTAssertEqual(description, "f(arg1: description1, arg2: 2) -> Int")
   }
-
-  static var allTests = [
-    ("test_callDescription_withNoParameters",
-     test_callDescription_withNoParameters),
-
-    ("test_callDescription_withParameters",
-     test_callDescription_withParameters)
-  ]
 }

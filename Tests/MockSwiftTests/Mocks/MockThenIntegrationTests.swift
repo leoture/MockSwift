@@ -59,9 +59,4 @@ class MockThenIntegrationTests: XCTestCase {
       .disambiguate(with: String.self)
       .called(times: >1)
   }
-
-  static var allTests = [
-    ("test_function_shouldBeCalledWhenParametersMatched",
-     test_function_shouldBeCalledWhenParametersMatched)
-  ]
 }

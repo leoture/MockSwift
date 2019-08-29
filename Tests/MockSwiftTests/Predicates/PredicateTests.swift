@@ -73,27 +73,4 @@ class PredicateTests: XCTestCase {
 
     XCTAssertEqual("\(predicate)", "any")
   }
-
-  static var allTests = [
-    ("test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType",
-     test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType),
-
-    ("test_satisfy_shouldReturnFalseIfInputNotMatched",
-     test_satisfy_shouldReturnFalseIfInputNotMatched),
-
-    ("test_satisfy_shouldReturnTrueIfInputMatched",
-     test_satisfy_shouldReturnTrueIfInputMatched),
-
-    ("test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType",
-     test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType),
-
-    ("test_satisfy_shouldReturnTrue",
-     test_satisfy_shouldReturnTrue),
-
-    ("test_description_withMatch",
-     test_description_withMatch),
-
-    ("test_description_withAny",
-     test_description_withAny)
-  ]
 }
