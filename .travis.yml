@@ -42,4 +42,4 @@ jobs:
     script:
       - xcodebuild -scheme MockSwift-Package -workspace MockSwift.xcworkspace test
     after_success:
-      - bash <(curl -s https://codecov.io/bash) -J MockSwift
+      - bash <(curl -s https://codecov.io/bash)
