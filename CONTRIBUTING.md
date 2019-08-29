@@ -51,7 +51,7 @@ The issue will be the place to discuss the proposal, so please detail your idea,
 ## 🎉 Pull Requests
 Every Pull Requests must be attached to, at least, one issue. Help us review the code by explaining the implementation, the tests and by adding any information you may find useful. For now, all Pull Requests must target the *master* branch.  
 
-All written codes should be commented and tested as much as possible. Insure that the code compiles and that the tests pass. Reviews will start only when Travis' jobs will be successfully completed.
+All written codes should be commented and tested as much as possible. Insure that the code compiles and that the tests pass. Reviews will start only when continuous integration will be successfully completed.
 
 We try to comply with [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/). So please make your best to comply with it as well.
 
