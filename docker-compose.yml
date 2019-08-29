@@ -2,6 +2,6 @@ version: '3.7'
 services:
   mockswift-test:
     build: .
-    command: ./scripts/linux-tests.sh
+    command: /bin/bash -c "swift package update && swift test"
     volumes:
       - './:/MockSwift'

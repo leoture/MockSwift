@@ -6,11 +6,11 @@ extension AnyPredicateEquatableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__AnyPredicateEquatableTests = [
-        ("test_satisfy_shouldReturnTrueIfEquals", test_satisfy_shouldReturnTrueIfEquals),
-        ("test_satisfy_shouldReturnFalseIfNotEquals", test_satisfy_shouldReturnFalseIfNotEquals),
         ("test_satify_Bool", test_satify_Bool),
         ("test_satify_Int", test_satify_Int),
         ("test_satify_String", test_satify_String),
+        ("test_satisfy_shouldReturnFalseIfNotEquals", test_satisfy_shouldReturnFalseIfNotEquals),
+        ("test_satisfy_shouldReturnTrueIfEquals", test_satisfy_shouldReturnTrueIfEquals),
     ]
 }
 
@@ -82,10 +82,10 @@ extension MockDefaultIntegrationTests {
     // to regenerate.
     static let __allTests__MockDefaultIntegrationTests = [
         ("test_function_shouldReturnDefaultCustom", test_function_shouldReturnDefaultCustom),
-        ("test_functionVoid_shouldReturnVoid", test_functionVoid_shouldReturnVoid),
         ("test_functionBool_shouldReturnDefaultBool", test_functionBool_shouldReturnDefaultBool),
         ("test_functionInt_shouldReturnDefaultInt", test_functionInt_shouldReturnDefaultInt),
         ("test_functionString_shouldReturnDefaultString", test_functionString_shouldReturnDefaultString),
+        ("test_functionVoid_shouldReturnVoid", test_functionVoid_shouldReturnVoid),
     ]
 }
 
@@ -94,9 +94,9 @@ extension MockGivenIntegrationTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockGivenIntegrationTests = [
+        ("test_function_shouldReturnDefaultValueIfNoMatch", test_function_shouldReturnDefaultValueIfNoMatch),
         ("test_function_shouldReturnValueFromWillCompletion", test_function_shouldReturnValueFromWillCompletion),
         ("test_function_shouldReturnValueFromWillReturnValue", test_function_shouldReturnValueFromWillReturnValue),
-        ("test_function_shouldReturnDefaultValueIfNoMatch", test_function_shouldReturnDefaultValueIfNoMatch),
     ]
 }
 
@@ -107,8 +107,8 @@ extension MockTests {
     static let __allTests__MockTests = [
         ("test_mocked_shouldRecordCallIntoCallRegister", test_mocked_shouldRecordCallIntoCallRegister),
         ("test_mocked_shouldReturnValueFromBehaviour", test_mocked_shouldReturnValueFromBehaviour),
-        ("test_mockedVoid_shouldRecordCallIntoCallRegister", test_mockedVoid_shouldRecordCallIntoCallRegister),
         ("test_mockedVoid_shouldCallBehaviour", test_mockedVoid_shouldCallBehaviour),
+        ("test_mockedVoid_shouldRecordCallIntoCallRegister", test_mockedVoid_shouldRecordCallIntoCallRegister),
     ]
 }
 
@@ -126,9 +126,9 @@ extension MockableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockableTests = [
-        ("test_willReturn_shouldCorrectlyRegisterBahaviour", test_willReturn_shouldCorrectlyRegisterBahaviour),
-        ("test_will_shouldCorrectlyRegisterBahaviour", test_will_shouldCorrectlyRegisterBahaviour),
         ("test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType", test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType),
+        ("test_will_shouldCorrectlyRegisterBahaviour", test_will_shouldCorrectlyRegisterBahaviour),
+        ("test_willReturn_shouldCorrectlyRegisterBahaviour", test_willReturn_shouldCorrectlyRegisterBahaviour),
     ]
 }
 
@@ -137,12 +137,12 @@ extension PredicateComparableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PredicateComparableTests = [
+        ("test_equals_description", test_equals_description),
         ("test_equals_shouldReturnFalseIfComparisonReturnFalse", test_equals_shouldReturnFalseIfComparisonReturnFalse),
         ("test_equals_shouldReturnTrueIfComparisonReturnTrue", test_equals_shouldReturnTrueIfComparisonReturnTrue),
-        ("test_equals_description", test_equals_description),
+        ("test_superior_description", test_superior_description),
         ("test_superior_shouldReturnFalseIfComparisonReturnFalse", test_superior_shouldReturnFalseIfComparisonReturnFalse),
         ("test_superior_shouldReturnTrueIfComparisonReturnTrue", test_superior_shouldReturnTrueIfComparisonReturnTrue),
-        ("test_superior_description", test_superior_description),
     ]
 }
 
@@ -151,13 +151,13 @@ extension PredicateTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PredicateTests = [
-        ("test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType", test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType),
+        ("test_description_withAny", test_description_withAny),
+        ("test_description_withMatch", test_description_withMatch),
         ("test_satisfy_shouldReturnFalseIfInputNotMatched", test_satisfy_shouldReturnFalseIfInputNotMatched),
+        ("test_satisfy_shouldReturnTrue", test_satisfy_shouldReturnTrue),
         ("test_satisfy_shouldReturnTrueIfInputMatched", test_satisfy_shouldReturnTrueIfInputMatched),
         ("test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType", test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType),
-        ("test_satisfy_shouldReturnTrue", test_satisfy_shouldReturnTrue),
-        ("test_description_withMatch", test_description_withMatch),
-        ("test_description_withAny", test_description_withAny),
+        ("test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType", test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType),
     ]
 }
 
@@ -166,33 +166,32 @@ extension VerifiableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__VerifiableTests = [
-        ("test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType", test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType),
-        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched),
         ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched", test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched),
-        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes),
         ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes", test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes),
-        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly),
         ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly", test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly),
+        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched),
+        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes),
+        ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly),
+        ("test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType", test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType),
     ]
 }
 
 public func __allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(MockTests.__allTests__MockTests),
+        testCase(DefaultFunctionBehaviourTests.__allTests__DefaultFunctionBehaviourTests),
         testCase(FunctionBehaviourRegisterTests.__allTests__FunctionBehaviourRegisterTests),
         testCase(FunctionBehaviourTests.__allTests__FunctionBehaviourTests),
-        testCase(DefaultFunctionBehaviourTests.__allTests__DefaultFunctionBehaviourTests),
-        testCase(MockDefaultExtensionTests.__allTests__MockDefaultExtensionTests),
-        testCase(MockDefaultIntegrationTests.__allTests__MockDefaultIntegrationTests),
-        testCase(MockableTests.__allTests__MockableTests),
-        testCase(PredicateTests.__allTests__PredicateTests),
-        testCase(AnyPredicateEquatableTests.__allTests__AnyPredicateEquatableTests),
-        testCase(MockGivenIntegrationTests.__allTests__MockGivenIntegrationTests),
-        testCase(VerifiableTests.__allTests__VerifiableTests),
-        testCase(PredicateComparableTests.__allTests__PredicateComparableTests),
-        testCase(MockThenIntegrationTests.__allTests__MockThenIntegrationTests),
         testCase(FunctionCallRegisterTests.__allTests__FunctionCallRegisterTests),
         testCase(FunctionIdentifierTests.__allTests__FunctionIdentifierTests),
+        testCase(MockDefaultExtensionTests.__allTests__MockDefaultExtensionTests),
+        testCase(MockDefaultIntegrationTests.__allTests__MockDefaultIntegrationTests),
+        testCase(MockGivenIntegrationTests.__allTests__MockGivenIntegrationTests),
+        testCase(MockTests.__allTests__MockTests),
+        testCase(MockThenIntegrationTests.__allTests__MockThenIntegrationTests),
+        testCase(MockableTests.__allTests__MockableTests),
+        testCase(PredicateComparableTests.__allTests__PredicateComparableTests),
+        testCase(PredicateTests.__allTests__PredicateTests),
+        testCase(VerifiableTests.__allTests__VerifiableTests),
     ]
 }
 #endif
