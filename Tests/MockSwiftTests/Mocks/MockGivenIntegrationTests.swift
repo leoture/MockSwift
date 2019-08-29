@@ -85,15 +85,4 @@ class MockGivenIntegrationTests: XCTestCase {
     //Then
     XCTAssertEqual(result, 0)
   }
-
-  static var allTests = [
-    ("test_function_shouldReturnValueFromWillCompletion",
-     test_function_shouldReturnValueFromWillCompletion),
-
-    ("test_function_shouldReturnValueFromWillReturnValue",
-     test_function_shouldReturnValueFromWillReturnValue),
-
-    ("test_function_shouldReturnDefaultValueIfNoMatch",
-     test_function_shouldReturnDefaultValueIfNoMatch)
-  ]
 }

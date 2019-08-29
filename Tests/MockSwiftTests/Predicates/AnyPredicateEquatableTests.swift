@@ -77,21 +77,4 @@ class AnyPredicateEquatableTests: XCTestCase {
   func test_satify_Bool() { XCTAssertTrue(false.satisfy(by: false)) }
   func test_satify_Int() { XCTAssertTrue(0.satisfy(by: 0)) }
   func test_satify_String() { XCTAssertTrue("value".satisfy(by: "value")) }
-
-  static var allTests = [
-    ("test_satisfy_shouldReturnTrueIfEquals",
-     test_satisfy_shouldReturnTrueIfEquals),
-
-    ("test_satisfy_shouldReturnFalseIfNotEquals",
-     test_satisfy_shouldReturnFalseIfNotEquals),
-
-    ("test_satify_Bool",
-    test_satify_Bool),
-
-    ("test_satify_Int",
-    test_satify_Int),
-
-    ("test_satify_String",
-    test_satify_String)
-  ]
 }

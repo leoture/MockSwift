@@ -210,27 +210,4 @@ class VerifiableTests: XCTestCase {
 
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
   }
-
-  static var allTests = [
-    ("test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType",
-     test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType),
-
-    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched",
-     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatched),
-
-    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched",
-     test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched),
-
-    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes",
-     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes),
-
-    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes",
-    test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes),
-
-    ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly",
-     test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly),
-
-    ("test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly",
-     test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly)
-  ]
 }

@@ -73,12 +73,4 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
     XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
   }
-
-  static var allTests = [
-    ("test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs",
-     test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs),
-
-    ("test_recordedBehaviours_shouldReturnFunctionBehaviourMatched",
-    test_recordedBehaviours_shouldReturnFunctionBehaviourMatched)
-  ]
 }

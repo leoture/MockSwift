@@ -74,21 +74,4 @@ class MockDefaultIntegrationTests: XCTestCase {
   func test_functionString_shouldReturnDefaultString() {
     XCTAssertEqual(custom.functionString(), String.default())
   }
-
-  static var allTests = [
-    ("test_function_shouldReturnDefaultCustom",
-     test_function_shouldReturnDefaultCustom),
-
-    ("test_functionVoid_shouldReturnVoid",
-     test_functionVoid_shouldReturnVoid),
-
-    ("test_functionBool_shouldReturnDefaultBool",
-     test_functionBool_shouldReturnDefaultBool),
-
-    ("test_functionInt_shouldReturnDefaultInt",
-     test_functionInt_shouldReturnDefaultInt),
-
-    ("test_functionString_shouldReturnDefaultString",
-     test_functionString_shouldReturnDefaultString)
-  ]
 }

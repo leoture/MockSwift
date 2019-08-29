@@ -55,12 +55,4 @@ class DefaultFunctionBehaviourTests: XCTestCase {
     let result: AnyProtocol? = defaultFunctionBehaviour.handle(with: [])
     XCTAssertNil(result)
   }
-
-  static var allTests = [
-    ("test_handle_shouldReturnDefaultCustom",
-     test_handle_shouldReturnDefaultCustom),
-
-    ("test_handle_shouldReturnNullOnUnknownType",
-     test_handle_shouldReturnNullOnUnknownType)
-  ]
 }

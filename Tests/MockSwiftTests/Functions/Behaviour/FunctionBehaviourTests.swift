@@ -54,12 +54,4 @@ class FunctionBehaviourTests: XCTestCase {
     //Then
     XCTAssertEqual(value, uuid)
   }
-
-  static var allTests = [
-    ("test_handle_shouldCallHandlerWithCorrectParameters",
-     test_handle_shouldCallHandlerWithCorrectParameters),
-
-    ("test_handle_shouldReturnValueFormHandler",
-     test_handle_shouldReturnValueFormHandler)
-  ]
 }

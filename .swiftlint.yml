@@ -1,0 +1,2 @@
+excluded:
+  - Tests/LinuxMain.swift

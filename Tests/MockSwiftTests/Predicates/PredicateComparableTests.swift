@@ -128,25 +128,4 @@ class PredicateComparableTests: XCTestCase {
     //Then
     XCTAssertEqual(description, "> description")
   }
-
-  static var allTests = [
-    ("test_equals_shouldReturnFalseIfComparisonReturnFalse",
-     test_equals_shouldReturnFalseIfComparisonReturnFalse),
-
-    ("test_equals_shouldReturnTrueIfComparisonReturnTrue",
-     test_equals_shouldReturnTrueIfComparisonReturnTrue),
-
-    ("test_equals_description",
-     test_equals_description),
-
-    ("test_superior_shouldReturnFalseIfComparisonReturnFalse",
-     test_superior_shouldReturnFalseIfComparisonReturnFalse),
-
-    ("test_superior_shouldReturnTrueIfComparisonReturnTrue",
-     test_superior_shouldReturnTrueIfComparisonReturnTrue),
-
-    ("test_superior_description",
-     test_superior_description)
-
-  ]
 }
