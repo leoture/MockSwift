@@ -68,7 +68,7 @@ class PredicateTests: XCTestCase {
     XCTAssertEqual("\(predicate)", "description")
   }
 
-  func test_description_withAny(){
+  func test_description_withAny() {
     let predicate: Predicate<String> = .any
 
     XCTAssertEqual("\(predicate)", "any")

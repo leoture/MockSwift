@@ -178,6 +178,7 @@ extension VerifiableTests {
 
 public func __allTests() -> [XCTestCaseEntry] {
     return [
+        testCase(AnyPredicateEquatableTests.__allTests__AnyPredicateEquatableTests),
         testCase(DefaultFunctionBehaviourTests.__allTests__DefaultFunctionBehaviourTests),
         testCase(FunctionBehaviourRegisterTests.__allTests__FunctionBehaviourRegisterTests),
         testCase(FunctionBehaviourTests.__allTests__FunctionBehaviourTests),
