@@ -9,11 +9,30 @@
 MockSwift is a Mock library written in Swift for Swift.
 
 ###### Table of Contents
+- [Installation](#installation)
 - [Usage](#usage)
 - [Playgrounds](#playgrounds)
-- [Installation](#installation)
 - [Contribution](#contribution)
 - [License](#license)
+
+# Installation
+## Swift Package Manager
+MockSwift is thinking to work with [Swift Package Manager](https://swift.org/package-manager/).
+```swift
+// swift-tools-version:5.1
+
+import PackageDescription
+
+let package = Package(
+  name: "MyProject",
+  dependencies: [
+    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.1.0")
+  ],
+  targets: [
+    .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
+  ]
+)
+```
 
 # Usage
 >⚠️ Work in progress ⚠️  
@@ -35,7 +54,7 @@ protocol UserService {
 }
 ```
 
-#### General usage
+### Basic usage
 Now, you can use `UserService` into your tests with the `@Mock` annotation.
 ```swift
 class MyTests: XCTestCase {
@@ -61,7 +80,7 @@ class MyTests: XCTestCase {
 }
 ```
 
-#### Use Mock
+### Use Mock
 To be able to use `Mock` as a `UserService`, you have to make it conform to the protocal like that:
 ```swift
 extension Mock: UserService where WrappedType == UserService {
@@ -69,13 +88,13 @@ extension Mock: UserService where WrappedType == UserService {
 }
 ```
 >⚠️ be careful to:
-- call `mocked()` with all parameters in the same order.  
+> - call `mocked()` with all parameters in the same order.  
 
 After that you can write `@Mock private var service: UserService` and `Mock<UserService>()`.
 
-##### MockDefault
+#### MockDefault
 You can define a default value for any type.  
-This value will be returned for any mocked method returning this type, only if no [behaviour](Use-MockGiven) has been defined.  
+This value will be returned for any mocked method returning this type, only if no [behaviour](use-mockgiven) has been defined.  
 ```swift
 extension User: MockDefault {
   static func `default`() -> User {
@@ -106,20 +125,20 @@ extension MockGiven where WrappedType == UserService {
 }
 ```
 >⚠️ be careful to:
-- call `mockable()` with all parameters in the same order.  
-- the method name must be the same as the one in the `WrappedType`.
-  - exemple: **fetch(identifer:)**
-- the return type must be a `Mockable` with, as generic type, the same type as the return type of the method in the WrappedType.
-  - exemple:
-    - UserService.fetch(identifer:) -> User
-    - MockGiven.fetch(identifer:) -> Mockable\<User>
+> - call `mockable()` with all parameters in the same order.  
+> - the method name must be the same as the one in the `WrappedType`.
+>  - exemple: **fetch(identifer:)**
+> - the return type must be a `Mockable` with, as generic type, the same type as the return type of the method in the WrappedType.
+>  - exemple:
+>    - UserService.fetch(identifer:) -> User
+>    - MockGiven.fetch(identifer:) -> Mockable\<User>
 
 To get it from a `Mock` use `given()` method.
 
-##### Behaviour Rules
+#### Behaviour Rules
 You can add as many behaviours as you like to a method. But make sure that, when you call the method, only one behaviour corresponds to it. Otherwise, the call will be cashed with a fatalError.
 
-##### Disambiguate
+#### Disambiguate
 Sometime, the return type can be ambiguous.
 ```swift
 protocol UserService {
@@ -149,17 +168,17 @@ extension MockThen where WrappedType == UserService {
 }
 ```
 >⚠️ be careful to:
-- call `verifiable()` with all parameters in the same order.  
-- the method name must be the same as the one in the `WrappedType`.
-  - exemple: **fetch(identifer:)**
-- the return type must be a `Verifiable` with, as generic type, the same type as the return type of the method in the WrappedType.
-  - exemple:
-    - UserService.fetch(identifer:) -> User
-    - MockThen.fetch(identifer:) -> Verifiable\<User>
+> - call `verifiable()` with all parameters in the same order.  
+> - the method name must be the same as the one in the `WrappedType`.
+>  - exemple: **fetch(identifer:)**
+> - the return type must be a `Verifiable` with, as generic type, the same type as the return type of the method in the WrappedType.
+>  - exemple:
+>    - UserService.fetch(identifer:) -> User
+>    - MockThen.fetch(identifer:) -> Verifiable\<User>
 
 To get it from a `Mock` use `then()` method.
 
-##### Disambiguate
+#### Disambiguate
 Sometime, the return type can be ambiguous.
 ```swift
 protocol UserService {
@@ -212,25 +231,6 @@ extension User: AnyPredicate {
 To use playgrounds:
 - open **MockSwift.xcworkspace**
 - build the **MockSwiftPlayground scheme**.
-
-# Installation
-## Swift Package Manager
-MockSwift is thinking to work with [Swift Package Manager](https://swift.org/package-manager/).
-```swift
-// swift-tools-version:5.1
-
-import PackageDescription
-
-let package = Package(
-  name: "MyProject",
-  dependencies: [
-    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.1.0")
-  ],
-  targets: [
-    .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
-  ]
-)
-```
 
 # Contribution
 Would you like to contribute to MockSwift? Please read our [contributing guidelines](https://github.com/leoture/MockSwift/blob/master/CONTRIBUTING.md) and [code of conduct](https://github.com/leoture/MockSwift/blob/master/CODE_OF_CONDUCT.md).
