@@ -1,4 +1,5 @@
-# Welcome to MockSwift!
+<img src="MockSwift.svg" alt="MockSwift" width="64" height="64"> Welcome to MockSwift!
+=======
 [![Build Status](https://travis-ci.com/leoture/MockSwift.svg?token=7mHp1J41yAdss7UzTesf&branch=master)](https://travis-ci.com/leoture/MockSwift)
 [![codecov](https://codecov.io/gh/leoture/MockSwift/branch/master/graph/badge.svg)](https://codecov.io/gh/leoture/MockSwift)
 [![documentation](https://github.com/leoture/MockSwift/blob/master/docs/badge.svg)](https://codecov.io/gh/leoture/MockSwift)  
