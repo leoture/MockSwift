@@ -4,12 +4,12 @@ All contributions are welcomed so do not hesitate.
 Before you start contributing, please read this file and do your best to comply with our contribution guidelines.  
 
 ## Topics
-- [Asking Questions](#asking-questions)
-- [Work on MockSwift](#work-on-mockswift)
-- [Reporting Bugs](#reporting-bugs)
-- [Feature proposals](#feature-proposals)
-- [Pull Requests](#pull-requests)
-- [Developers Certificate of Origin](#developers-certificate-of-origin)
+- [Asking Questions](#-asking-questions)
+- [Work on MockSwift](#-work-on-mockswift)
+- [Reporting Bugs](#-reporting-bugs)
+- [Feature proposals](#-feature-proposals)
+- [Pull Requests](#-pull-requests)
+- [Developers Certificate of Origin](#-developers-certificate-of-origin-11)
 
 ## 🤔 Asking Questions
 If you have a question, check that nobody asked this question before.  
