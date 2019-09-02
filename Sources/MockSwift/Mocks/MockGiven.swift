@@ -25,8 +25,11 @@
 
 import Foundation
 
-public func given<WrappedType>(_ mock: Mock<WrappedType>) -> MockGiven<WrappedType> {
-  MockGiven(mock.behaviourRegister)
+public func given<WrappedType>(_ value: WrappedType) -> MockGiven<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
+  }
+  return MockGiven(mock.behaviourRegister)
 }
 
 public class MockGiven<WrappedType> {

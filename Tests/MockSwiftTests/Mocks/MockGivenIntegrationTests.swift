@@ -49,7 +49,7 @@ class MockGivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnValueFromWillCompletion() {
     // Given
-    given(_custom).function(identifier: .match { !$0.isEmpty })
+    given(custom).function(identifier: .match { !$0.isEmpty })
       .disambiguate(with: String.self)
       .will { parameters in (parameters[0] as? String ?? "") + "1" }
 
@@ -62,7 +62,7 @@ class MockGivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnValueFromWillReturnValue() {
     // Given
-    given(_custom).function(identifier: "value")
+    given(custom).function(identifier: "value")
       .disambiguate(with: Int.self)
       .willReturn(42)
 
@@ -75,7 +75,7 @@ class MockGivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnDefaultValueIfNoMatch() {
     // Given
-    given(_custom).function(identifier: .match { _ in false})
+    given(custom).function(identifier: .match { _ in false})
       .disambiguate(with: Int.self)
       .willReturn(42)
 
