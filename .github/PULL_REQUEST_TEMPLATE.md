@@ -7,7 +7,7 @@ Please provide enough information so that others can review your pull request.
 - [ ] I have read the [CONTRIBUTING](https://github.com/leoture/MockSwift/blob/master/CONTRIBUTING.md).  
 
 ###### 🔗 Closing issues  
-#xxxx | #xxxx
+This closes #xxxx, #xxxx
 
 # 📖 Summary
 
