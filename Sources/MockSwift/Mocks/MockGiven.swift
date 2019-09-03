@@ -25,10 +25,24 @@
 
 import Foundation
 
-public func given<WrappedType>(_ mock: Mock<WrappedType>) -> MockGiven<WrappedType> {
-  MockGiven(mock.behaviourRegister)
+/// Creates a `MockGiven` based on `value`.
+/// - Parameter value: object that will be stubbed.
+/// - Returns: a new `MockGiven<WrappedType>` based on `value`.
+/// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
+public func given<WrappedType>(_ value: WrappedType) -> MockGiven<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
+  }
+  return MockGiven(mock.behaviourRegister)
 }
 
+/// MockGiven is used to define stubs.
+///
+/// To be able to use it on a specific type `CustomType`, you must create an extension.
+///
+///     extension MockGiven where WrappedType == CustomType
+///
+///
 public class MockGiven<WrappedType> {
   private let behaviourRegister: BehaviourRegister
 
@@ -36,8 +50,34 @@ public class MockGiven<WrappedType> {
     self.behaviourRegister = behaviourRegister
   }
 
-  public func mockable<ReturnType>(_ parametersPredicates: AnyPredicate...,
-                                   function: String = #function) -> Mockable<ReturnType> {
+  /// Creates a `Mockable` for `function` with `parametersPredicates`.
+  /// - Parameter parametersPredicates: predicates that will be used by the `Mockable`
+  /// to determine if it can handle the call.
+  /// - Parameter function: function concerned by the `Mockable`.
+  /// - Returns: A new `Mockable<ReturnType>` that will be able to create stubs for `function`.
+  ///
+  /// You must use it during the extension of `MockGiven`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) -> Int
+  /// }
+  /// extension MockGiven where WrappedType == CustomType {
+  ///   func doSomething(parameter1: Predicate<String>, parameter2: Predicate<Bool>) -> Mockable<Int> {
+  ///     mockable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `mockable` must respect the following rules:
+  ///   - The name must match the function from the `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - The return type must be a `Mockable` with, as generic type, the same type
+  ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Mockable<Int>`.
+  ///   - Call `mockable` with all parameters in the same order.
+  public func mockable<ReturnType>(
+    _ parametersPredicates: AnyPredicate...,
+    function: String = #function
+  ) -> Mockable<ReturnType> {
     Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), parametersPredicates)
   }
 }

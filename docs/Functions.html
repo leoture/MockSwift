@@ -14,7 +14,7 @@
     <a title="Functions  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MockSwift Docs</a> (10% documented)</p>
+        <p><a href="index.html">MockSwift Docs</a> (18% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -76,7 +76,7 @@
                 <a href="Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGAA0A0CyxGlF">given(_:)</a>
+                <a href="Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGAA0A0CyxGlF">then(_:)</a>
@@ -109,9 +109,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9MockSwift5givenyAA0A5GivenCyxGAA0A0CyxGlF"></a>
+                    <a name="/s:9MockSwift5givenyAA0A5GivenCyxGxlF"></a>
                     <a name="//apple_ref/swift/Function/given(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9MockSwift5givenyAA0A5GivenCyxGAA0A0CyxGlF">given(_:)</a>
+                    <a class="token" href="#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -119,16 +119,44 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates a <code><a href="Classes/MockGiven.html">MockGiven</a></code> based on <code>value</code>.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    If <code>value</code> cannot be cast to <code><a href="Classes/Mock.html">Mock&lt;WrappedType&gt;</a></code> a <code>fatalError</code> will be raised.
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">given</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">mock</span><span class="p">:</span> <span class="kt"><a href="Classes/Mock.html">Mock</a></span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Classes/MockGiven.html">MockGiven</a></span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">given</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">WrappedType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Classes/MockGiven.html">MockGiven</a></span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>object that will be stubbed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a new <code><a href="Classes/MockGiven.html">MockGiven&lt;WrappedType&gt;</a></code> based on <code>value</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -227,7 +255,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-08-22)</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-09-03)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

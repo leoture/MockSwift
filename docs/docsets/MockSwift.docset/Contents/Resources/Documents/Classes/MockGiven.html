@@ -14,7 +14,7 @@
     <a title="MockGiven Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MockSwift Docs</a> (10% documented)</p>
+        <p><a href="../index.html">MockSwift Docs</a> (18% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -76,7 +76,7 @@
                 <a href="../Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGAA0A0CyxGlF">given(_:)</a>
+                <a href="../Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGAA0A0CyxGlF">then(_:)</a>
@@ -106,7 +106,11 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>MockGiven is used to define stubs.</p>
+
+<p>To be able to use it on a specific type <code>CustomType</code>, you must create an extension.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MockGiven</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span>
+</code></pre>
 
           </section>
           <section class="section task-group-section">
@@ -125,17 +129,82 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Creates a <code><a href="../Classes/Mockable.html">Mockable</a></code> for <code>function</code> with <code>parametersPredicates</code>.</p>
+
+<p>You must use it during the extension of <code>MockGiven</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">MockGiven</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">Predicate</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Predicate</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Mockable</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nf">mockable</span><span class="p">(</span><span class="n">parameter1</span><span class="p">,</span> <span class="n">parameter2</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The function where you call <code>mockable</code> must respect the following rules:
+
+<ul>
+<li>The name must match the function from the <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>doSomething(parameter1:parameter2:)</strong></li>
+</ul></li>
+<li>The return type must be a <code><a href="../Classes/Mockable.html">Mockable</a></code> with, as generic type, the same type
+as the return type of the method in the <code>WrappedType</code>. In the example above, <code>Int</code> became <code><a href="../Classes/Mockable.html">Mockable&lt;Int&gt;</a></code>.</li>
+<li>Call <code>mockable</code> with all parameters in the same order.</li>
+</ul>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">mockable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">parametersPredicates</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AnyPredicate.html">AnyPredicate</a></span><span class="o">...</span><span class="p">,</span>
-                                 <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Mockable.html">Mockable</a></span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">mockable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="n">_</span> <span class="nv">parametersPredicates</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AnyPredicate.html">AnyPredicate</a></span><span class="o">...</span><span class="p">,</span>
+  <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Mockable.html">Mockable</a></span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parametersPredicates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>predicates that will be used by the <code><a href="../Classes/Mockable.html">Mockable</a></code>
+to determine if it can handle the call.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>function</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>function concerned by the <code><a href="../Classes/Mockable.html">Mockable</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new <code><a href="../Classes/Mockable.html">Mockable&lt;ReturnType&gt;</a></code> that will be able to create stubs for <code>function</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -145,7 +214,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-08-22)</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-09-03)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
