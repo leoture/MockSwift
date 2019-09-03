@@ -60,7 +60,7 @@ class MyTests: XCTestCase {
     // Given
     let expectedUser = User(identifier: "id", name: "John")
 
-    given(_service)
+    given(service)
       .fetch(identifier: .any)
       .willReturn(expectedUser)
 
