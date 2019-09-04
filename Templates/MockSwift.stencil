@@ -1,0 +1,65 @@
+import Foundation
+import MockSwift
+@testable import {{argument.module}}
+
+{% macro predicatesParameter method %}{% for param in method.parameters %}{% if param.argumentLabel == null %}_ {% elif param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.typeName }}>{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
+
+{% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
+
+{% macro mockMethod method %}
+  public func {{ method.name }} {% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName }}{% endif %} {
+    mocked({% call parametersOnInvoke method %})
+  }
+{% endmacro %}
+
+{% macro mock type %}
+extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
+
+  {% for method in type.allMethods|!definedInExtension %}
+    {% call mockMethod method %}
+  {% endfor %}
+}
+{% endmacro %}
+
+{% macro mockGivenMethod method %}
+
+  public func {{ method.shortName }}({% call predicatesParameter method %}){% if not method.returnTypeName.isVoid %} -> Mockable<{{ method.returnTypeName }}>{% endif %} {
+    mockable({% call parametersOnInvoke method %})
+  }
+{% endmacro %}
+
+{% macro mockGiven type %}
+
+extension MockGiven where WrappedType == {{ type.name }} {
+  {% for method in type.allMethods|!definedInExtension %}
+    {% call mockGivenMethod method %}
+  {% endfor %}
+}
+{% endmacro %}
+
+
+{% macro mockThenMethod method %}
+
+  public func {{ method.shortName }}({% call predicatesParameter method %}){% if not method.returnTypeName.isVoid %} -> Verifiable<{{ method.returnTypeName }}>{% endif %} {
+    verifiable({% call parametersOnInvoke method %})
+  }
+{% endmacro %}
+
+{% macro mockThen type %}
+
+extension MockThen where WrappedType == {{ type.name }} {
+  {% for method in type.allMethods|!definedInExtension %}
+    {% call mockThenMethod method %}
+  {% endfor %}
+}
+{% endmacro %}
+{% for type in types.protocols %}
+
+// MARK: - {{ type.name }}
+  {% call mock type %}
+
+  {% call mockGiven type %}
+
+  {% call mockThen type %}
+{% endfor %}
+

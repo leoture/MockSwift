@@ -96,6 +96,7 @@
 		9E2F052322FB32B200E04F34 /* Behaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
 		9E2F052522FB354C00E04F34 /* FunctionBehaviourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionBehaviourTests.swift; sourceTree = "<group>"; };
 		9E2F052722FB357F00E04F34 /* DefaultFunctionBehaviourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFunctionBehaviourTests.swift; sourceTree = "<group>"; };
+		9E7C0AFA232010180061BD9B /* MockSwift.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = MockSwift.stencil; sourceTree = "<group>"; };
 		9EA55223230D661E00E82139 /* FailureRecorderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureRecorderMock.swift; sourceTree = "<group>"; };
 		9EA55225230D6F9C00E82139 /* XCTestFailureRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestFailureRecorder.swift; sourceTree = "<group>"; };
 		9EA55227230D93D200E82139 /* FunctionIdentifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionIdentifierTests.swift; sourceTree = "<group>"; };
@@ -234,6 +235,14 @@
 			path = Stubs;
 			sourceTree = "<group>";
 		};
+		9E7C0AF923200FCE0061BD9B /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C0AFA232010180061BD9B /* MockSwift.stencil */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
 		9EA5D1512301DAAB006F0A28 /* Predicates */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +330,7 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				9E7C0AF923200FCE0061BD9B /* Templates */,
 				9EA77EF5230EE7C900DAE694 /* CHANGELOG.md */,
 				9EA77EF4230EE7C900DAE694 /* CONTRIBUTING.md */,
 				OBJ_6 /* Package.swift */,
