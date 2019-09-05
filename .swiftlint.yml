@@ -1,3 +1,6 @@
+included:
+  - Sources
+  - Tests
 excluded:
   - Tests/LinuxMain.swift
   - Tests/MockSwiftTests/XCTestManifests.swift

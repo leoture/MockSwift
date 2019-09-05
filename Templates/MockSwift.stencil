@@ -7,7 +7,7 @@ import MockSwift
 {% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
 
 {% macro mockMethod method %}
-  public func {{ method.name }} {% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName }}{% endif %} {
+  public func {{ method.name }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
     mocked({% call parametersOnInvoke method %})
   }
 {% endmacro %}
@@ -23,7 +23,7 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 
 {% macro mockGivenMethod method %}
 
-  public func {{ method.shortName }}({% call predicatesParameter method %}){% if not method.returnTypeName.isVoid %} -> Mockable<{{ method.returnTypeName }}>{% endif %} {
+  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable<{{ method.returnTypeName }}> {
     mockable({% call parametersOnInvoke method %})
   }
 {% endmacro %}
@@ -40,7 +40,7 @@ extension MockGiven where WrappedType == {{ type.name }} {
 
 {% macro mockThenMethod method %}
 
-  public func {{ method.shortName }}({% call predicatesParameter method %}){% if not method.returnTypeName.isVoid %} -> Verifiable<{{ method.returnTypeName }}>{% endif %} {
+  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable<{{ method.returnTypeName }}> {
     verifiable({% call parametersOnInvoke method %})
   }
 {% endmacro %}

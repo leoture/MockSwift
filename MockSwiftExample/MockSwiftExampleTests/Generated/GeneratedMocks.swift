@@ -18,28 +18,39 @@ import MockSwift
 // MARK: - Basic
 extension Mock: Basic where WrappedType == Basic {
 
-  public func doSomething()  -> String {
+  public func doSomething() {
     mocked()
   }
-  public func doSomething(arg: String)  -> String {
-    mocked(arg)
-  }
-  public func doSomething(arg1: String, arg2: Int)  -> String {
-    mocked(arg1, arg2)
-  }
-  public func doSomething(with arg: String)  -> String {
-    mocked(arg)
-  }
-  public func doSomething(with arg1: String, and arg2: Bool)  -> String {
-    mocked(arg1, arg2)
-  }
-  public func doSomething()  -> Int {
+  public func doSomething() -> Int {
     mocked()
+  }
+  public func doSomething() -> String {
+    mocked()
+  }
+  public func doSomething(arg: String) -> String {
+    mocked(arg)
+  }
+  public func doSomething(arg1: String, arg2: Int) -> String {
+    mocked(arg1, arg2)
+  }
+  public func doSomething(with arg: String) -> String {
+    mocked(arg)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> String {
+    mocked(arg1, arg2)
   }
 }
 
 
 extension MockGiven where WrappedType == Basic {
+
+  public func doSomething() -> Mockable<Void> {
+    mockable()
+  }
+
+  public func doSomething() -> Mockable<Int> {
+    mockable()
+  }
 
   public func doSomething() -> Mockable<String> {
     mockable()
@@ -60,14 +71,18 @@ extension MockGiven where WrappedType == Basic {
   public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Mockable<String> {
     mockable(arg1, arg2)
   }
-
-  public func doSomething() -> Mockable<Int> {
-    mockable()
-  }
 }
 
 
 extension MockThen where WrappedType == Basic {
+
+  public func doSomething() -> Verifiable<Void> {
+    verifiable()
+  }
+
+  public func doSomething() -> Verifiable<Int> {
+    verifiable()
+  }
 
   public func doSomething() -> Verifiable<String> {
     verifiable()
@@ -87,10 +102,6 @@ extension MockThen where WrappedType == Basic {
 
   public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Verifiable<String> {
     verifiable(arg1, arg2)
-  }
-
-  public func doSomething() -> Verifiable<Int> {
-    verifiable()
   }
 }
 

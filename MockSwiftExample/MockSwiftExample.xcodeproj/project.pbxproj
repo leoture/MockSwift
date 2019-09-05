@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9E7C0AFE232012210061BD9B /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0AFD232012210061BD9B /* GeneratedMocks.swift */; };
 		9E7C0B00232013420061BD9B /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0AFF232013420061BD9B /* Basic.swift */; };
+		9E7C0B09232033510061BD9B /* MockSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E7C0B08232033510061BD9B /* MockSwift.framework */; };
 		9ED78EF3232006E900886FEA /* MockSwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED78EE9232006E900886FEA /* MockSwiftExample.framework */; };
 		9ED78EF8232006E900886FEA /* BasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED78EF7232006E900886FEA /* BasicTests.swift */; };
 		9ED78EFA232006E900886FEA /* MockSwiftExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ED78EEC232006E900886FEA /* MockSwiftExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		9E7C0AFD232012210061BD9B /* GeneratedMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		9E7C0AFF232013420061BD9B /* Basic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basic.swift; sourceTree = "<group>"; };
+		9E7C0B08232033510061BD9B /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED78EE9232006E900886FEA /* MockSwiftExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockSwiftExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED78EEC232006E900886FEA /* MockSwiftExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockSwiftExample.h; sourceTree = "<group>"; };
 		9ED78EED232006E900886FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7C0B09232033510061BD9B /* MockSwift.framework in Frameworks */,
 				9ED78EF3232006E900886FEA /* MockSwiftExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,12 +65,21 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		9E7C0B07232033510061BD9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C0B08232033510061BD9B /* MockSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9ED78EDF232006E900886FEA = {
 			isa = PBXGroup;
 			children = (
 				9ED78EEB232006E900886FEA /* MockSwiftExample */,
 				9ED78EF6232006E900886FEA /* MockSwiftExampleTests */,
 				9ED78EEA232006E900886FEA /* Products */,
+				9E7C0B07232033510061BD9B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

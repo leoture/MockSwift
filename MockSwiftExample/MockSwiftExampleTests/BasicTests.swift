@@ -40,6 +40,7 @@ class MockSwiftExampleTests: XCTestCase {
     given(basic).doSomething(with: .any, and: .any).willReturn("5")
 
     // When
+    basic.doSomething() as Void
     let result0: Int = basic.doSomething()
     let result1: String = basic.doSomething()
     let result2 = basic.doSomething(arg: "2")
@@ -54,12 +55,13 @@ class MockSwiftExampleTests: XCTestCase {
     XCTAssertEqual(result3, "3")
     XCTAssertEqual(result4, "4")
     XCTAssertEqual(result5, "5")
+    then(_basic).doSomething().disambiguate(with: Void.self).called(times: 1)
     then(_basic).doSomething().disambiguate(with: Int.self).called(times: 1)
     then(_basic).doSomething().disambiguate(with: String.self).called(times: 1)
-    then(_basic).doSomething(arg: .match { $0 == "2"}).called(times: 1)
-    then(_basic).doSomething(arg1: .match { $0 == "3"}, arg2: .match { $0 == 3}).called(times: 1)
-    then(_basic).doSomething(with: .match { $0 == "4"}).called(times: 1)
-    then(_basic).doSomething(with: .match { $0 == "5"}, and: .match { $0 == true}).called(times: 1)
+    then(_basic).doSomething(arg: =="2").called(times: 1)
+    then(_basic).doSomething(arg1: =="3", arg2: ==3).called(times: 1)
+    then(_basic).doSomething(with: =="4").called(times: 1)
+    then(_basic).doSomething(with: =="5", and: ==true).called(times: 1)
   }
 
 }
