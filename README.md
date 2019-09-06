@@ -68,7 +68,7 @@ class MyTests: XCTestCase {
     let user = service.fetch(identifier: "id")
 
     // Then
-    then(_service)
+    then(service)
       .fetch(identifier: .any)
       .called()
     XCTAssertEqual(user, expectedUser)

@@ -25,8 +25,11 @@
 
 import Foundation
 
-public func then<WrappedType>(_ mock: Mock<WrappedType>) -> MockThen<WrappedType> {
-  MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
+public func then<WrappedType>(_ value: WrappedType) -> MockThen<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
+  }
+  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
 public class MockThen<WrappedType> {

@@ -47,7 +47,7 @@ class MyTests: XCTestCase {
     let user: User = service.fetch(identifier: "id")
 
     // Then
-    then(_service)
+    then(service)
       .fetch(identifier: .any)
       .disambiguate(with: User.self)
       .called()
