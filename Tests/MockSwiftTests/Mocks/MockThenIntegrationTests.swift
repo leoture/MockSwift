@@ -59,4 +59,15 @@ class MockThenIntegrationTests: XCTestCase {
       .disambiguate(with: String.self)
       .called(times: >1)
   }
+
+  func test_then_shouldCallCompletionWithMockThen() {
+    // Given
+    var mockThen: MockThen<Custom>?
+
+    // When
+    then(custom) { mockThen = $0 }
+
+    //Then
+    XCTAssertNotNil(mockThen)
+  }
 }

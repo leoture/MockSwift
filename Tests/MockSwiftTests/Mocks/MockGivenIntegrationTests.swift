@@ -85,4 +85,15 @@ class MockGivenIntegrationTests: XCTestCase {
     //Then
     XCTAssertEqual(result, 0)
   }
+
+  func test_given_shouldCallCompletionWithMockGiven() {
+    // Given
+    var mockGiven: MockGiven<Custom>?
+
+    // When
+    given(custom) { mockGiven = $0 }
+
+    //Then
+    XCTAssertNotNil(mockGiven)
+  }
 }

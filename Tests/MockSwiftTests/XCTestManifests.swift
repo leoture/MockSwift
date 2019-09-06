@@ -97,6 +97,7 @@ extension MockGivenIntegrationTests {
         ("test_function_shouldReturnDefaultValueIfNoMatch", test_function_shouldReturnDefaultValueIfNoMatch),
         ("test_function_shouldReturnValueFromWillCompletion", test_function_shouldReturnValueFromWillCompletion),
         ("test_function_shouldReturnValueFromWillReturnValue", test_function_shouldReturnValueFromWillReturnValue),
+        ("test_given_shouldCallCompletionWithMockGiven", test_given_shouldCallCompletionWithMockGiven),
     ]
 }
 
@@ -118,6 +119,7 @@ extension MockThenIntegrationTests {
     // to regenerate.
     static let __allTests__MockThenIntegrationTests = [
         ("test_function_shouldBeCalledWhenParametersMatched", test_function_shouldBeCalledWhenParametersMatched),
+        ("test_then_shouldCallCompletionWithMockThen", test_then_shouldCallCompletionWithMockThen),
     ]
 }
 
