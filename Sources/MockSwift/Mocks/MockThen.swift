@@ -25,6 +25,10 @@
 
 import Foundation
 
+/// Creates a `MockThen` based on `value`.
+/// - Parameter value: Object that will be verified.
+/// - Returns: A new `MockThen<WrappedType>` based on `value`.
+/// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func then<WrappedType>(_ value: WrappedType) -> MockThen<WrappedType> {
   guard let mock = value as? Mock<WrappedType> else {
     fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
@@ -32,9 +36,21 @@ public func then<WrappedType>(_ value: WrappedType) -> MockThen<WrappedType> {
   return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
+/// MockThen is used to verify method calls.
+///
+/// To be able to use it on a specific type `CustomType`, you must create an extension.
+///
+///     extension MockThen where WrappedType == CustomType
+///
+///
 public class MockThen<WrappedType> {
+
+  // MARK: - Properties
+
   private let callRegister: CallRegister
   private let failureRecorder: FailureRecorder
+
+  // MARK: - Init
 
   init(callRegister: CallRegister,
        failureRecorder: FailureRecorder) {
@@ -42,6 +58,34 @@ public class MockThen<WrappedType> {
     self.failureRecorder = failureRecorder
   }
 
+  // MARK: - Public Methods
+
+  /// Creates a `Verifiable` for `function` with `parameters`.
+  /// - Parameter parameters: Values that will be used as predicates by the `Verifiable`
+  /// for filter method calls.
+  /// - Parameter function: Function concerned by the `Verifiable`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `Verifiable<ReturnType>` that will be able to verify `function` calls.
+  ///
+  /// You must use it during the extension of `MockThen`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) -> Int
+  /// }
+  /// extension MockThen where WrappedType == CustomType {
+  ///   func doSomething(parameter1: Predicate<String>, parameter2: Predicate<Bool>) -> Verifiable<Int> {
+  ///     verifiable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `verifiable` must respect the following rules:
+  ///   - The name must match the function from the `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - The return type must be a `Verifiable` with, as generic type, the same type
+  ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Verifiable<Int>`.
+  ///   - Call `verifiable` with all parameters in the same order.
   public func verifiable<ReturnType>(
     _ parameters: Any...,
     function: String = #function,

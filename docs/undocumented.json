@@ -71,27 +71,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/MockThen.swift",
-      "line": 28,
-      "symbol": "then(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/MockThen.swift",
-      "line": 32,
-      "symbol": "MockThen",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/MockThen.swift",
-      "line": 42,
-      "symbol": "MockThen.verifiable(_:function:file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Mockable.swift",
       "line": 28,
       "symbol": "Mockable",
