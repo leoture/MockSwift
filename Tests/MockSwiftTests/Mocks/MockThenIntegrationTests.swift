@@ -55,7 +55,7 @@ class MockThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "value")
 
     //Then
-    then(_custom).function(identifier: .match { !$0.isEmpty })
+    then(custom).function(identifier: .match { !$0.isEmpty })
       .disambiguate(with: String.self)
       .called(times: >1)
   }

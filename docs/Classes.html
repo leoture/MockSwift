@@ -14,7 +14,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MockSwift Docs</a> (42% documented)</p>
+        <p><a href="index.html">MockSwift Docs</a> (50% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -79,7 +79,7 @@
                 <a href="Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGAA0A0CyxGlF">then(_:)</a>
+                <a href="Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGxlF">then(_:)</a>
               </li>
             </ul>
           </li>
@@ -187,7 +187,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>MockThen is used to verify method calls.</p>
+
+<p>To be able to use it on a specific type <code>CustomType</code>, you must create an extension.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MockThen</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span>
+</code></pre>
 
                         <a href="Classes/MockThen.html" class="slightly-smaller">See more</a>
                       </div>

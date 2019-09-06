@@ -50,7 +50,7 @@ public class MockGiven<WrappedType> {
     self.behaviourRegister = behaviourRegister
   }
 
-  /// Creates a `Mockable` for `function` with `parametersPredicates`.
+  /// Creates a `Mockable` for `function` with `parameters`.
   /// - Parameter parameters: Values that will be used as predicates by the `Mockable`
   /// to determine if it can handle the call.
   /// - Parameter function: Function concerned by the `Mockable`.
