@@ -26,6 +26,11 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable<{{ method.returnTypeName }}> {
     mockable({% call parametersOnInvoke method %})
   }
+  {% if method.parameters.count > 0 %}
+  public func {{ method.name }} -> Mockable<{{ method.returnTypeName }}> {
+    mockable({% call parametersOnInvoke method %})
+  }
+  {% endif %}
 {% endmacro %}
 
 {% macro mockGiven type %}
@@ -43,6 +48,11 @@ extension MockGiven where WrappedType == {{ type.name }} {
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable<{{ method.returnTypeName }}> {
     verifiable({% call parametersOnInvoke method %})
   }
+  {% if method.parameters.count > 0 %}
+  public func {{ method.name }} -> Verifiable<{{ method.returnTypeName }}> {
+    verifiable({% call parametersOnInvoke method %})
+  }
+  {% endif %}
 {% endmacro %}
 
 {% macro mockThen type %}

@@ -25,8 +25,13 @@
 
 import Foundation
 
-extension AnyPredicate where Self: Equatable {
-  public func satisfy(by element: Any) -> Bool {
+public extension AnyPredicate where Self: Equatable {
+
+  /// Check if an `element` satifies the predicate.
+  /// - Parameter element: The element to check.
+  /// - Returns: True if `element` is equals to `self`, false otherwise.
+  /// - SeeAlso: `AnyPredicate`
+  func satisfy(by element: Any) -> Bool {
     self == (element as? Self)
   }
 }

@@ -59,16 +59,28 @@ extension MockGiven where WrappedType == Basic {
   public func doSomething(arg: Predicate<String>) -> Mockable<String> {
     mockable(arg)
   }
+  public func doSomething(arg: String) -> Mockable<String> {
+    mockable(arg)
+  }
 
   public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int>) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+  public func doSomething(arg1: String, arg2: Int) -> Mockable<String> {
     mockable(arg1, arg2)
   }
 
   public func doSomething(with arg: Predicate<String>) -> Mockable<String> {
     mockable(arg)
   }
+  public func doSomething(with arg: String) -> Mockable<String> {
+    mockable(arg)
+  }
 
   public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> Mockable<String> {
     mockable(arg1, arg2)
   }
 }
@@ -91,16 +103,28 @@ extension MockThen where WrappedType == Basic {
   public func doSomething(arg: Predicate<String>) -> Verifiable<String> {
     verifiable(arg)
   }
+  public func doSomething(arg: String) -> Verifiable<String> {
+    verifiable(arg)
+  }
 
   public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int>) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+  public func doSomething(arg1: String, arg2: Int) -> Verifiable<String> {
     verifiable(arg1, arg2)
   }
 
   public func doSomething(with arg: Predicate<String>) -> Verifiable<String> {
     verifiable(arg)
   }
+  public func doSomething(with arg: String) -> Verifiable<String> {
+    verifiable(arg)
+  }
 
   public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> Verifiable<String> {
     verifiable(arg1, arg2)
   }
 }

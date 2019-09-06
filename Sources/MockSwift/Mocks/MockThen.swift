@@ -39,11 +39,18 @@ public class MockThen<WrappedType> {
     self.failureRecorder = failureRecorder
   }
 
-  public func verifiable<ReturnType>(_ parametersPredicates: AnyPredicate...,
-                                     function: String = #function) -> Verifiable<ReturnType> {
-    Verifiable(callRegister: callRegister,
-               functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
-               parametersPredicates: parametersPredicates,
-               failureRecorder: failureRecorder)
+  public func verifiable<ReturnType>(
+    _ parameters: Any...,
+    function: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line
+  ) -> Verifiable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<Any>.match($0, file: file, line: line)
+    }
+    return Verifiable(callRegister: callRegister,
+                      functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
+                      parametersPredicates: predicates,
+                      failureRecorder: failureRecorder)
   }
 }

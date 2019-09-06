@@ -25,7 +25,12 @@
 
 import Foundation
 
+/// AnyPredicate represents a condition on an `Any` element.
 public protocol AnyPredicate: CustomStringConvertible {
+
+  /// Check if an `element` satifies the predicate.
+  /// - Parameter element: The element to check.
+  /// - Returns: True if `element` satisfies the predicate, false otherwise.
   func satisfy(by element: Any) -> Bool
 }
 

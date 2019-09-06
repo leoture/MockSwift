@@ -30,8 +30,10 @@ import MockSwift
 class MockSwiftExampleTests: XCTestCase {
   @Mock private var basic: Basic
 
-  func test_doSomething() {
+  func test_doSomething_withPredicates() {
     // Given
+    var blockDone = false
+    given(basic).doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
     given(basic).doSomething().willReturn(0)
     given(basic).doSomething().willReturn("1")
     given(basic).doSomething(arg: .any).willReturn("2")
@@ -49,6 +51,7 @@ class MockSwiftExampleTests: XCTestCase {
     let result5 = basic.doSomething(with: "5", and: true)
 
     //Then
+    XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertEqual(result1, "1")
     XCTAssertEqual(result2, "2")
@@ -64,4 +67,40 @@ class MockSwiftExampleTests: XCTestCase {
     then(_basic).doSomething(with: =="5", and: ==true).called(times: 1)
   }
 
+  func test_doSomething_withTypes() {
+    // Given
+    var blockDone = false
+    given(basic).doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
+    given(basic).doSomething().willReturn(0)
+    given(basic).doSomething().willReturn("1")
+    given(basic).doSomething(arg: "2").willReturn("2")
+    given(basic).doSomething(arg1: "3", arg2: 3).willReturn("3")
+    given(basic).doSomething(with: "4").willReturn("4")
+    given(basic).doSomething(with: "5", and: true).willReturn("5")
+
+    // When
+    basic.doSomething() as Void
+    let result0: Int = basic.doSomething()
+    let result1: String = basic.doSomething()
+    let result2 = basic.doSomething(arg: "2")
+    let result3 = basic.doSomething(arg1: "3", arg2: 3)
+    let result4 = basic.doSomething(with: "4")
+    let result5 = basic.doSomething(with: "5", and: true)
+
+    //Then
+    XCTAssertTrue(blockDone)
+    XCTAssertEqual(result0, 0)
+    XCTAssertEqual(result1, "1")
+    XCTAssertEqual(result2, "2")
+    XCTAssertEqual(result3, "3")
+    XCTAssertEqual(result4, "4")
+    XCTAssertEqual(result5, "5")
+    then(_basic).doSomething().disambiguate(with: Void.self).called(times: 1)
+    then(_basic).doSomething().disambiguate(with: Int.self).called(times: 1)
+    then(_basic).doSomething().disambiguate(with: String.self).called(times: 1)
+    then(_basic).doSomething(arg: "2").called(times: 1)
+    then(_basic).doSomething(arg1: "3", arg2: 3).called(times: 1)
+    then(_basic).doSomething(with: "4").called(times: 1)
+    then(_basic).doSomething(with: "5", and: true).called(times: 1)
+  }
 }

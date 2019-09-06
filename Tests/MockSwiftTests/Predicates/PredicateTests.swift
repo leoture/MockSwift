@@ -26,6 +26,8 @@
 import XCTest
 import MockSwift
 
+private class Custom {}
+
 class PredicateTests: XCTestCase {
 
   func test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
@@ -49,6 +51,38 @@ class PredicateTests: XCTestCase {
     }
 
     XCTAssertTrue(predicate.satisfy(by: ""))
+  }
+
+  func test_satisfy_shouldReturnTrueIfInputMatchedByAnyPredicate() {
+    let anyPredicate: AnyPredicate = Predicate<String>.match { value in
+      value.isEmpty
+    }
+    let predicate: AnyPredicate = Predicate<AnyPredicate>.match(anyPredicate)
+
+    XCTAssertTrue(predicate.satisfy(by: ""))
+  }
+
+  func test_satisfy_shouldReturnFalseIfInputNotMatchedByAnyPredicate() {
+    let anyPredicate: AnyPredicate = Predicate<String>.match { value in
+      value.isEmpty
+    }
+    let predicate: AnyPredicate = Predicate<AnyPredicate>.match(anyPredicate)
+
+    XCTAssertFalse(predicate.satisfy(by: "not Empty"))
+  }
+
+  func test_satisfy_shouldReturnTrueIfInputMatchedReference() {
+    let custom = Custom()
+    let predicate: AnyPredicate = Predicate<Custom>.match(custom)
+
+    XCTAssertTrue(predicate.satisfy(by: custom))
+  }
+
+  func test_satisfy_shouldReturnFalseIfInputNotMatchedReference() {
+    let custom = Custom()
+    let predicate: AnyPredicate = Predicate<Custom>.match(custom)
+
+    XCTAssertFalse(predicate.satisfy(by: Custom()))
   }
 
   func test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType() {
