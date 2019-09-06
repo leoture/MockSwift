@@ -2,5 +2,6 @@ included:
   - Sources
   - Tests
 excluded:
+  - MockSwiftExample
   - Tests/LinuxMain.swift
   - Tests/MockSwiftTests/XCTestManifests.swift

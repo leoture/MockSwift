@@ -42,6 +42,6 @@ jobs:
       - brew install sourcery
     script:
       - xcodebuild -scheme MockSwift-Package -workspace MockSwift.xcworkspace test
-      - xcodebuild -scheme MockSwiftExample -workspace MockSwift.xcworkspace test
+      - xcodebuild -scheme MockSwiftExample -workspace MockSwift.xcworkspace -destination "name=iPhone Xs" test
     after_success:
       - bash <(curl -s https://codecov.io/bash)
