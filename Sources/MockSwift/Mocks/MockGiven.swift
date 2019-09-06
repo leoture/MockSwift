@@ -36,6 +36,14 @@ public func given<WrappedType>(_ value: WrappedType) -> MockGiven<WrappedType> {
   return MockGiven(mock.behaviourRegister)
 }
 
+/// Call `completion` with  a `MockGiven` based on `value`.
+/// - Parameter value: Object that will be stubbed.
+/// - Parameter completion: Block that will be called.
+/// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
+public func given<WrappedType>(_ value: WrappedType, _ completion: (MockGiven<WrappedType>) -> Void) {
+  completion(given(value))
+}
+
 /// MockGiven is used to define stubs.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.

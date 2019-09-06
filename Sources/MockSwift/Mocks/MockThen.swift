@@ -36,6 +36,14 @@ public func then<WrappedType>(_ value: WrappedType) -> MockThen<WrappedType> {
   return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
+/// Call `completion` with a `MockThen` based on `value`.
+/// - Parameter value: Object that will be verified.
+/// - Parameter completion: Block that will be called.
+/// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
+public func then<WrappedType>(_ value: WrappedType, _ completion: (MockThen<WrappedType>) -> Void) {
+  completion(then(value))
+}
+
 /// MockThen is used to verify method calls.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
