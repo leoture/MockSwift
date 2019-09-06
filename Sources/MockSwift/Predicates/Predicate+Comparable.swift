@@ -26,7 +26,7 @@
 import Foundation
 
 prefix operator ==
-public prefix func ==<Input: Comparable>(rhs: Input) -> Predicate<Input> {
+public prefix func ==<Input: Equatable>(rhs: Input) -> Predicate<Input> {
   Predicate.match(description: "\(rhs)") { $0 == rhs }
 }
 

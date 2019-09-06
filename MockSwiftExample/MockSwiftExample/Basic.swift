@@ -1,4 +1,4 @@
-//AnyPredicate.swift
+//Basic.swift
 /*
  MIT License
  
@@ -25,17 +25,12 @@
 
 import Foundation
 
-/// AnyPredicate represents a condition on an `Any` element.
-public protocol AnyPredicate: CustomStringConvertible {
-
-  /// Check if an `element` satifies the predicate.
-  /// - Parameter element: The element to check.
-  /// - Returns: True if `element` satisfies the predicate, false otherwise.
-  func satisfy(by element: Any) -> Bool
-}
-
-extension Collection where Element == AnyPredicate {
-  func satisfy(by elements: [Any]) -> Bool {
-    zip(self, elements).allSatisfy { $0.0.satisfy(by: $0.1) }
-  }
+protocol Basic {
+  func doSomething()
+  func doSomething() -> Int
+  func doSomething() -> String
+  func doSomething(arg: String) -> String
+  func doSomething(arg1: String, arg2: Int) -> String
+  func doSomething(with arg: String) -> String
+  func doSomething(with arg1: String, and arg2: Bool) -> String
 }

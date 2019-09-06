@@ -26,8 +26,8 @@
 import Foundation
 
 /// Creates a `MockGiven` based on `value`.
-/// - Parameter value: object that will be stubbed.
-/// - Returns: a new `MockGiven<WrappedType>` based on `value`.
+/// - Parameter value: Object that will be stubbed.
+/// - Returns: A new `MockGiven<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func given<WrappedType>(_ value: WrappedType) -> MockGiven<WrappedType> {
   guard let mock = value as? Mock<WrappedType> else {
@@ -51,9 +51,11 @@ public class MockGiven<WrappedType> {
   }
 
   /// Creates a `Mockable` for `function` with `parametersPredicates`.
-  /// - Parameter parametersPredicates: predicates that will be used by the `Mockable`
+  /// - Parameter parameters: Values that will be used as predicates by the `Mockable`
   /// to determine if it can handle the call.
-  /// - Parameter function: function concerned by the `Mockable`.
+  /// - Parameter function: Function concerned by the `Mockable`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
   /// - Returns: A new `Mockable<ReturnType>` that will be able to create stubs for `function`.
   ///
   /// You must use it during the extension of `MockGiven`.
@@ -75,9 +77,15 @@ public class MockGiven<WrappedType> {
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Mockable<Int>`.
   ///   - Call `mockable` with all parameters in the same order.
   public func mockable<ReturnType>(
-    _ parametersPredicates: AnyPredicate...,
-    function: String = #function
+    _ parameters: Any...,
+    function: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line
   ) -> Mockable<ReturnType> {
-    Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), parametersPredicates)
+    let predicates = parameters.compactMap {
+      Predicate<Any>.match($0, file: file, line: line)
+    }
+    return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }
+
 }
