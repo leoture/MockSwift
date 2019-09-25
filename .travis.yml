@@ -3,7 +3,7 @@ if: (branch = master OR branch = develop OR type = pull_request)
 
 env:
   global:
-  - SWIFT_VERSION=swift-5.1-DEVELOPMENT-SNAPSHOT-2019-08-16-a
+  - SWIFT_VERSION=swift-5.1
 
 jobs:
   include:
