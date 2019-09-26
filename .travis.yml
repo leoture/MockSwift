@@ -3,7 +3,7 @@ if: (branch = master OR branch = develop OR type = pull_request)
 
 env:
   global:
-  - SWIFT_VERSION=swift-5.1-DEVELOPMENT-SNAPSHOT-2019-08-16-a
+  - SWIFT_VERSION=swift-5.1
 
 jobs:
   include:
@@ -42,6 +42,6 @@ jobs:
       - brew install sourcery
     script:
       - xcodebuild -scheme MockSwift-Package -workspace MockSwift.xcworkspace test
-      - xcodebuild -scheme MockSwiftExample -workspace MockSwift.xcworkspace -destination "name=iPhone Xs" test
+      - xcodebuild -scheme MockSwiftExample -workspace MockSwift.xcworkspace -destination "name=iPhone 11" test
     after_success:
       - bash <(curl -s https://codecov.io/bash)

@@ -18,7 +18,6 @@ We will make our best to answer you as quickly as possible!
 >If you find that this question has already been asked in an issue, add 👍 as *reaction* on the issue.
 
 ## 🛠 Work on MockSwift
->⚠️Note that this framework is based on development version of Swift 5.1 and the Xcode project on Xcode11 Beta. So if you find any problem while working on MockSwift please make us known by opening an issue as a [**Bug Report**](https://github.com/leoture/MockSwift/issues/new?assignees=&labels=bug&template=bug_report.md&title=).⚠️
 
 #### With Xcode
 - Open `MockSwift.xcworkspace`.
