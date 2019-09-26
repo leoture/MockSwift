@@ -14,7 +14,7 @@
     <a title="Functions  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MockSwift Docs</a> (50% documented)</p>
+        <p><a href="index.html">MockSwift Docs</a> (52% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -79,7 +79,13 @@
                 <a href="Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="Functions.html#/s:9MockSwift5givenyyx_yAA0A5GivenCyxGXEtlF">given(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGxlF">then(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/s:9MockSwift4thenyyx_yAA0A4ThenCyxGXEtlF">then(_:_:)</a>
               </li>
             </ul>
           </li>
@@ -161,6 +167,69 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift5givenyyx_yAA0A5GivenCyxGXEtlF"></a>
+                    <a name="//apple_ref/swift/Function/given(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift5givenyyx_yAA0A5GivenCyxGXEtlF">given(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Call <code>completion</code> with  a <code><a href="Classes/MockGiven.html">MockGiven</a></code> based on <code>value</code>.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    If <code>value</code> cannot be cast to <code><a href="Classes/Mock.html">Mock&lt;WrappedType&gt;</a></code> a <code>fatalError</code> will be raised.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">given</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">WrappedType</span><span class="p">,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="Classes/MockGiven.html">MockGiven</a></span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Object that will be stubbed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Block that will be called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -216,6 +285,69 @@
                       <div>
                         <h4>Return Value</h4>
                         <p>A new <code><a href="Classes/MockThen.html">MockThen&lt;WrappedType&gt;</a></code> based on <code>value</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift4thenyyx_yAA0A4ThenCyxGXEtlF"></a>
+                    <a name="//apple_ref/swift/Function/then(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift4thenyyx_yAA0A4ThenCyxGXEtlF">then(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Call <code>completion</code> with a <code><a href="Classes/MockThen.html">MockThen</a></code> based on <code>value</code>.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    If <code>value</code> cannot be cast to <code><a href="Classes/Mock.html">Mock&lt;WrappedType&gt;</a></code> a <code>fatalError</code> will be raised.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">then</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">WrappedType</span><span class="p">,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="Classes/MockThen.html">MockThen</a></span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Object that will be verified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Block that will be called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -283,8 +415,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-09-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-09-26)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
