@@ -1,5 +1,6 @@
 <img src="https://raw.githubusercontent.com/leoture/MockSwift/master/MockSwift.svg?sanitize=true" alt="MockSwift" width="32" height="32"> Welcome to MockSwift!
 =======
+[![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://travis-ci.com/leoture/MockSwift.svg?token=7mHp1J41yAdss7UzTesf&branch=master)](https://travis-ci.com/leoture/MockSwift)
 [![codecov](https://codecov.io/gh/leoture/MockSwift/branch/master/graph/badge.svg)](https://codecov.io/gh/leoture/MockSwift)
 [![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
