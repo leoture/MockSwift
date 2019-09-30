@@ -26,11 +26,38 @@
 import Foundation
 
 prefix operator ==
-public prefix func ==<Input: Equatable>(rhs: Input) -> Predicate<Input> {
-  Predicate.match(description: "\(rhs)") { $0 == rhs }
+public prefix func ==<Input: Equatable>(rhs: Input) -> Predicate<Input> { .equalsTo(rhs: rhs) }
+
+public extension Predicate where Input: Equatable {
+  static func equalsTo(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "\(rhs)") { $0 == rhs }
+  }
 }
 
 prefix operator >
 public prefix func ><Input: Comparable>(rhs: Input) -> Predicate<Input> {
-  Predicate.match(description: "> \(rhs)") { $0 > rhs }
+  .moreThan(rhs: rhs)
+}
+
+prefix operator >=
+public prefix func >=<Input: Comparable>(rhs: Input) -> Predicate<Input> {
+  .moreThanOrEqualsTo(rhs: rhs)
+}
+
+public extension Predicate where Input: Comparable {
+  static func moreThan(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "more than \(rhs)") { $0 > rhs }
+  }
+
+  static func moreThanOrEqualsTo(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "more than or equals to \(rhs)") { $0 >= rhs }
+  }
+
+  static func lessThan(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "less than \(rhs)") { $0 < rhs }
+  }
+
+  static func lessThanOrEqualsTo(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "less than or equals to \(rhs)") { $0 <= rhs }
+  }
 }

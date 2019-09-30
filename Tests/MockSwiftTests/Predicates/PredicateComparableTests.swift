@@ -36,7 +36,17 @@ private class Custom: Comparable, CustomStringConvertible {
     return lhs.comparisonReturn
   }
 
+  static func <= (lhs: Custom, rhs: Custom) -> Bool {
+    lhs.comparisonReceived = rhs
+    return lhs.comparisonReturn
+  }
+
   static func > (lhs: Custom, rhs: Custom) -> Bool {
+    lhs.comparisonReceived = rhs
+    return lhs.comparisonReturn
+  }
+
+  static func >= (lhs: Custom, rhs: Custom) -> Bool {
     lhs.comparisonReceived = rhs
     return lhs.comparisonReturn
   }
@@ -49,7 +59,7 @@ private class Custom: Comparable, CustomStringConvertible {
 
 class PredicateComparableTests: XCTestCase {
 
-  func test_equals_shouldReturnFalseIfComparisonReturnFalse() {
+  func test_equalsTo_shouldReturnFalseIfComparisonReturnFalse() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = false
@@ -63,7 +73,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_equals_shouldReturnTrueIfComparisonReturnTrue() {
+  func test_equalsTo_shouldReturnTrueIfComparisonReturnTrue() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = true
@@ -77,7 +87,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_equals_description() {
+  func test_equalsTo_description() {
     // Given
     let customCompared = Custom()
     customCompared.description = "description"
@@ -89,7 +99,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertEqual(description, "description")
   }
 
-  func test_superior_shouldReturnFalseIfComparisonReturnFalse() {
+  func test_moreThan_shouldReturnFalseIfComparisonReturnFalse() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = false
@@ -103,7 +113,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_superior_shouldReturnTrueIfComparisonReturnTrue() {
+  func test_moreThan_shouldReturnTrueIfComparisonReturnTrue() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = true
@@ -117,7 +127,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_superior_description() {
+  func test_moreThan_description() {
     // Given
     let customCompared = Custom()
     customCompared.description = "description"
@@ -126,6 +136,126 @@ class PredicateComparableTests: XCTestCase {
     let description = (>customCompared).description
 
     //Then
-    XCTAssertEqual(description, "> description")
+    XCTAssertEqual(description, "more than description")
   }
+
+  func test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse() {
+    // Given
+    let custom = Custom()
+    custom.comparisonReturn = false
+    let customCompared = Custom()
+
+    // When
+    let result = (>=customCompared).satisfy(by: custom)
+
+    //Then
+    XCTAssertFalse(result)
+    XCTAssertTrue(custom.comparisonReceived === customCompared)
+  }
+
+  func test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue() {
+    // Given
+    let custom = Custom()
+    custom.comparisonReturn = true
+    let customCompared = Custom()
+
+    // When
+    let result = (>=customCompared).satisfy(by: custom)
+
+    //Then
+    XCTAssertTrue(result)
+    XCTAssertTrue(custom.comparisonReceived === customCompared)
+  }
+
+  func test_moreThanOrEqualsTo_description() {
+    // Given
+    let customCompared = Custom()
+    customCompared.description = "description"
+
+    // When
+    let description = (>=customCompared).description
+
+    //Then
+    XCTAssertEqual(description, "more than or equals to description")
+  }
+
+  func test_lessThan_shouldReturnFalseIfComparisonReturnFalse() {
+     // Given
+     let custom = Custom()
+     custom.comparisonReturn = false
+     let customCompared = Custom()
+
+     // When
+    let result = Predicate<Custom>.lessThan(rhs: customCompared).satisfy(by: custom)
+
+     //Then
+     XCTAssertFalse(result)
+     XCTAssertTrue(custom.comparisonReceived === customCompared)
+   }
+
+   func test_lessThan_shouldReturnTrueIfComparisonReturnTrue() {
+     // Given
+     let custom = Custom()
+     custom.comparisonReturn = true
+     let customCompared = Custom()
+
+     // When
+     let result = Predicate<Custom>.lessThan(rhs: customCompared).satisfy(by: custom)
+
+     //Then
+     XCTAssertTrue(result)
+     XCTAssertTrue(custom.comparisonReceived === customCompared)
+   }
+
+   func test_lessThan_description() {
+     // Given
+     let customCompared = Custom()
+     customCompared.description = "description"
+
+     // When
+     let description = Predicate<Custom>.lessThan(rhs: customCompared).description
+
+     //Then
+     XCTAssertEqual(description, "less than description")
+   }
+
+  func test_lessThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse() {
+     // Given
+     let custom = Custom()
+     custom.comparisonReturn = false
+     let customCompared = Custom()
+
+     // When
+     let result = Predicate<Custom>.lessThanOrEqualsTo(rhs: customCompared).satisfy(by: custom)
+
+     //Then
+     XCTAssertFalse(result)
+     XCTAssertTrue(custom.comparisonReceived === customCompared)
+   }
+
+   func test_lessThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue() {
+     // Given
+     let custom = Custom()
+     custom.comparisonReturn = true
+     let customCompared = Custom()
+
+     // When
+     let result = Predicate<Custom>.lessThanOrEqualsTo(rhs: customCompared).satisfy(by: custom)
+
+     //Then
+     XCTAssertTrue(result)
+     XCTAssertTrue(custom.comparisonReceived === customCompared)
+   }
+
+   func test_lessThanOrEqualsTo_description() {
+     // Given
+     let customCompared = Custom()
+     customCompared.description = "description"
+
+     // When
+    let description = Predicate<Custom>.lessThanOrEqualsTo(rhs: customCompared).description
+
+     //Then
+     XCTAssertEqual(description, "less than or equals to description")
+   }
 }
