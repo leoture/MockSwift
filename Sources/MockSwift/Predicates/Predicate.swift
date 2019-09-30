@@ -37,7 +37,7 @@ public class Predicate<Input> {
     Predicate(description: description, predicate: predicate)
   }
 
-  /// Creates a `Predicate<Input>`.
+  /// Creates a `AnyPredicate`.
   /// - Parameter value: The value to match.
   /// - Parameter file: The file name where the method is called.
   /// - Parameter line: The line where the method is called.
