@@ -58,6 +58,6 @@ public class Verifiable<ReturnType> {
 
   private func callFailureMessage(expectedCalls: Predicate<Int>, actualCalls: Int) -> String {
     let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
-    return "\(callDescription) expect to be call \(expectedCalls) time(s) but is call \(actualCalls) time(s)"
+    return "\(callDescription) expect to be called \(expectedCalls) time(s) but is call \(actualCalls) time(s)"
   }
 }
