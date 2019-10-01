@@ -76,7 +76,7 @@ class VerifiableTests: XCTestCase {
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
     XCTAssertEqual(message, "function(arg: description) ->" +
-      " Int expect to be call more than 0 time(s) but is call 0 time(s)")
+      " Int expect to be called more than 0 time(s) but is call 0 time(s)")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
@@ -128,7 +128,7 @@ class VerifiableTests: XCTestCase {
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
     XCTAssertEqual(message, "function(arg: description) ->" +
-      " Int expect to be call more than 2 time(s) but is call 2 time(s)")
+      " Int expect to be called more than 2 time(s) but is call 2 time(s)")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
@@ -183,7 +183,7 @@ class VerifiableTests: XCTestCase {
 
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int expect to be call 3 time(s) but is call 2 time(s)")
+    XCTAssertEqual(message, "function(arg: description) -> Int expect to be called 3 time(s) but is call 2 time(s)")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 

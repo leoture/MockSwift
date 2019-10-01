@@ -139,12 +139,21 @@ extension PredicateComparableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PredicateComparableTests = [
-        ("test_equals_description", test_equals_description),
-        ("test_equals_shouldReturnFalseIfComparisonReturnFalse", test_equals_shouldReturnFalseIfComparisonReturnFalse),
-        ("test_equals_shouldReturnTrueIfComparisonReturnTrue", test_equals_shouldReturnTrueIfComparisonReturnTrue),
-        ("test_superior_description", test_superior_description),
-        ("test_superior_shouldReturnFalseIfComparisonReturnFalse", test_superior_shouldReturnFalseIfComparisonReturnFalse),
-        ("test_superior_shouldReturnTrueIfComparisonReturnTrue", test_superior_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_equalsTo_description", test_equalsTo_description),
+        ("test_equalsTo_shouldReturnFalseIfComparisonReturnFalse", test_equalsTo_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_equalsTo_shouldReturnTrueIfComparisonReturnTrue", test_equalsTo_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_lessThan_description", test_lessThan_description),
+        ("test_lessThan_shouldReturnFalseIfComparisonReturnFalse", test_lessThan_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_lessThan_shouldReturnTrueIfComparisonReturnTrue", test_lessThan_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_lessThanOrEqualsTo_description", test_lessThanOrEqualsTo_description),
+        ("test_lessThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse", test_lessThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_lessThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue", test_lessThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_moreThan_description", test_moreThan_description),
+        ("test_moreThan_shouldReturnFalseIfComparisonReturnFalse", test_moreThan_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_moreThan_shouldReturnTrueIfComparisonReturnTrue", test_moreThan_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_moreThanOrEqualsTo_description", test_moreThanOrEqualsTo_description),
+        ("test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse", test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue", test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue),
     ]
 }
 
