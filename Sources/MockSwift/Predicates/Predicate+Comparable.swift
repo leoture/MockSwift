@@ -50,7 +50,7 @@ public prefix func ><Input: Comparable>(rhs: Input) -> Predicate<Input> {
 }
 
 prefix operator >=
-/// Creates a `Predicate<Input>` that can match any elements more than or equal to`rhs`
+/// Creates a `Predicate<Input>` that can match any elements more than or equal to `rhs`
 /// - Parameter rhs: The element to compare to.
 /// - SeeAlso: `Predicate`
 public prefix func >=<Input: Comparable>(rhs: Input) -> Predicate<Input> {
