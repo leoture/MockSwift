@@ -24,7 +24,7 @@ extension Mock: Basic where WrappedType == Basic {
   public func doSomething() -> Int {
     mocked()
   }
-  public func doSomething() -> String {
+  public func doSomething() -> String? {
     mocked()
   }
   public func doSomething(arg: String) -> String {
@@ -52,7 +52,7 @@ extension MockGiven where WrappedType == Basic {
     mockable()
   }
 
-  public func doSomething() -> Mockable<String> {
+  public func doSomething() -> Mockable<String?> {
     mockable()
   }
 
@@ -96,7 +96,7 @@ extension MockThen where WrappedType == Basic {
     verifiable()
   }
 
-  public func doSomething() -> Verifiable<String> {
+  public func doSomething() -> Verifiable<String?> {
     verifiable()
   }
 
