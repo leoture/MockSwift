@@ -33,7 +33,7 @@ class FunctionBehaviourRegister: BehaviourRegister {
   }
 
   func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [Any]) -> [Behaviour] {
+                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
     let behaviours = functionBehaviour[identifier]?
       .filter { $0.predicates.satisfy(by: parameters) }
       .map { $0.behaviour } ?? [DefaultFunctionBehaviour()]

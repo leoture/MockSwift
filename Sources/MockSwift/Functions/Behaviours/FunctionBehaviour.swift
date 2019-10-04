@@ -26,15 +26,15 @@
 import Foundation
 
 class FunctionBehaviour {
-  private let handler: ([Any]) -> Any
+  private let handler: ([ParameterType]) -> Any
 
-  init(handler: @escaping ([Any]) -> Any) {
+  init(handler: @escaping ([ParameterType]) -> Any) {
     self.handler = handler
   }
 }
 
 extension FunctionBehaviour: Behaviour {
-  func handle<ReturnType>(with parameters: [Any]) -> ReturnType? {
+  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
     handler(parameters) as? ReturnType
   }
 }

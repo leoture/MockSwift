@@ -32,7 +32,7 @@ struct FunctionIdentifier: Equatable, Hashable {
     self.identifier = "\(function) -> \(ReturnType.self)"
   }
 
-  func callDescription(with parameters: [Any]) -> String {
+  func callDescription(with parameters: [ParameterType]) -> String {
     var callDescription: String = ""
     var currentIndex = 0
     let separator = ", "
@@ -47,7 +47,7 @@ struct FunctionIdentifier: Equatable, Hashable {
       callDescription.append(character)
 
       if character == ":" {
-        callDescription.append(" \(parameters[currentIndex])")
+        callDescription.append(" \(parameters[currentIndex] ?? "nil" )")
         currentIndex += 1
         needSeparator = true
       }

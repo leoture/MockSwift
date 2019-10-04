@@ -38,9 +38,9 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn("1")
       $0.doSomething(arg: .any).willReturn("2")
-      $0.doSomething(arg1: .any, arg2: .any).willReturn("3")
-      $0.doSomething(with: .any).willReturn("4")
-      $0.doSomething(with: .any, and: .any).willReturn("5")
+      $0.doSomething(arg1: =="3", arg2: ==nil).willReturn("3")
+      $0.doSomething(with: =="4").willReturn("4")
+      $0.doSomething(with: =="5", and: ==true).willReturn("5")
     }
 
     // When
@@ -48,7 +48,7 @@ class MockSwiftExampleTests: XCTestCase {
     let result0: Int = basic.doSomething()
     let result1: String = basic.doSomething()
     let result2 = basic.doSomething(arg: "2")
-    let result3 = basic.doSomething(arg1: "3", arg2: 3)
+    let result3 = basic.doSomething(arg1: "3", arg2: nil)
     let result4 = basic.doSomething(with: "4")
     let result5 = basic.doSomething(with: "5", and: true)
 
@@ -65,7 +65,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String.self).called(times: 1)
       $0.doSomething(arg: =="2").called(times: 1)
-      $0.doSomething(arg1: =="3", arg2: ==3).called(times: 1)
+      $0.doSomething(arg1: =="3", arg2: ==nil).called(times: 1)
       $0.doSomething(with: =="4").called(times: 1)
       $0.doSomething(with: =="5", and: ==true).called(times: 1)
     }
@@ -79,7 +79,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn("1")
       $0.doSomething(arg: "2").willReturn("2")
-      $0.doSomething(arg1: "3", arg2: 3).willReturn("3")
+      $0.doSomething(arg1: "3", arg2: nil).willReturn("3")
       $0.doSomething(with: "4").willReturn("4")
       $0.doSomething(with: "5", and: true).willReturn("5")
     }
@@ -89,7 +89,7 @@ class MockSwiftExampleTests: XCTestCase {
     let result0: Int = basic.doSomething()
     let result1: String = basic.doSomething()
     let result2 = basic.doSomething(arg: "2")
-    let result3 = basic.doSomething(arg1: "3", arg2: 3)
+    let result3 = basic.doSomething(arg1: "3", arg2: nil)
     let result4 = basic.doSomething(with: "4")
     let result5 = basic.doSomething(with: "5", and: true)
 
@@ -106,7 +106,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String.self).called(times: 1)
       $0.doSomething(arg: "2").called(times: 1)
-      $0.doSomething(arg1: "3", arg2: 3).called(times: 1)
+      $0.doSomething(arg1: "3", arg2: nil).called(times: 1)
       $0.doSomething(with: "4").called(times: 1)
       $0.doSomething(with: "5", and: true).called(times: 1)
     }

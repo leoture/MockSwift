@@ -85,13 +85,13 @@ public class MockGiven<WrappedType> {
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Mockable<Int>`.
   ///   - Call `mockable` with all parameters in the same order.
   public func mockable<ReturnType>(
-    _ parameters: Any...,
+    _ parameters: ParameterType...,
     function: String = #function,
     file: StaticString = #file,
     line: UInt = #line
   ) -> Mockable<ReturnType> {
     let predicates = parameters.compactMap {
-      Predicate<Any>.match($0, file: file, line: line)
+      Predicate<ParameterType>.match($0, file: file, line: line)
     }
     return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }

@@ -26,5 +26,5 @@
 import Foundation
 
 struct FunctionCall {
-  let parameters: [Any]
+  let parameters: [ParameterType]
 }

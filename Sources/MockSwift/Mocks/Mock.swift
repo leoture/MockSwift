@@ -47,23 +47,23 @@ public class Mock<WrappedType> {
     return value
   }
 
-  public func mocked(_ parameters: Any..., function: String = #function) {
+  public func mocked(_ parameters: ParameterType..., function: String = #function) {
     let identifier = FunctionIdentifier(function: function, return: Void.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
   }
 
-  public func mocked<ReturnType>(_ parameters: Any..., function: String = #function) -> ReturnType {
+  public func mocked<ReturnType>(_ parameters: ParameterType..., function: String = #function) -> ReturnType {
     let identifier = FunctionIdentifier(function: function, return: ReturnType.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
   }
 
-  private func willCall(function: FunctionIdentifier, with parameters: [Any]) {
+  private func willCall(function: FunctionIdentifier, with parameters: [ParameterType]) {
     callRegister.recordCall(for: function, with: parameters)
   }
 
-  private func call<ReturnType>(function: FunctionIdentifier, with parameters: [Any]) -> ReturnType {
+  private func call<ReturnType>(function: FunctionIdentifier, with parameters: [ParameterType]) -> ReturnType {
     let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
 
     switch behaviours.count {

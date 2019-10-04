@@ -34,8 +34,8 @@ class FunctionIdentifierTests: XCTestCase {
   }
 
   func test_callDescription_withParameters() {
-    let description = FunctionIdentifier(function: "f(arg1:arg2:)", return: Int.self)
-      .callDescription(with: ["description1", 2])
-    XCTAssertEqual(description, "f(arg1: description1, arg2: 2) -> Int")
+    let description = FunctionIdentifier(function: "f(arg1:arg2:arg3:)", return: Int.self)
+      .callDescription(with: ["description1", 2, nil])
+    XCTAssertEqual(description, "f(arg1: description1, arg2: 2, arg3: nil) -> Int")
   }
 }

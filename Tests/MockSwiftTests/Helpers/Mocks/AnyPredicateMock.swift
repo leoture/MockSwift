@@ -30,8 +30,8 @@ class AnyPredicateMock: AnyPredicate {
   var description: String = ""
 
   var satisfyReturn: Bool!
-  var satisfyReceived: [Any] = []
-  func satisfy(by element: Any) -> Bool {
+  var satisfyReceived: [Any?] = []
+  func satisfy(by element: Any?) -> Bool {
     satisfyReceived.append(element)
     return satisfyReturn
   }

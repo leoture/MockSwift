@@ -27,7 +27,7 @@ import Foundation
 
 protocol BehaviourRegister {
   func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [Any]) -> [Behaviour]
+                          concernedBy parameters: [ParameterType]) -> [Behaviour]
 
   func record(_ behaviour: Behaviour,
               for identifier: FunctionIdentifier,

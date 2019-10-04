@@ -41,36 +41,37 @@ final class MockTests: XCTestCase {
 
   func test_mocked_shouldRecordCallIntoCallRegister() {
     // Given
-    let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2: Int) -> String {
-      mock.mocked(parameter1, parameter2)
+    let functionName = "function(parameter1:parameter2:parameter3:)"
+    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
+      mock.mocked(parameter1, parameter2, parameter3)
     }
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" }]
 
     // When
-    _ = function(parameter1: "parameter1", parameter2: 2)
+    _ = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
     XCTAssertEqual(callRegister.recordCallReceived.count, 1)
     let (identifier, parameters) = callRegister.recordCallReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
-    XCTAssertEqual(parameters.count, 2)
+    XCTAssertEqual(parameters.count, 3)
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
   }
 
   func test_mocked_shouldReturnValueFromBehaviour() {
     // Given
-    let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2: Int) -> UUID {
-      mock.mocked(parameter1, parameter2)
+    let functionName = "function(parameter1:parameter2:parameter3:)"
+    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> UUID {
+      mock.mocked(parameter1, parameter2, parameter3)
     }
     let uuid = UUID()
     let functionBehaviour = FunctionBehaviour { _ in uuid }
     behaviourRegister.recordedBehavioursReturn = [functionBehaviour]
 
     // When
-    let result = function(parameter1: "parameter1", parameter2: 2)
+    let result = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
@@ -78,41 +79,43 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertEqual(result, uuid)
   }
 
   func test_mockedVoid_shouldRecordCallIntoCallRegister() {
     // Given
-    let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2: Int) {
-      mock.mocked(parameter1, parameter2)
+    let functionName = "function(parameter1:parameter2:parameter3:)"
+    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
+      mock.mocked(parameter1, parameter2, parameter3)
     }
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
 
     // When
-    function(parameter1: "parameter1", parameter2: 2)
+    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
     XCTAssertEqual(callRegister.recordCallReceived.count, 1)
     let (identifier, parameters) = callRegister.recordCallReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
-    XCTAssertEqual(parameters.count, 2)
+    XCTAssertEqual(parameters.count, 3)
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
   }
 
   func test_mockedVoid_shouldCallBehaviour() {
     // Given
-    let functionName = "function(parameter1:parameter2:)"
-    func function(parameter1: String, parameter2: Int) {
-      mock.mocked(parameter1, parameter2)
+    let functionName = "function(parameter1:parameter2:parameter3:)"
+    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
+      mock.mocked(parameter1, parameter2, parameter3)
     }
 
     let functionBehaviour = FunctionBehaviour { _ in }
     behaviourRegister.recordedBehavioursReturn = [functionBehaviour]
 
     // When
-    function(parameter1: "parameter1", parameter2: 2)
+    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
@@ -120,5 +123,6 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
   }
 }
