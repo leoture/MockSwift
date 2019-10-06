@@ -25,6 +25,8 @@
 
 import Foundation
 
+// MARK: - Public Global Methods
+
 /// Creates a `MockThen` based on `value`.
 /// - Parameter value: Object that will be verified.
 /// - Returns: A new `MockThen<WrappedType>` based on `value`.

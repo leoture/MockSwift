@@ -25,11 +25,17 @@
 
 import Foundation
 
+/// Represents a function call that returns `ReturnType` and can be checked.
 public class Verifiable<ReturnType> {
+
+  // MARK: - Properties
+
   private let callRegister: CallRegister
   private let functionIdentifier: FunctionIdentifier
   private let parametersPredicates: [AnyPredicate]
   private let failureRecorder: FailureRecorder
+
+  // MARK: - Init
 
   init(callRegister: CallRegister,
        functionIdentifier: FunctionIdentifier,
@@ -41,23 +47,31 @@ public class Verifiable<ReturnType> {
     self.failureRecorder = failureRecorder
   }
 
+  // MARK: - Public Methods
+
+  /// Used to disambiguate the `ReturnType`.
+  /// - Parameter type: The type to disambiguate.
+  /// - Returns: `self` with `ReturnType` disambiguated.
   public  func disambiguate(with type: ReturnType.Type) -> Self { self }
 
+  /// Checks that the function has been called a number of times corresponding to the predicate.
+  /// - Parameter times: Predicate that corresponds to the number of calls.
+  /// - Parameter file: File where `called` is called.
+  /// - Parameter line: Line where `called`is called.
   public  func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
     let count = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count
     if !times.satisfy(by: count) {
-      failureRecorder.recordFailure(message: callFailureMessage(expectedCalls: times, actualCalls: count),
-                             file: file,
-                             line: line)
+      let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
+      let message = "\(callDescription) expect to be called \(times) time(s) but is call \(count) time(s)"
+      failureRecorder.recordFailure(message: message, file: file, line: line)
     }
   }
 
+  /// Checks that the function has been called.
+  /// - Parameter times: The expected number of calls.
+  /// - Parameter file: File where `called` is called.
+  /// - Parameter line: Line where `called`is called.
   public  func called(times: Int, file: StaticString = #file, line: UInt = #line) {
     called(times: ==times, file: file, line: line)
-  }
-
-  private func callFailureMessage(expectedCalls: Predicate<Int>, actualCalls: Int) -> String {
-    let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
-    return "\(callDescription) expect to be called \(expectedCalls) time(s) but is call \(actualCalls) time(s)"
   }
 }

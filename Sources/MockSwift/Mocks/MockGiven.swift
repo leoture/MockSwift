@@ -25,6 +25,8 @@
 
 import Foundation
 
+// MARK: - Public Global Methods
+
 /// Creates a `MockGiven` based on `value`.
 /// - Parameter value: Object that will be stubbed.
 /// - Returns: A new `MockGiven<WrappedType>` based on `value`.
@@ -52,11 +54,18 @@ public func given<WrappedType>(_ value: WrappedType, _ completion: (MockGiven<Wr
 ///
 ///
 public class MockGiven<WrappedType> {
+
+  // MARK: - Properties
+
   private let behaviourRegister: BehaviourRegister
+
+  // MARK: - Init
 
   fileprivate init(_ behaviourRegister: BehaviourRegister) {
     self.behaviourRegister = behaviourRegister
   }
+
+  // MARK: - Public Methods
 
   /// Creates a `Mockable` for `function` with `parameters`.
   /// - Parameter parameters: Values that will be used as predicates by the `Mockable`

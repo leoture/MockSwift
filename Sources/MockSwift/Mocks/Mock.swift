@@ -26,20 +26,22 @@
 import Foundation
 
 @propertyWrapper
+/// `Mock<WrappedType>` is use to define a mock on `WrappedType`.
+///
+/// To be able to use it on a specific type `CustomType`, you must create an extension.
+///
+///     extension Mock: CustomType where WrappedType == CustomType
+///
+///
 public class Mock<WrappedType> {
 
-  public convenience init() {
-    self.init(callRegister: FunctionCallRegister(), behaviourRegister: FunctionBehaviourRegister())
-  }
+  // MARK: - Properties
 
   let callRegister: CallRegister
   let behaviourRegister: BehaviourRegister
 
-  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
-    self.callRegister = callRegister
-    self.behaviourRegister = behaviourRegister
-  }
-
+  /// Returns `self` as a `WrappedType`.
+  /// - Important: If `self` cannot be cast to `WrappedType` a `fatalError` will be raised.
   public var wrappedValue: WrappedType {
     guard let value = self as? WrappedType else {
       fatalError("Mock can not be cast to \(WrappedType.self)")
@@ -47,17 +49,77 @@ public class Mock<WrappedType> {
     return value
   }
 
+  // MARK: - Init
+
+  /// Creates a `Mock<WrappedType>`.
+
+  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
+    self.callRegister = callRegister
+    self.behaviourRegister = behaviourRegister
+  }
+
+  public convenience init() {
+    self.init(callRegister: FunctionCallRegister(), behaviourRegister: FunctionBehaviourRegister())
+  }
+
+  // MARK: - Public Methods
+
+  /// Records the `function` call with `parameters` and executes the predefined behavior.
+  /// - Parameter parameters: Values passed to `function`.
+  /// - Parameter function: Function where `mocked` is called.
+  ///
+  /// You must use it during the extension of `Mock`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool)
+  /// }
+  /// extension Mock: CustomType where WrappedType == CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) {
+  ///     mocked(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `mocked` must respect the following rules:
+  ///   - The function must be defined in `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - Call `mocked` with all parameters in the same order.
+  /// Exactly one behaviour must match the call, otherwise a `fatalError` will be raised.
   public func mocked(_ parameters: ParameterType..., function: String = #function) {
     let identifier = FunctionIdentifier(function: function, return: Void.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
   }
 
+  /// Records the `function` call with `parameters` and executes the predefined behavior.
+  /// - Parameter parameters: Values passed to `function`.
+  /// - Parameter function: Function where `mocked` is called.
+  /// - Returns: The value computed by the behavior that match the call.
+  ///
+  /// You must use it during the extension of `Mock`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) -> Int
+  /// }
+  /// extension Mock: CustomType where WrappedType == CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) -> Int {
+  ///     mocked(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `mocked` must respect the following rules:
+  ///   - The function must be defined in `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - Call `mocked` with all parameters in the same order.
+  /// Exactly one behaviour must match the call, otherwise a `fatalError` will be raised.
   public func mocked<ReturnType>(_ parameters: ParameterType..., function: String = #function) -> ReturnType {
     let identifier = FunctionIdentifier(function: function, return: ReturnType.self)
     willCall(function: identifier, with: parameters)
     return call(function: identifier, with: parameters)
   }
+
+  // MARK: - Private Methods
 
   private func willCall(function: FunctionIdentifier, with parameters: [ParameterType]) {
     callRegister.recordCall(for: function, with: parameters)
