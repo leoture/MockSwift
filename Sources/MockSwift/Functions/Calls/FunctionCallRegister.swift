@@ -32,7 +32,7 @@ class FunctionCallRegister: CallRegister {
     calls = [:]
   }
 
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [Any]) {
+  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     calls[identifier, default: []].append(FunctionCall(parameters: parameters))
   }
 

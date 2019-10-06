@@ -25,17 +25,17 @@
 
 import Foundation
 
-/// AnyPredicate represents a condition on an `Any` element.
+/// AnyPredicate represents a condition on an `Any?` element.
 public protocol AnyPredicate: CustomStringConvertible {
 
   /// Check if an `element` satifies the predicate.
   /// - Parameter element: The element to check.
   /// - Returns: True if `element` satisfies the predicate, false otherwise.
-  func satisfy(by element: Any) -> Bool
+  func satisfy(by element: Any?) -> Bool
 }
 
 extension Collection where Element == AnyPredicate {
-  func satisfy(by elements: [Any]) -> Bool {
+  func satisfy(by elements: [Any?]) -> Bool {
     zip(self, elements).allSatisfy { $0.0.satisfy(by: $0.1) }
   }
 }

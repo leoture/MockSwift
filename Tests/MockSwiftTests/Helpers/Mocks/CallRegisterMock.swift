@@ -28,8 +28,8 @@ import Foundation
 
 class CallRegisterMock: CallRegister {
 
-  var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [Any]) {
+  var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
+  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     recordCallReceived.append((identifier, parameters))
   }
 

@@ -30,9 +30,9 @@ import Foundation
 class BehaviourRegisterMock: BehaviourRegister {
 
   var recordedBehavioursReturn: [Behaviour]!
-  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [Any])] = []
+  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
   func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [Any]) -> [Behaviour] {
+                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
     recordedBehavioursReceived.append((identifier, parameters))
     return recordedBehavioursReturn
   }

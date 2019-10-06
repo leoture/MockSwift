@@ -29,7 +29,7 @@ class DefaultFunctionBehaviour {
 }
 
 extension DefaultFunctionBehaviour: Behaviour {
-  func handle<ReturnType>(with parameters: [Any]) -> ReturnType? {
+  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
     if ReturnType.self is Void.Type {
       return () as? ReturnType
     }

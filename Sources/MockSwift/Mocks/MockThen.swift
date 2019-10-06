@@ -25,6 +25,8 @@
 
 import Foundation
 
+// MARK: - Public Global Methods
+
 /// Creates a `MockThen` based on `value`.
 /// - Parameter value: Object that will be verified.
 /// - Returns: A new `MockThen<WrappedType>` based on `value`.
@@ -95,13 +97,13 @@ public class MockThen<WrappedType> {
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Verifiable<Int>`.
   ///   - Call `verifiable` with all parameters in the same order.
   public func verifiable<ReturnType>(
-    _ parameters: Any...,
+    _ parameters: ParameterType...,
     function: String = #function,
     file: StaticString = #file,
     line: UInt = #line
   ) -> Verifiable<ReturnType> {
     let predicates = parameters.compactMap {
-      Predicate<Any>.match($0, file: file, line: line)
+      Predicate<ParameterType>.match($0, file: file, line: line)
     }
     return Verifiable(callRegister: callRegister,
                       functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),

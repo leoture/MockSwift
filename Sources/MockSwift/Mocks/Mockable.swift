@@ -25,10 +25,16 @@
 
 import Foundation
 
+/// Represents a function call that returns `ReturnType` and can be stubbed.
 public class Mockable<ReturnType> {
+
+  // MARK: - Properties
+
   private let behaviourRegister: BehaviourRegister
   private let functionIdentifier: FunctionIdentifier
   private let parametersPredicates: [AnyPredicate]
+
+  // MARK: - Init
 
   init(_ behaviourRegister: BehaviourRegister,
        _ functionIdentifier: FunctionIdentifier,
@@ -38,13 +44,22 @@ public class Mockable<ReturnType> {
     self.parametersPredicates = parametersPredicates
   }
 
+  // MARK: - Public Methods
+
+  /// Registers a return value.
+  /// - Parameter value: Value to registe.
   public func willReturn(_ value: ReturnType) {
     let behaviour = FunctionBehaviour { _ in value }
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
 
+  /// Used to disambiguate the `ReturnType`.
+  /// - Parameter type: The type to disambiguate.
+  /// - Returns: `self` with `ReturnType` disambiguated.
   public  func disambiguate(with type: ReturnType.Type) -> Self { self }
 
+  /// Registers a block to excecute.
+  /// - Parameter completion: Block to be excecuted.
   public func will(_ completion: @escaping ([Any]) -> ReturnType) {
     let behaviour = FunctionBehaviour(handler: completion)
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)

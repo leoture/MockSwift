@@ -25,6 +25,8 @@
 
 import Foundation
 
+// MARK: - Public Global Methods
+
 /// Creates a `MockGiven` based on `value`.
 /// - Parameter value: Object that will be stubbed.
 /// - Returns: A new `MockGiven<WrappedType>` based on `value`.
@@ -52,11 +54,18 @@ public func given<WrappedType>(_ value: WrappedType, _ completion: (MockGiven<Wr
 ///
 ///
 public class MockGiven<WrappedType> {
+
+  // MARK: - Properties
+
   private let behaviourRegister: BehaviourRegister
+
+  // MARK: - Init
 
   fileprivate init(_ behaviourRegister: BehaviourRegister) {
     self.behaviourRegister = behaviourRegister
   }
+
+  // MARK: - Public Methods
 
   /// Creates a `Mockable` for `function` with `parameters`.
   /// - Parameter parameters: Values that will be used as predicates by the `Mockable`
@@ -85,13 +94,13 @@ public class MockGiven<WrappedType> {
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Mockable<Int>`.
   ///   - Call `mockable` with all parameters in the same order.
   public func mockable<ReturnType>(
-    _ parameters: Any...,
+    _ parameters: ParameterType...,
     function: String = #function,
     file: StaticString = #file,
     line: UInt = #line
   ) -> Mockable<ReturnType> {
     let predicates = parameters.compactMap {
-      Predicate<Any>.match($0, file: file, line: line)
+      Predicate<ParameterType>.match($0, file: file, line: line)
     }
     return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }

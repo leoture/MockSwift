@@ -31,7 +31,7 @@ public extension AnyPredicate where Self: Equatable {
   /// - Parameter element: The element to check.
   /// - Returns: True if `element` is equals to `self`, false otherwise.
   /// - SeeAlso: `AnyPredicate`
-  func satisfy(by element: Any) -> Bool {
+  func satisfy(by element: Any?) -> Bool {
     self == (element as? Self)
   }
 }

@@ -26,6 +26,6 @@
 import Foundation
 
 protocol CallRegister {
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [Any])
+  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType])
   func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]
 }

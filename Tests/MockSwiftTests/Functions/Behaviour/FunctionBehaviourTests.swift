@@ -30,7 +30,7 @@ class FunctionBehaviourTests: XCTestCase {
 
   func test_handle_shouldCallHandlerWithCorrectParameters() {
     // Given
-    var capture: [Any]?
+    var capture: [ParameterType]?
     let behaviour = FunctionBehaviour { parameters in  capture = parameters}
 
     // When

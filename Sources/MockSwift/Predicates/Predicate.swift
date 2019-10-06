@@ -81,7 +81,7 @@ extension Predicate: AnyPredicate {
   /// - Parameter element: The element to check.
   /// - Returns: True if `element` is of type `Input` and satisfies the predicate, false otherwise.
   /// - SeeAlso: `AnyPredicate`
-  public func satisfy(by element: Any) -> Bool {
+  public func satisfy(by element: Any?) -> Bool {
     guard let element = element as? Input else {
       return false
     }

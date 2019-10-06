@@ -25,18 +25,23 @@
 
 import Foundation
 
+/// MockDefault represents an entity able to give a default value.
 public protocol MockDefault {
+  /// Creates a default value of `Self`.
   static func `default`() -> Self
 }
 
 extension String: MockDefault {
-  public static func `default`() -> String { "" }
+  /// Creates a default value of `Self`.
+  public static func `default`() -> Self { "" }
 }
 
 extension Int: MockDefault {
-  public static func `default`() -> Int { 0 }
+  /// Creates a default value of `Self`.
+  public static func `default`() -> Self { 0 }
 }
 
 extension Bool: MockDefault {
-  public static func `default`() -> Bool { false }
+  /// Creates a default value of `Self`.
+  public static func `default`() -> Self { false }
 }
