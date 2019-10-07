@@ -1,4 +1,4 @@
-//PredicateBoolTests.swift
+//PredicateOptionalTests.swift
 /*
 MIT License
 
@@ -27,35 +27,20 @@ import Foundation
 import MockSwift
 import XCTest
 
-class PredicatBoolTests: XCTestCase {
+class PredicateOptionalTests: XCTestCase {
 
-  func test_isTrue_shouldReturnTrue() {
-    let predicate: Predicate<Bool> = .isTrue()
-    XCTAssertTrue(predicate.satisfy(by: true))
+  func test_isNil_shouldReturnTrue() {
+    let predicate: Predicate<Int?> = .isNil()
+    XCTAssertTrue(predicate.satisfy(by: nil))
   }
 
-  func test_isTrue_shouldReturnFalse() {
-    let predicate: Predicate<Bool> = .isTrue()
-    XCTAssertFalse(predicate.satisfy(by: false))
+  func test_isNil_shouldReturnFalse() {
+    let predicate: Predicate<Int?> = .isNil()
+    XCTAssertFalse(predicate.satisfy(by: 0))
   }
 
-  func test_isTrue_description() {
-    let predicate: Predicate<Bool> = .isTrue()
-    XCTAssertEqual(predicate.description, "True")
-  }
-
-  func test_isFalse_shouldReturnTrue() {
-    let predicate: Predicate<Bool> = .isFalse()
-    XCTAssertTrue(predicate.satisfy(by: false))
-  }
-
-  func test_isFalse_shouldReturnFalse() {
-    let predicate: Predicate<Bool> = .isFalse()
-    XCTAssertFalse(predicate.satisfy(by: true))
-  }
-
-  func test_isFalse_description() {
-    let predicate: Predicate<Bool> = .isFalse()
-    XCTAssertEqual(predicate.description, "False")
+  func test_isNil_description() {
+    let predicate: Predicate<Int?> = .isNil()
+    XCTAssertEqual(predicate.description, "nil")
   }
 }
