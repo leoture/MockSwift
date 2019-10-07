@@ -40,7 +40,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething(arg: .any).willReturn("2")
       $0.doSomething(arg1: =="3", arg2: ==nil).willReturn("3")
       $0.doSomething(with: =="4").willReturn("4")
-      $0.doSomething(with: =="5", and: ==true).willReturn("5")
+      $0.doSomething(with: =="5", and: .isTrue).willReturn("5")
     }
 
     // When
@@ -67,7 +67,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething(arg: =="2").called(times: 1)
       $0.doSomething(arg1: =="3", arg2: ==nil).called(times: 1)
       $0.doSomething(with: =="4").called(times: 1)
-      $0.doSomething(with: =="5", and: ==true).called(times: 1)
+      $0.doSomething(with: =="5", and: .isTrue).called(times: 1)
     }
   }
 
