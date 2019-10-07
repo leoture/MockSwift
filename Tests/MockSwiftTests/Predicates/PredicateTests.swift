@@ -30,14 +30,14 @@ private class Custom {}
 
 class PredicateTests: XCTestCase {
 
-  func test_satisfy_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
+  func test_match_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
     let predicate: Predicate<String> = .match { _ in
       true
     }
     XCTAssertFalse(predicate.satisfy(by: 1))
   }
 
-  func test_satisfy_shouldReturnFalseIfInputNotMatched() {
+  func test_match_shouldReturnFalseIfInputNotMatched() {
     let predicate: Predicate<String> = .match { value in
       value.isEmpty
     }
@@ -45,7 +45,7 @@ class PredicateTests: XCTestCase {
     XCTAssertFalse(predicate.satisfy(by: "not Empty"))
   }
 
-  func test_satisfy_shouldReturnTrueIfInputMatched() {
+  func test_match_shouldReturnTrueIfInputMatched() {
     let predicate: Predicate<String> = .match { value in
       value.isEmpty
     }
@@ -53,7 +53,7 @@ class PredicateTests: XCTestCase {
     XCTAssertTrue(predicate.satisfy(by: ""))
   }
 
-  func test_satisfy_shouldReturnTrueIfInputMatchedByAnyPredicate() {
+  func test_match_shouldReturnTrueIfInputMatchedByAnyPredicate() {
     let anyPredicate: AnyPredicate = Predicate<String>.match { value in
       value.isEmpty
     }
@@ -62,7 +62,7 @@ class PredicateTests: XCTestCase {
     XCTAssertTrue(predicate.satisfy(by: ""))
   }
 
-  func test_satisfy_shouldReturnFalseIfInputNotMatchedByAnyPredicate() {
+  func test_match_shouldReturnFalseIfInputNotMatchedByAnyPredicate() {
     let anyPredicate: AnyPredicate = Predicate<String>.match { value in
       value.isEmpty
     }
@@ -71,40 +71,56 @@ class PredicateTests: XCTestCase {
     XCTAssertFalse(predicate.satisfy(by: "not Empty"))
   }
 
-  func test_satisfy_shouldReturnTrueIfInputMatchedReference() {
+  func test_match_shouldReturnTrueIfInputSameReference() {
     let custom = Custom()
     let predicate: AnyPredicate = Predicate<Custom>.match(custom)
 
     XCTAssertTrue(predicate.satisfy(by: custom))
   }
 
-  func test_satisfy_shouldReturnFalseIfInputNotMatchedReference() {
+  func test_match_shouldReturnFalseIfInputNotSameReference() {
     let custom = Custom()
     let predicate: AnyPredicate = Predicate<Custom>.match(custom)
 
     XCTAssertFalse(predicate.satisfy(by: Custom()))
   }
 
-  func test_satisfy_withAnyshouldReturnFalseIfInputIsNotTheSameType() {
-    let predicate: Predicate<String> = .any
-    XCTAssertFalse(predicate.satisfy(by: 1))
-  }
-
-  func test_satisfy_shouldReturnTrue() {
-    let predicate: Predicate<String> = .any
-    XCTAssertTrue(predicate.satisfy(by: ""))
-  }
-
-  func test_description_withMatch() {
+  func test_match_description() {
     let predicate: Predicate<String> = .match(description: "description") { _ in
       true
     }
     XCTAssertEqual("\(predicate)", "description")
   }
 
-  func test_description_withAny() {
-    let predicate: Predicate<String> = .any
+  func test_any_shouldReturnFalse() {
+    let predicate: Predicate<String> = .any()
+    XCTAssertFalse(predicate.satisfy(by: 1))
+  }
+
+  func test_any_shouldReturnTrue() {
+    let predicate: Predicate<String> = .any()
+    XCTAssertTrue(predicate.satisfy(by: ""))
+  }
+
+  func test_any_description() {
+    let predicate: Predicate<String> = .any()
 
     XCTAssertEqual("\(predicate)", "any")
+  }
+
+  func test_not_shouldReturnFalse() {
+    let predicate: Predicate<String> = .not(.match { _ in true })
+    XCTAssertFalse(predicate.satisfy(by: ""))
+  }
+
+  func test_not_shouldReturnTrue() {
+    let predicate: Predicate<String> = .not(.match { _ in false })
+    XCTAssertTrue(predicate.satisfy(by: ""))
+  }
+
+  func test_not_description() {
+    let predicate: Predicate<String> = .not(.match(description: "description") { _ in true })
+
+    XCTAssertEqual("\(predicate)", "not description")
   }
 }

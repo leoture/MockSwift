@@ -28,6 +28,22 @@ import Foundation
 /// Predicate represents a condition on an `Input`.
 public class Predicate<Input> {
 
+  // MARK: - Properties
+
+  /// Description of  the Predicate.
+  public var description: String
+
+  private let predicate: (Input) -> Bool
+
+  // MARK: - Init
+
+  private init(description: String, predicate: @escaping (Input) -> Bool) {
+    self.description = description
+    self.predicate = predicate
+  }
+
+  // MARK: - Public Methods
+
   /// Creates a `Predicate<Input>`.
   /// - Parameter description: The description of the Predicate.
   /// - Parameter predicate: The block that will be used to verify that the entry statisfies the Predicate.
@@ -53,24 +69,18 @@ public class Predicate<Input> {
     }
   }
 
-  /// Predicate matches any value of type `Input`.
-  public class var any: Predicate<Input> {
-    Self.match(description: "any") { _ in true }
+  /// Creates a `Predicate<Input>` able to match any value of type `Input`.
+  public class func any() -> Predicate<Input> {
+    .match(description: "any") { _ in true }
   }
 
-  // MARK: - Properties
-
-  /// Description of  the Predicate.
-  public var description: String
-
-  private let predicate: (Input) -> Bool
-
-  // MARK: - Init
-
-  private init(description: String, predicate: @escaping (Input) -> Bool) {
-    self.description = description
-    self.predicate = predicate
+  /// Creates a `Predicate<Input>` able to match any value of type `Input` not matched by an other predicate.
+  /// - Parameter predicate: The predicate to not match.
+  /// - Returns: A new `Predicate<Input>`.
+  public class func not(_ predicate: Predicate<Input>) -> Predicate<Input> {
+    .match(description: "not \(predicate)") { !predicate.satisfy(by: $0) }
   }
+
 }
 
 // MARK: - AnyPredicate

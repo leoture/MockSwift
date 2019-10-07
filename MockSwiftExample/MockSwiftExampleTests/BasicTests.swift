@@ -37,7 +37,7 @@ class MockSwiftExampleTests: XCTestCase {
       $0.doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
-      $0.doSomething(arg: .any).willReturn("2")
+      $0.doSomething(arg: .any()).willReturn("2")
       $0.doSomething(arg1: =="3", arg2: ==nil).willReturn("3")
       $0.doSomething(with: =="4").willReturn("4")
       $0.doSomething(with: =="5", and: .isTrue).willReturn("5")

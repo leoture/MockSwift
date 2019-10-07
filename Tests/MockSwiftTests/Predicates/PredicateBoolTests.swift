@@ -41,7 +41,7 @@ class PredicatBoolTests: XCTestCase {
 
   func test_isTrue_description() {
     let predicate: Predicate<Bool> = .isTrue
-    XCTAssertEqual(predicate.description, "is True")
+    XCTAssertEqual(predicate.description, "True")
   }
 
   func test_isFalse_shouldReturnTrue() {
@@ -56,6 +56,6 @@ class PredicatBoolTests: XCTestCase {
 
   func test_isFalse_description() {
     let predicate: Predicate<Bool> = .isFalse
-    XCTAssertEqual(predicate.description, "is False")
+    XCTAssertEqual(predicate.description, "False")
   }
 }

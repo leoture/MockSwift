@@ -28,8 +28,8 @@ import Foundation
 public extension Predicate where Input == Bool {
 
   /// Creates a `Predicate<Bool>` that can match any `Bool` equal to `true`
-  static var isTrue: Predicate<Bool> { .match(description: "is True") { $0 == true } }
+  static var isTrue: Predicate<Bool> { .match(description: "True") { $0 == true } }
 
   /// Creates a `Predicate<Bool>` that can match any `Bool` equal to `false`
-  static var isFalse: Predicate<Bool> { .match(description: "is False") { $0 == false } }
+  static var isFalse: Predicate<Bool> { .match(description: "False") { $0 == false } }
 }
