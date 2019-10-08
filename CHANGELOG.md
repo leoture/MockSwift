@@ -11,9 +11,9 @@
 [Compare](https://github.com/leoture/MockSwift/compare/v0.2.0...HEAD)
 #### Added
 - Add Predicates with Comparables [#28](https://github.com/leoture/MockSwift/pull/28)
-- Add Predicates .isTrue() & .isFalse()
-- Add Predicate .not()
-- Add Predicate .isNil()
+- Add Predicates .isTrue() & .isFalse() [#33](https://github.com/leoture/MockSwift/pull/33)
+- Add Predicate .not() [#33](https://github.com/leoture/MockSwift/pull/33)
+- Add Predicate .isNil() [#33](https://github.com/leoture/MockSwift/pull/33)
 
 #### Changed
 - mocked() with optionals [#32](https://github.com/leoture/MockSwift/pull/32)
