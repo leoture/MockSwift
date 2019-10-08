@@ -28,36 +28,6 @@ import Foundation
 /// Predicate represents a condition on an `Input`.
 public class Predicate<Input> {
 
-  /// Creates a `Predicate<Input>`.
-  /// - Parameter description: The description of the Predicate.
-  /// - Parameter predicate: The block that will be used to verify that the entry statisfies the Predicate.
-  /// - Returns: A new `Predicate<Input>`.
-  public class func match(description: String = "custom matcher",
-                          _ predicate: @escaping (Input) -> Bool) -> Predicate<Input> {
-    Predicate(description: description, predicate: predicate)
-  }
-
-  /// Creates a `AnyPredicate`.
-  /// - Parameter value: The value to match.
-  /// - Parameter file: The file name where the method is called.
-  /// - Parameter line: The line where the method is called.
-  /// - Returns: A `AnyPredicate` able to match `value`.
-  /// - Important: If value cannot be cast to `AnyPredicate` or to `AnyObject` a `fatalError` will be raised.
-  public class func match(_ value: Input,
-                          file: StaticString = #file,
-                          line: UInt = #line) -> AnyPredicate {
-    switch value {
-    case let value as AnyPredicate: return value
-    case let value as AnyObject: return Predicate<AnyObject>.match(description: "\(value)") { $0 === value }
-    default: fatalError("\(value) cannot be cast to \(AnyPredicate.self) or \(AnyObject.self)", file: file, line: line)
-    }
-  }
-
-  /// Predicate matches any value of type `Input`.
-  public class var any: Predicate<Input> {
-    Self.match(description: "any") { _ in true }
-  }
-
   // MARK: - Properties
 
   /// Description of  the Predicate.
@@ -71,6 +41,46 @@ public class Predicate<Input> {
     self.description = description
     self.predicate = predicate
   }
+
+  // MARK: - Public Methods
+
+  /// Creates a `Predicate<Input>`.
+  /// - Parameter description: The description of the Predicate.
+  /// - Parameter predicate: The block that will be used to verify that the entry statisfies the Predicate.
+  /// - Returns: A new `Predicate<Input>`.
+  public static func match(description: String = "custom matcher",
+                           _ predicate: @escaping (Input) -> Bool) -> Predicate<Input> {
+    Predicate(description: description, predicate: predicate)
+  }
+
+  /// Creates a `AnyPredicate`.
+  /// - Parameter value: The value to match.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A `AnyPredicate` able to match `value`.
+  /// - Important: If value cannot be cast to `AnyPredicate` or to `AnyObject` a `fatalError` will be raised.
+  public static func match(_ value: Input,
+                           file: StaticString = #file,
+                           line: UInt = #line) -> AnyPredicate {
+    switch value {
+    case let value as AnyPredicate: return value
+    case let value as AnyObject: return Predicate<AnyObject>.match(description: "\(value)") { $0 === value }
+    default: fatalError("\(value) cannot be cast to \(AnyPredicate.self) or \(AnyObject.self)", file: file, line: line)
+    }
+  }
+
+  /// Creates a `Predicate<Input>` able to match any value of type `Input`.
+  public static func any() -> Predicate<Input> {
+    .match(description: "any") { _ in true }
+  }
+
+  /// Creates a `Predicate<Input>` able to match any value of type `Input` not matched by an other predicate.
+  /// - Parameter predicate: The predicate to not match.
+  /// - Returns: A new `Predicate<Input>`.
+  public static func not(_ predicate: Predicate<Input>) -> Predicate<Input> {
+    .match(description: "not \(predicate)") { !predicate.satisfy(by: $0) }
+  }
+
 }
 
 // MARK: - AnyPredicate

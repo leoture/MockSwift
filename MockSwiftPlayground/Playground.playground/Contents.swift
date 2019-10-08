@@ -40,7 +40,7 @@ class MyTests: XCTestCase {
     let expectedUser = User(identifier: "id", name: "John")
 
     given(service)
-      .fetch(identifier: .any)
+      .fetch(identifier: .any())
       .willReturn(expectedUser)
 
     // When
@@ -48,7 +48,7 @@ class MyTests: XCTestCase {
 
     // Then
     then(service)
-      .fetch(identifier: .any)
+      .fetch(identifier: .any())
       .disambiguate(with: User.self)
       .called()
     XCTAssertEqual(user, expectedUser)
