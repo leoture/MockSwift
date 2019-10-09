@@ -16,8 +16,7 @@ jobs:
     install:
       - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
     script:
-      - swift package update
-      - swift test
+      - make linux-ci
 
   - stage: Tests
     name: macOS
@@ -29,8 +28,7 @@ jobs:
     before_script:
       - ./scripts/check-linux-tests.sh
     script:
-      - swift package update
-      - swift test
+      - make macOS-ci
 
   - stage: Tests
     name: Xcode
@@ -39,9 +37,7 @@ jobs:
     language: swift
     install:
       - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
-      - brew install sourcery
     script:
-      - xcodebuild -scheme MockSwift-Package -workspace MockSwift.xcworkspace test
-      - xcodebuild -scheme MockSwiftExample -workspace MockSwift.xcworkspace -destination "name=iPhone 11" test
+      - make MockSwift-Package MockSwiftExample
     after_success:
       - bash <(curl -s https://codecov.io/bash)
