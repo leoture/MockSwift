@@ -5,3 +5,4 @@ excluded:
   - MockSwiftExample
   - Tests/LinuxMain.swift
   - Tests/MockSwiftTests/XCTestManifests.swift
+  - Gemfile

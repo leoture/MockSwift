@@ -29,15 +29,5 @@ jobs:
       - ./scripts/check-linux-tests.sh
     script:
       - make macOS-ci
-
-  - stage: Tests
-    name: Xcode
-    os: osx
-    osx_image: xcode11
-    language: swift
-    install:
-      - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
-    script:
-      - make MockSwift-Package MockSwiftExample
     after_success:
       - bash <(curl -s https://codecov.io/bash)
