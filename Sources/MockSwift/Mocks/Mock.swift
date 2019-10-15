@@ -95,6 +95,12 @@ public class Mock<WrappedType> {
     return call(function: identifier, with: parameters)
   }
 
+  public func mockedThrowable(_ parameters: ParameterType..., function: String = #function) throws {
+    let identifier = FunctionIdentifier(function: function, return: Void.self)
+    willCall(function: identifier, with: parameters)
+    return try callThrowable(function: identifier, with: parameters)
+  }
+
   /// Records the `function` call with `parameters` and executes the predefined behavior.
   /// - Parameter parameters: Values passed to `function`.
   /// - Parameter function: Function where `mocked` is called.
@@ -123,6 +129,13 @@ public class Mock<WrappedType> {
     return call(function: identifier, with: parameters)
   }
 
+  public func mockedThrowable<ReturnType>(_ parameters: ParameterType...,
+                                          function: String = #function) throws -> ReturnType {
+    let identifier = FunctionIdentifier(function: function, return: ReturnType.self)
+    willCall(function: identifier, with: parameters)
+    return try callThrowable(function: identifier, with: parameters)
+  }
+
   // MARK: - Private Methods
 
   private func willCall(function: FunctionIdentifier, with parameters: [ParameterType]) {
@@ -135,6 +148,19 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       return behaviours[0].handle(with: parameters) ??
+        errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
+    }
+  }
+
+  private func callThrowable<ReturnType>(function: FunctionIdentifier,
+                                         with parameters: [ParameterType]) throws -> ReturnType {
+    let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
+
+    switch behaviours.count {
+    case 1:
+      return try behaviours[0].handleThrowable(with: parameters) ??
         errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))

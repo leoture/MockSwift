@@ -74,4 +74,11 @@ public class Mockable<ReturnType> {
     let behaviour = FunctionBehaviour(handler: completion)
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
+
+  /// Registers an error.
+  /// - Parameter error: Error to register.
+  public func willThrow(_ error: Error) {
+    let behaviour = FunctionBehaviour { _ in throw error }
+    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  }
 }

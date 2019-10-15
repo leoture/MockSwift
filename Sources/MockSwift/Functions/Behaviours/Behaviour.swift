@@ -27,4 +27,5 @@ import Foundation
 
 protocol Behaviour {
   func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType?
+  func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType?
 }

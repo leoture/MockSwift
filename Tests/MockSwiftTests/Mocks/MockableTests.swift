@@ -111,4 +111,31 @@ class MockableTests: XCTestCase {
     //Then
     XCTAssertTrue(disambiguatedMockable === mockable)
   }
+
+  func test_willThrow_shouldCorrectlyRegisterBahaviour() {
+    // Given
+    let behaviourRegister = BehaviourRegisterMock()
+    let identifier = FunctionIdentifier.stub()
+    let predicate = AnyPredicateMock()
+    let mockable: Mockable<UUID> = Mockable(behaviourRegister, identifier, [predicate])
+    let expectedBehaviourError = NSError(domain: "domain", code: 0)
+
+    // When
+    mockable.willThrow(expectedBehaviourError)
+
+    //Then
+    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
+    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(parameters.identifier, identifier)
+    XCTAssertEqual(parameters.matchs.count, 1)
+    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+
+    var catchedError: NSError?
+    do {
+      let _: UUID? = try parameters.behaviour.handleThrowable(with: [])
+    } catch {
+      catchedError = error as NSError
+    }
+    XCTAssertTrue(catchedError === expectedBehaviourError)
+  }
 }

@@ -55,4 +55,14 @@ class DefaultFunctionBehaviourTests: XCTestCase {
     let result: AnyProtocol? = defaultFunctionBehaviour.handle(with: [])
     XCTAssertNil(result)
   }
+
+  func test_handleThrowable_shouldReturnDefaultCustom() {
+    let custom: Custom? = defaultFunctionBehaviour.handleThrowable(with: [])
+    XCTAssertEqual(custom?.identifier, "default")
+  }
+
+  func test_handleThrowable_shouldReturnNullOnUnknownType() {
+    let result: AnyProtocol? = defaultFunctionBehaviour.handleThrowable(with: [])
+    XCTAssertNil(result)
+  }
 }
