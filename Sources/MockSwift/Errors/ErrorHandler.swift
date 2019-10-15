@@ -47,9 +47,11 @@ extension InternalError: CustomStringConvertible {
     case let .castTwice(source: source, firstTarget: firstTarget, secondTarget: secondTarget):
       return "\(source) can not be cast to \(firstTarget) or to \(secondTarget)."
     case let .noDefinedBehaviour(for: function, with: parameters):
-      return "Attempt to call \(function.callDescription(with: parameters)) but there is no defined behaviour for this call."
+      return "Attempt to call \(function.callDescription(with: parameters))" +
+      " but there is no defined behaviour for this call."
     case let .tooManyDefinedBehaviour(for: function, with: parameters):
-      return "Attempt to call \(function.callDescription(with: parameters)) but there too many defined behaviour."
+      return "Attempt to call \(function.callDescription(with: parameters))" +
+      " but there too many defined behaviour."
     }
   }
 }

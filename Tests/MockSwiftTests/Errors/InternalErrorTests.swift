@@ -41,11 +41,13 @@ class InternalErrorTests: XCTestCase {
 
   func test_description_withNoDefinedBehaviour() {
     let error = InternalError.noDefinedBehaviour(for: FunctionIdentifier.stub(), with: [0, "1"])
-    XCTAssertEqual(error.description, "Attempt to call function() -> () but there is no defined behaviour for this call.")
+    XCTAssertEqual(error.description, "Attempt to call function() -> ()" +
+      " but there is no defined behaviour for this call.")
   }
 
   func test_description_withTooManyDefinedBehaviour() {
     let error = InternalError.tooManyDefinedBehaviour(for: FunctionIdentifier.stub(), with: [0, "1"])
-    XCTAssertEqual(error.description, "Attempt to call function() -> () but there too many defined behaviour.")
+    XCTAssertEqual(error.description, "Attempt to call function() -> ()" +
+      " but there too many defined behaviour.")
   }
 }
