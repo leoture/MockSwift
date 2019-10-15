@@ -25,10 +25,24 @@
 
 import Foundation
 
+// MARK: - Global Methods
+
+func given<WrappedType>(_ value: WrappedType,
+                        errorHandler: ErrorHandler,
+                        file: StaticString,
+                        line: UInt) -> MockGiven<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
+  }
+  return MockGiven(mock.behaviourRegister)
+}
+
 // MARK: - Public Global Methods
 
 /// Creates a `MockGiven` based on `value`.
 /// - Parameter value: Object that will be stubbed.
+/// - Parameter file: The file name where the method is called.
+/// - Parameter line: The line where the method is called.
 /// - Returns: A new `MockGiven<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func given<WrappedType>(_ value: WrappedType,
@@ -39,6 +53,8 @@ public func given<WrappedType>(_ value: WrappedType,
 
 /// Call `completion` with  a `MockGiven` based on `value`.
 /// - Parameter value: Object that will be stubbed.
+/// - Parameter file: The file name where the method is called.
+/// - Parameter line: The line where the method is called.
 /// - Parameter completion: Block that will be called.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func given<WrappedType>(_ value: WrappedType,
@@ -46,16 +62,6 @@ public func given<WrappedType>(_ value: WrappedType,
                                line: UInt = #line,
                                _ completion: (MockGiven<WrappedType>) -> Void) {
   completion(given(value, file: file, line: line))
-}
-
-func given<WrappedType>(_ value: WrappedType,
-                        errorHandler: ErrorHandler,
-                        file: StaticString,
-                        line: UInt) -> MockGiven<WrappedType> {
-  guard let mock = value as? Mock<WrappedType> else {
-    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
-  }
-  return MockGiven(mock.behaviourRegister)
 }
 
 /// MockGiven is used to define stubs.

@@ -25,10 +25,24 @@
 
 import Foundation
 
+// MARK: - Global Methods
+
+func then<WrappedType>(_ value: WrappedType,
+                       errorHandler: ErrorHandler,
+                       file: StaticString,
+                       line: UInt) -> MockThen<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
+  }
+  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
+}
+
 // MARK: - Public Global Methods
 
 /// Creates a `MockThen` based on `value`.
 /// - Parameter value: Object that will be verified.
+/// - Parameter file: The file name where the method is called.
+/// - Parameter line: The line where the method is called.
 /// - Returns: A new `MockThen<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func then<WrappedType>(_ value: WrappedType,
@@ -39,6 +53,8 @@ public func then<WrappedType>(_ value: WrappedType,
 
 /// Call `completion` with a `MockThen` based on `value`.
 /// - Parameter value: Object that will be verified.
+/// - Parameter file: The file name where the method is called.
+/// - Parameter line: The line where the method is called.
 /// - Parameter completion: Block that will be called.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func then<WrappedType>(_ value: WrappedType,
@@ -46,16 +62,6 @@ public func then<WrappedType>(_ value: WrappedType,
                               line: UInt = #line,
                               _ completion: (MockThen<WrappedType>) -> Void) {
   completion(then(value))
-}
-
-func then<WrappedType>(_ value: WrappedType,
-                       errorHandler: ErrorHandler,
-                       file: StaticString,
-                       line: UInt) -> MockThen<WrappedType> {
-  guard let mock = value as? Mock<WrappedType> else {
-    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
-  }
-  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
 /// MockThen is used to verify method calls.
