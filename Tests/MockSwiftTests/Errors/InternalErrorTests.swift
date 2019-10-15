@@ -1,4 +1,4 @@
-//FunctionIdentifierStub.swift
+//InternalErrorTests.swift
 /*
  MIT License
 
@@ -24,15 +24,30 @@
  */
 
 import Foundation
+import XCTest
 @testable import MockSwift
 
-extension FunctionIdentifier {
-  static func stub() -> FunctionIdentifier {
-    stub(returnType: Void.self)
+class InternalErrorTests: XCTestCase {
+
+  func test_description_withCast() {
+    let error = InternalError.cast(source: true, target: Mock<Bool>.self)
+    XCTAssertEqual(error.description, "true can not be cast to Mock<Bool>.")
   }
 
-  static func stub<ReturnType>(function: String = "function()",
-                               returnType: ReturnType.Type = ReturnType.self) -> FunctionIdentifier {
-    return FunctionIdentifier(function: function, return: returnType)
+  func test_description_withCastTwice() {
+    let error = InternalError.castTwice(source: true, firstTarget: String.self, secondTarget: [Int].self)
+    XCTAssertEqual(error.description, "true can not be cast to String or to Array<Int>.")
+  }
+
+  func test_description_withNoDefinedBehaviour() {
+    let error = InternalError.noDefinedBehaviour(for: FunctionIdentifier.stub(), with: [0, "1"])
+    XCTAssertEqual(error.description, "Attempt to call function() -> ()" +
+      " but there is no defined behaviour for this call.")
+  }
+
+  func test_description_withTooManyDefinedBehaviour() {
+    let error = InternalError.tooManyDefinedBehaviour(for: FunctionIdentifier.stub(), with: [0, "1"])
+    XCTAssertEqual(error.description, "Attempt to call function() -> ()" +
+      " but there too many defined behaviour.")
   }
 }

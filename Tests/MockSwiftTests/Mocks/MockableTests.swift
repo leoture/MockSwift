@@ -48,6 +48,32 @@ class MockableTests: XCTestCase {
     XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
   }
 
+  func test_willReturn_withListShouldCorrectlyRegisterBahaviour() {
+    // Given
+    let behaviourRegister = BehaviourRegisterMock()
+    let identifier = FunctionIdentifier.stub()
+    let predicate = AnyPredicateMock()
+    let mockable: Mockable<UUID> = Mockable(behaviourRegister, identifier, [predicate])
+    let expectedFirstBehaviourReturn = UUID()
+    let expectedSecondBehaviourReturn = UUID()
+
+    // When
+    mockable.willReturn([
+      expectedFirstBehaviourReturn,
+      expectedSecondBehaviourReturn
+    ])
+
+    //Then
+    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
+    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedFirstBehaviourReturn)
+    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
+    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
+    XCTAssertEqual(parameters.identifier, identifier)
+    XCTAssertEqual(parameters.matchs.count, 1)
+    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+  }
+
   func test_will_shouldCorrectlyRegisterBahaviour() {
     // Given
     let behaviourRegister = BehaviourRegisterMock()

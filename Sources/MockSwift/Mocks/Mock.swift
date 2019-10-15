@@ -39,12 +39,13 @@ public class Mock<WrappedType> {
 
   let callRegister: CallRegister
   let behaviourRegister: BehaviourRegister
+  let errorHandler: ErrorHandler
 
   /// Returns `self` as a `WrappedType`.
   /// - Important: If `self` cannot be cast to `WrappedType` a `fatalError` will be raised.
   public var wrappedValue: WrappedType {
     guard let value = self as? WrappedType else {
-      fatalError("Mock can not be cast to \(WrappedType.self)")
+      return errorHandler.handle(.cast(source: self, target: WrappedType.self))
     }
     return value
   }
@@ -53,13 +54,16 @@ public class Mock<WrappedType> {
 
   /// Creates a `Mock<WrappedType>`.
 
-  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister) {
+  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister, errorHandler: ErrorHandler) {
     self.callRegister = callRegister
     self.behaviourRegister = behaviourRegister
+    self.errorHandler = errorHandler
   }
 
   public convenience init() {
-    self.init(callRegister: FunctionCallRegister(), behaviourRegister: FunctionBehaviourRegister())
+    self.init(callRegister: FunctionCallRegister(),
+              behaviourRegister: FunctionBehaviourRegister(),
+              errorHandler: ErrorHandler())
   }
 
   // MARK: - Public Methods
@@ -130,15 +134,10 @@ public class Mock<WrappedType> {
 
     switch behaviours.count {
     case 1:
-      guard let result: ReturnType = behaviours[0].handle(with: parameters) else {
-        fatalError("Attempt to call \(function.callDescription(with: parameters))" +
-          " but there is no defined behaviour for this call")
-      }
-      return result
-    case 0: fatalError("Attempt to call \(function.callDescription(with: parameters))" +
-      " but there is no defined behaviour for this call")
-    default: fatalError("Attempt to call \(function.callDescription(with: parameters))" +
-      " but there too much defined behaviours: \(behaviours)")
+      return behaviours[0].handle(with: parameters) ??
+        errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
     }
   }
 }

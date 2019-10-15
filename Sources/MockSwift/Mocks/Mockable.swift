@@ -47,9 +47,19 @@ public class Mockable<ReturnType> {
   // MARK: - Public Methods
 
   /// Registers a return value.
-  /// - Parameter value: Value to registe.
+  /// - Parameter value: Value to register.
   public func willReturn(_ value: ReturnType) {
     let behaviour = FunctionBehaviour { _ in value }
+    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  }
+
+  /// Registers return values.
+  /// - Parameter values: Values to register.
+  public func willReturn(_ values: [ReturnType]) {
+    var returns = values
+    let behaviour = FunctionBehaviour { _ in
+      returns.count == 1 ? returns[0] : returns.removeFirst()
+    }
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
 

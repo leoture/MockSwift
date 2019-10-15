@@ -65,7 +65,10 @@ public class Predicate<Input> {
     switch value {
     case let value as AnyPredicate: return value
     case let value as AnyObject: return Predicate<AnyObject>.match(description: "\(value)") { $0 === value }
-    default: fatalError("\(value) cannot be cast to \(AnyPredicate.self) or \(AnyObject.self)", file: file, line: line)
+    default: return ErrorHandler().handle(
+      InternalError.castTwice(source: value, firstTarget: AnyPredicate.self, secondTarget: AnyObject.self),
+      file: file,
+      line: line)
     }
   }
 
