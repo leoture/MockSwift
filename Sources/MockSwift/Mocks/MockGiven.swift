@@ -31,19 +31,31 @@ import Foundation
 /// - Parameter value: Object that will be stubbed.
 /// - Returns: A new `MockGiven<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
-public func given<WrappedType>(_ value: WrappedType) -> MockGiven<WrappedType> {
-  guard let mock = value as? Mock<WrappedType> else {
-    fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
-  }
-  return MockGiven(mock.behaviourRegister)
+public func given<WrappedType>(_ value: WrappedType,
+                               file: StaticString = #file,
+                               line: UInt = #line) -> MockGiven<WrappedType> {
+  given(value, errorHandler: ErrorHandler(), file: file, line: line)
 }
 
 /// Call `completion` with  a `MockGiven` based on `value`.
 /// - Parameter value: Object that will be stubbed.
 /// - Parameter completion: Block that will be called.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
-public func given<WrappedType>(_ value: WrappedType, _ completion: (MockGiven<WrappedType>) -> Void) {
-  completion(given(value))
+public func given<WrappedType>(_ value: WrappedType,
+                               file: StaticString = #file,
+                               line: UInt = #line,
+                               _ completion: (MockGiven<WrappedType>) -> Void) {
+  completion(given(value, file: file, line: line))
+}
+
+func given<WrappedType>(_ value: WrappedType,
+                        errorHandler: ErrorHandler,
+                        file: StaticString,
+                        line: UInt) -> MockGiven<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
+  }
+  return MockGiven(mock.behaviourRegister)
 }
 
 /// MockGiven is used to define stubs.

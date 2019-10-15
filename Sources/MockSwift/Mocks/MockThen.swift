@@ -31,19 +31,31 @@ import Foundation
 /// - Parameter value: Object that will be verified.
 /// - Returns: A new `MockThen<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
-public func then<WrappedType>(_ value: WrappedType) -> MockThen<WrappedType> {
-  guard let mock = value as? Mock<WrappedType> else {
-    fatalError("\(value) cannot be cast to \(Mock<WrappedType>.self)")
-  }
-  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
+public func then<WrappedType>(_ value: WrappedType,
+                              file: StaticString = #file,
+                              line: UInt = #line) -> MockThen<WrappedType> {
+  then(value, errorHandler: ErrorHandler(), file: file, line: line)
 }
 
 /// Call `completion` with a `MockThen` based on `value`.
 /// - Parameter value: Object that will be verified.
 /// - Parameter completion: Block that will be called.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
-public func then<WrappedType>(_ value: WrappedType, _ completion: (MockThen<WrappedType>) -> Void) {
+public func then<WrappedType>(_ value: WrappedType,
+                              file: StaticString = #file,
+                              line: UInt = #line,
+                              _ completion: (MockThen<WrappedType>) -> Void) {
   completion(then(value))
+}
+
+func then<WrappedType>(_ value: WrappedType,
+                       errorHandler: ErrorHandler,
+                       file: StaticString,
+                       line: UInt) -> MockThen<WrappedType> {
+  guard let mock = value as? Mock<WrappedType> else {
+    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
+  }
+  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
 }
 
 /// MockThen is used to verify method calls.
