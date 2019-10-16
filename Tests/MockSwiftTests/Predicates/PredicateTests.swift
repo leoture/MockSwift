@@ -92,6 +92,24 @@ class PredicateTests: XCTestCase {
     XCTAssertEqual("\(predicate)", "description")
   }
 
+  func test_match_shouldReturnTrueIfKeyPathReturnTrue() {
+    let predicate: AnyPredicate = Predicate<String>.match(\.isEmpty)
+
+     XCTAssertTrue(predicate.satisfy(by: ""))
+   }
+
+   func test_match_shouldReturnFalseIfKeyPathReturnFalse() {
+     let predicate: AnyPredicate = Predicate<String>.match(\.isEmpty)
+
+     XCTAssertFalse(predicate.satisfy(by: "not Empty"))
+   }
+
+   func test_match_KeyPathDescription() {
+     let predicate: AnyPredicate = Predicate<String>.match(description: "description", \.isEmpty)
+
+     XCTAssertEqual("\(predicate)", "description")
+   }
+
   func test_any_shouldReturnFalse() {
     let predicate: Predicate<String> = .any()
     XCTAssertFalse(predicate.satisfy(by: 1))
