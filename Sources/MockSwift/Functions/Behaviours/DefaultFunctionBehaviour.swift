@@ -29,10 +29,16 @@ class DefaultFunctionBehaviour {
 }
 
 extension DefaultFunctionBehaviour: Behaviour {
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
+
+  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
+
+  func handleThrowable<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
+
+  fileprivate func defaultValue<ReturnType>() -> ReturnType? {
     if ReturnType.self is Void.Type {
       return () as? ReturnType
     }
     return (ReturnType.self as? MockDefault.Type)?.default() as? ReturnType
   }
+
 }

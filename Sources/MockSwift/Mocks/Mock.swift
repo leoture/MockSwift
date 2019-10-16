@@ -97,6 +97,33 @@ public class Mock<WrappedType> {
 
   /// Records the `function` call with `parameters` and executes the predefined behavior.
   /// - Parameter parameters: Values passed to `function`.
+  /// - Parameter function: Function where `mockedThrowable` is called.
+  ///
+  /// You must use it during the extension of `Mock`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) throws
+  /// }
+  /// extension Mock: CustomType where WrappedType == CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) throws {
+  ///     try mockedThrowable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `mockedThrowable` must respect the following rules:
+  ///   - The function must be defined in `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - Call `mockedThrowable` with all parameters in the same order.
+  /// Exactly one behaviour must match the call, otherwise a `fatalError` will be raised.
+  public func mockedThrowable(_ parameters: ParameterType..., function: String = #function) throws {
+    let identifier = FunctionIdentifier(function: function, return: Void.self)
+    willCall(function: identifier, with: parameters)
+    return try callThrowable(function: identifier, with: parameters)
+  }
+
+  /// Records the `function` call with `parameters` and executes the predefined behavior.
+  /// - Parameter parameters: Values passed to `function`.
   /// - Parameter function: Function where `mocked` is called.
   /// - Returns: The value computed by the behavior that match the call.
   ///
@@ -123,6 +150,35 @@ public class Mock<WrappedType> {
     return call(function: identifier, with: parameters)
   }
 
+  /// Records the `function` call with `parameters` and executes the predefined behavior.
+  /// - Parameter parameters: Values passed to `function`.
+  /// - Parameter function: Function where `mockedThrowable` is called.
+  /// - Returns: The value computed by the behavior that match the call.
+  ///
+  /// You must use it during the extension of `Mock`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) throws -> Int
+  /// }
+  /// extension Mock: CustomType where WrappedType == CustomType {
+  ///   func doSomething(parameter1: String, parameter2: Bool) throws -> Int {
+  ///     try mockedThrowable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The function where you call `mockedThrowable` must respect the following rules:
+  ///   - The function must be defined in `WrappedType`.
+  ///       - example: **doSomething(parameter1:parameter2:)**
+  ///   - Call `mockedThrowable` with all parameters in the same order.
+  /// Exactly one behaviour must match the call, otherwise a `fatalError` will be raised.
+  public func mockedThrowable<ReturnType>(_ parameters: ParameterType...,
+                                          function: String = #function) throws -> ReturnType {
+    let identifier = FunctionIdentifier(function: function, return: ReturnType.self)
+    willCall(function: identifier, with: parameters)
+    return try callThrowable(function: identifier, with: parameters)
+  }
+
   // MARK: - Private Methods
 
   private func willCall(function: FunctionIdentifier, with parameters: [ParameterType]) {
@@ -135,6 +191,19 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       return behaviours[0].handle(with: parameters) ??
+        errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
+    }
+  }
+
+  private func callThrowable<ReturnType>(function: FunctionIdentifier,
+                                         with parameters: [ParameterType]) throws -> ReturnType {
+    let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
+
+    switch behaviours.count {
+    case 1:
+      return try behaviours[0].handleThrowable(with: parameters) ??
         errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
