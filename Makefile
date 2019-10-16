@@ -18,6 +18,10 @@ tools: xcmake
 	@description "Tools update"
 	bundle update
 
+documentation: tools
+	@description "Generate documentation"
+	jazzy
+
 spm-tests: xcmake
 	@description "Swift Package Manager Tests"
 	${SPM} test

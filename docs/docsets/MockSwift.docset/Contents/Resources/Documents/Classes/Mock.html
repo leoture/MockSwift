@@ -14,7 +14,7 @@
     <a title="Mock Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MockSwift Docs</a> (52% documented)</p>
+        <p><a href="../index.html">MockSwift Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -76,16 +76,19 @@
                 <a href="../Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:9MockSwift5givenyAA0A5GivenCyxGxlF">given(_:)</a>
+                <a href="../Functions.html#/s:9MockSwift2geopyAA9PredicateCyxGxSLRzlF">&gt;=(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:9MockSwift5givenyyx_yAA0A5GivenCyxGXEtlF">given(_:_:)</a>
+                <a href="../Functions.html#/s:9MockSwift5given_4file4lineAA0A5GivenCyxGx_s12StaticStringVSutlF">given(_:file:line:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:9MockSwift4thenyAA0A4ThenCyxGxlF">then(_:)</a>
+                <a href="../Functions.html#/s:9MockSwift5given_4file4line_yx_s12StaticStringVSuyAA0A5GivenCyxGXEtlF">given(_:file:line:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:9MockSwift4thenyyx_yAA0A4ThenCyxGXEtlF">then(_:_:)</a>
+                <a href="../Functions.html#/s:9MockSwift4then_4file4lineAA0A4ThenCyxGx_s12StaticStringVSutlF">then(_:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:9MockSwift4then_4file4line_yx_s12StaticStringVSuyAA0A4ThenCyxGXEtlF">then(_:file:line:_:)</a>
               </li>
             </ul>
           </li>
@@ -97,6 +100,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/MockDefault.html">MockDefault</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a>
               </li>
             </ul>
           </li>
@@ -118,6 +129,56 @@
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift0A0C12wrappedValuexvp"></a>
+                    <a name="//apple_ref/swift/Property/wrappedValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A0C12wrappedValuexvp">wrappedValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>self</code> as a <code>WrappedType</code>.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    If <code>self</code> cannot be cast to <code>WrappedType</code> a <code>fatalError</code> will be raised.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">wrappedValue</span><span class="p">:</span> <span class="kt">WrappedType</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Init"></a>
+                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <a href="#/Init">
+                  <h3 class="section-name">Init</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -139,46 +200,30 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Methods"></a>
+                <a name="//apple_ref/swift/Section/Public Methods" class="dashAnchor"></a>
+                <a href="#/Public%20Methods">
+                  <h3 class="section-name">Public Methods</h3>
+                </a>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9MockSwift0A0C12wrappedValuexvp"></a>
-                    <a name="//apple_ref/swift/Property/wrappedValue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9MockSwift0A0C12wrappedValuexvp">wrappedValue</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">wrappedValue</span><span class="p">:</span> <span class="kt">WrappedType</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:9MockSwift0A0C6mocked_8functionyypd_SStF"></a>
+                    <a name="/s:9MockSwift0A0C6mocked_8functionyypSgd_SStF"></a>
                     <a name="//apple_ref/swift/Method/mocked(_:function:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9MockSwift0A0C6mocked_8functionyypd_SStF">mocked(_:function:)</a>
+                    <a class="token" href="#/s:9MockSwift0A0C6mocked_8functionyypSgd_SStF">mocked(_:function:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -186,16 +231,73 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Records the <code>function</code> call with <code>parameters</code> and executes the predefined behavior.</p>
+
+<p>You must use it during the extension of <code>Mock</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">Mock</span><span class="p">:</span> <span class="kt">CustomType</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">mocked</span><span class="p">(</span><span class="n">parameter1</span><span class="p">,</span> <span class="n">parameter2</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The function where you call <code>mocked</code> must respect the following rules:
+
+<ul>
+<li>The function must be defined in <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>doSomething(parameter1:parameter2:)</strong></li>
+</ul></li>
+<li>Call <code>mocked</code> with all parameters in the same order.
+Exactly one behaviour must match the call, otherwise a <code>fatalError</code> will be raised.</li>
+</ul>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mocked</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt">Any</span><span class="o">...</span><span class="p">,</span> <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mocked</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a></span><span class="o">...</span><span class="p">,</span> <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parameters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Values passed to <code>function</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>function</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function where <code>mocked</code> is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -203,9 +305,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9MockSwift0A0C6mocked_8functionqd__ypd_SStlF"></a>
-                    <a name="//apple_ref/swift/Method/mocked(_:function:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9MockSwift0A0C6mocked_8functionqd__ypd_SStlF">mocked(_:function:)</a>
+                    <a name="/s:9MockSwift0A0C15mockedThrowable_8functionyypSgd_SStKF"></a>
+                    <a name="//apple_ref/swift/Method/mockedThrowable(_:function:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A0C15mockedThrowable_8functionyypSgd_SStKF">mockedThrowable(_:function:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -213,16 +315,250 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Records the <code>function</code> call with <code>parameters</code> and executes the predefined behavior.</p>
+
+<p>You must use it during the extension of <code>Mock</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">Mock</span><span class="p">:</span> <span class="kt">CustomType</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="nf">mockedThrowable</span><span class="p">(</span><span class="n">parameter1</span><span class="p">,</span> <span class="n">parameter2</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The function where you call <code>mockedThrowable</code> must respect the following rules:
+
+<ul>
+<li>The function must be defined in <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>doSomething(parameter1:parameter2:)</strong></li>
+</ul></li>
+<li>Call <code>mockedThrowable</code> with all parameters in the same order.
+Exactly one behaviour must match the call, otherwise a <code>fatalError</code> will be raised.</li>
+</ul>
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">mocked</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt">Any</span><span class="o">...</span><span class="p">,</span> <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ReturnType</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mockedThrowable</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a></span><span class="o">...</span><span class="p">,</span> <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span> <span class="k">throws</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parameters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Values passed to <code>function</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>function</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function where <code>mockedThrowable</code> is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift0A0C6mocked_8functionqd__ypSgd_SStlF"></a>
+                    <a name="//apple_ref/swift/Method/mocked(_:function:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A0C6mocked_8functionqd__ypSgd_SStlF">mocked(_:function:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Records the <code>function</code> call with <code>parameters</code> and executes the predefined behavior.</p>
+
+<p>You must use it during the extension of <code>Mock</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">Mock</span><span class="p">:</span> <span class="kt">CustomType</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="nf">mocked</span><span class="p">(</span><span class="n">parameter1</span><span class="p">,</span> <span class="n">parameter2</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The function where you call <code>mocked</code> must respect the following rules:
+
+<ul>
+<li>The function must be defined in <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>doSomething(parameter1:parameter2:)</strong></li>
+</ul></li>
+<li>Call <code>mocked</code> with all parameters in the same order.
+Exactly one behaviour must match the call, otherwise a <code>fatalError</code> will be raised.</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">mocked</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a></span><span class="o">...</span><span class="p">,</span> <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ReturnType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parameters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Values passed to <code>function</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>function</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function where <code>mocked</code> is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The value computed by the behavior that match the call.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift0A0C15mockedThrowable_8functionqd__ypSgd_SStKlF"></a>
+                    <a name="//apple_ref/swift/Method/mockedThrowable(_:function:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A0C15mockedThrowable_8functionqd__ypSgd_SStKlF">mockedThrowable(_:function:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Records the <code>function</code> call with <code>parameters</code> and executes the predefined behavior.</p>
+
+<p>You must use it during the extension of <code>Mock</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">Mock</span><span class="p">:</span> <span class="kt">CustomType</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="nv">parameter1</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">parameter2</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="nf">mockedThrowable</span><span class="p">(</span><span class="n">parameter1</span><span class="p">,</span> <span class="n">parameter2</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The function where you call <code>mockedThrowable</code> must respect the following rules:
+
+<ul>
+<li>The function must be defined in <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>doSomething(parameter1:parameter2:)</strong></li>
+</ul></li>
+<li>Call <code>mockedThrowable</code> with all parameters in the same order.
+Exactly one behaviour must match the call, otherwise a <code>fatalError</code> will be raised.</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">mockedThrowable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">parameters</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a></span><span class="o">...</span><span class="p">,</span>
+                                        <span class="nv">function</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">ReturnType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parameters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Values passed to <code>function</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>function</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Function where <code>mockedThrowable</code> is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The value computed by the behavior that match the call.</p>
                       </div>
                     </section>
                   </div>
@@ -232,7 +568,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-09-29)</p>
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-10-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
