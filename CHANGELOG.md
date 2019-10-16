@@ -10,6 +10,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.2.0...HEAD)
 #### Added
+- Add willThrow
 - Add willReturn with a List [#36](https://github.com/leoture/MockSwift/pull/36)
 - Add Predicates with Comparables [#28](https://github.com/leoture/MockSwift/pull/28)
 - Add Predicates .isTrue() & .isFalse() [#33](https://github.com/leoture/MockSwift/pull/33)
