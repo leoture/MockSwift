@@ -27,7 +27,7 @@ import PackageDescription
 let package = Package(
   name: "MyProject",
   dependencies: [
-    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.1.0")
+    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.3.0")
   ],
   targets: [
     .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
@@ -62,7 +62,7 @@ class MyTests: XCTestCase {
     let expectedUser = User(identifier: "id", name: "John")
 
     given(service)
-      .fetch(identifier: .any)
+      .fetch(identifier: .any())
       .willReturn(expectedUser)
 
     // When
@@ -70,7 +70,7 @@ class MyTests: XCTestCase {
 
     // Then
     then(service)
-      .fetch(identifier: .any)
+      .fetch(identifier: .any())
       .called()
     XCTAssertEqual(user, expectedUser)
   }

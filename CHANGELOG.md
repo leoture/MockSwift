@@ -3,12 +3,28 @@
 [Unrelease](#Unrelease)
 
 ##### 0.x Releases  
+- [0.3.0](#0.3.0)
 - [0.2.0](#0.2.0)
 - [0.1.0](#0.1.0)
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v0.2.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v0.3.0...HEAD)
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
+---
+## [0.3.0](https://github.com/leoture/MockSwift/releases/tag/v0.3.0) - 2019-10-16
+[Compare](https://github.com/leoture/MockSwift/compare/v0.2.0...v0.3.0)
 #### Added
 - Add Predicate .match(description:keyPath:) [#38](https://github.com/leoture/MockSwift/pull/38)
 - Add willThrow [#37](https://github.com/leoture/MockSwift/pull/37)
@@ -20,14 +36,6 @@
 
 #### Changed
 - mocked() with optionals [#32](https://github.com/leoture/MockSwift/pull/32)
-
-#### Deprecated
-
-#### Removed
-
-#### Fixed
-
-#### Security
 
 ---
 ## [0.2.0](https://github.com/leoture/MockSwift/releases/tag/v0.2.0) - 2019-09-29
