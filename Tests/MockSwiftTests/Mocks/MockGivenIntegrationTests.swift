@@ -49,7 +49,7 @@ class MockGivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnValueFromWillCompletion() {
     // Given
-    given(custom).function(identifier: .not(.match { $0.isEmpty }))
+    given(custom).function(identifier: .not(.match(\.isEmpty)))
       .disambiguate(with: String.self)
       .will { parameters in (parameters[0] as? String ?? "") + "1" }
 

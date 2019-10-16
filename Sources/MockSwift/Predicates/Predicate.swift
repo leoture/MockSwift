@@ -72,6 +72,15 @@ public class Predicate<Input> {
     }
   }
 
+  /// Creates a `Predicate<Input>`.
+  /// - Parameter description: The description of the Predicate.
+  /// - Parameter keyPath: The keyPath that will be used to verify that the entry statisfies the Predicate.
+  /// - Returns: A new `Predicate<Input>`.
+  public class func match(description: String = "KeyPath matcher",
+                          _ keyPath: KeyPath<Input, Bool>) -> Predicate<Input> {
+    .match(description: description) { $0[keyPath: keyPath] }
+  }
+
   /// Creates a `Predicate<Input>` able to match any value of type `Input`.
   public static func any() -> Predicate<Input> {
     .match(description: "any") { _ in true }
