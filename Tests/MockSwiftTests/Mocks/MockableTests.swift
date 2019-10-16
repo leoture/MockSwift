@@ -58,10 +58,7 @@ class MockableTests: XCTestCase {
     let expectedSecondBehaviourReturn = UUID()
 
     // When
-    mockable.willReturn([
-      expectedFirstBehaviourReturn,
-      expectedSecondBehaviourReturn
-    ])
+    mockable.willReturn(expectedFirstBehaviourReturn, expectedSecondBehaviourReturn)
 
     //Then
     XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)

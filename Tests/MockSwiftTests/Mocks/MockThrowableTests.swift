@@ -1,4 +1,4 @@
-//MockThrowable.swift
+//MockThrowableTests.swift
 /*
  MIT License
 

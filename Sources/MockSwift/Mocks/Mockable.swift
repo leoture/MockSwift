@@ -55,7 +55,7 @@ public class Mockable<ReturnType> {
 
   /// Registers return values.
   /// - Parameter values: Values to register.
-  public func willReturn(_ values: [ReturnType]) {
+  public func willReturn(_ values: ReturnType...) {
     var returns = values
     let behaviour = FunctionBehaviour { _ in
       returns.count == 1 ? returns[0] : returns.removeFirst()
@@ -70,7 +70,7 @@ public class Mockable<ReturnType> {
 
   /// Registers a block to excecute.
   /// - Parameter completion: Block to be excecuted.
-  public func will(_ completion: @escaping ([Any]) -> ReturnType) {
+  public func will(_ completion: @escaping ([Any]) throws -> ReturnType) {
     let behaviour = FunctionBehaviour(handler: completion)
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
@@ -79,6 +79,16 @@ public class Mockable<ReturnType> {
   /// - Parameter error: Error to register.
   public func willThrow(_ error: Error) {
     let behaviour = FunctionBehaviour { _ in throw error }
+    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  }
+
+  /// Registers errors.
+  /// - Parameter errors: Errors to register.
+  public func willThrow(_ errors: Error...) {
+    var throwables = errors
+    let behaviour = FunctionBehaviour { _ in
+      throw throwables.count == 1 ? throwables[0] : throwables.removeFirst()
+    }
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
 }

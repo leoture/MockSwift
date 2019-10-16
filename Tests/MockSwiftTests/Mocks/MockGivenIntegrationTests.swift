@@ -60,6 +60,25 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertEqual(result, "value1")
   }
 
+  func test_function_shouldThrowErrorFromWillCompletion() {
+    // Given
+    let expectedError = NSError(domain: "domain", code: 0)
+    given(custom).function(identifier: .not(.match { $0.isEmpty }))
+      .disambiguate(with: String.self)
+      .will { _ in throw expectedError }
+
+    // When
+    var catchedError: NSError?
+    do {
+      let _: String = try custom.function(identifier: "value")
+    } catch {
+      catchedError = error as NSError
+    }
+
+    //Then
+    XCTAssertTrue(catchedError === expectedError)
+  }
+
   func test_function_shouldReturnValueFromWillReturnValue() {
     // Given
     given(custom).function(identifier: "value")
@@ -74,22 +93,22 @@ class MockGivenIntegrationTests: XCTestCase {
   }
 
   func test_function_shouldReturnValueFromWillReturnValues() {
-     // Given
-     given(custom).function(identifier: "value")
-       .disambiguate(with: Int.self)
-       .willReturn([0, 1, 2])
+    // Given
+    given(custom).function(identifier: "value")
+      .disambiguate(with: Int.self)
+      .willReturn(0, 1, 2)
 
-     // When
+    // When
     let results: [Int] = [
       custom.function(identifier: "value"),
       custom.function(identifier: "value"),
       custom.function(identifier: "value"),
       custom.function(identifier: "value")
-      ]
+    ]
 
-     //Then
-     XCTAssertEqual(results, [0, 1, 2, 2])
-   }
+    //Then
+    XCTAssertEqual(results, [0, 1, 2, 2])
+  }
 
   func test_function_shouldReturnDefaultValueIfNoMatch() {
     // Given
@@ -121,6 +140,35 @@ class MockGivenIntegrationTests: XCTestCase {
 
     //Then
     XCTAssertTrue(catchedError === expectedError)
+  }
+
+  func test_function_shouldThrowFromWillThrowErrors() {
+    // Given
+    let expectedError1 = NSError(domain: "domain", code: 1)
+    let expectedError2 = NSError(domain: "domain", code: 2)
+    let expectedError3 = NSError(domain: "domain", code: 3)
+    given(custom).function(identifier: .any())
+      .disambiguate(with: String.self)
+      .willThrow(expectedError1, expectedError2, expectedError3)
+
+    // When
+    let completion: () -> NSError? = {
+      do {
+        let _: String = try self.custom.function(identifier: "")
+        return nil
+      } catch {
+        return error as NSError
+      }
+    }
+    let catchedErrors: [NSError?] = [
+      completion(),
+      completion(),
+      completion(),
+      completion()
+    ]
+
+    //Then
+    XCTAssertEqual(catchedErrors, [expectedError1, expectedError2, expectedError3, expectedError3])
   }
 
   func test_given_shouldCallCompletionWithMockGiven() {
