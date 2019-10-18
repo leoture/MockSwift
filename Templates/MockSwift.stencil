@@ -63,7 +63,7 @@ extension MockThen where WrappedType == {{ type.name }} {
   {% endfor %}
 }
 {% endmacro %}
-{% for type in types.protocols %}
+{% for type in types.protocols where type|annotated:"AutoMockable" %}
 
 // MARK: - {{ type.name }}
   {% call mock type %}

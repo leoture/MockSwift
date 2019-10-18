@@ -25,6 +25,7 @@
 
 import Foundation
 
+//sourcery: AutoMockable
 protocol Basic {
   func doSomething()
   func doSomething() -> Int
