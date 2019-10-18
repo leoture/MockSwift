@@ -30,7 +30,7 @@ protocol Basic {
   func doSomething()
   func doSomething() -> Int
   func doSomething() -> String?
-  func doSomething(arg: String) -> String
+  func doSomething(arg: String) throws -> String
   func doSomething(arg1: String, arg2: Int?) -> String
   func doSomething(with arg: String) -> String
   func doSomething(with arg1: String, and arg2: Bool) -> String

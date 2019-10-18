@@ -19,25 +19,25 @@ import MockSwift
 extension Mock: Basic where WrappedType == Basic {
 
   public func doSomething() {
-    mocked()
+    mocked( )
   }
   public func doSomething() -> Int {
-    mocked()
+    mocked( )
   }
   public func doSomething() -> String? {
-    mocked()
+    mocked( )
   }
-  public func doSomething(arg: String) -> String {
-    mocked(arg)
+  public func doSomething(arg: String) throws -> String {
+    try mockedThrowable(arg)
   }
   public func doSomething(arg1: String, arg2: Int?) -> String {
-    mocked(arg1, arg2)
+    mocked( arg1, arg2)
   }
   public func doSomething(with arg: String) -> String {
-    mocked(arg)
+    mocked( arg)
   }
   public func doSomething(with arg1: String, and arg2: Bool) -> String {
-    mocked(arg1, arg2)
+    mocked( arg1, arg2)
   }
 }
 

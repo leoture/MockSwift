@@ -7,8 +7,12 @@ import MockSwift
 {% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
 
 {% macro mockMethod method %}
-  public func {{ method.name }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
-    mocked({% call parametersOnInvoke method %})
+  public func {{ method.name }}{{ ' throws' if method.throws }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
+  {% if method.throws %}
+    try mockedThrowable({% call parametersOnInvoke method %})
+  {% else %}
+    mocked( {% call parametersOnInvoke method %})
+  {% endif %}
   }
 {% endmacro %}
 
