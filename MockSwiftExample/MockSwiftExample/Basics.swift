@@ -1,4 +1,4 @@
-//Basic.swift
+//Basics.swift
 /*
  MIT License
  
@@ -26,7 +26,7 @@
 import Foundation
 
 //sourcery: AutoMockable
-protocol Basic {
+protocol Basics {
   func doSomething()
   func doSomething() -> Int
   func doSomething() -> String?

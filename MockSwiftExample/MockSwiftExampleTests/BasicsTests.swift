@@ -1,4 +1,4 @@
-//MockSwiftExampleTests.swift
+//BasicsTests.swift
 /*
  MIT License
 
@@ -27,14 +27,14 @@ import XCTest
 import MockSwift
 @testable import MockSwiftExample
 
-class MockSwiftExampleTests: XCTestCase {
-  @Mock private var basic: Basic
+class BasicsTests: XCTestCase {
+  @Mock private var basics: Basics
 
   func test_doSomething_withPredicates() {
     // Given
     var blockDone = false
     let error = NSError(domain: "domain", code: 0)
-    given(basic) {
+    given(basics) {
       $0.doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
@@ -46,19 +46,19 @@ class MockSwiftExampleTests: XCTestCase {
     }
 
     // When
-    basic.doSomething() as Void
-    let result0: Int = basic.doSomething()
-    let result1: String? = basic.doSomething()
-    let result2 = try? basic.doSomething(arg: "2")
+    basics.doSomething() as Void
+    let result0: Int = basics.doSomething()
+    let result1: String? = basics.doSomething()
+    let result2 = try? basics.doSomething(arg: "2")
     var resultError: NSError?
     do {
-      _ = try basic.doSomething(arg: "")
+      _ = try basics.doSomething(arg: "")
     } catch {
       resultError = error as NSError
     }
-    let result3 = basic.doSomething(arg1: "3", arg2: nil)
-    let result4 = basic.doSomething(with: "4")
-    let result5 = basic.doSomething(with: "5", and: true)
+    let result3 = basics.doSomething(arg1: "3", arg2: nil)
+    let result4 = basics.doSomething(with: "4")
+    let result5 = basics.doSomething(with: "5", and: true)
 
     //Then
     XCTAssertTrue(blockDone)
@@ -69,7 +69,7 @@ class MockSwiftExampleTests: XCTestCase {
     XCTAssertEqual(result3, "3")
     XCTAssertEqual(result4, "4")
     XCTAssertEqual(result5, "5")
-    then(basic) {
+    then(basics) {
       $0.doSomething().disambiguate(with: Void.self).called(times: 1)
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String?.self).called(times: 1)
@@ -84,7 +84,7 @@ class MockSwiftExampleTests: XCTestCase {
     // Given
     var blockDone = false
     let error = NSError(domain: "domain", code: 0)
-    given(basic) {
+    given(basics) {
       $0.doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
@@ -96,19 +96,19 @@ class MockSwiftExampleTests: XCTestCase {
     }
 
     // When
-    basic.doSomething() as Void
-    let result0: Int = basic.doSomething()
-    let result1: String? = basic.doSomething()
-    let result2 = try? basic.doSomething(arg: "2")
+    basics.doSomething() as Void
+    let result0: Int = basics.doSomething()
+    let result1: String? = basics.doSomething()
+    let result2 = try? basics.doSomething(arg: "2")
     var resultError: NSError?
     do {
-      _ = try basic.doSomething(arg: "")
+      _ = try basics.doSomething(arg: "")
     } catch {
       resultError = error as NSError
     }
-    let result3 = basic.doSomething(arg1: "3", arg2: nil)
-    let result4 = basic.doSomething(with: "4")
-    let result5 = basic.doSomething(with: "5", and: true)
+    let result3 = basics.doSomething(arg1: "3", arg2: nil)
+    let result4 = basics.doSomething(with: "4")
+    let result5 = basics.doSomething(with: "5", and: true)
 
     //Then
     XCTAssertTrue(blockDone)
@@ -119,7 +119,7 @@ class MockSwiftExampleTests: XCTestCase {
     XCTAssertEqual(result3, "3")
     XCTAssertEqual(result4, "4")
     XCTAssertEqual(result5, "5")
-    then(basic) {
+    then(basics) {
       $0.doSomething().disambiguate(with: Void.self).called(times: 1)
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String?.self).called(times: 1)

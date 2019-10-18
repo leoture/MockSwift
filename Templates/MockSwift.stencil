@@ -11,27 +11,27 @@ import MockSwift
   {% if method.throws %}
     try mockedThrowable({% call parametersOnInvoke method %})
   {% else %}
-    mocked( {% call parametersOnInvoke method %})
+    mocked({% call parametersOnInvoke method %})
   {% endif %}
   }
 {% endmacro %}
 
 {% macro mock type %}
 extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
-
   {% for method in type.allMethods|!definedInExtension %}
     {% call mockMethod method %}
   {% endfor %}
 }
 {% endmacro %}
 
-{% macro mockGivenMethod method %}
+{% macro normalizeReturnType type %}<{% if type|hasPrefix: "where " %}{{ type|replace:"where ","Void> where " }}{% elif type|contains:" where " %}{{ type|replace:" where ","> where " }}{% else %}{{ type }}>{% endif %}{% endmacro %}
 
-  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable<{{ method.returnTypeName }}> {
+{% macro mockGivenMethod method %}
+  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable{% call normalizeReturnType method.returnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public func {{ method.name }} -> Mockable<{{ method.returnTypeName }}> {
+  public func {{ method.name }} -> Mockable{% call normalizeReturnType method.returnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
   {% endif %}
@@ -48,12 +48,11 @@ extension MockGiven where WrappedType == {{ type.name }} {
 
 
 {% macro mockThenMethod method %}
-
-  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable<{{ method.returnTypeName }}> {
+  public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public func {{ method.name }} -> Verifiable<{{ method.returnTypeName }}> {
+  public func {{ method.name }} -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% endif %}
