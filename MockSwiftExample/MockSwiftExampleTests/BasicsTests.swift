@@ -1,4 +1,4 @@
-//MockSwiftExampleTests.swift
+//BasicsTests.swift
 /*
  MIT License
 
@@ -27,44 +27,53 @@ import XCTest
 import MockSwift
 @testable import MockSwiftExample
 
-class MockSwiftExampleTests: XCTestCase {
-  @Mock private var basic: Basic
+class BasicsTests: XCTestCase {
+  @Mock private var basics: Basics
 
   func test_doSomething_withPredicates() {
     // Given
     var blockDone = false
-    given(basic) {
+    let error = NSError(domain: "domain", code: 0)
+    given(basics) {
       $0.doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
-      $0.doSomething(arg: .any()).willReturn("2")
+      $0.doSomething(arg: =="2").willReturn("2")
+      $0.doSomething(arg: .match(\.isEmpty)).willThrow(error)
       $0.doSomething(arg1: =="3", arg2: .isNil()).willReturn("3")
       $0.doSomething(with: =="4").willReturn("4")
       $0.doSomething(with: =="5", and: .isTrue()).willReturn("5")
     }
 
     // When
-    basic.doSomething() as Void
-    let result0: Int = basic.doSomething()
-    let result1: String? = basic.doSomething()
-    let result2 = basic.doSomething(arg: "2")
-    let result3 = basic.doSomething(arg1: "3", arg2: nil)
-    let result4 = basic.doSomething(with: "4")
-    let result5 = basic.doSomething(with: "5", and: true)
+    basics.doSomething() as Void
+    let result0: Int = basics.doSomething()
+    let result1: String? = basics.doSomething()
+    let result2 = try? basics.doSomething(arg: "2")
+    var resultError: NSError?
+    do {
+      _ = try basics.doSomething(arg: "")
+    } catch {
+      resultError = error as NSError
+    }
+    let result3 = basics.doSomething(arg1: "3", arg2: nil)
+    let result4 = basics.doSomething(with: "4")
+    let result5 = basics.doSomething(with: "5", and: true)
 
     //Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertNil(result1)
     XCTAssertEqual(result2, "2")
+    XCTAssertTrue(resultError === error)
     XCTAssertEqual(result3, "3")
     XCTAssertEqual(result4, "4")
     XCTAssertEqual(result5, "5")
-    then(basic) {
+    then(basics) {
       $0.doSomething().disambiguate(with: Void.self).called(times: 1)
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String?.self).called(times: 1)
-      $0.doSomething(arg: =="2").called(times: 1)
+      $0.doSomething(arg: .any()).called(times: >1)
       $0.doSomething(arg1: =="3", arg2: .isNil()).called(times: 1)
       $0.doSomething(with: =="4").called(times: 1)
       $0.doSomething(with: =="5", and: .isTrue()).called(times: 1)
@@ -74,38 +83,48 @@ class MockSwiftExampleTests: XCTestCase {
   func test_doSomething_withTypes() {
     // Given
     var blockDone = false
-    given(basic) {
+    let error = NSError(domain: "domain", code: 0)
+    given(basics) {
       $0.doSomething().disambiguate(with: Void.self).will { _ in blockDone = true }
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
       $0.doSomething(arg: "2").willReturn("2")
+      $0.doSomething(arg: "").willThrow(error)
       $0.doSomething(arg1: "3", arg2: nil).willReturn("3")
       $0.doSomething(with: "4").willReturn("4")
       $0.doSomething(with: "5", and: true).willReturn("5")
     }
 
     // When
-    basic.doSomething() as Void
-    let result0: Int = basic.doSomething()
-    let result1: String? = basic.doSomething()
-    let result2 = basic.doSomething(arg: "2")
-    let result3 = basic.doSomething(arg1: "3", arg2: nil)
-    let result4 = basic.doSomething(with: "4")
-    let result5 = basic.doSomething(with: "5", and: true)
+    basics.doSomething() as Void
+    let result0: Int = basics.doSomething()
+    let result1: String? = basics.doSomething()
+    let result2 = try? basics.doSomething(arg: "2")
+    var resultError: NSError?
+    do {
+      _ = try basics.doSomething(arg: "")
+    } catch {
+      resultError = error as NSError
+    }
+    let result3 = basics.doSomething(arg1: "3", arg2: nil)
+    let result4 = basics.doSomething(with: "4")
+    let result5 = basics.doSomething(with: "5", and: true)
 
     //Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertNil(result1)
     XCTAssertEqual(result2, "2")
+    XCTAssertTrue(resultError === error)
     XCTAssertEqual(result3, "3")
     XCTAssertEqual(result4, "4")
     XCTAssertEqual(result5, "5")
-    then(basic) {
+    then(basics) {
       $0.doSomething().disambiguate(with: Void.self).called(times: 1)
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String?.self).called(times: 1)
       $0.doSomething(arg: "2").called(times: 1)
+      $0.doSomething(arg: "").called(times: 1)
       $0.doSomething(arg1: "3", arg2: nil).called(times: 1)
       $0.doSomething(with: "4").called(times: 1)
       $0.doSomething(with: "5", and: true).called(times: 1)

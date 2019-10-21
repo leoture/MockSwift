@@ -11,8 +11,10 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.3.0...HEAD)
 #### Added
+- Generate Mock with generics [#43](https://github.com/leoture/MockSwift/pull/43)
 
 #### Changed
+- Template sourcery only generates Mock with AutoMockable annotation [#43](https://github.com/leoture/MockSwift/pull/43)
 
 #### Deprecated
 

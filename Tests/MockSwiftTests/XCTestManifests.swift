@@ -6,9 +6,14 @@ extension AnyPredicateEquatableTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__AnyPredicateEquatableTests = [
-        ("test_satify_Bool", test_satify_Bool),
-        ("test_satify_Int", test_satify_Int),
-        ("test_satify_String", test_satify_String),
+        ("test_satify_shoudReturnFalseWithInt", test_satify_shoudReturnFalseWithInt),
+        ("test_satify_shoudReturnTrueWithInt", test_satify_shoudReturnTrueWithInt),
+        ("test_satify_shouldReturnFalseWithArray", test_satify_shouldReturnFalseWithArray),
+        ("test_satify_shouldReturnFalseWithBool", test_satify_shouldReturnFalseWithBool),
+        ("test_satify_shouldReturnFalseWithString", test_satify_shouldReturnFalseWithString),
+        ("test_satify_shouldReturnTrueWithArray", test_satify_shouldReturnTrueWithArray),
+        ("test_satify_shouldReturnTrueWithBool", test_satify_shouldReturnTrueWithBool),
+        ("test_satify_shouldReturnTrueWithString", test_satify_shouldReturnTrueWithString),
         ("test_satisfy_shouldReturnFalseIfNotEquals", test_satisfy_shouldReturnFalseIfNotEquals),
         ("test_satisfy_shouldReturnTrueIfEquals", test_satisfy_shouldReturnTrueIfEquals),
     ]

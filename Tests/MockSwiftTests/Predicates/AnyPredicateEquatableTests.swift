@@ -74,7 +74,38 @@ class AnyPredicateEquatableTests: XCTestCase {
     XCTAssertTrue(argument?.rhs === rhsCustom)
   }
 
-  func test_satify_Bool() { XCTAssertTrue(false.satisfy(by: false)) }
-  func test_satify_Int() { XCTAssertTrue(0.satisfy(by: 0)) }
-  func test_satify_String() { XCTAssertTrue("value".satisfy(by: "value")) }
+  func test_satify_shouldReturnTrueWithArray() {
+    // Given
+    let lhsCustom = Custom()
+    let rhsCustom = Custom()
+    lhsCustom.equalsReturn = true
+
+    // When
+    let result = [lhsCustom].satisfy(by: [rhsCustom])
+
+    //Then
+    XCTAssertTrue(result)
+  }
+
+  func test_satify_shouldReturnFalseWithArray() {
+    // Given
+    let lhsCustom = Custom()
+    let rhsCustom = Custom()
+    lhsCustom.equalsReturn = false
+
+    // When
+    let result = [lhsCustom].satisfy(by: [rhsCustom])
+
+    //Then
+    XCTAssertFalse(result)
+  }
+
+  func test_satify_shouldReturnTrueWithBool() { XCTAssertTrue(false.satisfy(by: false)) }
+  func test_satify_shouldReturnFalseWithBool() { XCTAssertFalse(false.satisfy(by: true)) }
+
+  func test_satify_shoudReturnTrueWithInt() { XCTAssertTrue(0.satisfy(by: 0)) }
+  func test_satify_shoudReturnFalseWithInt() { XCTAssertFalse(0.satisfy(by: 1)) }
+
+  func test_satify_shouldReturnTrueWithString() { XCTAssertTrue("value".satisfy(by: "value")) }
+  func test_satify_shouldReturnFalseWithString() { XCTAssertFalse("value".satisfy(by: "")) }
 }

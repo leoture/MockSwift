@@ -1,4 +1,4 @@
-//AnyPredicate+Equatable.swift
+//Generics.swift
 /*
  MIT License
  
@@ -25,18 +25,11 @@
 
 import Foundation
 
-public extension AnyPredicate where Self: Equatable {
-
-  /// Check if an `element` satifies the predicate.
-  /// - Parameter element: The element to check.
-  /// - Returns: True if `element` is equals to `self`, false otherwise.
-  /// - SeeAlso: `AnyPredicate`
-  func satisfy(by element: Any?) -> Bool {
-    self == (element as? Self)
-  }
+//sourcery: AutoMockable
+protocol Generics {
+  func doSomething<T>() -> T
+  func doSomething<T: Sequence>(with arg: T) where T.Element == Int
+  func doSomething<T>(arg: T) throws -> T
+  func doSomething<T: Sequence, U>(arg1: T, arg2: U?) -> U where T.Element == U
+  func doSomething<T: Equatable, U: Equatable>(with arg1: T, and arg2: U) -> Bool
 }
-
-extension Bool: AnyPredicate {}
-extension Int: AnyPredicate {}
-extension String: AnyPredicate {}
-extension Array: AnyPredicate where Element: Equatable {}
