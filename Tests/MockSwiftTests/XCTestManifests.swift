@@ -242,12 +242,12 @@ extension PredicateComparableTests {
         ("test_lessThanOrEqualsTo_description", test_lessThanOrEqualsTo_description),
         ("test_lessThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse", test_lessThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse),
         ("test_lessThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue", test_lessThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue),
-        ("test_moreThan_description", test_moreThan_description),
-        ("test_moreThan_shouldReturnFalseIfComparisonReturnFalse", test_moreThan_shouldReturnFalseIfComparisonReturnFalse),
-        ("test_moreThan_shouldReturnTrueIfComparisonReturnTrue", test_moreThan_shouldReturnTrueIfComparisonReturnTrue),
-        ("test_moreThanOrEqualsTo_description", test_moreThanOrEqualsTo_description),
-        ("test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse", test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse),
-        ("test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue", test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_greaterThan_description", test_greaterThan_description),
+        ("test_greaterThan_shouldReturnFalseIfComparisonReturnFalse", test_greaterThan_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_greaterThan_shouldReturnTrueIfComparisonReturnTrue", test_greaterThan_shouldReturnTrueIfComparisonReturnTrue),
+        ("test_greaterThanOrEqualsTo_description", test_greaterThanOrEqualsTo_description),
+        ("test_greaterThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse", test_greaterThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse),
+        ("test_greaterThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue", test_greaterThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue),
     ]
 }
 

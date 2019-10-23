@@ -99,7 +99,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertEqual(description, "description")
   }
 
-  func test_moreThan_shouldReturnFalseIfComparisonReturnFalse() {
+  func test_greaterThan_shouldReturnFalseIfComparisonReturnFalse() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = false
@@ -113,7 +113,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_moreThan_shouldReturnTrueIfComparisonReturnTrue() {
+  func test_greaterThan_shouldReturnTrueIfComparisonReturnTrue() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = true
@@ -127,7 +127,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_moreThan_description() {
+  func test_greaterThan_description() {
     // Given
     let customCompared = Custom()
     customCompared.description = "description"
@@ -139,7 +139,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertEqual(description, "more than description")
   }
 
-  func test_moreThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse() {
+  func test_greaterThanOrEqualsTo_shouldReturnFalseIfComparisonReturnFalse() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = false
@@ -153,7 +153,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_moreThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue() {
+  func test_greaterThanOrEqualsTo_shouldReturnTrueIfComparisonReturnTrue() {
     // Given
     let custom = Custom()
     custom.comparisonReturn = true
@@ -167,7 +167,7 @@ class PredicateComparableTests: XCTestCase {
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
 
-  func test_moreThanOrEqualsTo_description() {
+  func test_greaterThanOrEqualsTo_description() {
     // Given
     let customCompared = Custom()
     customCompared.description = "description"
