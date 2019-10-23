@@ -86,3 +86,4 @@ public extension Predicate where Input: Comparable {
     Predicate.match(description: "less than or equals to \(rhs)") { $0 <= rhs }
   }
 }
+
