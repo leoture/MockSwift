@@ -35,6 +35,20 @@ public class Verifiable<ReturnType> {
   private let parametersPredicates: [AnyPredicate]
   private let failureRecorder: FailureRecorder
 
+  // MARK: - Public Properties
+
+  /// Return a list of all parameters' list with whom the function was called.
+  public var receivedParameters: [[ParameterType]] {
+    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+      .map { $0.parameters }
+  }
+
+  /// Return the number of times that the function was called.
+  public var callCount: Int {
+    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    .count
+  }
+
   // MARK: - Init
 
   init(callRegister: CallRegister,
@@ -73,12 +87,5 @@ public class Verifiable<ReturnType> {
   /// - Parameter line: Line where `called`is called.
   public  func called(times: Int, file: StaticString = #file, line: UInt = #line) {
     called(times: ==times, file: file, line: line)
-  }
-
-  /// Return a list of all parameters' list with whom the function was called.
-  public var receivedParameters: [[ParameterType]] {
-    callRegister.recordedCall(for: functionIdentifier,
-                              when: parametersPredicates)
-      .map { $0.parameters }
   }
 }

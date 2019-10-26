@@ -233,7 +233,7 @@ class VerifiableTests: XCTestCase {
     XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
   }
 
-  func test_receivedParameters_shouldAllCallsParametersWhenFunctionCallFromCallRegisterMatched() {
+  func test_receivedParameters_shouldReturnAllCallsParametersWhenFunctionCallFromCallRegisterMatched() {
     // Given
     callRegister.recordedCallReturn = [
       FunctionCall(parameters: ["arg1", 1]),
@@ -256,6 +256,49 @@ class VerifiableTests: XCTestCase {
     XCTAssertEqual(result[1].count, 2)
     XCTAssertEqual(result[1][0] as? String, "arg2")
     XCTAssertEqual(result[1][1] as? Int, 2)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+  }
+
+  func test_callCount_shouldReturnZeroWhenNoFunctionCallFromCallRegisterMatched() {
+    // Given
+    callRegister.recordedCallReturn = []
+    let predicate = AnyPredicateMock()
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+
+    // When
+    let result = verifiable.callCount
+
+    //Then
+    XCTAssertEqual(result, 0)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+  }
+
+  func test_callCount_shouldReturnNumberOfMatchedFunctionCallFromCallRegister() {
+    // Given
+    callRegister.recordedCallReturn = [
+      FunctionCall(parameters: ["arg1", 1]),
+      FunctionCall(parameters: ["arg2", 2])
+    ]
+    let predicate = AnyPredicateMock()
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+
+    // When
+    let result = verifiable.callCount
+
+    //Then
+    XCTAssertEqual(result, 2)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
     XCTAssertEqual(matchs.count, 1)
