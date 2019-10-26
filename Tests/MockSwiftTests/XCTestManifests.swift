@@ -166,6 +166,7 @@ extension MockThenIntegrationTests {
     // to regenerate.
     static let __allTests__MockThenIntegrationTests = [
         ("test_function_shouldBeCalledWhenParametersMatched", test_function_shouldBeCalledWhenParametersMatched),
+        ("test_receivedParameters_whenParametersMatched", test_receivedParameters_whenParametersMatched),
         ("test_then_shouldCallCompletionWithMockThen", test_then_shouldCallCompletionWithMockThen),
     ]
 }
@@ -299,6 +300,8 @@ extension VerifiableTests {
         ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes),
         ("test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly", test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly),
         ("test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType", test_disambiguate_shouldReturnSameVerifiableWithDisambiguatedReturnType),
+        ("test_receivedParameters_shouldAllCallsParametersWhenFunctionCallFromCallRegisterMatched", test_receivedParameters_shouldAllCallsParametersWhenFunctionCallFromCallRegisterMatched),
+        ("test_receivedParameters_shouldReturnEmptyWhenNoFunctionCallFromCallRegisterMatched", test_receivedParameters_shouldReturnEmptyWhenNoFunctionCallFromCallRegisterMatched),
     ]
 }
 

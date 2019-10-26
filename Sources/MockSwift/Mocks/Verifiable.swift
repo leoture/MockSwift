@@ -52,7 +52,7 @@ public class Verifiable<ReturnType> {
   /// Used to disambiguate the `ReturnType`.
   /// - Parameter type: The type to disambiguate.
   /// - Returns: `self` with `ReturnType` disambiguated.
-  public  func disambiguate(with type: ReturnType.Type) -> Self { self }
+  public func disambiguate(with type: ReturnType.Type) -> Self { self }
 
   /// Checks that the function has been called a number of times corresponding to the predicate.
   /// - Parameter times: Predicate that corresponds to the number of calls.
@@ -73,5 +73,12 @@ public class Verifiable<ReturnType> {
   /// - Parameter line: Line where `called`is called.
   public  func called(times: Int, file: StaticString = #file, line: UInt = #line) {
     called(times: ==times, file: file, line: line)
+  }
+
+  /// Return a list of all parameters' list with whom the function was called.
+  public var receivedParameters: [[ParameterType]] {
+    callRegister.recordedCall(for: functionIdentifier,
+                              when: parametersPredicates)
+      .map { $0.parameters }
   }
 }
