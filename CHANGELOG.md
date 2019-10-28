@@ -11,7 +11,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.3.0...HEAD)
 #### Added
-- Add receivedParameters and callCount to Verifiable
+- Add receivedParameters and callCount to Verifiable [#50](https://github.com/leoture/MockSwift/pull/50)
 - Generate Mock with generics [#43](https://github.com/leoture/MockSwift/pull/43)
 
 #### Changed
