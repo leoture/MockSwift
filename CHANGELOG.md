@@ -21,6 +21,7 @@
 #### Removed
 
 #### Fixed
+- Fix generated mock when a parameter is escaping
 
 #### Security
 
