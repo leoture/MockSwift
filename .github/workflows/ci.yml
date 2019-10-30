@@ -10,10 +10,9 @@ on:
 
 jobs:
   build:
-    
+    name: Tests
     runs-on: macOS-latest
     steps:
-    - name: Tests
     - uses: actions/checkout@v1
     - run: make
     - run: bash <(curl -s https://codecov.io/bash)
