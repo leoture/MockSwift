@@ -20,5 +20,7 @@ jobs:
     name: Swift Package Manager Tests
     steps:
     - uses: actions/checkout@v1
-    - run: eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
     - run: swift test
