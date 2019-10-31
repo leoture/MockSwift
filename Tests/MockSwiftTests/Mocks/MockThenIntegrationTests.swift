@@ -70,4 +70,34 @@ class MockThenIntegrationTests: XCTestCase {
     //Then
     XCTAssertNotNil(mockThen)
   }
+
+  func test_receivedParameters_whenParametersMatched() {
+    // Given
+
+    // When
+    let _: String = custom.function(identifier: "arg1")
+    let _: String = custom.function(identifier: "")
+    let _: String = custom.function(identifier: "arg2")
+
+    //Then
+    let receivedParameters = then(custom).function(identifier: .not(.match(\.isEmpty)))
+      .disambiguate(with: String.self)
+      .receivedParameters
+    XCTAssertEqual(receivedParameters as? [[String]], [["arg1"], ["arg2"]])
+  }
+
+  func test_callCount_whenParametersMatched() {
+    // Given
+
+    // When
+    let _: String = custom.function(identifier: "arg1")
+    let _: String = custom.function(identifier: "")
+    let _: String = custom.function(identifier: "arg2")
+
+    //Then
+    let callCount = then(custom).function(identifier: .not(.match(\.isEmpty)))
+      .disambiguate(with: String.self)
+      .callCount
+    XCTAssertEqual(callCount, 2)
+  }
 }

@@ -35,6 +35,20 @@ public class Verifiable<ReturnType> {
   private let parametersPredicates: [AnyPredicate]
   private let failureRecorder: FailureRecorder
 
+  // MARK: - Public Properties
+
+  /// Return a list of all parameters' list with whom the function was called.
+  public var receivedParameters: [[ParameterType]] {
+    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+      .map { $0.parameters }
+  }
+
+  /// Return the number of times that the function was called.
+  public var callCount: Int {
+    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    .count
+  }
+
   // MARK: - Init
 
   init(callRegister: CallRegister,
@@ -52,7 +66,7 @@ public class Verifiable<ReturnType> {
   /// Used to disambiguate the `ReturnType`.
   /// - Parameter type: The type to disambiguate.
   /// - Returns: `self` with `ReturnType` disambiguated.
-  public  func disambiguate(with type: ReturnType.Type) -> Self { self }
+  public func disambiguate(with type: ReturnType.Type) -> Self { self }
 
   /// Checks that the function has been called a number of times corresponding to the predicate.
   /// - Parameter times: Predicate that corresponds to the number of calls.
