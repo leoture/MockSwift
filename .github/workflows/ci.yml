@@ -9,10 +9,16 @@ on:
       - '*'
 
 jobs:
-  build:
-    name: Tests
-    runs-on: macOS-latest
+
+  spm-tests:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+    runs-on: ${{ matrix.os }}
+    name: Swift Package Manager Tests
     steps:
     - uses: actions/checkout@v1
-    - run: make
-    - run: bash <(curl -s https://codecov.io/bash)
+    - run: eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+    - run: swift test
