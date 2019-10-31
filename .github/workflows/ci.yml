@@ -9,7 +9,17 @@ on:
       - '*'
 
 jobs:
-
+  
+  check-linuxmain:
+    runs-on: macOS-latest
+    name: Check Linuxmain
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - run: ./scripts/check-linux-tests.sh 
+      
   spm-tests:
     strategy:
       matrix:
@@ -23,4 +33,24 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: swift test
+    - run: make spm-tests
+  
+  mockswift-package:
+    runs-on: macOS-latest
+    name: MockSwift-Package
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - run: make MockSwift-Package
+      
+  mockswiftexample:
+    runs-on: macOS-latest
+    name: MockSwiftExample
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - run: make MockSwiftExample
