@@ -43,7 +43,9 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - run: |
+        brew install swiftlint
+        xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
       
   mockswiftexample:
     runs-on: macOS-latest
@@ -53,4 +55,6 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - run: |
+        brew install sourcery
+        xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
