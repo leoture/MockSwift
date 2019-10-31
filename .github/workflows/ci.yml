@@ -14,7 +14,7 @@ jobs:
     name: swift
     steps:
     - uses: actions/checkout@v1
-    - run: xcode-select -switch /Applications/Xcode_11.1.app
+    - run: sudo xcode-select -switch /Applications/Xcode_11.1.app
     - run: swift --version
       
   check-linuxmain:
