@@ -16,6 +16,7 @@ import MockSwift
 
 
 
+
 // MARK: - Basics
 extension Mock: Basics where WrappedType == Basics {
   public func doSomething() {
@@ -112,6 +113,33 @@ extension MockThen where WrappedType == Basics {
   }
   public func doSomething(with arg1: String, and arg2: Bool) -> Verifiable<String> {
     verifiable(arg1, arg2)
+  }
+}
+
+// MARK: - Escaping
+extension Mock: Escaping where WrappedType == Escaping {
+  public func call(_ block: @escaping (String) -> Bool) -> Bool {
+    mocked(block)
+  }
+}
+
+
+extension MockGiven where WrappedType == Escaping {
+  public func call(_ block: Predicate<(String) -> Bool>) -> Mockable<Bool> {
+    mockable(block)
+  }
+  public func call(_ block: @escaping (String) -> Bool) -> Mockable<Bool> {
+    mockable(block)
+  }
+}
+
+
+extension MockThen where WrappedType == Escaping {
+  public func call(_ block: Predicate<(String) -> Bool>) -> Verifiable<Bool> {
+    verifiable(block)
+  }
+  public func call(_ block: @escaping (String) -> Bool) -> Verifiable<Bool> {
+    verifiable(block)
   }
 }
 

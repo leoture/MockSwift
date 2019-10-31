@@ -22,6 +22,7 @@
 #### Removed
 
 #### Fixed
+- Fix generated mock when a parameter is escaping [#51](https://github.com/leoture/MockSwift/pull/51)
 
 #### Security
 

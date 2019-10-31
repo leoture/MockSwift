@@ -2,9 +2,11 @@ import Foundation
 import MockSwift
 @testable import {{argument.module}}
 
-{% macro predicatesParameter method %}{% for param in method.parameters %}{% if param.argumentLabel == null %}_ {% elif param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.typeName }}>{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
+{% macro predicatesParameter method %}{% for param in method.parameters %}{% if param.argumentLabel == null %}_ {% elif param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}{% endmacro %}
 
-{% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
+{% macro normalizeParameter method %}{% for param in method.parameters %}{% if param.argumentLabel == null %}_ {% elif param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {% if param.typeName|contains:"->" %}@escaping {{ param.unwrappedTypeName }}{% else %}{{ param.typeName }}{% endif %}{{ ', ' if not forloop.last }}{% endfor %}{% endmacro %}
+
+{% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{{ ', ' if not forloop.last }}{% endfor %}{% endmacro %}
 
 {% macro mockMethod method %}
   public func {{ method.name }}{{ ' throws' if method.throws }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
@@ -31,7 +33,7 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
     mockable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public func {{ method.name }} -> Mockable{% call normalizeReturnType method.returnTypeName %} {
+  public func {{ method.shortName }}({% call normalizeParameter method %}) -> Mockable{% call normalizeReturnType method.returnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
   {% endif %}
@@ -52,7 +54,7 @@ extension MockGiven where WrappedType == {{ type.name }} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public func {{ method.name }} -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
+  public func {{ method.shortName }}({% call normalizeParameter method %}) -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% endif %}
