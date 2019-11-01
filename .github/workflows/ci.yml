@@ -28,42 +28,46 @@ jobs:
     - run: ./scripts/check-linux-tests.sh 
       
   spm-tests:
+    name: Swift Package Manager Tests
     strategy:
       matrix:
         os:
           - ubuntu-latest
           - macOS-latest
     runs-on: ${{ matrix.os }}
-    name: Swift Package Manager Tests
     steps:
     - uses: actions/checkout@v1
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: swift test
+    - name: Build and test
+      run: swift test
   
   mockswift-package:
-    runs-on: macOS-latest
     name: MockSwift-Package
+    runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: brew install swiftlint
-    - run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
-    - uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
+    - name: Prepare
+      run: brew install swiftlint
+    - name: Build and test
+      run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - name: Code coverage
+      run: bash <(curl -s 'https://codecov.io/bash') -t ${{secrets.CODECOV_TOKEN}}
     
       
   mockswiftexample:
-    runs-on: macOS-latest
     name: MockSwiftExample
+    runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: brew install swiftlint sourcery
-    - run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - name: Prepare
+      run: brew install swiftlint sourcery
+    - name: Build and test
+      run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
