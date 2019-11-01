@@ -10,6 +10,7 @@ XCPRETTY =  xcpretty && exit $${PIPESTATUS[0]}
 SPM = swift
 
 SOURCERY_VERSION := $(shell sourcery --version 2>/dev/null)
+SWIFTLINT_VERSION := $(shell swiftlint version 2>/dev/null)
 
 .DEFAULT_GOAL = all
 all: spm-tests MockSwift-Package MockSwiftExample linux-tests
@@ -17,6 +18,12 @@ all: spm-tests MockSwift-Package MockSwiftExample linux-tests
 tools: xcmake
 	@description "Tools update"
 	bundle update
+ifndef SOURCERY_VERSION
+	brew install sourcery
+endif
+ifndef SWIFTLINT_VERSION
+	brew install swiftlint
+endif
 
 documentation: tools
 	@description "Generate documentation"
@@ -26,7 +33,7 @@ spm-tests: xcmake
 	@description "Swift Package Manager Tests"
 	${SPM} test
 
-MockSwift-Package: xcmake
+MockSwift-Package: tools
 	@description "MockSwift-Package Tests"
 	${XCBUILD} ${XCFLAGS} -scheme $@ test | ${XCPRETTY}
 
@@ -35,7 +42,12 @@ ifndef SOURCERY_VERSION
 	brew install sourcery
 endif
 
-MockSwiftExample: xcmake sourcery
+swiftlint:
+ifndef SWIFTLINT_VERSION
+	brew install swiftlint
+endif
+
+MockSwiftExample: tools
 	@description "MockSwiftExample Tests"
 	${XCBUILD} ${XCFLAGS} -scheme $@ -destination $(DESTINATION) test | ${XCPRETTY}
 

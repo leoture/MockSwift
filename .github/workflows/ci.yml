@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+
+  check-linuxmain:
+    name: Check Linuxmain
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - run: ./scripts/check-linux-tests.sh 
+
+  spm-tests:
+    name: Swift Package Manager Tests
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - name: Build and test
+      run: swift test
+
+  mockswift-package:
+    name: MockSwift-Package
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - name: Prepare
+      run: brew install swiftlint
+    - name: Build and test
+      run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - name: Code coverage
+      run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
+
+
+  mockswiftexample:
+    name: MockSwiftExample
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
+    - name: Prepare
+      run: brew install swiftlint sourcery
+    - name: Build and test
+      run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}

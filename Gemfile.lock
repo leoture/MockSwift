@@ -68,7 +68,7 @@ GEM
       xcinvoke (~> 0.3.0)
     json (2.2.0)
     liferaft (0.0.6)
-    minitest (5.12.2)
+    minitest (5.13.0)
     molinillo (0.6.6)
     mustache (1.1.0)
     nanaimo (0.2.6)
@@ -103,4 +103,4 @@ DEPENDENCIES
   xcpretty (~> 0.3.0)
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
