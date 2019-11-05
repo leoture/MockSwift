@@ -14,8 +14,6 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Prepare
-        run: gem install danger
       - run: bundle exec danger
         
   check-linuxmain:
