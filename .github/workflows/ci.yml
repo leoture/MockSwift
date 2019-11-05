@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Prepare
-        run: bundle install danger
+        run: bundle install
       - run: bundle exec danger
         
   check-linuxmain:
