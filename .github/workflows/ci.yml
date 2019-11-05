@@ -18,7 +18,9 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: ./scripts/check-linux-tests.sh 
+    - name: Danger Swift
+      uses: danger/swift@2.0.1
+    - run: ./scripts/check-linux-tests.sh
 
   spm-tests:
     name: Swift Package Manager Tests
