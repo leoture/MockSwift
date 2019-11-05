@@ -18,7 +18,10 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - run: ./scripts/check-linux-tests.sh 
+    - name: Prepare
+      - run: gem install danger
+    - run: ./scripts/check-linux-tests.sh
+    - run: bundle exec danger
 
   spm-tests:
     name: Swift Package Manager Tests
