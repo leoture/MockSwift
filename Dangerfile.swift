@@ -10,6 +10,7 @@ if !changelogChanged && sourceChanges != nil {
   warn("No CHANGELOG entry added.")
 }
 
-if danger.github.pullRequest.body.isEmpty {
+let noPRBody = danger.github.pullRequest.body?.isEmpty ?? true
+if noPRBody {
   warn("Please, provide a description to your PR.")
 }
