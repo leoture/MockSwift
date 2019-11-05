@@ -10,6 +10,12 @@ on:
 
 jobs:
 
+  danger:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Danger Swift
+      uses: danger/swift@2.0.3
+      
   check-linuxmain:
     name: Check Linuxmain
     runs-on: macOS-latest
@@ -18,8 +24,6 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - name: Danger Swift
-      uses: danger/swift@2.0.1
     - run: ./scripts/check-linux-tests.sh
 
   spm-tests:
