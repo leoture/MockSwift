@@ -10,6 +10,13 @@ on:
 
 jobs:
 
+  danger:
+    runs-on: macOS-latest
+    steps:
+      - name: Prepare
+        run: gem install danger
+      - run: bundle exec danger
+        
   check-linuxmain:
     name: Check Linuxmain
     runs-on: macOS-latest
@@ -18,10 +25,7 @@ jobs:
     - uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1'
-    - name: Prepare
-      run: gem install danger
     - run: ./scripts/check-linux-tests.sh
-    - run: bundle exec danger
 
   spm-tests:
     name: Swift Package Manager Tests
