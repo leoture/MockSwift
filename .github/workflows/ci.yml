@@ -19,7 +19,7 @@ jobs:
       with:
         swift-version: '5.1'
     - name: Prepare
-      - run: gem install danger
+      run: gem install danger
     - run: ./scripts/check-linux-tests.sh
     - run: bundle exec danger
 
