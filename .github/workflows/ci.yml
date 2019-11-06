@@ -10,26 +10,6 @@ on:
 
 jobs:
 
-  danger:
-    runs-on: macOS-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Prepare
-        run: bundle install
-      - run: bundle exec danger
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-  check-linuxmain:
-    name: Check Linuxmain
-    runs-on: macOS-latest
-    steps:
-    - uses: actions/checkout@v1
-    - uses: YOCKOW/Action-setup-swift@master
-      with:
-        swift-version: '5.1'
-    - run: ./scripts/check-linux-tests.sh
-
   spm-tests:
     name: Swift Package Manager Tests
     strategy:
@@ -46,7 +26,7 @@ jobs:
     - name: Build and test
       run: swift test
 
-  mockswift-package:
+  xcode-tests:
     name: MockSwift-Package
     runs-on: macOS-latest
     steps:
@@ -55,22 +35,15 @@ jobs:
       with:
         swift-version: '5.1'
     - name: Prepare
-      run: brew install swiftlint
-    - name: Build and test
+      run: brew install swiftlint sourcery
+      run: bundle install
+    - name: Build and test MockSwift-Package
       run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
-
-
-  mockswiftexample:
-    name: MockSwiftExample
-    runs-on: macOS-latest
-    steps:
-    - uses: actions/checkout@v1
-    - uses: YOCKOW/Action-setup-swift@master
-      with:
-        swift-version: '5.1'
-    - name: Prepare
-      run: brew install swiftlint sourcery
-    - name: Build and test
+    - name: Build and test MockSwiftExample
       run: xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty && exit ${PIPESTATUS[0]}
+    - name: Danger
+      run: bundle exec danger
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
