@@ -1,9 +1,9 @@
-name: CI
+name: Master
 
 on:
-  pull_request:
+  push:
     branches:
-      - '*'
+      - master
 
 jobs:
 
@@ -28,18 +28,14 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1'
     - name: Prepare
-      run: |
-        brew install swiftlint sourcery
-        bundle install
-        sudo xcode-select -switch /Applications/Xcode_11.1.app
+      run: brew install swiftlint sourcery
     - name: Build and test MockSwift-Package
       run: set -o pipefail && xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Build and test MockSwiftExample
       run: set -o pipefail && xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
-    - name: Danger
-      run: bundle exec danger
-      env:
-        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
