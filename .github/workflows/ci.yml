@@ -32,7 +32,7 @@ jobs:
       run: |
         brew install swiftlint sourcery
         bundle install
-        sudo xcode-select -switch /Applications/Xcode_11.1.app
+        swift --version
     - name: Build and test MockSwift-Package
       run: set -o pipefail && xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
     - name: Code coverage
