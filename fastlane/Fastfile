@@ -1,0 +1,80 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+#update_fastlane
+
+default_platform(:mac)
+
+platform :mac do
+
+  desc "Run Swift Package Manager tests"
+  lane :spm_tests do
+    spm(
+      command: "test",
+      xcpretty_output: "simple"
+    )
+  end
+
+  desc "Run Swift Package Manager tests on linux"
+  lane :spm_linux_tests do
+    sh("docker-compose","up")
+  end
+
+  desc "Run MockSwift-Package tests"
+  lane :mockswift_package_tests do
+    run_tests(
+      scheme: "MockSwift-Package",
+      clean: true,
+      skip_detect_devices: true
+    )
+  end
+
+  desc "Run MockSwiftExample tests"
+  lane :mockswift_example_tests do
+    run_tests(
+      scheme: "MockSwiftExample",
+      clean: true,
+    )
+  end
+
+  def manifests_size
+    Dir.chdir("..") do
+      lines = File.readlines("Tests/MockSwiftTests/XCTestManifests.swift")
+      lines.join.size
+    end
+  end
+
+  desc "Check linux main generated"
+  lane :check_linux_main do
+    previous_size = manifests_size
+    sh("swift test --generate-linuxmain")
+    current_size = manifests_size
+    if previous_size != current_size
+      UI.user_error!("XCTestManifests was not generated."\
+        " Please run `swift test --generate-linuxmain` to include all tests in linux CI.")
+    end
+  end
+
+  desc "Run mac tests"
+  lane :mac_tests do
+    check_linux_main
+    spm_tests
+    mockswift_package_tests
+    mockswift_example_tests
+  end
+
+  desc "Run mac & linux tests"
+  lane :all_tests do
+    mac_tests
+    spm_linux_tests
+  end
+end
