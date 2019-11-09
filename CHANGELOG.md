@@ -16,6 +16,7 @@
 
 #### Changed
 - Template sourcery only generates Mock with AutoMockable annotation [#43](https://github.com/leoture/MockSwift/pull/43)
+- The Input type of Predicate.match and Predicate.any can be disambiguate
 
 #### Deprecated
 
