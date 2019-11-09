@@ -7,14 +7,9 @@ on:
 
 jobs:
 
-  spm-tests:
-    name: Swift Package Manager Tests
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - macOS-latest
-    runs-on: ${{ matrix.os }}
+  linux-tests:
+    name: Ubuntu Tests
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: YOCKOW/Action-setup-swift@master
@@ -23,18 +18,17 @@ jobs:
     - name: Build and test
       run: swift test
 
-  xcode-tests:
-    name: Xcode Tests
+  macos-tests:
+    name: macOS Tests
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
     - name: Prepare
       run: |
         brew install swiftlint sourcery
+        bundle install
         swift --version
-    - name: Build and test MockSwift-Package
-      run: set -o pipefail && xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwift-Package -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
+    - name: Run fastlane
+      run: fastlane mac_tests
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
-    - name: Build and test MockSwiftExample
-      run: set -o pipefail && xcodebuild -workspace MockSwift.xcworkspace -scheme MockSwiftExample -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty

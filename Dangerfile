@@ -5,7 +5,6 @@ has_source_changes = !git.modified_files.grep(/^Sources/).empty?
 has_test_changes = !git.modified_files.grep(/^Tests/).empty?
 has_changelog_changes = git.modified_files.include?("CHANGELOG.md")
 has_pr_body = !github.pr_body.strip.empty?
-has_linuxmain_changes = system("./scripts/check-linux-tests.sh")
 
 if has_source_changes && !has_changelog_changes
     fail("Please update #{github.html_link(@CHANGELOG_FILE)}.")
@@ -20,6 +19,17 @@ if !has_pr_body
   warn("Please, provide a description to your PR. #{github.html_link(@PULL_REQUEST_TEMPLATE)} can help you.")
 end
 
+def manifests_size
+  lines = File.readlines("Tests/MockSwiftTests/XCTestManifests.swift")
+  lines.join.size
+end
+
+previous_size = manifests_size
+system("swift test --generate-linuxmain")
+current_size = manifests_size
+
+has_linuxmain_changes = previous_size == current_size
+
 if !has_linuxmain_changes
-  fail("linuxmain have not been update. Please run `swift test --generate-linuxmain`.")
+  fail("XCTestManifests.swift has not been updated. Please run `swift test --generate-linuxmain` to include all tests in linux CI.")
 end

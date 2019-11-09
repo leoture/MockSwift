@@ -3,3 +3,5 @@
 /Packages
 xcuserdata/
 .xcmake/bin
+fastlane/report.xml
+fastlane/test_output
