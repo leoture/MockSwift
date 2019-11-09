@@ -18,17 +18,17 @@ jobs:
     - name: Build and test
       run: swift test
 
-    macos-tests:
-      name: macOS Tests
-      runs-on: macOS-latest
-      steps:
-      - uses: actions/checkout@v1
-      - name: Prepare
-        run: |
-          brew install swiftlint sourcery
-          bundle install
-          swift --version
-      - name: Run fastlane
-        run: fastlane mac_tests
-      - name: Code coverage
-        run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
+  macos-tests:
+    name: macOS Tests
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Prepare
+      run: |
+        brew install swiftlint sourcery
+        bundle install
+        swift --version
+    - name: Run fastlane
+      run: fastlane mac_tests
+    - name: Code coverage
+      run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
