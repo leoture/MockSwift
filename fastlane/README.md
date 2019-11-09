@@ -36,11 +36,6 @@ Run MockSwift-Package tests
 fastlane mac mockswift_example_tests
 ```
 Run MockSwiftExample tests
-### mac check_linux_main
-```
-fastlane mac check_linux_main
-```
-Check linux main generated
 ### mac mac_tests
 ```
 fastlane mac mac_tests

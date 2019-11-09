@@ -34,7 +34,8 @@ platform :mac do
     run_tests(
       scheme: "MockSwift-Package",
       clean: true,
-      skip_detect_devices: true
+      skip_detect_devices: true,
+      code_coverage: true
     )
   end
 
@@ -46,34 +47,16 @@ platform :mac do
     )
   end
 
-  def manifests_size
-    Dir.chdir("..") do
-      lines = File.readlines("Tests/MockSwiftTests/XCTestManifests.swift")
-      lines.join.size
-    end
-  end
-
-  desc "Check linux main generated"
-  lane :check_linux_main do
-    previous_size = manifests_size
-    sh("swift test --generate-linuxmain")
-    current_size = manifests_size
-    if previous_size != current_size
-      UI.user_error!("XCTestManifests was not generated."\
-        " Please run `swift test --generate-linuxmain` to include all tests in linux CI.")
-    end
-  end
-
   desc "Run mac tests"
   lane :mac_tests do
-    check_linux_main
     spm_tests
-    mockswift_package_tests
     mockswift_example_tests
+    mockswift_package_tests
   end
 
   desc "Run mac & linux tests"
   lane :all_tests do
+    sh("swift test --generate-linuxmain")
     mac_tests
     spm_linux_tests
   end
