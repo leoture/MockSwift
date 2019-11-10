@@ -24,34 +24,46 @@
  */
 
 import XCTest
-import MockSwift
+@testable import MockSwift
 
 private class Custom {}
 
 class PredicateTests: XCTestCase {
 
+  // MARK: - match(description:any type:_ predicate:)
+
   func test_match_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
-    let predicate: Predicate<String> = .match { _ in
-      true
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertFalse(predicate.satisfy(by: 1))
     }
-    XCTAssertFalse(predicate.satisfy(by: 1))
+
+    assertion(.match(any: String.self) { _ in true })
   }
 
   func test_match_shouldReturnFalseIfInputNotMatched() {
-    let predicate: Predicate<String> = .match { value in
-      value.isEmpty
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertFalse(predicate.satisfy(by: "not Empty"))
     }
 
-    XCTAssertFalse(predicate.satisfy(by: "not Empty"))
+    assertion(.match(any: String.self) {$0.isEmpty})
   }
 
   func test_match_shouldReturnTrueIfInputMatched() {
-    let predicate: Predicate<String> = .match { value in
-      value.isEmpty
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
-    XCTAssertTrue(predicate.satisfy(by: ""))
+    assertion(.match(any: String.self) {$0.isEmpty})
   }
+
+  func test_match_description() {
+    let predicate: Predicate<String> = .match { _ in
+      true
+    }
+    XCTAssertEqual("\(predicate)", "a String")
+  }
+
+  // MARK: - match(_ value:file:line:)
 
   func test_match_shouldReturnTrueIfInputMatchedByAnyPredicate() {
     let anyPredicate: AnyPredicate = Predicate<String>.match { value in
@@ -85,45 +97,52 @@ class PredicateTests: XCTestCase {
     XCTAssertFalse(predicate.satisfy(by: Custom()))
   }
 
-  func test_match_description() {
-    let predicate: Predicate<String> = .match(description: "description") { _ in
-      true
-    }
-    XCTAssertEqual("\(predicate)", "description")
-  }
+  // MARK: - match(description:any type:when keyPath:)
 
   func test_match_shouldReturnTrueIfKeyPathReturnTrue() {
-    let predicate: AnyPredicate = Predicate<String>.match(\.isEmpty)
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertTrue(predicate.satisfy(by: ""))
+    }
 
-     XCTAssertTrue(predicate.satisfy(by: ""))
-   }
+    assertion(.match(any: String.self, when: \.isEmpty))
+  }
 
-   func test_match_shouldReturnFalseIfKeyPathReturnFalse() {
-     let predicate: AnyPredicate = Predicate<String>.match(\.isEmpty)
+  func test_match_shouldReturnFalseIfKeyPathReturnFalse() {
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertFalse(predicate.satisfy(by: "not Empty"))
+    }
 
-     XCTAssertFalse(predicate.satisfy(by: "not Empty"))
-   }
+    assertion(.match(any: String.self, when: \.isEmpty))
+  }
 
-   func test_match_KeyPathDescription() {
-     let predicate: AnyPredicate = Predicate<String>.match(description: "description", \.isEmpty)
+  func test_match_KeyPathDescription() {
+    let predicate: Predicate<String> = .match(when: \.isEmpty)
 
-     XCTAssertEqual("\(predicate)", "description")
-   }
+    XCTAssertEqual("\(predicate)", "a String")
+  }
+
+  // MARK: - any(_ type:)
 
   func test_any_shouldReturnFalse() {
-    let predicate: Predicate<String> = .any()
-    XCTAssertFalse(predicate.satisfy(by: 1))
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertFalse(predicate.satisfy(by: 1))
+    }
+
+    assertion(.any(String.self))
   }
 
   func test_any_shouldReturnTrue() {
-    let predicate: Predicate<String> = .any()
-    XCTAssertTrue(predicate.satisfy(by: ""))
+    func assertion<T>(_ predicate: Predicate<T>) {
+      XCTAssertTrue(predicate.satisfy(by: ""))
+    }
+
+    assertion(.any(String.self))
   }
 
   func test_any_description() {
     let predicate: Predicate<String> = .any()
 
-    XCTAssertEqual("\(predicate)", "any")
+    XCTAssertEqual("\(predicate)", "any String")
   }
 
   func test_not_shouldReturnFalse() {
@@ -138,7 +157,6 @@ class PredicateTests: XCTestCase {
 
   func test_not_description() {
     let predicate: Predicate<String> = .not(.match(description: "description") { _ in true })
-
     XCTAssertEqual("\(predicate)", "not description")
   }
 }
