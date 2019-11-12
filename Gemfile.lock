@@ -130,7 +130,6 @@ GEM
       xcodeproj (>= 1.8.1, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
-    fastlane-plugin-docker (0.3.0)
     ffi (1.11.1)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
@@ -263,7 +262,6 @@ PLATFORMS
 DEPENDENCIES
   danger (~> 6.1.0)
   fastlane (~> 2)
-  fastlane-plugin-docker
   jazzy (~> 0.11.0)
   xcpretty (~> 0.3.0)
 

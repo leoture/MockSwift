@@ -1,4 +1,8 @@
-<img src="https://raw.githubusercontent.com/leoture/MockSwift/master/MockSwift.svg?sanitize=true" alt="MockSwift" width="32" height="32"> Welcome to MockSwift!
+<p align="center">
+  <img src="https://raw.githubusercontent.com/leoture/MockSwift/master/MockSwift.svg?sanitize=true" alt="MockSwift" width="256">  
+</p>
+
+Welcome to MockSwift!  
 =======
 [![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master)](https://github.com/leoture/MockSwift/actions)
@@ -27,7 +31,7 @@ import PackageDescription
 let package = Package(
   name: "MyProject",
   dependencies: [
-    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.3.0")
+    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.4.0")
   ],
   targets: [
     .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
@@ -112,3 +116,6 @@ Would you like to contribute to MockSwift? Please read our [contributing guideli
 
 # License
 MockSwift is released under the MIT license. [See LICENSE](https://github.com/leoture/MockSwift/blob/master/LICENSE) for details.
+
+# Credits
+[![Thanks to JetBrains](https://raw.githubusercontent.com/leoture/MockSwift/master/jetbrains.svg?sanitize=true)](https://www.jetbrains.com/?from=MockSwift)
