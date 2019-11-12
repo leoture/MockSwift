@@ -4,4 +4,5 @@ root_url: https://leoture.github.io/MockSwift/
 module: MockSwift
 output: docs
 readme: README.md
+theme: fullwidth
 xcodebuild_arguments: [-workspace, 'MockSwift.xcworkspace', -scheme, 'MockSwift-Package']

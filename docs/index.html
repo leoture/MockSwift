@@ -4,122 +4,153 @@
     <title>MockSwift  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
+
+
     <a title="MockSwift  Reference"></a>
-    <header>
-      <div class="content-wrapper">
-        <p><a href="index.html">MockSwift Docs</a> (95% documented)</p>
-        <p class="header-right"><a href="https://github.com/leoture/MockSwift"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
-      </div>
-    </header>
-    <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="index.html">MockSwift Reference</a>
-        <img id="carat" src="img/carat.png" />
-        MockSwift  Reference
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          MockSwift Docs
+        </a>
+         (95% documented)
       </p>
-    </div>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/leoture/MockSwift">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml">
+            <img class="header-icon" src="img/dash.png"/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">MockSwift Reference</a>
+      <img class="carat" src="img/carat.png" />
+      MockSwift  Reference
+    </p>
+
     <div class="content-wrapper">
-      <nav class="sidebar">
+      <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Classes.html">Classes</a>
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/Mock.html">Mock</a>
+                <a class="nav-group-task-link" href="Classes/Mock.html">Mock</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/MockGiven.html">MockGiven</a>
+                <a class="nav-group-task-link" href="Classes/MockGiven.html">MockGiven</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/MockThen.html">MockThen</a>
+                <a class="nav-group-task-link" href="Classes/MockThen.html">MockThen</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/Mockable.html">Mockable</a>
+                <a class="nav-group-task-link" href="Classes/Mockable.html">Mockable</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/Predicate.html">Predicate</a>
+                <a class="nav-group-task-link" href="Classes/Predicate.html">Predicate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/Verifiable.html">Verifiable</a>
+                <a class="nav-group-task-link" href="Classes/Verifiable.html">Verifiable</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Extensions/Bool.html">Bool</a>
+                <a class="nav-group-task-link" href="Extensions/Bool.html">Bool</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/Int.html">Int</a>
+                <a class="nav-group-task-link" href="Extensions/Int.html">Int</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
+                <a class="nav-group-task-link" href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Functions.html">Functions</a>
+            <a class="nav-group-name-link" href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift2eeopyAA9PredicateCyxGxSQRzlF">==(_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2eeopyAA9PredicateCyxGxSQRzlF">==(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift2geopyAA9PredicateCyxGxSLRzlF">&gt;=(_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2geopyAA9PredicateCyxGxSLRzlF">&gt;=(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift5given_4file4lineAA0A5GivenCyxGx_s12StaticStringVSutlF">given(_:file:line:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift5given_4file4lineAA0A5GivenCyxGx_s12StaticStringVSutlF">given(_:file:line:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift5given_4file4line_yx_s12StaticStringVSuyAA0A5GivenCyxGXEtlF">given(_:file:line:_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift5given_4file4line_yx_s12StaticStringVSuyAA0A5GivenCyxGXEtlF">given(_:file:line:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift4then_4file4lineAA0A4ThenCyxGx_s12StaticStringVSutlF">then(_:file:line:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift4then_4file4lineAA0A4ThenCyxGx_s12StaticStringVSutlF">then(_:file:line:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:9MockSwift4then_4file4line_yx_s12StaticStringVSuyAA0A4ThenCyxGXEtlF">then(_:file:line:_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift4then_4file4line_yx_s12StaticStringVSuyAA0A4ThenCyxGXEtlF">then(_:file:line:_:)</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Protocols.html">Protocols</a>
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Protocols/AnyPredicate.html">AnyPredicate</a>
+                <a class="nav-group-task-link" href="Protocols/AnyPredicate.html">AnyPredicate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/MockDefault.html">MockDefault</a>
+                <a class="nav-group-task-link" href="Protocols/MockDefault.html">MockDefault</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Typealiases.html">Type Aliases</a>
+            <a class="nav-group-name-link" href="Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a>
+                <a class="nav-group-task-link" href="Typealiases.html#/s:9MockSwift13ParameterTypea">ParameterType</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-        <section>
-          <section class="section">
+
+        <section class="section">
+          <div class="section-content">
             
-            <h1 id='img-src-https-raw-githubusercontent-com-leoture-mockswift-master-mockswift-svg-sanitize-true-alt-mockswift-width-32-height-32-welcome-to-mockswift' class='heading'><img src="https://raw.githubusercontent.com/leoture/MockSwift/master/MockSwift.svg?sanitize=true" alt="MockSwift" width="32" height="32"> Welcome to MockSwift!</h1>
+            <p align="center">
+  <img src="https://raw.githubusercontent.com/leoture/MockSwift/master/MockSwift.svg?sanitize=true" alt="MockSwift" width="256">  
+</p>
+<h1 id='welcome-to-mockswift' class='heading'>Welcome to MockSwift!  </h1>
 
 <p><a href="https://github.com/leoture/MockSwift/releases"><img src="https://img.shields.io/github/v/release/leoture/MockSwift?color=red" alt="Release"></a>
-<a href="https://travis-ci.com/leoture/MockSwift"><img src="https://travis-ci.com/leoture/MockSwift.svg?token=7mHp1J41yAdss7UzTesf&branch=master" alt="Build Status"></a>
+<a href="https://github.com/leoture/MockSwift/actions"><img src="https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/gh/leoture/MockSwift"><img src="https://codecov.io/gh/leoture/MockSwift/branch/master/graph/badge.svg" alt="codecov"></a>
 <a href="https://leoture.github.io/MockSwift"><img src="https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true" alt="documentation"></a>
 <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen" alt="Swift Package Manager compatible"></a>
@@ -147,7 +178,7 @@
 <span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
   <span class="nv">name</span><span class="p">:</span> <span class="s">"MyProject"</span><span class="p">,</span>
   <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/leoture/MockSwift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"0.3.0"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/leoture/MockSwift.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"0.4.0"</span><span class="p">)</span>
   <span class="p">],</span>
   <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
     <span class="o">.</span><span class="nf">testTarget</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"MyProjectTests"</span><span class="p">,</span> <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="s">"MockSwift"</span><span class="p">])</span>
@@ -198,7 +229,7 @@
 <p>You can define a default value for any type.<br>
 This value will be returned for any mocked method returning this type, only if no behaviour has been defined.  </p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">User</span><span class="p">:</span> <span class="kt">MockDefault</span> <span class="p">{</span>
-  <span class="kd">static</span> <span class="kd">func</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">User</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">default</span><span class="p">`()</span> <span class="o">-&gt;</span> <span class="kt">User</span> <span class="p">{</span>
     <span class="kt">User</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"id"</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"John"</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -229,15 +260,20 @@ To use playgrounds:</p>
 <h1 id='license' class='heading'>License</h1>
 
 <p>MockSwift is released under the MIT license. <a href="https://github.com/leoture/MockSwift/blob/master/LICENSE">See LICENSE</a> for details.</p>
+<h1 id='credits' class='heading'>Credits</h1>
 
-          </section>
+<p><a href="https://www.jetbrains.com/?from=MockSwift"><img src="https://raw.githubusercontent.com/leoture/MockSwift/master/jetbrains.svg?sanitize=true" alt="Thanks to JetBrains"></a></p>
+
+          </div>
         </section>
-        <section id="footer">
-          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-10-16)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-        </section>
+
+
       </article>
     </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-11-12)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
   </body>
 </div>
 </html>
