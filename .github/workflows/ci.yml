@@ -27,18 +27,18 @@ jobs:
       run: |
         brew install swiftlint sourcery
         bundle install
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
         swift --version
     - name: Run fastlane
       run: fastlane mac_tests
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
-      run: |
-        xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
-        ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
+      uses: paambaati/codeclimate-action@v2.3.0
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
+        debug: true
     - name: Danger
       run: bundle exec danger
       env:
