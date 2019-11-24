@@ -32,6 +32,11 @@ jobs:
       run: fastlane mac_tests
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
+    - name: Code climate
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter upload-coverage
     - name: Danger
       run: bundle exec danger
       env:

@@ -1,0 +1,8 @@
+plugins:
+  swiftlint:
+    enabled: true
+
+exclude_patterns:
+- "fastlane/"
+- "docs/"
+- "**/GeneratedMocks.swift "
