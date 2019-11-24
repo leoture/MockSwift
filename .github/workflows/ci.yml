@@ -38,7 +38,7 @@ jobs:
     - name: Code climate
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      run: ./cc-test-reporter after-build -t lcov --exit-code $?
+      run: ./cc-test-reporter after-build -d -t xccov --exit-code $?
     - name: Danger
       run: bundle exec danger
       env:
