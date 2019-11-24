@@ -35,7 +35,8 @@ platform :mac do
       scheme: "MockSwift-Package",
       clean: true,
       skip_detect_devices: true,
-      code_coverage: true
+      code_coverage: true,
+      result_bundle: true
     )
   end
 
