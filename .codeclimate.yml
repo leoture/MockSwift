@@ -5,4 +5,5 @@ plugins:
 exclude_patterns:
 - "fastlane/"
 - "docs/"
-- "**/GeneratedMocks.swift "
+- "MockSwiftExample/MockSwiftExampleTests/"
+- "Tests/"
