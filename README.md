@@ -6,7 +6,8 @@ Welcome to MockSwift!
 =======
 [![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master)](https://github.com/leoture/MockSwift/actions)
-[![codecov](https://codecov.io/gh/leoture/MockSwift/branch/master/graph/badge.svg)](https://codecov.io/gh/leoture/MockSwift)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/maintainability)](https://codeclimate.com/github/leoture/MockSwift/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/test_coverage)](https://codeclimate.com/github/leoture/MockSwift/test_coverage)
 [![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen)](https://github.com/apple/swift-package-manager)
 [![Swift](https://img.shields.io/badge/Swift-5.1-important)](https://swift.org)
