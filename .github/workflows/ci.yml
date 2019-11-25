@@ -37,8 +37,8 @@ jobs:
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
       env:
-        GIT_COMMIT_SHA: $GITHUB_SHA
-        GIT_BRANCH: ${GITHUB_REF//refs\/heads\//}
+        GIT_COMMIT_SHA: "$GITHUB_SHA"
+        GIT_BRANCH: "${GITHUB_REF//refs\/heads\//}"
       run: |
         xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
         ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
