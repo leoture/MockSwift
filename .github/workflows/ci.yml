@@ -37,7 +37,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
-        coverageCommand: xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
+        coverageCommand: 'xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json'
         debug: true
     - name: Danger
       run: bundle exec danger
