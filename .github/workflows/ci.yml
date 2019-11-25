@@ -31,7 +31,8 @@ jobs:
     - name: Prepare Code climate
       run: |
         export GIT_COMMIT_SHA=$GITHUB_SHA
-        export GIT_BRANCH=${GITHUB_REF//refs\/heads\//}
+        export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
+        echo $GIT_BRANCH
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
@@ -42,7 +43,7 @@ jobs:
     - name: Code climate
       run: |
         export GIT_COMMIT_SHA=$GITHUB_SHA
-        export GIT_BRANCH=${GITHUB_REF//refs\/heads\//}
+        export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
         xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
         ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
     - name: Danger
