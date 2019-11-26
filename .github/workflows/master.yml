@@ -30,7 +30,7 @@ jobs:
         swift --version
     - name: Prepare Code climate
       run: |
-        export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
+        export GIT_BRANCH=master
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
@@ -40,6 +40,6 @@ jobs:
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
       run: |
-        export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
+        export GIT_BRANCH=master
         xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
         ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
