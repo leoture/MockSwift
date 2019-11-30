@@ -24,10 +24,10 @@ extension DefaultFunctionBehaviourTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__DefaultFunctionBehaviourTests = [
-        ("test_handle_shouldReturnDefaultCustom", test_handle_shouldReturnDefaultCustom),
         ("test_handle_shouldReturnNullOnUnknownType", test_handle_shouldReturnNullOnUnknownType),
-        ("test_handleThrowable_shouldReturnDefaultCustom", test_handleThrowable_shouldReturnDefaultCustom),
+        ("test_handle_shouldReturnStubCustom", test_handle_shouldReturnStubCustom),
         ("test_handleThrowable_shouldReturnNullOnUnknownType", test_handleThrowable_shouldReturnNullOnUnknownType),
+        ("test_handleThrowable_shouldReturnStubCustom", test_handleThrowable_shouldReturnStubCustom),
     ]
 }
 
@@ -108,9 +108,9 @@ extension MockDefaultExtensionTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockDefaultExtensionTests = [
-        ("test_default_Bool", test_default_Bool),
-        ("test_default_Int", test_default_Int),
-        ("test_default_String", test_default_String),
+        ("test_stub_Bool", test_stub_Bool),
+        ("test_stub_Int", test_stub_Int),
+        ("test_stub_String", test_stub_String),
     ]
 }
 
