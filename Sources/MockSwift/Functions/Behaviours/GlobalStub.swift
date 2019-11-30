@@ -1,4 +1,4 @@
-//MockDefaults.swift
+//GlobalStub.swift
 /*
  MIT License
 
@@ -25,23 +25,23 @@
 
 import Foundation
 
-/// MockDefault represents an entity able to give a default value.
-public protocol MockDefault {
-  /// Creates a default value of `Self`.
-  static func `default`() -> Self
+/// GlobalStub represents an entity able to give a stub value.
+public protocol GlobalStub {
+  /// Creates a stub value of `Self`.
+  static func stub() -> Self
 }
 
-extension String: MockDefault {
-  /// Creates a default value of `Self`.
-  public static func `default`() -> Self { "" }
+extension String: GlobalStub {
+  /// Creates a stub value of `String`.
+  public static func stub() -> Self { "" }
 }
 
-extension Int: MockDefault {
-  /// Creates a default value of `Self`.
-  public static func `default`() -> Self { 0 }
+extension Int: GlobalStub {
+  /// Creates a stub value of `Int`.
+  public static func stub() -> Self { 0 }
 }
 
-extension Bool: MockDefault {
-  /// Creates a default value of `Self`.
-  public static func `default`() -> Self { false }
+extension Bool: GlobalStub {
+  /// Creates a stub value of `Bool`.
+  public static func stub() -> Self { false }
 }

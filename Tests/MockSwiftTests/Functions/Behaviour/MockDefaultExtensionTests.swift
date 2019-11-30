@@ -28,7 +28,7 @@ import XCTest
 
 class MockDefaultExtensionTests: XCTestCase {
 
-  func test_default_Bool() { XCTAssertEqual(Bool.default(), false) }
-  func test_default_Int() { XCTAssertEqual(Int.default(), 0) }
-  func test_default_String() { XCTAssertEqual(String.default(), "") }
+  func test_stub_Bool() { XCTAssertEqual(Bool.stub(), false) }
+  func test_stub_Int() { XCTAssertEqual(Int.stub(), 0) }
+  func test_stub_String() { XCTAssertEqual(String.stub(), "") }
 }

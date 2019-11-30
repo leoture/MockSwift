@@ -38,7 +38,7 @@ extension DefaultFunctionBehaviour: Behaviour {
     if ReturnType.self is Void.Type {
       return () as? ReturnType
     }
-    return (ReturnType.self as? MockDefault.Type)?.default() as? ReturnType
+    return (ReturnType.self as? GlobalStub.Type)?.stub() as? ReturnType
   }
 
 }

@@ -1,4 +1,4 @@
-//MockDefaultIntegrationTests.swift
+//GlobalStubIntegrationTests.swift
 /*
  MIT License
 
@@ -38,8 +38,8 @@ private protocol Custom {
   func functionString() -> String
 }
 
-extension CustomReturnType: MockDefault {
-  static func `default`() -> CustomReturnType {
+extension CustomReturnType: GlobalStub {
+  static func stub() -> CustomReturnType {
     CustomReturnType(identifier: "default")
   }
 }
@@ -52,26 +52,26 @@ extension Mock: Custom where WrappedType == Custom {
   func functionString() -> String { mocked() }
 }
 
-class MockDefaultIntegrationTests: XCTestCase {
+class GlobalStubIntegrationTests: XCTestCase {
   @Mock private var custom: Custom
 
-  func test_function_shouldReturnDefaultCustom() {
-    XCTAssertEqual(custom.function(), CustomReturnType.default())
+  func test_function_shouldReturnStubCustom() {
+    XCTAssertEqual(custom.function(), CustomReturnType.stub())
   }
 
   func test_functionVoid_shouldReturnVoid() {
     XCTAssertNotNil(custom.functionVoid())
   }
 
-  func test_functionBool_shouldReturnDefaultBool() {
-    XCTAssertEqual(custom.functionBool(), Bool.default())
+  func test_functionBool_shouldReturnStubBool() {
+    XCTAssertEqual(custom.functionBool(), Bool.stub())
   }
 
-  func test_functionInt_shouldReturnDefaultInt() {
-    XCTAssertEqual(custom.functionInt(), Int.default())
+  func test_functionInt_shouldReturnStubInt() {
+    XCTAssertEqual(custom.functionInt(), Int.stub())
   }
 
-  func test_functionString_shouldReturnDefaultString() {
-    XCTAssertEqual(custom.functionString(), String.default())
+  func test_functionString_shouldReturnStubString() {
+    XCTAssertEqual(custom.functionString(), String.stub())
   }
 }

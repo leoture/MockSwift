@@ -56,9 +56,9 @@
 		9EAC3792234A25B800281F7B /* PredicateBoolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC378E234A248D00281F7B /* PredicateBoolTests.swift */; };
 		9EAC3794234BA23F00281F7B /* Predicate+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC3793234BA23F00281F7B /* Predicate+Optional.swift */; };
 		9EAC3796234BA25A00281F7B /* PredicateOptionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */; };
-		9EB5542422FDDDEB00449662 /* MockDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542322FDDDEB00449662 /* MockDefaults.swift */; };
+		9EB5542422FDDDEB00449662 /* GlobalStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542322FDDDEB00449662 /* GlobalStub.swift */; };
 		9EB5542622FDDF2C00449662 /* MockDefaultExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542522FDDF2C00449662 /* MockDefaultExtensionTests.swift */; };
-		9EB5542B22FDE44300449662 /* MockDefaultIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542A22FDE44300449662 /* MockDefaultIntegrationTests.swift */; };
+		9EB5542B22FDE44300449662 /* GlobalStubIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */; };
 		9EB5542F2300591500449662 /* MockGiven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542E2300591500449662 /* MockGiven.swift */; };
 		9EB55432230059D800449662 /* AnyPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB55431230059D800449662 /* AnyPredicate.swift */; };
 		9EB5543423005A2900449662 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5543323005A2900449662 /* Mockable.swift */; };
@@ -83,14 +83,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "MockSwift::MockSwift";
+			remoteGlobalIDString = MockSwift::MockSwift;
 			remoteInfo = MockSwift;
 		};
 		9EBF806D22FAC06600C283B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "MockSwift::MockSwiftTests";
+			remoteGlobalIDString = MockSwift::MockSwiftTests;
 			remoteInfo = MockSwiftTests;
 		};
 /* End PBXContainerItemProxy section */
@@ -134,9 +134,9 @@
 		9EAC3790234A25B000281F7B /* Predicate+Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+Bool.swift"; sourceTree = "<group>"; };
 		9EAC3793234BA23F00281F7B /* Predicate+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+Optional.swift"; sourceTree = "<group>"; };
 		9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicateOptionalTests.swift; sourceTree = "<group>"; };
-		9EB5542322FDDDEB00449662 /* MockDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaults.swift; sourceTree = "<group>"; };
+		9EB5542322FDDDEB00449662 /* GlobalStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStub.swift; sourceTree = "<group>"; };
 		9EB5542522FDDF2C00449662 /* MockDefaultExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultExtensionTests.swift; sourceTree = "<group>"; };
-		9EB5542A22FDE44300449662 /* MockDefaultIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultIntegrationTests.swift; sourceTree = "<group>"; };
+		9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStubIntegrationTests.swift; sourceTree = "<group>"; };
 		9EB5542E2300591500449662 /* MockGiven.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGiven.swift; sourceTree = "<group>"; };
 		9EB55431230059D800449662 /* AnyPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPredicate.swift; sourceTree = "<group>"; };
 		9EB5543323005A2900449662 /* Mockable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 				OBJ_10 /* BehaviourRegister.swift */,
 				9E2F052122FB32A600E04F34 /* DefaultFunctionBehaviour.swift */,
 				9E2F052322FB32B200E04F34 /* Behaviour.swift */,
-				9EB5542322FDDDEB00449662 /* MockDefaults.swift */,
+				9EB5542322FDDDEB00449662 /* GlobalStub.swift */,
 				9E2372E723014A770083396B /* FunctionBehaviourRegister.swift */,
 			);
 			path = Behaviours;
@@ -341,7 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_19 /* MockTests.swift */,
-				9EB5542A22FDE44300449662 /* MockDefaultIntegrationTests.swift */,
+				9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */,
 				9EB5543523005BB000449662 /* MockableTests.swift */,
 				9EA5D1582301E43B006F0A28 /* MockGivenIntegrationTests.swift */,
 				9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */,
@@ -551,7 +551,7 @@
 				OBJ_40 /* FunctionIdentifier.swift in Sources */,
 				OBJ_41 /* Mock.swift in Sources */,
 				9EA5D15D2302EE7B006F0A28 /* Verifiable.swift in Sources */,
-				9EB5542422FDDDEB00449662 /* MockDefaults.swift in Sources */,
+				9EB5542422FDDDEB00449662 /* GlobalStub.swift in Sources */,
 				9EAC3794234BA23F00281F7B /* Predicate+Optional.swift in Sources */,
 				9E2F052422FB32B200E04F34 /* Behaviour.swift in Sources */,
 				9EAC3791234A25B000281F7B /* Predicate+Bool.swift in Sources */,
@@ -579,7 +579,7 @@
 				9EAC3792234A25B800281F7B /* PredicateBoolTests.swift in Sources */,
 				9EA5D1592301E43B006F0A28 /* MockGivenIntegrationTests.swift in Sources */,
 				9EA5D1532301DABB006F0A28 /* PredicateTests.swift in Sources */,
-				9EB5542B22FDE44300449662 /* MockDefaultIntegrationTests.swift in Sources */,
+				9EB5542B22FDE44300449662 /* GlobalStubIntegrationTests.swift in Sources */,
 				9EA55228230D93D200E82139 /* FunctionIdentifierTests.swift in Sources */,
 				9EA55224230D661E00E82139 /* FailureRecorderMock.swift in Sources */,
 				9E79EBD7235628F100979D90 /* MockThrowableTests.swift in Sources */,
