@@ -82,12 +82,12 @@ class MyTests: XCTestCase {
 }
 ```
 
-### MockDefault
-You can define a default value for any type.  
+### GlobalStub
+You can define a global stub for any type.  
 This value will be returned for any mocked method returning this type, only if no behaviour has been defined.  
 ```swift
-extension User: MockDefault {
-  static func `default`() -> User {
+extension User: GlobalStub {
+  static func stub() -> User {
     User(identifier: "id", name: "John")
   }
 }
