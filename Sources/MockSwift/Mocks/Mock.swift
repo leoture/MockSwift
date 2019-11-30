@@ -191,7 +191,7 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       return behaviours[0].handle(with: parameters) ??
-        errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+             errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
     }
@@ -204,7 +204,7 @@ public class Mock<WrappedType> {
     switch behaviours.count {
     case 1:
       return try behaviours[0].handleThrowable(with: parameters) ??
-        errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
+                 errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
     }

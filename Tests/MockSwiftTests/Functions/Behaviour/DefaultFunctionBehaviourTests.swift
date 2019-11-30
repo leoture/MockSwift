@@ -26,8 +26,8 @@
 import XCTest
 @testable import MockSwift
 
-private class Custom: MockDefault {
-  static func `default`() -> Self {
+private class Custom: GlobalStub {
+  static func stub() -> Self {
     self.init("default")
   }
 
@@ -46,7 +46,7 @@ class DefaultFunctionBehaviourTests: XCTestCase {
     defaultFunctionBehaviour = DefaultFunctionBehaviour()
   }
 
-  func test_handle_shouldReturnDefaultCustom() {
+  func test_handle_shouldReturnStubCustom() {
     let custom: Custom? = defaultFunctionBehaviour.handle(with: [])
     XCTAssertEqual(custom?.identifier, "default")
   }
@@ -56,7 +56,7 @@ class DefaultFunctionBehaviourTests: XCTestCase {
     XCTAssertNil(result)
   }
 
-  func test_handleThrowable_shouldReturnDefaultCustom() {
+  func test_handleThrowable_shouldReturnStubCustom() {
     let custom: Custom? = defaultFunctionBehaviour.handleThrowable(with: [])
     XCTAssertEqual(custom?.identifier, "default")
   }

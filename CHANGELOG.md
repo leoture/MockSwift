@@ -14,6 +14,7 @@
 #### Added
 
 #### Changed
+- Rename MockDefault to GlobalStub [#69](https://github.com/leoture/MockSwift/pull/69) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Deprecated
 

@@ -26,8 +26,8 @@ extension MockThen where WrappedType == UserService {
   func fetch(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
 }
 
-extension User: MockDefault {
-  static func `default`() -> User {
+extension User: GlobalStub {
+  static func stub() -> User {
     User(identifier: "id", name: "John")
   }
 }
