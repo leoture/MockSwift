@@ -355,6 +355,36 @@
 			path = Verifiables;
 			sourceTree = "<group>";
 		};
+		FC75745323A690D900B5064C /* Verifiables */ = {
+			isa = PBXGroup;
+			children = (
+				9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */,
+				FC75744B23A6867000B5064C /* VerifiablePropertyReadableTests.swift */,
+				FC75744D23A6867C00B5064C /* VerifiablePropertyWritableTests.swift */,
+			);
+			path = Verifiables;
+			sourceTree = "<group>";
+		};
+		FC75745423A690E600B5064C /* Mockables */ = {
+			isa = PBXGroup;
+			children = (
+				9EB5543523005BB000449662 /* MockableTests.swift */,
+				FC7A193823A020C80008AE6E /* MockablePropertyReadableTests.swift */,
+				FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */,
+			);
+			path = Mockables;
+			sourceTree = "<group>";
+		};
+		FC75745523A6912D00B5064C /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */,
+				9EA5D1582301E43B006F0A28 /* MockGivenIntegrationTests.swift */,
+				9E00715B230403DC00F040F4 /* MockThenIntegrationTests.swift */,
+			);
+			path = IntegrationTests;
+			sourceTree = "<group>";
+		};
 		OBJ_16 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +396,7 @@
 		OBJ_17 /* MockSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC75745523A6912D00B5064C /* IntegrationTests */,
 				9E79EBD32355DB2000979D90 /* Errors */,
 				9EA5D1512301DAAB006F0A28 /* Predicates */,
 				9E2F051A22FAF19600E04F34 /* Functions */,
@@ -380,19 +411,12 @@
 		OBJ_18 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				FC75745423A690E600B5064C /* Mockables */,
+				FC75745323A690D900B5064C /* Verifiables */,
 				OBJ_19 /* MockTests.swift */,
-				9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */,
-				9EB5543523005BB000449662 /* MockableTests.swift */,
-				9EA5D1582301E43B006F0A28 /* MockGivenIntegrationTests.swift */,
-				9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */,
-				9E00715B230403DC00F040F4 /* MockThenIntegrationTests.swift */,
 				9E79EBCF23549C0C00979D90 /* MockGivenTests.swift */,
 				9E79EBD12354C54E00979D90 /* MockThenTests.swift */,
 				9E79EBD6235628F100979D90 /* MockThrowableTests.swift */,
-				FC7A193823A020C80008AE6E /* MockablePropertyReadableTests.swift */,
-				FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */,
-				FC75744B23A6867000B5064C /* VerifiablePropertyReadableTests.swift */,
-				FC75744D23A6867C00B5064C /* VerifiablePropertyWritableTests.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
