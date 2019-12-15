@@ -64,6 +64,15 @@ public func then<WrappedType>(_ value: WrappedType,
   completion(then(value))
 }
 
+protocol VerifiableBuilder {
+  func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Verifiable<ReturnType>
+}
+
 /// MockThen is used to verify method calls.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
@@ -71,7 +80,7 @@ public func then<WrappedType>(_ value: WrappedType,
 ///     extension MockThen where WrappedType == CustomType
 ///
 ///
-public class MockThen<WrappedType> {
+public class MockThen<WrappedType>: VerifiableBuilder {
 
   // MARK: - Properties
 
@@ -127,5 +136,17 @@ public class MockThen<WrappedType> {
                       functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
                       parametersPredicates: predicates,
                       failureRecorder: failureRecorder)
+  }
+
+  public func verifiable<ReturnType>(property: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
+    VerifiableProperty.Readable(property: property, file: file, line: line, verifiableBuilder: self)
+  }
+
+  public func verifiable<ReturnType>(property: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {
+    VerifiableProperty.Writable(property: property, file: file, line: line, verifiableBuilder: self)
   }
 }

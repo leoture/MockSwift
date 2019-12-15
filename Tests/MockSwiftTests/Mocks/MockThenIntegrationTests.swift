@@ -27,16 +27,29 @@ import XCTest
 import MockSwift
 
 private protocol Custom {
+  var identifier: String { get set }
+  var computed: String { get }
   func function(identifier: String) -> Int
   func function(identifier: String) -> String
 }
 
 extension Mock: Custom where WrappedType == Custom {
+  var identifier: String {
+    get { mocked() }
+    set { mocked(newValue) }
+  }
+  var computed: String {
+    mocked()
+  }
   func function(identifier: String) -> Int { mocked(identifier) }
   func function(identifier: String) -> String { mocked(identifier) }
 }
 
 extension MockThen where WrappedType == Custom {
+  var identifier: VerifiableProperty.Writable<String> { verifiable() }
+
+  var computed: VerifiableProperty.Readable<String> { verifiable() }
+
   func function(identifier: String) -> Verifiable<Int> { verifiable(identifier) }
   func function(identifier: Predicate<String>) -> Verifiable<Int> { verifiable(identifier) }
 
@@ -99,5 +112,50 @@ class MockThenIntegrationTests: XCTestCase {
       .disambiguate(with: String.self)
       .callCount
     XCTAssertEqual(callCount, 2)
+  }
+
+  func test_Readable_get_shouldBeCalled() {
+    // Given
+
+    // When
+    _ = custom.computed
+    _ = custom.computed
+
+    // Then
+    then(custom).computed.get.called(times: 2)
+  }
+
+  func test_Writable_get_shouldBeCalled() {
+    // Given
+
+    // When
+    _ = custom.identifier
+    _ = custom.identifier
+
+    // Then
+    then(custom).identifier.get.called(times: 2)
+  }
+
+  func test_Writable_set_shouldBeCalledWhenParametersMatched() {
+    // Given
+    let custom = Mock<Custom>()
+
+    // When
+    custom.identifier = "value"
+
+    // Then
+    then(custom).identifier.set(.not(.match(when: \.isEmpty))).called()
+    then(custom).identifier.set("value").called()
+  }
+
+  func test_Writable_set_shouldNotBeCalledWhenParametersDontMatch() {
+    // Given
+    let custom = Mock<Custom>()
+
+    // When
+    custom.identifier = "value"
+
+    // Then
+    then(custom).identifier.set(.match(when: \.isEmpty)).called(times: 0)
   }
 }

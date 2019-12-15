@@ -47,7 +47,9 @@ extension Mock: Custom where WrappedType == Custom {
 
 extension MockGiven where WrappedType == Custom {
   var identifier: MockableProperty.Writable<String> { mockable() }
+
   var computed: MockableProperty.Readable<String> { mockable() }
+
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
   func function(identifier: Predicate<String>) -> Mockable<Int> { mockable(identifier) }
 

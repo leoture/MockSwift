@@ -68,6 +68,7 @@
 		FC61C6DC23A2BEAA007DE003 /* MockableStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC61C6DB23A2BEAA007DE003 /* MockableStub.swift */; };
 		FC75744023A6643E00B5064C /* MockablePropertyWritableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */; };
 		FC75744323A6674900B5064C /* MockableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744223A6674900B5064C /* MockableProperty.swift */; };
+		FC75744A23A66D2800B5064C /* VerifiableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744923A66D2800B5064C /* VerifiableProperty.swift */; };
 		FC7A193923A020C80008AE6E /* MockablePropertyReadableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A193823A020C80008AE6E /* MockablePropertyReadableTests.swift */; };
 		OBJ_36 /* BehaviourRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BehaviourRegister.swift */; };
 		OBJ_37 /* CallRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CallRegister.swift */; };
@@ -151,6 +152,7 @@
 		FC61C6DB23A2BEAA007DE003 /* MockableStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockableStub.swift; sourceTree = "<group>"; };
 		FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockablePropertyWritableTests.swift; sourceTree = "<group>"; };
 		FC75744223A6674900B5064C /* MockableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockableProperty.swift; sourceTree = "<group>"; };
+		FC75744923A66D2800B5064C /* VerifiableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableProperty.swift; sourceTree = "<group>"; };
 		FC7A193823A020C80008AE6E /* MockablePropertyReadableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockablePropertyReadableTests.swift; sourceTree = "<group>"; };
 		"MockSwift::MockSwift::Product" /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"MockSwift::MockSwiftTests::Product" /* MockSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MockSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,6 +337,15 @@
 			path = Mockables;
 			sourceTree = "<group>";
 		};
+		FC75744823A66CF900B5064C /* Verifiables */ = {
+			isa = PBXGroup;
+			children = (
+				9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */,
+				FC75744923A66D2800B5064C /* VerifiableProperty.swift */,
+			);
+			path = Verifiables;
+			sourceTree = "<group>";
+		};
 		OBJ_16 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,11 +447,11 @@
 		OBJ_9 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				FC75744823A66CF900B5064C /* Verifiables */,
 				FC75744123A666FB00B5064C /* Mockables */,
 				OBJ_15 /* Mock.swift */,
 				9EB5542E2300591500449662 /* MockGiven.swift */,
 				9EA5D15A2302EDD2006F0A28 /* MockThen.swift */,
-				9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */,
 				9EAC378C234378DD00281F7B /* ParameterType.swift */,
 			);
 			path = Mocks;
@@ -578,6 +589,7 @@
 				9EAC3794234BA23F00281F7B /* Predicate+Optional.swift in Sources */,
 				9E2F052422FB32B200E04F34 /* Behaviour.swift in Sources */,
 				FC75744323A6674900B5064C /* MockableProperty.swift in Sources */,
+				FC75744A23A66D2800B5064C /* VerifiableProperty.swift in Sources */,
 				9EAC3791234A25B000281F7B /* Predicate+Bool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
