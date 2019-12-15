@@ -1,4 +1,4 @@
-//MockablePropertyReadableTests.swift
+//VerifiablePropertyReadableTests.swift
 /*
  MIT License
 
@@ -27,20 +27,20 @@ import Foundation
 import XCTest
 @testable import MockSwift
 
-final class MockablePropertyReadableTests: XCTestCase {
+final class VerifiablePropertyReadableTests: XCTestCase {
 
-  private let builder = MockableBuilderMock()
+  private let builder = VerifiableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
-  private let expectedMockable = Mockable<Bool>.stub()
-  private var readable: MockableProperty.Readable<Bool>!
+  private let expectedVerifiable = Verifiable<Bool>.stub()
+  private var readable: VerifiableProperty.Readable<Bool>!
 
-  override func setUp() {
-    builder.mockableReturn = expectedMockable
-    readable = MockableProperty.Readable<Bool>(property: expectedProperty,
-                                               file: "file",
-                                               line: expectedLine,
-                                               mockableBuilder: builder)
+  override  func setUp() {
+    builder.verifiableReturn = expectedVerifiable
+    readable = VerifiableProperty.Readable<Bool>(property: expectedProperty,
+                                                 file: "file",
+                                                 line: expectedLine,
+                                                 verifiableBuilder: builder)
   }
 
   func test_get_shouldCorrectlyCallBuilder() {
@@ -50,8 +50,8 @@ final class MockablePropertyReadableTests: XCTestCase {
     _  = readable.get
 
     // Then
-    XCTAssertEqual(builder.mockableReceived.count, 1)
-    let (parameters, function, file, line) = builder.mockableReceived[0]
+    XCTAssertEqual(builder.verifiableReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiableReceived[0]
     XCTAssertTrue(parameters.isEmpty)
     XCTAssertEqual(function, expectedProperty)
     XCTAssertEqual(file, "file")
@@ -62,9 +62,9 @@ final class MockablePropertyReadableTests: XCTestCase {
     // Given
 
     // When
-    let mockable = readable.get
+    let verifiable = readable.get
 
     // Then
-    XCTAssertTrue(mockable === expectedMockable)
+    XCTAssertTrue(verifiable === expectedVerifiable)
   }
 }

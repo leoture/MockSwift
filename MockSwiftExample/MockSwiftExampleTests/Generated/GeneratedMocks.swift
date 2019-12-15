@@ -222,7 +222,7 @@ extension MockThen where WrappedType == Generics {
 
 // MARK: - Properties
 extension Mock: Properties where WrappedType == Properties {
-  public var variable: [String] {
+  public var variable: String {
       get { mocked() }
       set { mocked(newValue) }
   }
@@ -232,7 +232,7 @@ extension Mock: Properties where WrappedType == Properties {
 }
 
 extension MockGiven where WrappedType == Properties {
-  public var variable: MockableProperty.Writable<[String]> {
+  public var variable: MockableProperty.Writable<String> {
     mockable()
   }
   public var constant: MockableProperty.Readable<Bool?> {
@@ -241,7 +241,7 @@ extension MockGiven where WrappedType == Properties {
 }
 
 extension MockThen where WrappedType == Properties {
-  public var variable: VerifiableProperty.Writable<[String]> {
+  public var variable: VerifiableProperty.Writable<String> {
     verifiable()
   }
   public var constant: VerifiableProperty.Readable<Bool?> {

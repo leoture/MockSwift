@@ -1,4 +1,4 @@
-//MockablePropertyWritableTests.swift
+//VerifiablePropertyWritableTests.swift
 /*
  MIT License
 
@@ -27,31 +27,31 @@ import Foundation
 import XCTest
 @testable import MockSwift
 
-final class MockablePropertyWritableTests: XCTestCase {
+final class VerifiablePropertyWritableTests: XCTestCase {
 
-  private let builder = MockableBuilderMock()
+  private let builder = VerifiableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
-  private var writable: MockableProperty.Writable<Bool>!
+  private var writable: VerifiableProperty.Writable<Bool>!
 
-  override func setUp() {
-    writable = MockableProperty.Writable<Bool>(property: expectedProperty,
-                                                   file: "file",
-                                                   line: expectedLine,
-                                                   mockableBuilder: builder)
+  override  func setUp() {
+    writable = VerifiableProperty.Writable<Bool>(property: expectedProperty,
+                                                 file: "file",
+                                                 line: expectedLine,
+                                                 verifiableBuilder: builder)
   }
 
   func test_get_shouldCorrectlyCallBuilder() {
     // Given
-    let expectedMockable = Mockable<Bool>.stub()
-    builder.mockableReturn = expectedMockable
+    let expectedVerifiable = Verifiable<Bool>.stub()
+    builder.verifiableReturn = expectedVerifiable
 
     // When
     _  = writable.get
 
     // Then
-    XCTAssertEqual(builder.mockableReceived.count, 1)
-    let (parameters, function, file, line) = builder.mockableReceived[0]
+    XCTAssertEqual(builder.verifiableReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiableReceived[0]
     XCTAssertTrue(parameters.isEmpty)
     XCTAssertEqual(function, expectedProperty)
     XCTAssertEqual(file, "file")
@@ -60,27 +60,27 @@ final class MockablePropertyWritableTests: XCTestCase {
 
   func test_get_shouldReturnValueFromBuilder() {
     // Given
-    let expectedMockable = Mockable<Bool>.stub()
-    builder.mockableReturn = expectedMockable
+    let expectedVerifiable = Verifiable<Bool>.stub()
+    builder.verifiableReturn = expectedVerifiable
 
     // When
-    let mockable = writable.get
+    let verifiable = writable.get
 
     // Then
-    XCTAssertTrue(mockable === expectedMockable)
+    XCTAssertTrue(verifiable === expectedVerifiable)
   }
 
   func test_set_shouldCorrectlyCallBuilder() {
     // Given
-    let expectedMockable = Mockable<Void>.stub()
-    builder.mockableReturn = expectedMockable
+    let expectedVerifiable = Verifiable<Void>.stub()
+    builder.verifiableReturn = expectedVerifiable
 
     // When
     _  = writable.set(true)
 
     // Then
-    XCTAssertEqual(builder.mockableReceived.count, 1)
-    let (parameters, function, file, line) = builder.mockableReceived[0]
+    XCTAssertEqual(builder.verifiableReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiableReceived[0]
     XCTAssertEqual(parameters.count, 1)
     XCTAssertEqual(parameters[0] as? Bool, true)
     XCTAssertEqual(function, expectedProperty)
@@ -90,13 +90,13 @@ final class MockablePropertyWritableTests: XCTestCase {
 
   func test_set_shouldReturnValueFromBuilder() {
     // Given
-    let expectedMockable = Mockable<Void>.stub()
-    builder.mockableReturn = expectedMockable
+    let expectedVerifiable = Verifiable<Void>.stub()
+    builder.verifiableReturn = expectedVerifiable
 
     // When
-    let mockable = writable.set(true)
+    let verifiable = writable.set(true)
 
     // Then
-    XCTAssertTrue(mockable === expectedMockable)
+    XCTAssertTrue(verifiable === expectedVerifiable)
   }
 }
