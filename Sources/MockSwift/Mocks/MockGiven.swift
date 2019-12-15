@@ -64,6 +64,14 @@ public func given<WrappedType>(_ value: WrappedType,
   completion(given(value, file: file, line: line))
 }
 
+protocol MockableBuilder {
+    func mockable<ReturnType>(
+      _ parameters: ParameterType...,
+      function: String,
+      file: StaticString,
+      line: UInt
+    ) -> Mockable<ReturnType>
+  }
 /// MockGiven is used to define stubs.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
@@ -71,7 +79,7 @@ public func given<WrappedType>(_ value: WrappedType,
 ///     extension MockGiven where WrappedType == CustomType
 ///
 ///
-public class MockGiven<WrappedType> {
+public class MockGiven<WrappedType>: MockableBuilder {
 
   // MARK: - Properties
 
@@ -123,4 +131,18 @@ public class MockGiven<WrappedType> {
     return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }
 
+  public func mockable<ReturnType>(
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line
+  ) -> MockableProperty.Readable<ReturnType> {
+    return MockableProperty.Readable(property: property, file: file, line: line, mockableBuilder: self)
+  }
+
+  public func mockable<ReturnType>(
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> MockableProperty.Writable<ReturnType> {
+    return MockableProperty.Writable(property: property, file: file, line: line, mockableBuilder: self)
+  }
 }

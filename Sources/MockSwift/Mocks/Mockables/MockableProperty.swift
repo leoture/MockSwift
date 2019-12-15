@@ -1,4 +1,4 @@
-//FunctionIdentifier.swift
+//MockableProperty.swift
 /*
  MIT License
  
@@ -25,44 +25,38 @@
 
 import Foundation
 
-struct FunctionIdentifier: Equatable, Hashable {
-  private let identifier: String
+public class MockableProperty {
+  private let mockableBuilder: MockableBuilder
+  private let property: String
+  private let file: StaticString
+  private let line: UInt
 
-  init<ReturnType>(function: String, return: ReturnType.Type) {
-    var normalizedFunction = function
+  init(property: String, file: StaticString, line: UInt, mockableBuilder: MockableBuilder) {
+    self.property = property
+    self.file = file
+    self.line = line
+    self.mockableBuilder = mockableBuilder
+  }
+}
 
-    if !function.contains("(") {
-      if ReturnType.self == Void.self {
-        normalizedFunction = function+"(newValue:)"
-      } else {
-        normalizedFunction = function+"()"
-      }
+extension MockableProperty {
+  public class Readable<ReturnType>: MockableProperty {
+    public var get: Mockable<ReturnType> {
+      mockableBuilder.mockable(function: property, file: file, line: line)
     }
-    self.identifier = "\(normalizedFunction) -> \(ReturnType.self)"
   }
 
-  func callDescription(with parameters: [ParameterType]) -> String {
-    var callDescription: String = ""
-    var currentIndex = 0
-    let separator = ", "
-    var needSeparator = false
-
-    for character in identifier {
-      if needSeparator && character != ")" {
-        callDescription.append(separator)
-      }
-      needSeparator = false
-
-      callDescription.append(character)
-
-      if character == ":" {
-        callDescription.append(" \(parameters[currentIndex] ?? "nil" )")
-        currentIndex += 1
-        needSeparator = true
-      }
+  public class Writable<ReturnType>: MockableProperty {
+    public var get: Mockable<ReturnType> {
+      mockableBuilder.mockable(function: property, file: file, line: line)
     }
 
-    return callDescription
-  }
+    public func set(_ predicate: Predicate<ReturnType>) -> Mockable<Void> {
+      mockableBuilder.mockable(predicate, function: property, file: file, line: line)
+    }
 
+    public func set(_ value: ReturnType) -> Mockable<Void> {
+      mockableBuilder.mockable(value, function: property, file: file, line: line)
+    }
+  }
 }

@@ -28,14 +28,25 @@ import XCTest
 
 class FunctionIdentifierTests: XCTestCase {
 
-  func test_callDescription_withNoParameters() {
+  func test_callDescription_withNoParametersWhenFunction() {
     let description = FunctionIdentifier(function: "f()", return: Int.self).callDescription(with: [])
     XCTAssertEqual(description, "f() -> Int")
   }
 
-  func test_callDescription_withParameters() {
+  func test_callDescription_withParametersWhenFuntion() {
     let description = FunctionIdentifier(function: "f(arg1:arg2:arg3:)", return: Int.self)
       .callDescription(with: ["description1", 2, nil])
     XCTAssertEqual(description, "f(arg1: description1, arg2: 2, arg3: nil) -> Int")
+  }
+
+  func test_callDescription_withGetProperty() {
+    let description = FunctionIdentifier(function: "variable", return: Int.self).callDescription(with: [])
+    XCTAssertEqual(description, "variable() -> Int")
+  }
+
+  func test_callDescription_withSetProperty() {
+    let description = FunctionIdentifier(function: "variable", return: Void.self)
+      .callDescription(with: [2])
+    XCTAssertEqual(description, "variable(newValue: 2) -> ()")
   }
 }
