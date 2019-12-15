@@ -17,6 +17,8 @@ import MockSwift
 
 
 
+
+
 // MARK: - Basics
 extension Mock: Basics where WrappedType == Basics {
   public func doSomething() {
@@ -41,7 +43,6 @@ extension Mock: Basics where WrappedType == Basics {
     mocked(arg1, arg2)
   }
 }
-
 
 extension MockGiven where WrappedType == Basics {
   public func doSomething() -> Mockable<Void> {
@@ -78,7 +79,6 @@ extension MockGiven where WrappedType == Basics {
     mockable(arg1, arg2)
   }
 }
-
 
 extension MockThen where WrappedType == Basics {
   public func doSomething() -> Verifiable<Void> {
@@ -123,7 +123,6 @@ extension Mock: Escaping where WrappedType == Escaping {
   }
 }
 
-
 extension MockGiven where WrappedType == Escaping {
   public func call(_ block: Predicate<(String) -> Bool>) -> Mockable<Bool> {
     mockable(block)
@@ -132,7 +131,6 @@ extension MockGiven where WrappedType == Escaping {
     mockable(block)
   }
 }
-
 
 extension MockThen where WrappedType == Escaping {
   public func call(_ block: Predicate<(String) -> Bool>) -> Verifiable<Bool> {
@@ -161,7 +159,6 @@ extension Mock: Generics where WrappedType == Generics {
     mocked(arg1, arg2)
   }
 }
-
 
 extension MockGiven where WrappedType == Generics {
   public func doSomething<T>() -> Mockable<T> {
@@ -193,7 +190,6 @@ extension MockGiven where WrappedType == Generics {
   }
 }
 
-
 extension MockThen where WrappedType == Generics {
   public func doSomething<T>() -> Verifiable<T> {
     verifiable()
@@ -221,6 +217,35 @@ extension MockThen where WrappedType == Generics {
   }
   public func doSomething<T: Equatable, U: Equatable>(with arg1: T, and arg2: U) -> Verifiable<Bool> {
     verifiable(arg1, arg2)
+  }
+}
+
+// MARK: - Properties
+extension Mock: Properties where WrappedType == Properties {
+  public var variable: [String] {
+      get { mocked() }
+      set { mocked(newValue) }
+  }
+  public var constant: Bool? {
+    mocked()
+  }
+}
+
+extension MockGiven where WrappedType == Properties {
+  public var variable: MockableProperty.Writable<[String]> {
+    mockable()
+  }
+  public var constant: MockableProperty.Readable<Bool?> {
+    mockable()
+  }
+}
+
+extension MockThen where WrappedType == Properties {
+  public var variable: VerifiableProperty.Writable<[String]> {
+    verifiable()
+  }
+  public var constant: VerifiableProperty.Readable<Bool?> {
+    verifiable()
   }
 }
 
