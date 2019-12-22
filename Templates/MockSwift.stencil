@@ -8,6 +8,17 @@ import MockSwift
 
 {% macro parametersOnInvoke method %}{% for param in method.parameters %}{{ param.name }}{{ ', ' if not forloop.last }}{% endfor %}{% endmacro %}
 
+{% macro mockVariable variable %}
+  public var {{ variable.name }}: {{ variable.typeName }} {
+{% if variable.isMutable %}
+      get { mocked() }
+      set { mocked(newValue) }
+{% else %}
+    mocked()
+{% endif %}
+  }
+{% endmacro %}
+
 {% macro mockMethod method %}
   public func {{ method.name }}{{ ' throws' if method.throws }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
   {% if method.throws %}
@@ -20,6 +31,9 @@ import MockSwift
 
 {% macro mock type %}
 extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
+  {% for variable in type.allVariables|!definedInExtension %}
+    {% call mockVariable variable %}
+  {% endfor %}
   {% for method in type.allMethods|!definedInExtension %}
     {% call mockMethod method %}
   {% endfor %}
@@ -27,6 +41,12 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro normalizeReturnType type %}<{% if type|hasPrefix: "where " %}{{ type|replace:"where ","Void> where " }}{% elif type|contains:" where " %}{{ type|replace:" where ","> where " }}{% else %}{{ type }}>{% endif %}{% endmacro %}
+
+{% macro mockGivenVariable variable %}
+  public var {{ variable.name }}: MockableProperty.{% if variable.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType variable.typeName %} {
+    mockable()
+  }
+{% endmacro %}
 
 {% macro mockGivenMethod method %}
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable{% call normalizeReturnType method.returnTypeName %} {
@@ -40,14 +60,21 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro mockGiven type %}
-
 extension MockGiven where WrappedType == {{ type.name }} {
+  {% for variable in type.allVariables|!definedInExtension %}
+    {% call mockGivenVariable variable %}
+  {% endfor %}
   {% for method in type.allMethods|!definedInExtension %}
     {% call mockGivenMethod method %}
   {% endfor %}
 }
 {% endmacro %}
 
+{% macro mockThenVariable variable %}
+  public var {{ variable.name }}: VerifiableProperty.{% if variable.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType variable.typeName %} {
+    verifiable()
+  }
+{% endmacro %}
 
 {% macro mockThenMethod method %}
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
@@ -61,8 +88,10 @@ extension MockGiven where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro mockThen type %}
-
 extension MockThen where WrappedType == {{ type.name }} {
+  {% for variable in type.allVariables|!definedInExtension %}
+    {% call mockThenVariable variable %}
+  {% endfor %}
   {% for method in type.allMethods|!definedInExtension %}
     {% call mockThenMethod method %}
   {% endfor %}

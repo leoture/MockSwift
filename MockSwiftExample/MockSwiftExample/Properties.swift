@@ -1,4 +1,4 @@
-//FunctionIdentifier.swift
+//Properties.swift
 /*
  MIT License
  
@@ -25,44 +25,8 @@
 
 import Foundation
 
-struct FunctionIdentifier: Equatable, Hashable {
-  private let identifier: String
-
-  init<ReturnType>(function: String, return: ReturnType.Type) {
-    var normalizedFunction = function
-
-    if !function.contains("(") {
-      if ReturnType.self == Void.self {
-        normalizedFunction = function+"(newValue:)"
-      } else {
-        normalizedFunction = function+"()"
-      }
-    }
-    self.identifier = "\(normalizedFunction) -> \(ReturnType.self)"
-  }
-
-  func callDescription(with parameters: [ParameterType]) -> String {
-    var callDescription: String = ""
-    var currentIndex = 0
-    let separator = ", "
-    var needSeparator = false
-
-    for character in identifier {
-      if needSeparator && character != ")" {
-        callDescription.append(separator)
-      }
-      needSeparator = false
-
-      callDescription.append(character)
-
-      if character == ":" {
-        callDescription.append(" \(parameters[currentIndex] ?? "nil" )")
-        currentIndex += 1
-        needSeparator = true
-      }
-    }
-
-    return callDescription
-  }
-
+// sourcery: AutoMockable
+protocol Properties: class {
+  var variable: String { get set }
+  var constant: Bool? { get }
 }

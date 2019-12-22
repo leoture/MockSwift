@@ -1,19 +1,19 @@
 //MockGivenIntegrationTests.swift
 /*
  MIT License
-
+ 
  Copyright (c) 2019 Jordhan Leoture
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,16 +27,29 @@ import XCTest
 import MockSwift
 
 private protocol Custom {
+  var identifier: String { get set }
+  var computed: String { get }
   func function(identifier: String) -> Int
   func function(identifier: String) throws -> String
 }
 
 extension Mock: Custom where WrappedType == Custom {
+  var identifier: String {
+    get { mocked() }
+    set { mocked(newValue) }
+  }
+  var computed: String {
+    mocked()
+  }
   func function(identifier: String) -> Int { mocked(identifier) }
   func function(identifier: String) throws -> String { try mockedThrowable(identifier) }
 }
 
 extension MockGiven where WrappedType == Custom {
+  var identifier: MockableProperty.Writable<String> { mockable() }
+
+  var computed: MockableProperty.Readable<String> { mockable() }
+
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
   func function(identifier: Predicate<String>) -> Mockable<Int> { mockable(identifier) }
 
@@ -56,7 +69,7 @@ class MockGivenIntegrationTests: XCTestCase {
     // When
     let result: String? = try? custom.function(identifier: "value")
 
-    //Then
+    // Then
     XCTAssertEqual(result, "value1")
   }
 
@@ -75,7 +88,7 @@ class MockGivenIntegrationTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertTrue(catchedError === expectedError)
   }
 
@@ -88,7 +101,7 @@ class MockGivenIntegrationTests: XCTestCase {
     // When
     let result: Int = custom.function(identifier: "value")
 
-    //Then
+    // Then
     XCTAssertEqual(result, 42)
   }
 
@@ -106,7 +119,7 @@ class MockGivenIntegrationTests: XCTestCase {
       custom.function(identifier: "value")
     ]
 
-    //Then
+    // Then
     XCTAssertEqual(results, [0, 1, 2, 2])
   }
 
@@ -119,7 +132,7 @@ class MockGivenIntegrationTests: XCTestCase {
     // When
     let result: Int = custom.function(identifier: "value")
 
-    //Then
+    // Then
     XCTAssertEqual(result, 0)
   }
 
@@ -138,7 +151,7 @@ class MockGivenIntegrationTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertTrue(catchedError === expectedError)
   }
 
@@ -167,7 +180,7 @@ class MockGivenIntegrationTests: XCTestCase {
       completion()
     ]
 
-    //Then
+    // Then
     XCTAssertEqual(catchedErrors, [expectedError1, expectedError2, expectedError3, expectedError3])
   }
 
@@ -178,7 +191,56 @@ class MockGivenIntegrationTests: XCTestCase {
     // When
     given(custom) { mockGiven = $0 }
 
-    //Then
+    // Then
     XCTAssertNotNil(mockGiven)
+  }
+
+  func test_Readable_get_shouldReturnFromWillReturn() {
+    // Given
+    given(custom).computed.get.willReturn("id")
+
+    // When
+    let computed = custom.computed
+
+    // Then
+    XCTAssertEqual(computed, "id")
+  }
+
+  func test_Writable_get_shouldReturnFromWillReturn() {
+    // Given
+    given(custom).identifier.get.willReturn("id")
+
+    // When
+    let identifier = custom.identifier
+
+    // Then
+    XCTAssertEqual(identifier, "id")
+  }
+
+  func test_Writable_set_shouldReturnFromWillCompletion() {
+    // Given
+    let custom = Mock<Custom>()
+    var completionParameters: [Any]?
+    given(custom).identifier.set(.not(.match(when: \.isEmpty))).will { completionParameters = $0 }
+
+    // When
+    custom.identifier = "value"
+
+    // Then
+    XCTAssertEqual(completionParameters?.count, 1)
+    XCTAssertEqual(completionParameters?[0] as? String, "value")
+  }
+
+  func test_Writable_set_shouldNotReturnFromWillCompletion() {
+    // Given
+    let custom = Mock<Custom>()
+    var completionParameters: [Any]?
+    given(custom).identifier.set("").will { completionParameters = $0 }
+
+    // When
+    custom.identifier = "value"
+
+    // Then
+    XCTAssertNil(completionParameters)
   }
 }
