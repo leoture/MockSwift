@@ -12,11 +12,11 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.4.0...HEAD)
 #### Added
-- Add MockableProperty by [Jordhan Leoture](https://github.com/leoture)
-- Add VerifiableProperty by [Jordhan Leoture](https://github.com/leoture)
-- Template sourcery for property by [Jordhan Leoture](https://github.com/leoture)
-- Template sourcery for MockableProperty by [Jordhan Leoture](https://github.com/leoture)
-- Template sourcery for VerifiableProperty by [Jordhan Leoture](https://github.com/leoture)
+- Add MockableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
+- Add VerifiableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
+- Template sourcery for property [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
+- Template sourcery for MockableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
+- Template sourcery for VerifiableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 - Rename MockDefault to GlobalStub [#69](https://github.com/leoture/MockSwift/pull/69) by [Jordhan Leoture](https://github.com/leoture)
