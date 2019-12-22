@@ -64,6 +64,30 @@ public func then<WrappedType>(_ value: WrappedType,
   completion(then(value))
 }
 
+/// MockThen is used to verify method calls.
+///
+/// To be able to use it on a specific type `CustomType`, you must create an extension.
+///
+///     extension MockThen where WrappedType == CustomType
+///
+///
+public class MockThen<WrappedType> {
+
+  // MARK: - Properties
+
+  private let callRegister: CallRegister
+  private let failureRecorder: FailureRecorder
+
+  // MARK: - Init
+
+  init(callRegister: CallRegister, failureRecorder: FailureRecorder) {
+    self.callRegister = callRegister
+    self.failureRecorder = failureRecorder
+  }
+
+}
+
+// MARK: - VerifiableBuilder
 protocol VerifiableBuilder {
   func verifiable<ReturnType>(
     _ parameters: ParameterType...,
@@ -73,27 +97,7 @@ protocol VerifiableBuilder {
   ) -> Verifiable<ReturnType>
 }
 
-/// MockThen is used to verify method calls.
-///
-/// To be able to use it on a specific type `CustomType`, you must create an extension.
-///
-///     extension MockThen where WrappedType == CustomType
-///
-///
-public class MockThen<WrappedType>: VerifiableBuilder {
-
-  // MARK: - Properties
-
-  private let callRegister: CallRegister
-  private let failureRecorder: FailureRecorder
-
-  // MARK: - Init
-
-  init(callRegister: CallRegister,
-       failureRecorder: FailureRecorder) {
-    self.callRegister = callRegister
-    self.failureRecorder = failureRecorder
-  }
+extension MockThen: VerifiableBuilder {
 
   // MARK: - Public Methods
 
@@ -137,13 +141,77 @@ public class MockThen<WrappedType>: VerifiableBuilder {
                       parametersPredicates: predicates,
                       failureRecorder: failureRecorder)
   }
+}
 
+// MARK: - VerifiablePropertyBuilder
+
+protocol VerifiablePropertyBuilder {
+  func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Verifiable<ReturnType>
+}
+
+extension MockThen: VerifiablePropertyBuilder {
+
+  // MARK: - Public Methods
+
+  /// Creates a `VerifiableProperty.Readable` for `property`.
+  /// - Parameter property: Property concerned by the `VerifiableProperty`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `VerifiableProperty.Readable<ReturnType>` that will be able to verify `property` calls.
+  ///
+  /// You must use it during the extension of `MockThen`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   var variable: Int { get }
+  /// }
+  /// extension MockThen where WrappedType == CustomType {
+  ///   var variable: VerifiableProperty.Readable<Int>
+  ///     verifiable()
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The property where you call `verifiable` must respect the following rules:
+  ///   - The name must match the property from the `WrappedType`.
+  ///       - example: **variable**
+  ///   - The return type must be a `Verifiable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `VerifiableProperty.Readable<Int>`.
   public func verifiable<ReturnType>(property: String = #function,
                                      file: StaticString = #file,
                                      line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
     VerifiableProperty.Readable(property: property, file: file, line: line, verifiableBuilder: self)
   }
 
+  /// Creates a `VerifiableProperty.Writable` for `property`.
+  /// - Parameter property: Property concerned by the `VerifiableProperty`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `VerifiableProperty.Writable<ReturnType>` that will be able to verify `property` calls.
+  ///
+  /// You must use it during the extension of `MockThen`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   var variable: Int { get set }
+  /// }
+  /// extension MockThen where WrappedType == CustomType {
+  ///   var variable: VerifiableProperty.Writable<Int>
+  ///     verifiable()
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The property where you call `verifiable` must respect the following rules:
+  ///   - The name must match the property from the `WrappedType`.
+  ///       - example: **variable**
+  ///   - The return type must be a `Verifiable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `VerifiableProperty.Writable<Int>`.
   public func verifiable<ReturnType>(property: String = #function,
                                      file: StaticString = #file,
                                      line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {

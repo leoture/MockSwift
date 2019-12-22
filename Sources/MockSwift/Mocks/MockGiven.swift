@@ -64,14 +64,6 @@ public func given<WrappedType>(_ value: WrappedType,
   completion(given(value, file: file, line: line))
 }
 
-protocol MockableBuilder {
-    func mockable<ReturnType>(
-      _ parameters: ParameterType...,
-      function: String,
-      file: StaticString,
-      line: UInt
-    ) -> Mockable<ReturnType>
-  }
 /// MockGiven is used to define stubs.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
@@ -79,7 +71,7 @@ protocol MockableBuilder {
 ///     extension MockGiven where WrappedType == CustomType
 ///
 ///
-public class MockGiven<WrappedType>: MockableBuilder {
+public class MockGiven<WrappedType> {
 
   // MARK: - Properties
 
@@ -90,6 +82,21 @@ public class MockGiven<WrappedType>: MockableBuilder {
   fileprivate init(_ behaviourRegister: BehaviourRegister) {
     self.behaviourRegister = behaviourRegister
   }
+
+}
+
+// MARK: - MockableBuilder
+
+protocol MockableBuilder {
+  func mockable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Mockable<ReturnType>
+}
+
+extension MockGiven: MockableBuilder {
 
   // MARK: - Public Methods
 
@@ -130,19 +137,76 @@ public class MockGiven<WrappedType>: MockableBuilder {
     }
     return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }
+}
 
-  public func mockable<ReturnType>(
-    property: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line
-  ) -> MockableProperty.Readable<ReturnType> {
+// MARK: - MockablePropertyBuilder
+
+protocol MockablePropertyBuilder {
+  func mockable<ReturnType>(property: String, file: StaticString, line: UInt) -> MockableProperty.Readable<ReturnType>
+  func mockable<ReturnType>(property: String, file: StaticString, line: UInt) -> MockableProperty.Writable<ReturnType>
+}
+
+extension MockGiven: MockablePropertyBuilder {
+
+  // MARK: - Public Methods
+
+  /// Creates a `MockableProperty.Readable` for `property`.
+  /// - Parameter property: Property concerned by the `MockableProperty`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `MockableProperty.Readable<ReturnType>` that will be able to create stubs for `property`.
+  ///
+  /// You must use it during the extension of `MockGiven`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   var variable: Int { get }
+  /// }
+  /// extension MockGiven where WrappedType == CustomType {
+  ///   var variable: MockableProperty.Readable<Int> {
+  ///     mockable()
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The property where you call `mockable` must respect the following rules:
+  ///   - The name must match the property from the `WrappedType`.
+  ///       - example: **variable**
+  ///   - The return type must be a `MockableProperty.Readable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `MockableProperty.Readable<Int>`.
+  public func mockable<ReturnType>(property: String = #function,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) -> MockableProperty.Readable<ReturnType> {
     return MockableProperty.Readable(property: property, file: file, line: line, mockableBuilder: self)
   }
 
-  public func mockable<ReturnType>(
-    property: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> MockableProperty.Writable<ReturnType> {
+  /// Creates a `MockableProperty.Writable` for `property`.
+  /// - Parameter property: Property concerned by the `MockableProperty`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `MockableProperty.Writable<ReturnType>` that will be able to create stubs for `property`.
+  ///
+  /// You must use it during the extension of `MockGiven`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   var variable: Int { get set }
+  /// }
+  /// extension MockGiven where WrappedType == CustomType {
+  ///   var variable: MockableProperty.Writable<Int> {
+  ///     mockable()
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The property where you call `mockable` must respect the following rules:
+  ///   - The name must match the property from the `WrappedType`.
+  ///       - example: **variable**
+  ///   - The return type must be a `MockableProperty.Writable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `MockableProperty.Writable<Int>`.
+  public func mockable<ReturnType>(property: String = #function,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) -> MockableProperty.Writable<ReturnType> {
     return MockableProperty.Writable(property: property, file: file, line: line, mockableBuilder: self)
   }
 }
