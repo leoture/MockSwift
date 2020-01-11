@@ -195,7 +195,7 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertNotNil(mockGiven)
   }
 
-  func test_Readable_get_shouldReturnFromWillReturn() {
+  func test_computed_get_shouldReturnFromWillReturn() {
     // Given
     given(custom).computed.get.willReturn("id")
 
@@ -206,7 +206,7 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertEqual(computed, "id")
   }
 
-  func test_Writable_get_shouldReturnFromWillReturn() {
+  func test_identifier_get_shouldReturnFromWillReturn() {
     // Given
     given(custom).identifier.get.willReturn("id")
 
@@ -217,7 +217,7 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertEqual(identifier, "id")
   }
 
-  func test_Writable_set_shouldReturnFromWillCompletion() {
+  func test_identifier_set_shouldReturnFromWillCompletion() {
     // Given
     let custom = Mock<Custom>()
     var completionParameters: [Any]?
@@ -231,7 +231,7 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertEqual(completionParameters?[0] as? String, "value")
   }
 
-  func test_Writable_set_shouldNotReturnFromWillCompletion() {
+  func test_identifier_set_shouldNotReturnFromWillCompletion() {
     // Given
     let custom = Mock<Custom>()
     var completionParameters: [Any]?

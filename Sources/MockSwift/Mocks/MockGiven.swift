@@ -55,7 +55,7 @@ public func given<WrappedType>(_ value: WrappedType,
 /// - Parameter value: Object that will be stubbed.
 /// - Parameter file: The file name where the method is called.
 /// - Parameter line: The line where the method is called.
-/// - Parameter completion: Block that will be called.
+/// - Parameter completion: Block where to define behaviours.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func given<WrappedType>(_ value: WrappedType,
                                file: StaticString = #file,
@@ -64,7 +64,7 @@ public func given<WrappedType>(_ value: WrappedType,
   completion(given(value, file: file, line: line))
 }
 
-/// MockGiven is used to define stubs.
+/// MockGiven is used to define behaviours.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
 ///

@@ -52,14 +52,13 @@ public class Mock<WrappedType> {
 
   // MARK: - Init
 
-  /// Creates a `Mock<WrappedType>`.
-
   required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister, errorHandler: ErrorHandler) {
     self.callRegister = callRegister
     self.behaviourRegister = behaviourRegister
     self.errorHandler = errorHandler
   }
 
+  /// Creates a `Mock<WrappedType>`.
   public convenience init() {
     self.init(callRegister: FunctionCallRegister(),
               behaviourRegister: FunctionBehaviourRegister(),
