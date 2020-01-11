@@ -13,7 +13,10 @@ Welcome to MockSwift!
 [![Swift](https://img.shields.io/badge/Swift-5.1-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
-MockSwift is a Mock library written in Swift for Swift.  
+MockSwift is a Mock library for Swift inspired by [Mockito](https://site.mockito.org).
+
+> # ⚠️ This README is out of date. Full documentation coming soon.  
+
 ###### Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
