@@ -23,37 +23,41 @@
  SOFTWARE.
  */
 
-class GivenStrategy: Strategy {
+class GivenStrategy: StrategyDecorate {
 
   let behaviourRegister: BehaviourRegister
   let errorHandler: ErrorHandler
 
-  init(behaviourRegister: BehaviourRegister, errorHandler: ErrorHandler) {
+  init(next stategy: Strategy,
+       behaviourRegister: BehaviourRegister,
+       errorHandler: ErrorHandler) {
     self.behaviourRegister = behaviourRegister
     self.errorHandler = errorHandler
+    super.init(stategy)
   }
 
-  func resolve<ReturnType>(for identifier: FunctionIdentifier, concernedBy parameters: [ParameterType]) -> ReturnType {
+  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) -> ReturnType {
     let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
 
     switch behaviours.count {
     case 1:
       return behaviours[0].handle(with: parameters) ??
-        errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
-    case 0: return errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
+        super.resolve(for: identifier, concernedBy: parameters)
+    case 0: return super.resolve(for: identifier, concernedBy: parameters)
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
     }
   }
 
-  func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
-                                    concernedBy parameters: [ParameterType]) throws -> ReturnType {
+  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
     let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
 
     switch behaviours.count {
     case 1:
       return try behaviours[0].handleThrowable(with: parameters) ??
-        errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
-    case 0: return errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
+        super.resolveThrowable(for: identifier, concernedBy: parameters)
+    case 0: return try super.resolveThrowable(for: identifier, concernedBy: parameters)
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
     }
   }

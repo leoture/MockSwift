@@ -1,4 +1,4 @@
-//DefaultFunctionBehaviour.swift
+//UnresolvedStrategy.swift
 /*
  MIT License
 
@@ -23,22 +23,20 @@
  SOFTWARE.
  */
 
-import Foundation
+class UnresolvedStrategy: Strategy {
+  private let errorHandler: ErrorHandler
 
-class DefaultFunctionBehaviour {
-}
+  init(_ errorHandler: ErrorHandler) {
+    self.errorHandler = errorHandler
+  }
 
-extension DefaultFunctionBehaviour: Behaviour {
+  func resolve<ReturnType>(for identifier: FunctionIdentifier, concernedBy parameters: [ParameterType]) -> ReturnType {
+    errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
+  }
 
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
-
-  func handleThrowable<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
-
-  fileprivate func defaultValue<ReturnType>() -> ReturnType? {
-    if ReturnType.self is Void.Type {
-      return () as? ReturnType
-    }
-    return (ReturnType.self as? GlobalStub.Type)?.stub() as? ReturnType
+  func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
   }
 
 }

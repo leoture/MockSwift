@@ -69,7 +69,9 @@ public class Mock<WrappedType> {
     let behaviourRegister = FunctionBehaviourRegister()
     self.init(callRegister: FunctionCallRegister(),
               behaviourRegister: behaviourRegister,
-              strategy: GivenStrategy(behaviourRegister: behaviourRegister, errorHandler: errorHandler),
+              strategy: GivenStrategy(next: GlobalStubStrategy(UnresolvedStrategy(errorHandler)),
+                behaviourRegister: behaviourRegister,
+                errorHandler: errorHandler),
               errorHandler: errorHandler)
   }
 

@@ -33,7 +33,7 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     functionBehaviourRegister = FunctionBehaviourRegister()
   }
 
-  func test_recordedBehaviours_shouldReturnDefaultFunctionBehaviourWhenNoMatchs() {
+  func test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs() {
     // Given
     let predicate = AnyPredicateMock()
     predicate.satisfyReturn = false
@@ -43,8 +43,7 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
     //Then
-    XCTAssertEqual(behaviours.count, 1)
-    XCTAssertTrue(behaviours[0] is DefaultFunctionBehaviour)
+    XCTAssertTrue(behaviours.isEmpty)
   }
 
   func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {

@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//StrategyDecorate.swift
 /*
  MIT License
 
@@ -23,25 +23,21 @@
  SOFTWARE.
  */
 
-import Foundation
+class StrategyDecorate: Strategy {
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
+  private let strategy: Strategy
 
-  init() {
-    functionBehaviour = [:]
+  init(_ strategy: Strategy) {
+    self.strategy = strategy
   }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
+  func resolve<ReturnType>(for identifier: FunctionIdentifier, concernedBy parameters: [ParameterType]) -> ReturnType {
+    strategy.resolve(for: identifier, concernedBy: parameters)
   }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
+  func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    try strategy.resolveThrowable(for: identifier, concernedBy: parameters)
   }
+
 }
