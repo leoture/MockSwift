@@ -31,19 +31,25 @@ private protocol AnyProtocol {}
 final class MockTests: XCTestCase {
   private var mock: Mock<AnyProtocol>!
   private var callRegister: CallRegisterMock!
-  private var behaviourRegister: BehaviourRegisterMock!
+  private var strategy: StrategyMock!
   private var errorHandler: ErrorHandlerMock!
 
   override func setUp() {
     callRegister = CallRegisterMock()
-    behaviourRegister = BehaviourRegisterMock()
+    strategy = StrategyMock()
     errorHandler = ErrorHandlerMock()
-    mock = Mock(callRegister: callRegister, behaviourRegister: behaviourRegister, errorHandler: errorHandler)
+    mock = Mock(callRegister: callRegister,
+                behaviourRegister: BehaviourRegisterMock(),
+                strategy: strategy,
+                errorHandler: errorHandler)
   }
 
   func test_wrappedValue_shouldFailWithCast() {
     // Given
-    let mock = Mock<Int>(callRegister: callRegister, behaviourRegister: behaviourRegister, errorHandler: errorHandler)
+    let mock = Mock<Int>(callRegister: CallRegisterMock(),
+                         behaviourRegister: BehaviourRegisterMock(),
+                         strategy: strategy,
+                         errorHandler: errorHandler)
     errorHandler.handleReturn = 0
 
     // When
@@ -54,73 +60,13 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(result, 0)
   }
 
-  func test_mocked_shouldFailWithNoDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = []
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
-
-  func test_mocked_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
-
-  func test_mocked_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in "" },
-      FunctionBehaviour { _ in "" }
-    ]
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
-
   func test_mocked_shouldRecordCallIntoCallRegister() {
     // Given
     let functionName = "function(parameter1:parameter2:parameter3:)"
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
       mock.mocked(parameter1, parameter2, parameter3)
     }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" }]
+    strategy.resolveReturn =  ""
 
     // When
     _ = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
@@ -135,83 +81,26 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(parameters[2] as? Bool, true)
   }
 
-  func test_mocked_shouldReturnValueFromBehaviour() {
+  func test_mocked_shouldReturnValueFromStrategy() {
     // Given
     let functionName = "function(parameter1:parameter2:parameter3:)"
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> UUID {
       mock.mocked(parameter1, parameter2, parameter3)
     }
     let uuid = UUID()
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in uuid }]
+    strategy.resolveReturn = uuid
 
     // When
     let result = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
     XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertEqual(result, uuid)
-  }
-
-  func test_mockedVoid_shouldFailWithNoDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = []
-    errorHandler.handleReturn = ()
-
-    // When
-    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-  }
-
-  func test_mockedVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    errorHandler.handleReturn = ()
-
-    // When
-    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-  }
-
-  func test_mockedVoid_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
-      mock.mocked(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in  },
-      FunctionBehaviour { _ in  }
-    ]
-    errorHandler.handleReturn = ()
-
-    // When
-    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
   }
 
   func test_mockedVoid_shouldRecordCallIntoCallRegister() {
@@ -220,7 +109,7 @@ final class MockTests: XCTestCase {
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
       mock.mocked(parameter1, parameter2, parameter3)
     }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
+    strategy.resolveReturn = ()
 
     // When
     function(parameter1: "parameter1", parameter2: 2, parameter3: true)
@@ -235,21 +124,21 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(parameters[2] as? Bool, true)
   }
 
-  func test_mockedVoid_shouldCallBehaviour() {
+  func test_mockedVoid_shouldCallStrategy() {
     // Given
     let functionName = "function(parameter1:parameter2:parameter3:)"
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
       mock.mocked(parameter1, parameter2, parameter3)
     }
 
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
+    strategy.resolveReturn = ()
 
     // When
     function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)

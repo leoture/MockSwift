@@ -32,74 +32,17 @@ private protocol AnyProtocol {}
 final class MockThrowableTests: XCTestCase {
   private var mock: Mock<AnyProtocol>!
   private var callRegister: CallRegisterMock!
-  private var behaviourRegister: BehaviourRegisterMock!
+  private var strategy: StrategyMock!
   private var errorHandler: ErrorHandlerMock!
 
   override func setUp() {
     callRegister = CallRegisterMock()
-    behaviourRegister = BehaviourRegisterMock()
+    strategy = StrategyMock()
     errorHandler = ErrorHandlerMock()
-    mock = Mock(callRegister: callRegister, behaviourRegister: behaviourRegister, errorHandler: errorHandler)
-  }
-
-  func test_mockedThrowable_shouldFailWithNoDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> String {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = []
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
-
-  func test_mockedThrowable_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws-> String {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
-
-  func test_mockedThrowable_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> String {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in "" },
-      FunctionBehaviour { _ in "" }
-    ]
-    errorHandler.handleReturn = "error"
-
-    // When
-    let result = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
+    mock = Mock(callRegister: callRegister,
+                behaviourRegister: BehaviourRegisterMock(),
+                strategy: strategy,
+                errorHandler: errorHandler)
   }
 
   func test_mockedThrowable_shouldRecordCallIntoCallRegister() {
@@ -108,7 +51,7 @@ final class MockThrowableTests: XCTestCase {
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> String {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" }]
+    strategy.resolveThrowableReturn = ""
 
     // When
     _ = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
@@ -123,21 +66,21 @@ final class MockThrowableTests: XCTestCase {
     XCTAssertEqual(parameters[2] as? Bool, true)
   }
 
-  func test_mockedThrowable_shouldReturnValueFromBehaviour() {
+  func test_mockedThrowable_shouldReturnValueFromStrategy() {
     // Given
     let functionName = "function(parameter1:parameter2:parameter3:)"
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> UUID {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
     let uuid = UUID()
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in uuid }]
+    strategy.resolveThrowableReturn = uuid
 
     // When
     let result = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
@@ -152,7 +95,7 @@ final class MockThrowableTests: XCTestCase {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
     let expectedError = NSError(domain: "domain", code: 0)
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in throw expectedError }]
+    strategy.resolveThrowableError = expectedError
 
     // When
     var catchedError: NSError?
@@ -163,70 +106,13 @@ final class MockThrowableTests: XCTestCase {
     }
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
     XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertTrue(catchedError === expectedError)
-  }
-
-  func test_mockedThrowableVoid_shouldFailWithNoDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = []
-    errorHandler.handleReturn = ()
-
-    // When
-    try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-  }
-
-  func test_mockedThrowableVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    errorHandler.handleReturn = ()
-
-    // When
-    try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .noDefinedBehaviour(for: functionIdentifier, with: parameters))
-  }
-
-  func test_mockedThrowableVoid_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
-    }
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in  },
-      FunctionBehaviour { _ in  }
-    ]
-    errorHandler.handleReturn = ()
-
-    // When
-    try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    //Then
-    let functionIdentifier = FunctionIdentifier(function: functionName, return: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
   }
 
   func test_mockedThrowableVoid_shouldRecordCallIntoCallRegister() {
@@ -235,7 +121,7 @@ final class MockThrowableTests: XCTestCase {
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
+    strategy.resolveThrowableReturn = ()
 
     // When
     try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
@@ -256,15 +142,14 @@ final class MockThrowableTests: XCTestCase {
     func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
-
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in }]
+    strategy.resolveThrowableReturn = ()
 
     // When
     try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
@@ -278,7 +163,7 @@ final class MockThrowableTests: XCTestCase {
       try mock.mockedThrowable(parameter1, parameter2, parameter3)
     }
     let expectedError = NSError(domain: "domain", code: 0)
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in throw expectedError }]
+    strategy.resolveThrowableError = expectedError
 
     // When
     var catchedError: NSError?
@@ -289,8 +174,8 @@ final class MockThrowableTests: XCTestCase {
     }
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+    XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)

@@ -37,9 +37,10 @@ public class Mock<WrappedType> {
 
   // MARK: - Properties
 
-  let callRegister: CallRegister
-  let behaviourRegister: BehaviourRegister
+  let strategy: Strategy
   let errorHandler: ErrorHandler
+  private let callRegister: CallRegister
+  private let behaviourRegister: BehaviourRegister
 
   /// Returns `self` as a `WrappedType`.
   /// - Important: If `self` cannot be cast to `WrappedType` a `fatalError` will be raised.
@@ -52,17 +53,24 @@ public class Mock<WrappedType> {
 
   // MARK: - Init
 
-  required init(callRegister: CallRegister, behaviourRegister: BehaviourRegister, errorHandler: ErrorHandler) {
+  required init(callRegister: CallRegister,
+                behaviourRegister: BehaviourRegister,
+                strategy: Strategy,
+                errorHandler: ErrorHandler) {
     self.callRegister = callRegister
     self.behaviourRegister = behaviourRegister
+    self.strategy = strategy
     self.errorHandler = errorHandler
   }
 
   /// Creates a `Mock<WrappedType>`.
   public convenience init() {
+    let errorHandler = ErrorHandler()
+    let behaviourRegister = FunctionBehaviourRegister()
     self.init(callRegister: FunctionCallRegister(),
-              behaviourRegister: FunctionBehaviourRegister(),
-              errorHandler: ErrorHandler())
+              behaviourRegister: behaviourRegister,
+              strategy: GivenStrategy(behaviourRegister: behaviourRegister, errorHandler: errorHandler),
+              errorHandler: errorHandler)
   }
 
   // MARK: - Public Methods
@@ -185,27 +193,37 @@ public class Mock<WrappedType> {
   }
 
   private func call<ReturnType>(function: FunctionIdentifier, with parameters: [ParameterType]) -> ReturnType {
-    let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
-
-    switch behaviours.count {
-    case 1:
-      return behaviours[0].handle(with: parameters) ??
-             errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
-    case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
-    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
-    }
+    strategy.resolve(for: function, concernedBy: parameters)
   }
 
   private func callThrowable<ReturnType>(function: FunctionIdentifier,
                                          with parameters: [ParameterType]) throws -> ReturnType {
-    let behaviours = behaviourRegister.recordedBehaviours(for: function, concernedBy: parameters)
-
-    switch behaviours.count {
-    case 1:
-      return try behaviours[0].handleThrowable(with: parameters) ??
-                 errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
-    case 0: return errorHandler.handle(.noDefinedBehaviour(for: function, with: parameters))
-    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: function, with: parameters))
-    }
+    try strategy.resolveThrowable(for: function, concernedBy: parameters)
   }
+}
+
+// MARK: - CallRegister
+
+extension Mock: CallRegister {
+  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
+    callRegister.recordCall(for: identifier, with: parameters)
+  }
+
+  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+    callRegister.recordedCall(for: identifier, when: matchs)
+  }
+
+}
+
+// MARK: - BehaviourRegister
+
+extension Mock: BehaviourRegister {
+  func recordedBehaviours(for identifier: FunctionIdentifier, concernedBy parameters: [ParameterType]) -> [Behaviour] {
+    behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
+  }
+
+  func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
+    behaviourRegister.record(behaviour, for: identifier, when: matchs)
+  }
+
 }
