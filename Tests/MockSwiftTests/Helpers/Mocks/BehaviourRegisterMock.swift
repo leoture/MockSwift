@@ -37,8 +37,8 @@ class BehaviourRegisterMock: BehaviourRegister {
     return recordedBehavioursReturn
   }
 
-  var recordeReceived: [(behaviour: Behaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+  var recordReceived: [(behaviour: Behaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
   func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
-    recordeReceived.append((behaviour, identifier, matchs))
+    recordReceived.append((behaviour, identifier, matchs))
   }
 }

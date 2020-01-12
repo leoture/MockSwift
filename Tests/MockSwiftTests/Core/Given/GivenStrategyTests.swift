@@ -1,27 +1,27 @@
 //GivenStrategyTests.swift
 /*
-MIT License
+ MIT License
 
-Copyright (c) 2019 Jordhan Leoture
+ Copyright (c) 2019 Jordhan Leoture
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 
 import XCTest
 @testable import MockSwift
@@ -39,8 +39,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolve_shouldFailWithNoDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = []
     errorHandler.handleReturn = "error"
@@ -55,8 +54,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolve_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
     errorHandler.handleReturn = "error"
@@ -72,8 +70,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolve_shouldFailWithTooManyDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [
       FunctionBehaviour { _ in "" },
@@ -91,8 +88,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolve_shouldReturnValueFromBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: UUID.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
     let uuid = UUID()
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in uuid }]
 
@@ -111,8 +107,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoid_shouldFailWithNoDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = []
     errorHandler.handleReturn = ()
@@ -126,8 +121,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
     errorHandler.handleReturn = ()
@@ -142,8 +136,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoid_shouldFailWithTooManyDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [
       FunctionBehaviour { _ in },
@@ -160,8 +153,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveThrowable_shouldFailWithNoDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = []
     errorHandler.handleReturn = "error"
@@ -176,8 +168,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveThrowable_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
     errorHandler.handleReturn = "error"
@@ -193,8 +184,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveThrowable_shouldFailWithTooManyDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [
       FunctionBehaviour { _ in "" },
@@ -212,8 +202,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveThrowable_shouldReturnValueFromBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: UUID.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
     let uuid = UUID()
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in uuid }]
 
@@ -232,8 +221,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_mockedThrowable_shouldThrowErrorFromBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-    return: String.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let expectedError = NSError(domain: "domain", code: 0)
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in throw expectedError }]
 
@@ -257,8 +245,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoidThrowable_shouldFailWithNoDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = []
     errorHandler.handleReturn = ()
@@ -272,8 +259,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoidThrowable_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
     errorHandler.handleReturn = ()
@@ -288,8 +274,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_resolveVoidThrowable_shouldFailWithTooManyDefinedBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-                                                return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
     behaviourRegister.recordedBehavioursReturn = [
       FunctionBehaviour { _ in },
@@ -306,8 +291,7 @@ final class GivenStrategyTests: XCTestCase {
 
   func test_mockedVoidThrowable_shouldThrowErrorFromBehaviour() {
     // Given
-    let functionIdentifier = FunctionIdentifier(function: "function(parameter1:parameter2:parameter3:)",
-    return: Void.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let expectedError = NSError(domain: "domain", code: 0)
     behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in throw expectedError }]
 
