@@ -1,4 +1,4 @@
-//Mock+init.swift
+//StubTypeRegisterTests.swift
 /*
  MIT License
 
@@ -23,17 +23,19 @@
  SOFTWARE.
  */
 
-import Foundation
+import XCTest
+@testable import MockSwift
 
-public extension Mock {
+class StubTypeRegisterTests: XCTestCase {
 
-  /// Creates a `Mock<WrappedType>` with predefined behaviours.
-  /// - Parameter stubs: List of default stub.
-  /// - Parameter completion: Block where to define behaviours.
-  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
-    self.init()
-    stubs.forEach(record)
-    given(wrappedValue, completion)
+  private let register = StubTypeRegister()
+
+  func test_recordedStub_shouldReturnNilWhenValueNotRecordedBefore() {
+    XCTAssertNil(register.recordedStub(for: String.self))
   }
 
+  func test_recordedStub_shouldReturnValueWhenValueRecordedBefore() {
+    register.record(Stub(String.self, "value"))
+    XCTAssertEqual(register.recordedStub(for: String.self), "value")
+  }
 }

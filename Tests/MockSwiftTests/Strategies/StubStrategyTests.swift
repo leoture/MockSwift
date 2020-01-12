@@ -1,19 +1,19 @@
-//GlobalStubStrategyTests.swift
+//StubStrategyTests.swift
 /*
  MIT License
- 
+
  Copyright (c) 2019 Jordhan Leoture
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,91 +26,97 @@
 import XCTest
 @testable import MockSwift
 
-private class Custom: GlobalStub {
-  static func stub() -> Self {
-    self.init("default")
-  }
-
-  let identifier: String
-  required init(_ identifier: String) {
-    self.identifier = identifier
-  }
-}
-
-private struct AnyClass: Equatable {
-  let uuid = UUID()
-}
-
-class GlobalStubStrategyTests: XCTestCase {
-  private var globalStubStrategy: GlobalStubStrategy!
+final class StubStrategyTests: XCTestCase {
+  private var stubStrategy: StubStrategy!
   private var nextStrategy: StrategyMock!
+  private var stubRegister: StubRegisterMock!
 
   override func setUp() {
+    stubRegister = StubRegisterMock()
     nextStrategy = StrategyMock()
-    globalStubStrategy = GlobalStubStrategy(nextStrategy)
+    stubStrategy = StubStrategy(next: nextStrategy,
+                                stubRegister: stubRegister)
   }
 
-  func test_resolve_shouldReturnStubCustom() {
-    let result: Custom = globalStubStrategy.resolve(for: .stub(), concernedBy: [])
-    XCTAssertEqual(result.identifier, "default")
-  }
-
-  func test_resolve_shouldReturnFromNextStrategy() {
+  func test_resolve_shouldReturnFromNextStrategyWhenNoStubFound() {
     // Given
-    let functionIdentifier = FunctionIdentifier.stub()
-    let expectedResult = AnyClass()
-    nextStrategy.resolveReturn = expectedResult
+    let uuid = UUID()
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
+    stubRegister.recordedStubReturn = nil
+    nextStrategy.resolveReturn = uuid
 
     // When
-    let result: AnyClass = globalStubStrategy.resolve(for: functionIdentifier,
-                                                      concernedBy: ["1", 2])
+    let result: UUID = stubStrategy.resolve(for: functionIdentifier,
+                                            concernedBy: ["parameter1", 2, true])
 
-    // Then
+    //Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 2)
-    XCTAssertEqual(parameters[0] as? String, "1")
+    XCTAssertEqual(parameters.count, 3)
+    XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(result, expectedResult)
+    XCTAssertEqual(parameters[2] as? Bool, true)
+    XCTAssertEqual(result, uuid)
   }
 
-  func test_resolveThrowable_shouldReturnStubCustom() {
-    let result = try? globalStubStrategy.resolveThrowable(for: .stub(), concernedBy: []) as Custom
-    XCTAssertEqual(result?.identifier, "default")
-  }
-
-  func test_resolveThrowable_shouldReturnFromNextStrategy() {
+  func test_resolve_shouldReturnValueFromRegister() {
     // Given
-    let functionIdentifier = FunctionIdentifier.stub()
-    let expectedResult = AnyClass()
-    nextStrategy.resolveThrowableReturn = expectedResult
+    let uuid = UUID()
+    stubRegister.recordedStubReturn = uuid
 
     // When
-    let result = try? globalStubStrategy.resolveThrowable(for: functionIdentifier,
-                                                          concernedBy: ["1", 2]) as AnyClass
+    let result: UUID = stubStrategy.resolve(for: .stub(), concernedBy: [])
 
-    // Then
+    //Then
+    XCTAssertEqual(result, uuid)
+  }
+
+  func test_resolveThrowable_shouldReturnFromNextStrategyWhenNoStubFound() {
+    // Given
+    let uuid = UUID()
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
+    stubRegister.recordedStubReturn = nil
+    nextStrategy.resolveThrowableReturn = uuid
+
+    // When
+    let result = try? stubStrategy.resolveThrowable(for: functionIdentifier,
+                                                    concernedBy: ["parameter1", 2, true]) as UUID
+
+    //Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 2)
-    XCTAssertEqual(parameters[0] as? String, "1")
+    XCTAssertEqual(parameters.count, 3)
+    XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(result, expectedResult)
+    XCTAssertEqual(parameters[2] as? Bool, true)
+    XCTAssertEqual(result, uuid)
+  }
+
+  func test_resolveThrowable_shouldReturnValueFromRegister() {
+    // Given
+    let uuid = UUID()
+    stubRegister.recordedStubReturn = uuid
+
+    // When
+    let result = try? stubStrategy.resolveThrowable(for: .stub(), concernedBy: []) as UUID
+
+    //Then
+    XCTAssertEqual(result, uuid)
   }
 
   func test_resolveThrowable_shouldThrowErroFromNextStrategy() {
     // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: AnyClass.self)
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
     let expectedError = NSError(domain: "domain", code: 0)
     nextStrategy.resolveThrowableError = expectedError
 
     // When
     var catchedError: NSError?
     do {
-      _ = try globalStubStrategy.resolveThrowable(for: functionIdentifier,
-                                            concernedBy: ["parameter1", 2, true]) as AnyClass
+      _ = try stubStrategy.resolveThrowable(for: functionIdentifier,
+                                            concernedBy: ["parameter1", 2, true]) as UUID
     } catch {
       catchedError = error as NSError
     }
@@ -125,4 +131,5 @@ class GlobalStubStrategyTests: XCTestCase {
     XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertTrue(catchedError === expectedError)
   }
+
 }

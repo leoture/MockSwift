@@ -26,9 +26,14 @@
 import XCTest
 import MockSwift
 
+private struct AnyClass {
+  let identifier: String
+}
+
 private protocol Custom {
   var computed: String { get }
   func function(identifier: String) -> Int
+  func functionStub() -> AnyClass
 }
 
 extension Mock: Custom where WrappedType == Custom {
@@ -36,6 +41,8 @@ extension Mock: Custom where WrappedType == Custom {
     mocked()
   }
   func function(identifier: String) -> Int { mocked(identifier) }
+
+  func functionStub() -> AnyClass { mocked() }
 }
 
 extension MockGiven where WrappedType == Custom {
@@ -45,28 +52,25 @@ extension MockGiven where WrappedType == Custom {
 }
 
 class MockIntegrationTests: XCTestCase {
-  @Mock({
-    $0.computed.get.willReturn("id")
-    $0.function(identifier: "id").willReturn(3)
+  @Mock(stubs: [
+    AnyClass.self => AnyClass(identifier: "stub")
+    ], {
+      $0.computed.get.willReturn("id")
+      $0.function(identifier: "id").willReturn(3)
   }) private var custom: Custom
 
   func test_computed_get_shouldReturnFromMockInit() {
-    // Given
-
-    // When
     let computed = custom.computed
-
-    // Then
     XCTAssertEqual(computed, "id")
   }
 
   func test_function_shouldReturnValueFromMockInit() {
-    // Given
-
-    // When
     let result = custom.function(identifier: "id")
-
-    // Then
     XCTAssertEqual(result, 3)
+  }
+
+  func test_functionStub_shouldReturnValueFromStub() {
+    let result = custom.functionStub()
+    XCTAssertEqual(result.identifier, "stub")
   }
 }

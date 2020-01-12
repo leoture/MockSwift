@@ -1,4 +1,4 @@
-//Mock+init.swift
+//StubTypeRegister.swift
 /*
  MIT License
 
@@ -23,17 +23,16 @@
  SOFTWARE.
  */
 
-import Foundation
+class StubTypeRegister: StubRegister {
 
-public extension Mock {
+  private var stubs: [String: Any] = [:]
 
-  /// Creates a `Mock<WrappedType>` with predefined behaviours.
-  /// - Parameter stubs: List of default stub.
-  /// - Parameter completion: Block where to define behaviours.
-  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
-    self.init()
-    stubs.forEach(record)
-    given(wrappedValue, completion)
+  func recordedStub<ReturnType>(for returnType: ReturnType.Type) -> ReturnType? {
+    stubs["\(returnType)"] as? ReturnType
+  }
+
+  func record(_ stub: Stub) {
+    stubs["\(stub.returnType)"] = stub.value
   }
 
 }

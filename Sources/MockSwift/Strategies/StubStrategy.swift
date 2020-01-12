@@ -1,4 +1,4 @@
-//Mock+init.swift
+//StubStrategy.swift
 /*
  MIT License
 
@@ -23,17 +23,22 @@
  SOFTWARE.
  */
 
-import Foundation
+class StubStrategy: StrategyDecorate {
+  private let stubRegister: StubRegister
 
-public extension Mock {
-
-  /// Creates a `Mock<WrappedType>` with predefined behaviours.
-  /// - Parameter stubs: List of default stub.
-  /// - Parameter completion: Block where to define behaviours.
-  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
-    self.init()
-    stubs.forEach(record)
-    given(wrappedValue, completion)
+  init(next stategy: Strategy, stubRegister: StubRegister) {
+    self.stubRegister = stubRegister
+    super.init(stategy)
   }
 
+  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) -> ReturnType {
+    stubRegister.recordedStub(for: ReturnType.self) ?? super.resolve(for: identifier, concernedBy: parameters)
+  }
+
+  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    try stubRegister.recordedStub(for: ReturnType.self) ??
+      super.resolveThrowable(for: identifier, concernedBy: parameters)
+  }
 }

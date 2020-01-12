@@ -145,6 +145,33 @@ final class GivenStrategyThrowableTests: XCTestCase {
     XCTAssertTrue(catchedError === expectedError)
   }
 
+  func test_resolveThrowable_shouldThrowErroFromNextStrategy() {
+    // Given
+    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
+    let expectedError = NSError(domain: "domain", code: 0)
+    behaviourRegister.recordedBehavioursReturn = []
+    nextStrategy.resolveThrowableError = expectedError
+
+    // When
+    var catchedError: NSError?
+    do {
+      _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
+                                            concernedBy: ["parameter1", 2, true]) as UUID
+    } catch {
+      catchedError = error as NSError
+    }
+
+    //Then
+    XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(parameters.count, 3)
+    XCTAssertEqual(parameters[0] as? String, "parameter1")
+    XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
+    XCTAssertTrue(catchedError === expectedError)
+  }
+
   func test_resolveVoidThrowable_shouldFailWithNoDefinedBehaviour() {
     // Given
     let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
@@ -220,6 +247,33 @@ final class GivenStrategyThrowableTests: XCTestCase {
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
     XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(parameters[0] as? String, "parameter1")
+    XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
+    XCTAssertTrue(catchedError === expectedError)
+  }
+
+  func test_resolveVoidThrowable_shouldThrowErroFromNextStrategy() {
+    // Given
+    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
+    let expectedError = NSError(domain: "domain", code: 0)
+    behaviourRegister.recordedBehavioursReturn = []
+    nextStrategy.resolveThrowableError = expectedError
+
+    // When
+    var catchedError: NSError?
+    do {
+      _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
+                                            concernedBy: ["parameter1", 2, true]) as Void
+    } catch {
+      catchedError = error as NSError
+    }
+
+    //Then
+    XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
+    let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(parameters.count, 3)
     XCTAssertEqual(parameters[0] as? String, "parameter1")
     XCTAssertEqual(parameters[1] as? Int, 2)
     XCTAssertEqual(parameters[2] as? Bool, true)

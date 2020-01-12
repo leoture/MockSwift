@@ -1,4 +1,4 @@
-//Mock+init.swift
+//Stub.swift
 /*
  MIT License
 
@@ -23,17 +23,18 @@
  SOFTWARE.
  */
 
-import Foundation
+public class Stub {
+  let value: Any
+  let returnType: Any
 
-public extension Mock {
-
-  /// Creates a `Mock<WrappedType>` with predefined behaviours.
-  /// - Parameter stubs: List of default stub.
-  /// - Parameter completion: Block where to define behaviours.
-  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
-    self.init()
-    stubs.forEach(record)
-    given(wrappedValue, completion)
+  public init<ReturnType>(_ returnType: ReturnType.Type, _ value: ReturnType) {
+    self.returnType = returnType
+    self.value = value
   }
+}
 
+infix operator =>
+
+public func =><ReturnType>(lhs: ReturnType.Type, rhs: ReturnType) -> Stub {
+  Stub(lhs, rhs)
 }

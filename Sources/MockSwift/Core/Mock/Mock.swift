@@ -41,6 +41,7 @@ public class Mock<WrappedType> {
   let errorHandler: ErrorHandler
   private let callRegister: CallRegister
   private let behaviourRegister: BehaviourRegister
+  private let stubRegister: StubRegister
 
   /// Returns `self` as a `WrappedType`.
   /// - Important: If `self` cannot be cast to `WrappedType` a `fatalError` will be raised.
@@ -55,10 +56,12 @@ public class Mock<WrappedType> {
 
   required init(callRegister: CallRegister,
                 behaviourRegister: BehaviourRegister,
+                stubRegister: StubRegister,
                 strategy: Strategy,
                 errorHandler: ErrorHandler) {
     self.callRegister = callRegister
     self.behaviourRegister = behaviourRegister
+    self.stubRegister = stubRegister
     self.strategy = strategy
     self.errorHandler = errorHandler
   }
@@ -67,9 +70,12 @@ public class Mock<WrappedType> {
   public convenience init() {
     let errorHandler = ErrorHandler()
     let behaviourRegister = FunctionBehaviourRegister()
+    let stubRegister = StubTypeRegister()
     self.init(callRegister: FunctionCallRegister(),
               behaviourRegister: behaviourRegister,
-              strategy: GivenStrategy(next: GlobalStubStrategy(UnresolvedStrategy(errorHandler)),
+              stubRegister: stubRegister,
+              strategy: GivenStrategy(next: StubStrategy(next: GlobalStubStrategy(UnresolvedStrategy(errorHandler)),
+                                                         stubRegister: stubRegister),
                 behaviourRegister: behaviourRegister,
                 errorHandler: errorHandler),
               errorHandler: errorHandler)
@@ -226,6 +232,18 @@ extension Mock: BehaviourRegister {
 
   func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
     behaviourRegister.record(behaviour, for: identifier, when: matchs)
+  }
+
+}
+// MARK: - StubRegister
+
+extension Mock: StubRegister {
+  func recordedStub<ReturnType>(for returnType: ReturnType.Type) -> ReturnType? {
+    stubRegister.recordedStub(for: returnType)
+  }
+
+  func record(_ stub: Stub) {
+    stubRegister.record(stub)
   }
 
 }

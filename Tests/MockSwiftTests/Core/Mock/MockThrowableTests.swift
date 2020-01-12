@@ -41,6 +41,7 @@ final class MockThrowableTests: XCTestCase {
     errorHandler = ErrorHandlerMock()
     mock = Mock(callRegister: callRegister,
                 behaviourRegister: BehaviourRegisterMock(),
+                stubRegister: StubRegisterMock(),
                 strategy: strategy,
                 errorHandler: errorHandler)
   }

@@ -40,6 +40,7 @@ final class MockTests: XCTestCase {
     errorHandler = ErrorHandlerMock()
     mock = Mock(callRegister: callRegister,
                 behaviourRegister: BehaviourRegisterMock(),
+                stubRegister: StubRegisterMock(),
                 strategy: strategy,
                 errorHandler: errorHandler)
   }
@@ -48,6 +49,7 @@ final class MockTests: XCTestCase {
     // Given
     let mock = Mock<Int>(callRegister: CallRegisterMock(),
                          behaviourRegister: BehaviourRegisterMock(),
+                         stubRegister: StubRegisterMock(),
                          strategy: strategy,
                          errorHandler: errorHandler)
     errorHandler.handleReturn = 0

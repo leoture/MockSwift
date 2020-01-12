@@ -45,6 +45,7 @@ final class MockBehaviourRegisterTests: XCTestCase {
     behaviourRegister = BehaviourRegisterMock()
     mock = Mock(callRegister: CallRegisterMock(),
                 behaviourRegister: behaviourRegister,
+                stubRegister: StubRegisterMock(),
                 strategy: StrategyMock(),
                 errorHandler: ErrorHandlerMock())
   }
