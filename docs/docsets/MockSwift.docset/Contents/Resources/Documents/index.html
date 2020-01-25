@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           MockSwift Docs
         </a>
-         (95% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -71,10 +71,31 @@
                 <a class="nav-group-task-link" href="Classes/Mockable.html">Mockable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty.html">MockableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty/Writable.html">– Writable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Predicate.html">Predicate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Stub.html">Stub</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Verifiable.html">Verifiable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty.html">VerifiableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty/Writable.html">– Writable</a>
               </li>
             </ul>
           </li>
@@ -97,6 +118,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2eeopyAA9PredicateCyxGxSQRzlF">==(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2egoiyAA4StubCxm_xtlF">=&gt;(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
@@ -125,7 +149,7 @@
                 <a class="nav-group-task-link" href="Protocols/AnyPredicate.html">AnyPredicate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/MockDefault.html">MockDefault</a>
+                <a class="nav-group-task-link" href="Protocols/GlobalStub.html">GlobalStub</a>
               </li>
             </ul>
           </li>
@@ -151,13 +175,18 @@
 
 <p><a href="https://github.com/leoture/MockSwift/releases"><img src="https://img.shields.io/github/v/release/leoture/MockSwift?color=red" alt="Release"></a>
 <a href="https://github.com/leoture/MockSwift/actions"><img src="https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master" alt="Build Status"></a>
-<a href="https://codecov.io/gh/leoture/MockSwift"><img src="https://codecov.io/gh/leoture/MockSwift/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://codeclimate.com/github/leoture/MockSwift/maintainability"><img src="https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/maintainability" alt="Maintainability"></a>
+<a href="https://codeclimate.com/github/leoture/MockSwift/test_coverage"><img src="https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/test_coverage" alt="Test Coverage"></a>
 <a href="https://leoture.github.io/MockSwift"><img src="https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true" alt="documentation"></a>
 <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen" alt="Swift Package Manager compatible"></a>
 <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.1-important" alt="Swift"></a>
 <a href="https://github.com/leoture/MockSwift/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="license MIT"></a>  </p>
 
-<p>MockSwift is a Mock library written in Swift for Swift.  </p>
+<p>MockSwift is a Mock library for Swift inspired by <a href="https://site.mockito.org">Mockito</a>.</p>
+
+<blockquote>
+<h1 id='️-this-readme-is-out-of-date-full-documentation-coming-soon' class='heading'>⚠️ This README is out of date. Full documentation coming soon.</h1>
+</blockquote>
 <h6 id='table-of-contents' class='heading'>Table of Contents</h6>
 
 <ul>
@@ -224,12 +253,12 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<h3 id='mockdefault' class='heading'>MockDefault</h3>
+<h3 id='globalstub' class='heading'>GlobalStub</h3>
 
-<p>You can define a default value for any type.<br>
+<p>You can define a global stub for any type.<br>
 This value will be returned for any mocked method returning this type, only if no behaviour has been defined.  </p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">User</span><span class="p">:</span> <span class="kt">MockDefault</span> <span class="p">{</span>
-  <span class="kd">static</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">default</span><span class="p">`()</span> <span class="o">-&gt;</span> <span class="kt">User</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">User</span><span class="p">:</span> <span class="kt">GlobalStub</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="kd">func</span> <span class="nf">stub</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">User</span> <span class="p">{</span>
     <span class="kt">User</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="s">"id"</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="s">"John"</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -271,7 +300,7 @@ To use playgrounds:</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-11-12)</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2020-01-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

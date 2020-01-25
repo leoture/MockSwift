@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           MockSwift Docs
         </a>
-         (95% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -72,10 +72,31 @@
                 <a class="nav-group-task-link" href="Classes/Mockable.html">Mockable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty.html">MockableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MockableProperty/Writable.html">– Writable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Predicate.html">Predicate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Stub.html">Stub</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Verifiable.html">Verifiable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty.html">VerifiableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/VerifiableProperty/Writable.html">– Writable</a>
               </li>
             </ul>
           </li>
@@ -98,6 +119,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2eeopyAA9PredicateCyxGxSQRzlF">==(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift2egoiyAA4StubCxm_xtlF">=&gt;(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
@@ -126,7 +150,7 @@
                 <a class="nav-group-task-link" href="Protocols/AnyPredicate.html">AnyPredicate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/MockDefault.html">MockDefault</a>
+                <a class="nav-group-task-link" href="Protocols/GlobalStub.html">GlobalStub</a>
               </li>
             </ul>
           </li>
@@ -207,7 +231,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>MockGiven is used to define stubs.</p>
+                        <p>MockGiven is used to define behaviours.</p>
 
 <p>To be able to use it on a specific type <code>CustomType</code>, you must create an extension.</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MockGiven</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span>
@@ -220,6 +244,102 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MockGiven</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift8MockableC"></a>
+                    <a name="//apple_ref/swift/Class/Mockable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift8MockableC">Mockable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a function call that returns <code>ReturnType</code> and can be stubbed.</p>
+
+                        <a href="Classes/Mockable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Mockable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift16MockablePropertyC"></a>
+                    <a name="//apple_ref/swift/Class/MockableProperty" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift16MockablePropertyC">MockableProperty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a property call that can be stubbed.</p>
+
+                        <a href="Classes/MockableProperty.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MockableProperty</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift4StubC"></a>
+                    <a name="//apple_ref/swift/Class/Stub" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift4StubC">Stub</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/Stub.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Stub</span></code></pre>
 
                         </div>
                       </div>
@@ -276,38 +396,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9MockSwift8MockableC"></a>
-                    <a name="//apple_ref/swift/Class/Mockable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9MockSwift8MockableC">Mockable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Represents a function call that returns <code>ReturnType</code> and can be stubbed.</p>
-
-                        <a href="Classes/Mockable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Mockable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:9MockSwift10VerifiableC"></a>
                     <a name="//apple_ref/swift/Class/Verifiable" class="dashAnchor"></a>
                     <a class="token" href="#/s:9MockSwift10VerifiableC">Verifiable</a>
@@ -327,6 +415,38 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Verifiable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift18VerifiablePropertyC"></a>
+                    <a name="//apple_ref/swift/Class/VerifiableProperty" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift18VerifiablePropertyC">VerifiableProperty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a property call that can be checked.</p>
+
+                        <a href="Classes/VerifiableProperty.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">VerifiableProperty</span></code></pre>
 
                         </div>
                       </div>
@@ -373,7 +493,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-11-12)</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2020-01-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

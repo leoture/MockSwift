@@ -2,7 +2,8 @@
 
 [Unrelease](#Unrelease)
 
-##### 0.x Releases  
+##### 0.x Releases
+- [0.5.0](#0.5.0)
 - [0.4.0](#0.4.0)
 - [0.3.0](#0.3.0)
 - [0.2.0](#0.2.0)
@@ -10,7 +11,22 @@
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v0.4.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
+---
+## [0.5.0](https://github.com/leoture/MockSwift/releases/tag/v0.5.0) - 2020-01-25
+[Compare](https://github.com/leoture/MockSwift/compare/v0.4.0...v0.5.0)
 #### Added
 - Add Mock init with block stubs [#74](https://github.com/leoture/MockSwift/pull/74) by [Jordhan Leoture](https://github.com/leoture)
 - Add Mock init with given block [#72](https://github.com/leoture/MockSwift/pull/72) by [Jordhan Leoture](https://github.com/leoture)

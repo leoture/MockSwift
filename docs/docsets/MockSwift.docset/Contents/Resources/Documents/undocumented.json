@@ -1,26 +1,47 @@
 {
   "warnings": [
     {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Mock.swift",
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Mock.swift",
+      "line": 28,
+      "symbol": "Mock",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Mock.swift",
       "line": 36,
       "symbol": "Mock",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/Mock.swift",
-      "line": 63,
-      "symbol": "Mock.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jordhan.leoture/XCodeProjects/MockSwift/Sources/MockSwift/Mocks/ParameterType.swift",
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/ParameterType.swift",
       "line": 28,
       "symbol": "ParameterType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
+      "line": 26,
+      "symbol": "Stub",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
+      "line": 30,
+      "symbol": "Stub.init(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
+      "line": 38,
+      "symbol": "=>(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/jordhan.leoture/XCodeProjects/MockSwift"
+  "source_directory": "/Users/jordhanleoture/XcodeProjects/MockSwift"
 }

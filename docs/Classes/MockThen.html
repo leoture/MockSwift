@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           MockSwift Docs
         </a>
-         (95% documented)
+         (93% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -72,10 +72,31 @@
                 <a class="nav-group-task-link" href="../Classes/Mockable.html">Mockable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MockableProperty.html">MockableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MockableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MockableProperty/Writable.html">– Writable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Predicate.html">Predicate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Stub.html">Stub</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Verifiable.html">Verifiable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiableProperty.html">VerifiableProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiableProperty/Readable.html">– Readable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiableProperty/Writable.html">– Writable</a>
               </li>
             </ul>
           </li>
@@ -98,6 +119,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:9MockSwift2eeopyAA9PredicateCyxGxSQRzlF">==(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:9MockSwift2egoiyAA4StubCxm_xtlF">=&gt;(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:9MockSwift1gopyAA9PredicateCyxGxSLRzlF">&gt;(_:)</a>
@@ -126,7 +150,7 @@
                 <a class="nav-group-task-link" href="../Protocols/AnyPredicate.html">AnyPredicate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/MockDefault.html">MockDefault</a>
+                <a class="nav-group-task-link" href="../Protocols/GlobalStub.html">GlobalStub</a>
               </li>
             </ul>
           </li>
@@ -292,13 +316,230 @@ for filter method calls.</p>
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Methods2"></a>
+                <a name="//apple_ref/swift/Section/Public Methods" class="dashAnchor"></a>
+                <a href="#/Public%20Methods2">
+                  <h3 class="section-name">Public Methods</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift0A4ThenC10verifiable8property4file4lineAA18VerifiablePropertyC8ReadableCy_qd__GSS_s12StaticStringVSutlF"></a>
+                    <a name="//apple_ref/swift/Method/verifiable(property:file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A4ThenC10verifiable8property4file4lineAA18VerifiablePropertyC8ReadableCy_qd__GSS_s12StaticStringVSutlF">verifiable(property:file:line:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code><a href="../Classes/VerifiableProperty/Readable.html">VerifiableProperty.Readable</a></code> for <code>property</code>.</p>
+
+<p>You must use it during the extension of <code>MockThen</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">variable</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span><span class="err"> </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">MockThen</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">variable</span><span class="p">:</span> <span class="kt">VerifiableProperty</span><span class="o">.</span><span class="kt">Readable</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span>
+    <span class="nf">verifiable</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The property where you call <code>verifiable</code> must respect the following rules:
+
+<ul>
+<li>The name must match the property from the <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>variable</strong></li>
+</ul></li>
+<li>The return type must be a <code><a href="../Classes/Verifiable.html">Verifiable</a></code> with, as generic type, the same type
+as the return type of the property in the <code>WrappedType</code>.
+In the example above, <code>Int</code> became <code><a href="../Classes/VerifiableProperty/Readable.html">VerifiableProperty.Readable&lt;Int&gt;</a></code>.</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">verifiable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">property</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+                                   <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+                                   <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/VerifiableProperty.html">VerifiableProperty</a></span><span class="o">.</span><span class="kt">Readable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>property</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Property concerned by the <code><a href="../Classes/VerifiableProperty.html">VerifiableProperty</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>file</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The file name where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The line where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new <code><a href="../Classes/VerifiableProperty/Readable.html">VerifiableProperty.Readable&lt;ReturnType&gt;</a></code> that will be able to verify <code>property</code> calls.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9MockSwift0A4ThenC10verifiable8property4file4lineAA18VerifiablePropertyC8WritableCy_qd__GSS_s12StaticStringVSutlF"></a>
+                    <a name="//apple_ref/swift/Method/verifiable(property:file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift0A4ThenC10verifiable8property4file4lineAA18VerifiablePropertyC8WritableCy_qd__GSS_s12StaticStringVSutlF">verifiable(property:file:line:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code><a href="../Classes/VerifiableProperty/Writable.html">VerifiableProperty.Writable</a></code> for <code>property</code>.</p>
+
+<p>You must use it during the extension of <code>MockThen</code>.</p>
+<pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">variable</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span><span class="err"> </span><span class="k">set</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">extension</span> <span class="kt">MockThen</span> <span class="k">where</span> <span class="kt">WrappedType</span> <span class="o">==</span> <span class="kt">CustomType</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">variable</span><span class="p">:</span> <span class="kt">VerifiableProperty</span><span class="o">.</span><span class="kt">Writable</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span>
+    <span class="nf">verifiable</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    The property where you call <code>verifiable</code> must respect the following rules:
+
+<ul>
+<li>The name must match the property from the <code>WrappedType</code>.
+
+<ul>
+<li>example: <strong>variable</strong></li>
+</ul></li>
+<li>The return type must be a <code><a href="../Classes/Verifiable.html">Verifiable</a></code> with, as generic type, the same type
+as the return type of the property in the <code>WrappedType</code>.
+In the example above, <code>Int</code> became <code><a href="../Classes/VerifiableProperty/Writable.html">VerifiableProperty.Writable&lt;Int&gt;</a></code>.</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">verifiable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">property</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+                                   <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+                                   <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/VerifiableProperty.html">VerifiableProperty</a></span><span class="o">.</span><span class="kt">Writable</span><span class="o">&lt;</span><span class="kt">ReturnType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>property</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Property concerned by the <code><a href="../Classes/VerifiableProperty.html">VerifiableProperty</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>file</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The file name where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The line where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new <code><a href="../Classes/VerifiableProperty/Writable.html">VerifiableProperty.Writable&lt;ReturnType&gt;</a></code> that will be able to verify <code>property</code> calls.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2019-11-12)</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2020-01-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
