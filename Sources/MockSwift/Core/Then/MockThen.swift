@@ -34,7 +34,7 @@ func then<WrappedType>(_ value: WrappedType,
   guard let mock = value as? Mock<WrappedType> else {
     return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
   }
-  return MockThen(callRegister: mock.callRegister, failureRecorder: XCTestFailureRecorder())
+  return MockThen(callRegister: mock, failureRecorder: XCTestFailureRecorder())
 }
 
 // MARK: - Public Global Methods

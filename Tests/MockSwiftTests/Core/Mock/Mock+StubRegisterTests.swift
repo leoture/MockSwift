@@ -1,4 +1,4 @@
-//DefaultFunctionBehaviourTests.swift
+//Mock+StubRegisterTests.swift
 /*
  MIT License
 
@@ -26,43 +26,45 @@
 import XCTest
 @testable import MockSwift
 
-private class Custom: GlobalStub {
-  static func stub() -> Self {
-    self.init("default")
-  }
-
-  let identifier: String
-  required init(_ identifier: String) {
-    self.identifier = identifier
-  }
-}
-
 private protocol AnyProtocol {}
 
-class DefaultFunctionBehaviourTests: XCTestCase {
-  private var defaultFunctionBehaviour: DefaultFunctionBehaviour!
+class MockStubRegisterTests: XCTestCase {
+  private var mock: Mock<AnyProtocol>!
+  private var stubRegister: StubRegisterMock!
 
   override func setUp() {
-    defaultFunctionBehaviour = DefaultFunctionBehaviour()
+    stubRegister = StubRegisterMock()
+    mock = Mock(callRegister: CallRegisterMock(),
+                behaviourRegister: BehaviourRegisterMock(),
+                stubRegister: stubRegister,
+                strategy: StrategyMock(),
+                errorHandler: ErrorHandlerMock())
   }
 
-  func test_handle_shouldReturnStubCustom() {
-    let custom: Custom? = defaultFunctionBehaviour.handle(with: [])
-    XCTAssertEqual(custom?.identifier, "default")
+  func test_recordedStub_shouldCallStubRegister() {
+    // Given
+    stubRegister.recordedStubReturn = "result"
+
+    // When
+    let result = mock.recordedStub(for: String.self)
+
+    //Then
+    XCTAssertEqual(stubRegister.recordedStubReceived.count, 1)
+    let value = stubRegister.recordedStubReceived[0] as? String.Type
+    XCTAssertTrue(value == String.self)
+    XCTAssertEqual(result, "result")
   }
 
-  func test_handle_shouldReturnNullOnUnknownType() {
-    let result: AnyProtocol? = defaultFunctionBehaviour.handle(with: [])
-    XCTAssertNil(result)
-  }
+  func test_recordedCall_shouldReturnFromBehaviourRegister() {
+    // Given
 
-  func test_handleThrowable_shouldReturnStubCustom() {
-    let custom: Custom? = defaultFunctionBehaviour.handleThrowable(with: [])
-    XCTAssertEqual(custom?.identifier, "default")
-  }
+    // When
+    mock.record(Stub(String.self, "value"))
 
-  func test_handleThrowable_shouldReturnNullOnUnknownType() {
-    let result: AnyProtocol? = defaultFunctionBehaviour.handleThrowable(with: [])
-    XCTAssertNil(result)
+    //Then
+    XCTAssertEqual(stubRegister.recordReceived.count, 1)
+    let stub = stubRegister.recordReceived[0]
+    XCTAssertNotNil(stub.returnType as? String.Type)
+    XCTAssertEqual(stub.value as? String, "value")
   }
 }

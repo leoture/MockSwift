@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//Mock+init.swift
 /*
  MIT License
 
@@ -25,23 +25,15 @@
 
 import Foundation
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
+public extension Mock {
 
-  init() {
-    functionBehaviour = [:]
+  /// Creates a `Mock<WrappedType>` with predefined behaviours.
+  /// - Parameter stubs: List of default stub.
+  /// - Parameter completion: Block where to define behaviours.
+  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
+    self.init()
+    stubs.forEach(record)
+    given(wrappedValue, completion)
   }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
-  }
-
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
-  }
 }

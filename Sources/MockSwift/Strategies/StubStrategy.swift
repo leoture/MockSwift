@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//StubStrategy.swift
 /*
  MIT License
 
@@ -23,25 +23,22 @@
  SOFTWARE.
  */
 
-import Foundation
+class StubStrategy: StrategyDecorate {
+  private let stubRegister: StubRegister
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
-
-  init() {
-    functionBehaviour = [:]
+  init(next stategy: Strategy, stubRegister: StubRegister) {
+    self.stubRegister = stubRegister
+    super.init(stategy)
   }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
+  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) -> ReturnType {
+    stubRegister.recordedStub(for: ReturnType.self) ?? super.resolve(for: identifier, concernedBy: parameters)
   }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
+  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    try stubRegister.recordedStub(for: ReturnType.self) ??
+      super.resolveThrowable(for: identifier, concernedBy: parameters)
   }
 }

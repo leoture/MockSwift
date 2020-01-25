@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//UnresolvedStrategy.swift
 /*
  MIT License
 
@@ -23,25 +23,20 @@
  SOFTWARE.
  */
 
-import Foundation
+class UnresolvedStrategy: Strategy {
+  private let errorHandler: ErrorHandler
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
-
-  init() {
-    functionBehaviour = [:]
+  init(_ errorHandler: ErrorHandler) {
+    self.errorHandler = errorHandler
   }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
+  func resolve<ReturnType>(for identifier: FunctionIdentifier, concernedBy parameters: [ParameterType]) -> ReturnType {
+    errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
   }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
+  func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
   }
+
 }

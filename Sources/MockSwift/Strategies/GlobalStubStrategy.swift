@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//GlobalStubStrategy.swift
 /*
  MIT License
 
@@ -23,25 +23,22 @@
  SOFTWARE.
  */
 
-import Foundation
+class GlobalStubStrategy: StrategyDecorate {
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
-
-  init() {
-    functionBehaviour = [:]
+  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
+                                    concernedBy parameters: [ParameterType]) -> ReturnType {
+    defaultValue() ?? super.resolve(for: identifier, concernedBy: parameters)
   }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
+  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
+    try defaultValue() ?? super.resolveThrowable(for: identifier, concernedBy: parameters)
   }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
+  fileprivate func defaultValue<ReturnType>() -> ReturnType? {
+    if ReturnType.self is Void.Type {
+      return () as? ReturnType
+    }
+    return (ReturnType.self as? GlobalStub.Type)?.stub() as? ReturnType
   }
 }

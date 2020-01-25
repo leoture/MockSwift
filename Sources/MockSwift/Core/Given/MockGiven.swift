@@ -34,7 +34,7 @@ func given<WrappedType>(_ value: WrappedType,
   guard let mock = value as? Mock<WrappedType> else {
     return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
   }
-  return MockGiven(mock.behaviourRegister)
+  return MockGiven(mock)
 }
 
 // MARK: - Public Global Methods

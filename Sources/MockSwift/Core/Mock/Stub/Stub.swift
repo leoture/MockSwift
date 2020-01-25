@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+//Stub.swift
 /*
  MIT License
 
@@ -23,25 +23,18 @@
  SOFTWARE.
  */
 
-import Foundation
+public class Stub {
+  let value: Any
+  let returnType: Any
 
-class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
-
-  init() {
-    functionBehaviour = [:]
+  public init<ReturnType>(_ returnType: ReturnType.Type, _ value: ReturnType) {
+    self.returnType = returnType
+    self.value = value
   }
+}
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
-  }
+infix operator =>
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
-  }
+public func =><ReturnType>(lhs: ReturnType.Type, rhs: ReturnType) -> Stub {
+  Stub(lhs, rhs)
 }

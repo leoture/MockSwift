@@ -40,8 +40,8 @@ class MockableTests: XCTestCase {
     mockable.willReturn(expectedBehaviourReturn)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
-    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+    let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedBehaviourReturn)
     XCTAssertEqual(parameters.identifier, identifier)
     XCTAssertEqual(parameters.matchs.count, 1)
@@ -61,8 +61,8 @@ class MockableTests: XCTestCase {
     mockable.willReturn(expectedFirstBehaviourReturn, expectedSecondBehaviourReturn)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
-    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+    let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedFirstBehaviourReturn)
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
@@ -87,8 +87,8 @@ class MockableTests: XCTestCase {
     }
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
-    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+    let parameters = behaviourRegister.recordReceived[0]
     let expectedBehaviourReceived = [UUID()]
     let behaviourResult: UUID? = parameters.behaviour.handle(with: expectedBehaviourReceived)
     XCTAssertEqual(behaviourReceived, expectedBehaviourReceived)
@@ -121,8 +121,8 @@ class MockableTests: XCTestCase {
     mockable.willThrow(expectedBehaviourError)
 
     //Then
-    XCTAssertEqual(behaviourRegister.recordeReceived.count, 1)
-    let parameters = behaviourRegister.recordeReceived[0]
+    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+    let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.identifier, identifier)
     XCTAssertEqual(parameters.matchs.count, 1)
     XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)

@@ -1,4 +1,4 @@
-//DefaultFunctionBehaviour.swift
+//StubTypeRegisterTests.swift
 /*
  MIT License
 
@@ -23,22 +23,19 @@
  SOFTWARE.
  */
 
-import Foundation
+import XCTest
+@testable import MockSwift
 
-class DefaultFunctionBehaviour {
-}
+class StubTypeRegisterTests: XCTestCase {
 
-extension DefaultFunctionBehaviour: Behaviour {
+  private let register = StubTypeRegister()
 
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
-
-  func handleThrowable<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { defaultValue() }
-
-  fileprivate func defaultValue<ReturnType>() -> ReturnType? {
-    if ReturnType.self is Void.Type {
-      return () as? ReturnType
-    }
-    return (ReturnType.self as? GlobalStub.Type)?.stub() as? ReturnType
+  func test_recordedStub_shouldReturnNilWhenValueNotRecordedBefore() {
+    XCTAssertNil(register.recordedStub(for: String.self))
   }
 
+  func test_recordedStub_shouldReturnValueWhenValueRecordedBefore() {
+    register.record(Stub(String.self, "value"))
+    XCTAssertEqual(register.recordedStub(for: String.self), "value")
+  }
 }
