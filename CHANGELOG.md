@@ -12,6 +12,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.4.0...HEAD)
 #### Added
+- Add Mock init with block stubs [#74](https://github.com/leoture/MockSwift/pull/74) by [Jordhan Leoture](https://github.com/leoture)
 - Add Mock init with given block [#72](https://github.com/leoture/MockSwift/pull/72) by [Jordhan Leoture](https://github.com/leoture)
 - Add MockableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
 - Add VerifiableProperty [#70](https://github.com/leoture/MockSwift/pull/70) by [Jordhan Leoture](https://github.com/leoture)
