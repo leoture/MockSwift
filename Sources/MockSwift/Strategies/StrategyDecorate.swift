@@ -25,7 +25,7 @@
 
 class StrategyDecorate: Strategy {
 
-  private let strategy: Strategy
+  let strategy: Strategy
 
   init(_ strategy: Strategy) {
     self.strategy = strategy

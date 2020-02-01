@@ -37,8 +37,8 @@ public class Mock<WrappedType> {
 
   // MARK: - Properties
 
-  let strategy: Strategy
-  let errorHandler: ErrorHandler
+  private let strategy: Strategy
+  private let errorHandler: ErrorHandler
   private let callRegister: CallRegister
   private let behaviourRegister: BehaviourRegister
   private let stubRegister: StubRegister
@@ -66,19 +66,36 @@ public class Mock<WrappedType> {
     self.errorHandler = errorHandler
   }
 
-  /// Creates a `Mock<WrappedType>`.
-  public convenience init() {
+  convenience init(callRegister: CallRegister,
+                   behaviourRegister: BehaviourRegister,
+                   stubRegister: StubRegister,
+                   factory: StrategyFactory,
+                   strategies: [StrategyIdentifier],
+                   errorHandler: ErrorHandler) {
+    self.init(callRegister: FunctionCallRegister(),
+              behaviourRegister: behaviourRegister,
+              stubRegister: stubRegister,
+              strategy: factory.create(strategy: strategies),
+              errorHandler: errorHandler)
+  }
+
+  convenience init(strategies: [StrategyIdentifier]) {
     let errorHandler = ErrorHandler()
     let behaviourRegister = FunctionBehaviourRegister()
     let stubRegister = StubTypeRegister()
     self.init(callRegister: FunctionCallRegister(),
               behaviourRegister: behaviourRegister,
               stubRegister: stubRegister,
-              strategy: GivenStrategy(next: StubStrategy(next: GlobalStubStrategy(UnresolvedStrategy(errorHandler)),
-                                                         stubRegister: stubRegister),
-                behaviourRegister: behaviourRegister,
-                errorHandler: errorHandler),
+              factory: MockStrategyFactory(errorHandler: errorHandler,
+                                           behaviourRegister: behaviourRegister,
+                                           stubRegister: stubRegister),
+              strategies: strategies,
               errorHandler: errorHandler)
+  }
+
+  /// Creates a `Mock<WrappedType>`.
+  public convenience init() {
+    self.init(strategies: .default)
   }
 
   // MARK: - Public Methods

@@ -49,22 +49,23 @@ extension MockGiven where WrappedType == Custom {
   var computed: MockableProperty.Readable<String> { mockable() }
 
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
+
+  func functionStub() -> Mockable<AnyClass> { mockable() }
 }
 
 class MockIntegrationTests: XCTestCase {
-  @Mock(stubs: [
-    AnyClass.self => AnyClass(identifier: "stub")
+  @Mock(stubs: [ AnyClass.self => AnyClass(identifier: "stub")
     ], {
       $0.computed.get.willReturn("id")
       $0.function(identifier: "id").willReturn(3)
   }) private var custom: Custom
 
-  func test_computed_get_shouldReturnFromMockInit() {
+  func test_computed_get_shouldReturnFromMockInitBlock() {
     let computed = custom.computed
     XCTAssertEqual(computed, "id")
   }
 
-  func test_function_shouldReturnValueFromMockInit() {
+  func test_function_shouldReturnValueFromMockInitBlock() {
     let result = custom.function(identifier: "id")
     XCTAssertEqual(result, 3)
   }
@@ -72,5 +73,12 @@ class MockIntegrationTests: XCTestCase {
   func test_functionStub_shouldReturnValueFromStub() {
     let result = custom.functionStub()
     XCTAssertEqual(result.identifier, "stub")
+  }
+
+  func test_functionStub_shouldReturnValueFromGlobalStub() {
+    let mock = Mock<Custom>(strategy: [.globalStubs]) {
+      $0.function(identifier: "id").willReturn(1)
+    }
+    XCTAssertEqual(mock.function(identifier: "id"), 0)
   }
 }

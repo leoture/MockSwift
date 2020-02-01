@@ -1,4 +1,4 @@
-//StubStrategy.swift
+//MockStrategyFactory.swift
 /*
  MIT License
 
@@ -23,22 +23,32 @@
  SOFTWARE.
  */
 
-class StubStrategy: StrategyDecorate {
-  let stubRegister: StubRegister
+class MockStrategyFactory: StrategyFactory {
 
-  init(next stategy: Strategy, stubRegister: StubRegister) {
+  private let errorHandler: ErrorHandler
+  private let behaviourRegister: BehaviourRegister
+  private let stubRegister: StubRegister
+
+  init(errorHandler: ErrorHandler,
+       behaviourRegister: BehaviourRegister,
+       stubRegister: StubRegister) {
+    self.errorHandler = errorHandler
+    self.behaviourRegister = behaviourRegister
     self.stubRegister = stubRegister
-    super.init(stategy)
   }
 
-  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
-                                    concernedBy parameters: [ParameterType]) -> ReturnType {
-    stubRegister.recordedStub(for: ReturnType.self) ?? super.resolve(for: identifier, concernedBy: parameters)
-  }
-
-  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
-                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
-    try stubRegister.recordedStub(for: ReturnType.self) ??
-      super.resolveThrowable(for: identifier, concernedBy: parameters)
+  func create(strategy chain: [StrategyIdentifier]) -> Strategy {
+    var strategy: Strategy = UnresolvedStrategy(errorHandler)
+    for element in chain.reversed() {
+      switch element {
+      case .given:
+        strategy = GivenStrategy(next: strategy, behaviourRegister: behaviourRegister, errorHandler: errorHandler)
+      case .localStubs:
+        strategy = StubStrategy(next: strategy, stubRegister: stubRegister)
+      case .globalStubs:
+        strategy = GlobalStubStrategy(strategy)
+      }
+    }
+    return strategy
   }
 }

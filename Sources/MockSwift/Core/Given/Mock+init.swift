@@ -27,11 +27,14 @@ import Foundation
 
 public extension Mock {
 
-  /// Creates a `Mock<WrappedType>` with predefined behaviours.
+  /// Creates a `Mock<WrappedType>` with a custom configuration.
+  /// - Parameter strategy: List of strategies used to resolve behaviours.
   /// - Parameter stubs: List of default stub.
   /// - Parameter completion: Block where to define behaviours.
-  convenience init(stubs: [Stub], _ completion: (MockGiven<WrappedType>) -> Void) {
-    self.init()
+  convenience init(strategy: [StrategyIdentifier] = .default,
+                   stubs: [Stub] = [],
+                   _ completion: (MockGiven<WrappedType>) -> Void = { _ in }) {
+    self.init(strategies: strategy)
     stubs.forEach(record)
     given(wrappedValue, completion)
   }
