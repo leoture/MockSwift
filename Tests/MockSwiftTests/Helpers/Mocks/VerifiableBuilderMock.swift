@@ -41,4 +41,15 @@ class VerifiableBuilderMock: VerifiableBuilder {
     return verifiableReturn as! Verifiable<ReturnType>
   }
 
+  var verifiablePredicatesReturn: Any!
+  var verifiablePredicatesReceived: [(predicates: [AnyPredicate], function: String, file: String, line: UInt)] = []
+  func verifiable<ReturnType>(
+    predicates: [AnyPredicate],
+    function: String,
+    file: StaticString,
+    line: UInt) -> Verifiable<ReturnType> {
+    verifiablePredicatesReceived.append((predicates, function, file.description, line))
+    return verifiablePredicatesReturn as! Verifiable<ReturnType>
+  }
+
 }

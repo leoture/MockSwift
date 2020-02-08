@@ -94,6 +94,13 @@ protocol MockableBuilder {
     file: StaticString,
     line: UInt
   ) -> Mockable<ReturnType>
+
+  func mockable<ReturnType>(
+    predicates: [AnyPredicate],
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Mockable<ReturnType>
 }
 
 extension MockGiven: MockableBuilder {
@@ -135,15 +142,34 @@ extension MockGiven: MockableBuilder {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
-    return Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
+    return mockable(predicates: predicates, function: function, file: file, line: line)
+  }
+
+  func mockable<ReturnType>(
+    predicates: [AnyPredicate],
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Mockable<ReturnType> {
+    Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }
 }
 
 // MARK: - MockablePropertyBuilder
 
 protocol MockablePropertyBuilder {
-  func mockable<ReturnType>(property: String, file: StaticString, line: UInt) -> MockableProperty.Readable<ReturnType>
-  func mockable<ReturnType>(property: String, file: StaticString, line: UInt) -> MockableProperty.Writable<ReturnType>
+  func mockable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String,
+    file: StaticString,
+    line: UInt
+  ) -> MockableProperty.Readable<ReturnType>
+
+  func mockable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String,
+    file: StaticString,
+    line: UInt) -> MockableProperty.Writable<ReturnType>
 }
 
 extension MockGiven: MockablePropertyBuilder {
@@ -174,10 +200,19 @@ extension MockGiven: MockablePropertyBuilder {
   ///   - The return type must be a `MockableProperty.Readable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `MockableProperty.Readable<Int>`.
-  public func mockable<ReturnType>(property: String = #function,
-                                   file: StaticString = #file,
-                                   line: UInt = #line) -> MockableProperty.Readable<ReturnType> {
-    return MockableProperty.Readable(property: property, file: file, line: line, mockableBuilder: self)
+  public func mockable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> MockableProperty.Readable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<ParameterType>.match($0, file: file, line: line)
+    }
+    return MockableProperty.Readable(property: property,
+                                     file: file,
+                                     line: line,
+                                     mockableBuilder: self,
+                                     predicates: predicates)
   }
 
   /// Creates a `MockableProperty.Writable` for `property`.
@@ -204,9 +239,18 @@ extension MockGiven: MockablePropertyBuilder {
   ///   - The return type must be a `MockableProperty.Writable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `MockableProperty.Writable<Int>`.
-  public func mockable<ReturnType>(property: String = #function,
-                                   file: StaticString = #file,
-                                   line: UInt = #line) -> MockableProperty.Writable<ReturnType> {
-    return MockableProperty.Writable(property: property, file: file, line: line, mockableBuilder: self)
+  public func mockable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> MockableProperty.Writable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<ParameterType>.match($0, file: file, line: line)
+    }
+    return MockableProperty.Writable(property: property,
+                                     file: file,
+                                     line: line,
+                                     mockableBuilder: self,
+                                     predicates: predicates)
   }
 }

@@ -296,7 +296,6 @@
 			children = (
 				9E00715D2304069600F040F4 /* Calls */,
 				9E2F051B22FAF19C00E04F34 /* Behaviour */,
-				9EA55227230D93D200E82139 /* FunctionIdentifierTests.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -398,6 +397,7 @@
 		FC48153623CB5DE200E0976A /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				9EA55227230D93D200E82139 /* FunctionIdentifierTests.swift */,
 				OBJ_19 /* MockTests.swift */,
 				9E79EBD6235628F100979D90 /* MockThrowableTests.swift */,
 				FC48153723CB5E0600E0976A /* Mock+CallRegisterTests.swift */,

@@ -29,6 +29,8 @@ import MockSwift
 private protocol Custom {
   var identifier: String { get set }
   var computed: String { get }
+  subscript(first: Int, second: String) -> String { get }
+  subscript(x first: Int, y second: Int) -> String { get set }
   func function(identifier: String) -> Int
   func function(identifier: String) throws -> String
 }
@@ -38,9 +40,24 @@ extension Mock: Custom where WrappedType == Custom {
     get { mocked() }
     set { mocked(newValue) }
   }
+
   var computed: String {
     mocked()
   }
+
+  subscript(first: Int, second: String) -> String {
+    mocked(first, second)
+  }
+
+  subscript(x first: Int, y second: Int) -> String {
+    get {
+    mocked(first, second)
+    }
+    set {
+      mocked(first, second, newValue)
+    }
+  }
+
   func function(identifier: String) -> Int { mocked(identifier) }
   func function(identifier: String) throws -> String { try mockedThrowable(identifier) }
 }
@@ -49,6 +66,14 @@ extension MockGiven where WrappedType == Custom {
   var identifier: MockableProperty.Writable<String> { mockable() }
 
   var computed: MockableProperty.Readable<String> { mockable() }
+
+  subscript(first: Int, second: String) -> MockableProperty.Readable<String> {
+    mockable(first, second)
+  }
+
+  subscript(x first: Int, y second: Int) -> MockableProperty.Writable<String> {
+    mockable(first, second)
+  }
 
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
   func function(identifier: Predicate<String>) -> Mockable<Int> { mockable(identifier) }
@@ -243,4 +268,56 @@ class MockGivenIntegrationTests: XCTestCase {
     // Then
     XCTAssertNil(completionParameters)
   }
+
+  func test_subscriptFirstSecond_get_shouldReturnFromWillReturn() {
+    // Given
+    given(custom)[1, "a"].get.willReturn("hello")
+
+    // When
+    let result = custom[1, "a"]
+
+    // Then
+    XCTAssertEqual(result, "hello")
+  }
+
+  func test_subscriptXY_get_shouldReturnFromWillReturn() {
+    // Given
+    given(custom)[x: 1, y: 2].get.willReturn("value")
+
+    // When
+    let result = custom[x: 1, y: 2]
+
+    // Then
+    XCTAssertEqual(result, "value")
+  }
+
+  func test_subscriptXY_set_shouldReturnFromWillCompletion() {
+    // Given
+    let custom = Mock<Custom>()
+    var completionParameters: [Any]?
+    given(custom)[x: 1, y: 2].set(.not(.match(when: \.isEmpty))).will { completionParameters = $0 }
+
+    // When
+    custom[x: 1, y: 2] = "value"
+
+    // Then
+    XCTAssertEqual(completionParameters?.count, 3)
+    XCTAssertEqual(completionParameters?[0] as? Int, 1)
+    XCTAssertEqual(completionParameters?[1] as? Int, 2)
+    XCTAssertEqual(completionParameters?[2] as? String, "value")
+  }
+
+  func test_subscriptXY_set_shouldNotReturnFromWillCompletion() {
+    // Given
+    let custom = Mock<Custom>()
+    var completionParameters: [Any]?
+    given(custom)[x: 1, y: 2].set("").will { completionParameters = $0 }
+
+    // When
+    custom[x: 1, y: 2] = "value"
+
+    // Then
+    XCTAssertNil(completionParameters)
+  }
+
 }

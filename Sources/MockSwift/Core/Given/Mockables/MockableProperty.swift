@@ -34,14 +34,16 @@ public class MockableProperty {
   private let property: String
   private let file: StaticString
   private let line: UInt
+  private let predicates: [AnyPredicate]
 
   // MARK: - Init
 
-  init(property: String, file: StaticString, line: UInt, mockableBuilder: MockableBuilder) {
+  init(property: String, file: StaticString, line: UInt, mockableBuilder: MockableBuilder, predicates: [AnyPredicate]) {
     self.property = property
     self.file = file
     self.line = line
     self.mockableBuilder = mockableBuilder
+    self.predicates = predicates
   }
 }
 
@@ -54,7 +56,7 @@ extension MockableProperty {
 
     /// Creates a `Mockable` for `get` method of the concerned property.
     public var get: Mockable<ReturnType> {
-      mockableBuilder.mockable(function: property, file: file, line: line)
+      mockableBuilder.mockable(predicates: predicates, function: property, file: file, line: line)
     }
   }
 
@@ -63,7 +65,7 @@ extension MockableProperty {
 
     /// Creates a `Mockable` for `get` method of the concerned property.
     public var get: Mockable<ReturnType> {
-      mockableBuilder.mockable(function: property, file: file, line: line)
+      mockableBuilder.mockable(predicates: predicates, function: property, file: file, line: line)
     }
 
     /// Creates a `Mockable` for `set` method of the concerned property.
@@ -71,15 +73,19 @@ extension MockableProperty {
     /// to determine if it can handle the call.
     /// - Returns: A new `Mockable<Void>` that will be able to create stubs for `set`method.
     public func set(_ predicate: Predicate<ReturnType>) -> Mockable<Void> {
-      mockableBuilder.mockable(predicate, function: property, file: file, line: line)
+      var predicates: [AnyPredicate] = self.predicates
+      predicates.append(predicate)
+      return mockableBuilder.mockable(predicates: predicates, function: property, file: file, line: line)
     }
 
     /// Creates a `Mockable` for `set` method of the concerned property.
     /// - Parameter value: Value that will be used as predicate by the `Mockable`
     /// to determine if it can handle the call.
     /// - Returns: A new `Mockable<Void>` that will be able to create stubs for `set`method.
-    public func set(_ value: ReturnType) -> Mockable<Void> {
-      mockableBuilder.mockable(value, function: property, file: file, line: line)
+    public func set(_ value: ReturnType, file: StaticString = #file, line: UInt = #line) -> Mockable<Void> {
+      var predicates: [AnyPredicate] = self.predicates
+      predicates.append(Predicate<ReturnType>.match(value, file: file, line: line))
+      return mockableBuilder.mockable(predicates: predicates, function: property, file: self.file, line: self.line)
     }
   }
 }

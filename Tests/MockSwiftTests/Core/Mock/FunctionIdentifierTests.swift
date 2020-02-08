@@ -49,4 +49,16 @@ class FunctionIdentifierTests: XCTestCase {
       .callDescription(with: [2])
     XCTAssertEqual(description, "variable(newValue: 2) -> ()")
   }
+
+  func test_callDescription_withGetSubscript() {
+    let description = FunctionIdentifier(function: "subscript(_:_:)", return: Int.self)
+      .callDescription(with: [1, "description2"])
+    XCTAssertEqual(description, "subscript(_: 1, _: description2) -> Int")
+  }
+
+  func test_callDescription_withSetSubscript() {
+    let description = FunctionIdentifier(function: "subscript(_:_:)", return: Void.self)
+      .callDescription(with: [1, "description2", 0])
+    XCTAssertEqual(description, "subscript(_: 1, _: description2)(newValue: 0) -> ()")
+  }
 }

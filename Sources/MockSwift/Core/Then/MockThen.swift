@@ -95,6 +95,13 @@ protocol VerifiableBuilder {
     file: StaticString,
     line: UInt
   ) -> Verifiable<ReturnType>
+
+  func verifiable<ReturnType>(
+    predicates: [AnyPredicate],
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Verifiable<ReturnType>
 }
 
 extension MockThen: VerifiableBuilder {
@@ -136,7 +143,16 @@ extension MockThen: VerifiableBuilder {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
-    return Verifiable(callRegister: callRegister,
+    return verifiable(predicates: predicates, function: function, file: file, line: line)
+  }
+
+  func verifiable<ReturnType>(
+    predicates: [AnyPredicate],
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> Verifiable<ReturnType> {
+    Verifiable(callRegister: callRegister,
                       functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
                       parametersPredicates: predicates,
                       failureRecorder: failureRecorder)
@@ -148,10 +164,17 @@ extension MockThen: VerifiableBuilder {
 protocol VerifiablePropertyBuilder {
   func verifiable<ReturnType>(
     _ parameters: ParameterType...,
-    function: String,
+    property: String,
     file: StaticString,
     line: UInt
-  ) -> Verifiable<ReturnType>
+  ) -> VerifiableProperty.Readable<ReturnType>
+
+  func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String,
+    file: StaticString,
+    line: UInt
+  ) -> VerifiableProperty.Writable<ReturnType>
 }
 
 extension MockThen: VerifiablePropertyBuilder {
@@ -182,10 +205,19 @@ extension MockThen: VerifiablePropertyBuilder {
   ///   - The return type must be a `Verifiable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableProperty.Readable<Int>`.
-  public func verifiable<ReturnType>(property: String = #function,
-                                     file: StaticString = #file,
-                                     line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
-    VerifiableProperty.Readable(property: property, file: file, line: line, verifiableBuilder: self)
+  public func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<ParameterType>.match($0, file: file, line: line)
+    }
+    return VerifiableProperty.Readable(property: property,
+                                       file: file,
+                                       line: line,
+                                       verifiableBuilder: self,
+                                       predicates: predicates)
   }
 
   /// Creates a `VerifiableProperty.Writable` for `property`.
@@ -212,9 +244,18 @@ extension MockThen: VerifiablePropertyBuilder {
   ///   - The return type must be a `Verifiable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableProperty.Writable<Int>`.
-  public func verifiable<ReturnType>(property: String = #function,
-                                     file: StaticString = #file,
-                                     line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {
-    VerifiableProperty.Writable(property: property, file: file, line: line, verifiableBuilder: self)
+  public func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    property: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<ParameterType>.match($0, file: file, line: line)
+    }
+    return VerifiableProperty.Writable(property: property,
+                                       file: file,
+                                       line: line,
+                                       verifiableBuilder: self,
+                                       predicates: predicates)
   }
 }

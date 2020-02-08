@@ -34,14 +34,20 @@ public class VerifiableProperty {
   private let property: String
   private let file: StaticString
   private let line: UInt
+  private let predicates: [AnyPredicate]
 
   // MARK: - Init
 
-  init(property: String, file: StaticString, line: UInt, verifiableBuilder: VerifiableBuilder) {
+  init(property: String,
+       file: StaticString,
+       line: UInt,
+       verifiableBuilder: VerifiableBuilder,
+       predicates: [AnyPredicate]) {
     self.property = property
     self.file = file
     self.line = line
     self.verifiableBuilder = verifiableBuilder
+    self.predicates = predicates
   }
 }
 
@@ -54,7 +60,7 @@ extension VerifiableProperty {
 
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
-      verifiableBuilder.verifiable(function: property, file: file, line: line)
+      verifiableBuilder.verifiable(predicates: predicates, function: property, file: file, line: line)
     }
   }
 
@@ -63,7 +69,7 @@ extension VerifiableProperty {
 
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
-      verifiableBuilder.verifiable(function: property, file: file, line: line)
+      verifiableBuilder.verifiable(predicates: predicates, function: property, file: file, line: line)
     }
 
     /// Creates a `Verifiable` for `set` method of the concerned property.
@@ -71,15 +77,19 @@ extension VerifiableProperty {
     /// to determine if it can handle the call.
     /// - Returns: A new `Verifiable<Void>` that will be able to check `set`method calls.
     public func set(_ predicate: Predicate<ReturnType>) -> Verifiable<Void> {
-      verifiableBuilder.verifiable(predicate, function: property, file: file, line: line)
+      var predicates: [AnyPredicate] = self.predicates
+      predicates.append(predicate)
+      return verifiableBuilder.verifiable(predicates: predicates, function: property, file: file, line: line)
     }
 
     /// Creates a `Verifiable` for `set` method of the concerned property.
     /// - Parameter value: Value that will be used as predicate by the `Verifiable`
     /// to determine if it can handle the call.
     /// - Returns: A new `Verifiable<Void>` that will be able to check `set`method calls.
-    public func set(_ value: ReturnType) -> Verifiable<Void> {
-      verifiableBuilder.verifiable(value, function: property, file: file, line: line)
+    public func set(_ value: ReturnType, file: StaticString = #file, line: UInt = #line) -> Verifiable<Void> {
+      var predicates: [AnyPredicate] =  self.predicates
+      predicates.append(Predicate<ReturnType>.match(value, file: file, line: line))
+      return verifiableBuilder.verifiable(predicates: predicates, function: property, file: self.file, line: self.line)
     }
   }
 }

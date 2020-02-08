@@ -32,27 +32,29 @@ final class VerifiablePropertyWritableTests: XCTestCase {
   private let builder = VerifiableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
+  private let expectedPredicates = [1, 2]
   private var writable: VerifiableProperty.Writable<Bool>!
 
   override  func setUp() {
     writable = VerifiableProperty.Writable<Bool>(property: expectedProperty,
                                                  file: "file",
                                                  line: expectedLine,
-                                                 verifiableBuilder: builder)
+                                                 verifiableBuilder: builder,
+                                                 predicates: expectedPredicates)
   }
 
   func test_get_shouldCorrectlyCallBuilder() {
     // Given
     let expectedVerifiable = Verifiable<Bool>.stub()
-    builder.verifiableReturn = expectedVerifiable
+    builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
     _  = writable.get
 
     // Then
-    XCTAssertEqual(builder.verifiableReceived.count, 1)
-    let (parameters, function, file, line) = builder.verifiableReceived[0]
-    XCTAssertTrue(parameters.isEmpty)
+    XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiablePredicatesReceived[0]
+    XCTAssertEqual(parameters as? [Int], expectedPredicates)
     XCTAssertEqual(function, expectedProperty)
     XCTAssertEqual(file, "file")
     XCTAssertEqual(line, expectedLine)
@@ -61,7 +63,7 @@ final class VerifiablePropertyWritableTests: XCTestCase {
   func test_get_shouldReturnValueFromBuilder() {
     // Given
     let expectedVerifiable = Verifiable<Bool>.stub()
-    builder.verifiableReturn = expectedVerifiable
+    builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
     let verifiable = writable.get
@@ -73,16 +75,18 @@ final class VerifiablePropertyWritableTests: XCTestCase {
   func test_set_shouldCorrectlyCallBuilder() {
     // Given
     let expectedVerifiable = Verifiable<Void>.stub()
-    builder.verifiableReturn = expectedVerifiable
+    builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
     _  = writable.set(true)
 
     // Then
-    XCTAssertEqual(builder.verifiableReceived.count, 1)
-    let (parameters, function, file, line) = builder.verifiableReceived[0]
-    XCTAssertEqual(parameters.count, 1)
-    XCTAssertEqual(parameters[0] as? Bool, true)
+    XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiablePredicatesReceived[0]
+    XCTAssertEqual(parameters.count, 3)
+    XCTAssertEqual(parameters[0] as? Int, 1)
+    XCTAssertEqual(parameters[1] as? Int, 2)
+    XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertEqual(function, expectedProperty)
     XCTAssertEqual(file, "file")
     XCTAssertEqual(line, expectedLine)
@@ -91,7 +95,7 @@ final class VerifiablePropertyWritableTests: XCTestCase {
   func test_set_shouldReturnValueFromBuilder() {
     // Given
     let expectedVerifiable = Verifiable<Void>.stub()
-    builder.verifiableReturn = expectedVerifiable
+    builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
     let verifiable = writable.set(true)
