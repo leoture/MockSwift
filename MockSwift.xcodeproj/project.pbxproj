@@ -278,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_12 /* FunctionBehaviour.swift */,
-				9EB5542322FDDDEB00449662 /* GlobalStub.swift */,
 				9E2372E723014A770083396B /* FunctionBehaviourRegister.swift */,
 			);
 			path = Behaviours;
@@ -357,7 +356,6 @@
 		9ED0E95D230C170D008D2329 /* Assertions */ = {
 			isa = PBXGroup;
 			children = (
-				9ED0E95E230C173D008D2329 /* FailureRecorder.swift */,
 				9EA55225230D6F9C00E82139 /* XCTestFailureRecorder.swift */,
 			);
 			path = Assertions;
@@ -367,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				9EB5542E2300591500449662 /* MockGiven.swift */,
-				FC66A25823CA29A6001F1821 /* Mock+init.swift */,
 				FC75744123A666FB00B5064C /* Mockables */,
 			);
 			path = Given;
@@ -495,7 +492,8 @@
 		FC48155723CB9D7A00E0976A /* Registers */ = {
 			isa = PBXGroup;
 			children = (
-				FC48155823CB9D9400E0976A /* StubTypeRegister.swift */,
+				9E2F051722FAEED700E04F34 /* Functions */,
+				FCA31FE623E60358007C6DED /* Stubs */,
 			);
 			path = Registers;
 			sourceTree = "<group>";
@@ -520,6 +518,7 @@
 		FC75744823A66CF900B5064C /* Verifiables */ = {
 			isa = PBXGroup;
 			children = (
+				9ED0E95E230C173D008D2329 /* FailureRecorder.swift */,
 				9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */,
 				FC75744923A66D2800B5064C /* VerifiableProperty.swift */,
 			);
@@ -555,6 +554,15 @@
 				FC66A25623CA25CD001F1821 /* MockIntegrationTests.swift */,
 			);
 			path = IntegrationTests;
+			sourceTree = "<group>";
+		};
+		FCA31FE623E60358007C6DED /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				9EB5542322FDDDEB00449662 /* GlobalStub.swift */,
+				FC48155823CB9D9400E0976A /* StubTypeRegister.swift */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 		OBJ_16 /* Tests */ = {
@@ -647,7 +655,6 @@
 				FC48154023CB6FFC00E0976A /* Strategies */,
 				9ED0E95D230C170D008D2329 /* Assertions */,
 				9EB55430230059A600449662 /* Predicates */,
-				9E2F051722FAEED700E04F34 /* Functions */,
 				OBJ_9 /* Core */,
 			);
 			name = MockSwift;
@@ -657,6 +664,7 @@
 		OBJ_9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				FC66A25823CA29A6001F1821 /* Mock+init.swift */,
 				FC48153E23CB6D8800E0976A /* Then */,
 				FC48152923CA3AD700E0976A /* Given */,
 				FC48153123CB5D2C00E0976A /* Mock */,
