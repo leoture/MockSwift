@@ -13,7 +13,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
 #### Added
-- Add Strategy configuration [#xx](https://github.com/leoture/MockSwift/pull/xx) by [Jordhan Leoture](https://github.com/leoture)
+- Add Strategy configuration [#78](https://github.com/leoture/MockSwift/pull/78) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
