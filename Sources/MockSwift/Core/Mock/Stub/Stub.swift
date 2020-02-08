@@ -23,10 +23,15 @@
  SOFTWARE.
  */
 
+/// Stub represents a paire of type and a value of this type
 public class Stub {
   let value: Any
   let returnType: Any
 
+    /// Creates a Stub
+    /// - Parameters:
+    ///   - returnType: Type to define a stub value
+    ///   - value: Stub value
   public init<ReturnType>(_ returnType: ReturnType.Type, _ value: ReturnType) {
     self.returnType = returnType
     self.value = value
@@ -35,6 +40,10 @@ public class Stub {
 
 infix operator =>
 
+/// Creates a Stub
+/// - Parameters:
+///   - lhs: Type to define a stub value
+///   - rhs: Stub value
 public func =><ReturnType>(lhs: ReturnType.Type, rhs: ReturnType) -> Stub {
   Stub(lhs, rhs)
 }

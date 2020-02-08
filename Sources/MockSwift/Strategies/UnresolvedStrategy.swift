@@ -24,7 +24,7 @@
  */
 
 class UnresolvedStrategy: Strategy {
-  private let errorHandler: ErrorHandler
+  let errorHandler: ErrorHandler
 
   init(_ errorHandler: ErrorHandler) {
     self.errorHandler = errorHandler

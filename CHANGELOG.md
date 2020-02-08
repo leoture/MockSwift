@@ -13,6 +13,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
 #### Added
+- Add Strategy configuration [#78](https://github.com/leoture/MockSwift/pull/78) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
@@ -38,14 +39,6 @@
 
 #### Changed
 - Rename MockDefault to GlobalStub [#69](https://github.com/leoture/MockSwift/pull/69) by [Jordhan Leoture](https://github.com/leoture)
-
-#### Deprecated
-
-#### Removed
-
-#### Fixed
-
-#### Security
 
 ---
 ## [0.4.0](https://github.com/leoture/MockSwift/releases/tag/v0.4.0) - 2019-11-12
