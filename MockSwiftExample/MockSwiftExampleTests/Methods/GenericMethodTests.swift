@@ -1,4 +1,4 @@
-//GenericsTests.swift
+//GenericMethodTests.swift
 /*
  MIT License
 
@@ -27,14 +27,14 @@ import XCTest
 import MockSwift
 @testable import MockSwiftExample
 
-class GenericsTests: XCTestCase {
-  @Mock private var generics: Generics
+class GenericMethodTests: XCTestCase {
+  @Mock private var genericMethod: GenericMethod
 
   func test_doSomething_withPredicates() {
     // Given
     var blockDone = false
     let error = NSError(domain: "domain", code: 0)
-    given(generics) {
+    given(genericMethod) {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn("1")
       $0.doSomething(with: .match(any: [Int].self, when: \.isEmpty)).will { _ in blockDone = true }
@@ -44,17 +44,17 @@ class GenericsTests: XCTestCase {
     }
 
     // When
-    generics.doSomething(with: [])
-    let result0: Int  = generics.doSomething()
-    let result1: String  = generics.doSomething()
+    genericMethod.doSomething(with: [])
+    let result0: Int  = genericMethod.doSomething()
+    let result1: String  = genericMethod.doSomething()
     var resultError: NSError?
     do {
-      _ = try generics.doSomething(arg: true)
+      _ = try genericMethod.doSomething(arg: true)
     } catch {
       resultError = error as NSError
     }
-    let result2 = generics.doSomething(arg1: [2], arg2: nil)
-    let result3 = generics.doSomething(with: 3, and: "3")
+    let result2 = genericMethod.doSomething(arg1: [2], arg2: nil)
+    let result3 = genericMethod.doSomething(with: 3, and: "3")
 
     //Then
     XCTAssertTrue(blockDone)
@@ -63,7 +63,7 @@ class GenericsTests: XCTestCase {
     XCTAssertEqual(result2, 2)
     XCTAssertTrue(result3)
     XCTAssertTrue(resultError === error)
-    then(generics) {
+    then(genericMethod) {
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String.self).called(times: 1)
       $0.doSomething(with: .match(any: [Int].self, when: \.isEmpty)).called(times: 1)
@@ -77,7 +77,7 @@ class GenericsTests: XCTestCase {
     // Given
     var blockDone = false
     let error = NSError(domain: "domain", code: 0)
-    given(generics) {
+    given(genericMethod) {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn("1")
       $0.doSomething(with: []).will { _ in blockDone = true }
@@ -87,17 +87,17 @@ class GenericsTests: XCTestCase {
     }
 
     // When
-    generics.doSomething(with: [])
-    let result0: Int  = generics.doSomething()
-    let result1: String  = generics.doSomething()
+    genericMethod.doSomething(with: [])
+    let result0: Int  = genericMethod.doSomething()
+    let result1: String  = genericMethod.doSomething()
     var resultError: NSError?
     do {
-      _ = try generics.doSomething(arg: true)
+      _ = try genericMethod.doSomething(arg: true)
     } catch {
       resultError = error as NSError
     }
-    let result2 = generics.doSomething(arg1: [2], arg2: nil)
-    let result3 = generics.doSomething(with: 3, and: "3")
+    let result2 = genericMethod.doSomething(arg1: [2], arg2: nil)
+    let result3 = genericMethod.doSomething(with: 3, and: "3")
 
     //Then
     XCTAssertTrue(blockDone)
@@ -106,7 +106,7 @@ class GenericsTests: XCTestCase {
     XCTAssertEqual(result2, 2)
     XCTAssertTrue(result3)
     XCTAssertTrue(resultError === error)
-    then(generics) {
+    then(genericMethod) {
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String.self).called(times: 1)
       $0.doSomething(with: []).called(times: 1)

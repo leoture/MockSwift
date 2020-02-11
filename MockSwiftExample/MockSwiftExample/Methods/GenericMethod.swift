@@ -1,4 +1,4 @@
-//Escaping.swift
+//GenericMethod.swift
 /*
  MIT License
  
@@ -25,7 +25,11 @@
 
 import Foundation
 
-// sourcery: AutoMockable
-protocol Escaping {
-  func call(_ block: @escaping (String) -> Bool) -> Bool
+//sourcery: AutoMockable
+protocol GenericMethod {
+  func doSomething<T>() -> T
+  func doSomething<T: Sequence>(with arg: T) where T.Element == Int
+  func doSomething<T>(arg: T) throws -> T
+  func doSomething<T: Sequence, U>(arg1: T, arg2: U?) -> U where T.Element == U
+  func doSomething<T: Equatable, U: Equatable>(with arg1: T, and arg2: U) -> Bool
 }

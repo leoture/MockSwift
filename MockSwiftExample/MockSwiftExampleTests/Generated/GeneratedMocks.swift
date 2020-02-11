@@ -22,6 +22,103 @@ import MockSwift
 
 
 
+// MARK: - BasicMethod
+extension Mock: BasicMethod where WrappedType == BasicMethod {
+  public func doSomething() {
+    mocked()
+  }
+  public func doSomething() -> Int {
+    mocked()
+  }
+  public func doSomething() -> String? {
+    mocked()
+  }
+  public func doSomething(arg: String) throws -> String {
+    try mockedThrowable(arg)
+  }
+  public func doSomething(arg1: String, arg2: Int?) -> String {
+    mocked(arg1, arg2)
+  }
+  public func doSomething(with arg: String) -> String {
+    mocked(arg)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> String {
+    mocked(arg1, arg2)
+  }
+}
+
+extension MockGiven where WrappedType == BasicMethod {
+  public func doSomething() -> Mockable<Void> {
+    mockable()
+  }
+  public func doSomething() -> Mockable<Int> {
+    mockable()
+  }
+  public func doSomething() -> Mockable<String?> {
+    mockable()
+  }
+  public func doSomething(arg: Predicate<String>) -> Mockable<String> {
+    mockable(arg)
+  }
+  public func doSomething(arg: String) -> Mockable<String> {
+    mockable(arg)
+  }
+  public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int?>) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+  public func doSomething(arg1: String, arg2: Int?) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+  public func doSomething(with arg: Predicate<String>) -> Mockable<String> {
+    mockable(arg)
+  }
+  public func doSomething(with arg: String) -> Mockable<String> {
+    mockable(arg)
+  }
+  public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> Mockable<String> {
+    mockable(arg1, arg2)
+  }
+}
+
+extension MockThen where WrappedType == BasicMethod {
+  public func doSomething() -> Verifiable<Void> {
+    verifiable()
+  }
+  public func doSomething() -> Verifiable<Int> {
+    verifiable()
+  }
+  public func doSomething() -> Verifiable<String?> {
+    verifiable()
+  }
+  public func doSomething(arg: Predicate<String>) -> Verifiable<String> {
+    verifiable(arg)
+  }
+  public func doSomething(arg: String) -> Verifiable<String> {
+    verifiable(arg)
+  }
+  public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int?>) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+  public func doSomething(arg1: String, arg2: Int?) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+  public func doSomething(with arg: Predicate<String>) -> Verifiable<String> {
+    verifiable(arg)
+  }
+  public func doSomething(with arg: String) -> Verifiable<String> {
+    verifiable(arg)
+  }
+  public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+  public func doSomething(with arg1: String, and arg2: Bool) -> Verifiable<String> {
+    verifiable(arg1, arg2)
+  }
+}
+
 // MARK: - BasicSubscript
 extension Mock: BasicSubscript where WrappedType == BasicSubscript {
   public subscript(arg1: String, arg2: Int) -> Bool {
@@ -69,111 +166,14 @@ extension MockThen where WrappedType == BasicSubscript {
   }
 }
 
-// MARK: - Basics
-extension Mock: Basics where WrappedType == Basics {
-  public func doSomething() {
-    mocked()
-  }
-  public func doSomething() -> Int {
-    mocked()
-  }
-  public func doSomething() -> String? {
-    mocked()
-  }
-  public func doSomething(arg: String) throws -> String {
-    try mockedThrowable(arg)
-  }
-  public func doSomething(arg1: String, arg2: Int?) -> String {
-    mocked(arg1, arg2)
-  }
-  public func doSomething(with arg: String) -> String {
-    mocked(arg)
-  }
-  public func doSomething(with arg1: String, and arg2: Bool) -> String {
-    mocked(arg1, arg2)
-  }
-}
-
-extension MockGiven where WrappedType == Basics {
-  public func doSomething() -> Mockable<Void> {
-    mockable()
-  }
-  public func doSomething() -> Mockable<Int> {
-    mockable()
-  }
-  public func doSomething() -> Mockable<String?> {
-    mockable()
-  }
-  public func doSomething(arg: Predicate<String>) -> Mockable<String> {
-    mockable(arg)
-  }
-  public func doSomething(arg: String) -> Mockable<String> {
-    mockable(arg)
-  }
-  public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int?>) -> Mockable<String> {
-    mockable(arg1, arg2)
-  }
-  public func doSomething(arg1: String, arg2: Int?) -> Mockable<String> {
-    mockable(arg1, arg2)
-  }
-  public func doSomething(with arg: Predicate<String>) -> Mockable<String> {
-    mockable(arg)
-  }
-  public func doSomething(with arg: String) -> Mockable<String> {
-    mockable(arg)
-  }
-  public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Mockable<String> {
-    mockable(arg1, arg2)
-  }
-  public func doSomething(with arg1: String, and arg2: Bool) -> Mockable<String> {
-    mockable(arg1, arg2)
-  }
-}
-
-extension MockThen where WrappedType == Basics {
-  public func doSomething() -> Verifiable<Void> {
-    verifiable()
-  }
-  public func doSomething() -> Verifiable<Int> {
-    verifiable()
-  }
-  public func doSomething() -> Verifiable<String?> {
-    verifiable()
-  }
-  public func doSomething(arg: Predicate<String>) -> Verifiable<String> {
-    verifiable(arg)
-  }
-  public func doSomething(arg: String) -> Verifiable<String> {
-    verifiable(arg)
-  }
-  public func doSomething(arg1: Predicate<String>, arg2: Predicate<Int?>) -> Verifiable<String> {
-    verifiable(arg1, arg2)
-  }
-  public func doSomething(arg1: String, arg2: Int?) -> Verifiable<String> {
-    verifiable(arg1, arg2)
-  }
-  public func doSomething(with arg: Predicate<String>) -> Verifiable<String> {
-    verifiable(arg)
-  }
-  public func doSomething(with arg: String) -> Verifiable<String> {
-    verifiable(arg)
-  }
-  public func doSomething(with arg1: Predicate<String>, and arg2: Predicate<Bool>) -> Verifiable<String> {
-    verifiable(arg1, arg2)
-  }
-  public func doSomething(with arg1: String, and arg2: Bool) -> Verifiable<String> {
-    verifiable(arg1, arg2)
-  }
-}
-
-// MARK: - Escaping
-extension Mock: Escaping where WrappedType == Escaping {
+// MARK: - EscapingMethod
+extension Mock: EscapingMethod where WrappedType == EscapingMethod {
   public func call(_ block: @escaping (String) -> Bool) -> Bool {
     mocked(block)
   }
 }
 
-extension MockGiven where WrappedType == Escaping {
+extension MockGiven where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Mockable<Bool> {
     mockable(block)
   }
@@ -182,7 +182,7 @@ extension MockGiven where WrappedType == Escaping {
   }
 }
 
-extension MockThen where WrappedType == Escaping {
+extension MockThen where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Verifiable<Bool> {
     verifiable(block)
   }
@@ -221,8 +221,8 @@ extension MockThen where WrappedType == EscapingSubscript {
   }
 }
 
-// MARK: - Generics
-extension Mock: Generics where WrappedType == Generics {
+// MARK: - GenericMethod
+extension Mock: GenericMethod where WrappedType == GenericMethod {
   public func doSomething<T>() -> T {
     mocked()
   }
@@ -240,7 +240,7 @@ extension Mock: Generics where WrappedType == Generics {
   }
 }
 
-extension MockGiven where WrappedType == Generics {
+extension MockGiven where WrappedType == GenericMethod {
   public func doSomething<T>() -> Mockable<T> {
     mockable()
   }
@@ -270,7 +270,7 @@ extension MockGiven where WrappedType == Generics {
   }
 }
 
-extension MockThen where WrappedType == Generics {
+extension MockThen where WrappedType == GenericMethod {
   public func doSomething<T>() -> Verifiable<T> {
     verifiable()
   }

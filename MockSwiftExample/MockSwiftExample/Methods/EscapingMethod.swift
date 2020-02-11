@@ -1,4 +1,4 @@
-//Basics.swift
+//EscapingMethod.swift
 /*
  MIT License
  
@@ -25,13 +25,7 @@
 
 import Foundation
 
-//sourcery: AutoMockable
-protocol Basics {
-  func doSomething()
-  func doSomething() -> Int
-  func doSomething() -> String?
-  func doSomething(arg: String) throws -> String
-  func doSomething(arg1: String, arg2: Int?) -> String
-  func doSomething(with arg: String) -> String
-  func doSomething(with arg1: String, and arg2: Bool) -> String
+// sourcery: AutoMockable
+protocol EscapingMethod {
+  func call(_ block: @escaping (String) -> Bool) -> Bool
 }
