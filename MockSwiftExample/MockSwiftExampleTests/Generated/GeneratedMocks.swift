@@ -19,6 +19,56 @@ import MockSwift
 
 
 
+
+
+
+// MARK: - BasicSubscript
+extension Mock: BasicSubscript where WrappedType == BasicSubscript {
+  public subscript(arg1: String, arg2: Int) -> Bool {
+    get {
+      mocked(arg1, arg2)
+    }
+    set {
+      mocked(arg1, arg2, newValue)
+    }
+  }
+  public subscript(with arg1: String, and arg2: Int) -> String {
+    get {
+      mocked(arg1, arg2)
+    }
+  }
+}
+
+extension MockGiven where WrappedType == BasicSubscript {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> MockableProperty.Writable<Bool> {
+    mockable(arg1, arg2)
+  }
+  public subscript(arg1: String, arg2: Int) -> MockableProperty.Writable<Bool> {
+   mockable(arg1, arg2)
+  }
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableProperty.Readable<String> {
+    mockable(arg1, arg2)
+  }
+  public subscript(with arg1: String, and arg2: Int) -> MockableProperty.Readable<String> {
+   mockable(arg1, arg2)
+  }
+}
+
+extension MockThen where WrappedType == BasicSubscript {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> VerifiableProperty.Writable<Bool> {
+    verifiable(arg1, arg2)
+  }
+  public subscript(arg1: String, arg2: Int) -> VerifiableProperty.Writable<Bool> {
+   verifiable(arg1, arg2)
+  }
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableProperty.Readable<String> {
+    verifiable(arg1, arg2)
+  }
+  public subscript(with arg1: String, and arg2: Int) -> VerifiableProperty.Readable<String> {
+   verifiable(arg1, arg2)
+  }
+}
+
 // MARK: - Basics
 extension Mock: Basics where WrappedType == Basics {
   public func doSomething() {
