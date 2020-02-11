@@ -191,6 +191,36 @@ extension MockThen where WrappedType == Escaping {
   }
 }
 
+// MARK: - EscapingSubscript
+extension Mock: EscapingSubscript where WrappedType == EscapingSubscript {
+  public subscript(block: @escaping (String) -> Bool) -> Bool {
+    get {
+      mocked(block)
+    }
+    set {
+      mocked(block, newValue)
+    }
+  }
+}
+
+extension MockGiven where WrappedType == EscapingSubscript {
+  public subscript(block: Predicate<(String) -> Bool>) -> MockableProperty.Writable<Bool> {
+    mockable(block)
+  }
+  public subscript(block: @escaping (String) -> Bool) -> MockableProperty.Writable<Bool> {
+   mockable(block)
+  }
+}
+
+extension MockThen where WrappedType == EscapingSubscript {
+  public subscript(block: Predicate<(String) -> Bool>) -> VerifiableProperty.Writable<Bool> {
+    verifiable(block)
+  }
+  public subscript(block: @escaping (String) -> Bool) -> VerifiableProperty.Writable<Bool> {
+   verifiable(block)
+  }
+}
+
 // MARK: - Generics
 extension Mock: Generics where WrappedType == Generics {
   public func doSomething<T>() -> T {

@@ -19,6 +19,8 @@
 		9ED78EFA232006E900886FEA /* MockSwiftExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ED78EEC232006E900886FEA /* MockSwiftExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC6FB8E523F30E3400AB0FCF /* BasicSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */; };
 		FC6FB8E823F30ED700AB0FCF /* BasicSubscriptsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */; };
+		FC6FB8EC23F31A0500AB0FCF /* EscapingSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */; };
+		FC6FB8EE23F31A5800AB0FCF /* EscapingSubscriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */; };
 		FC75744523A6686900B5064C /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744423A6686900B5064C /* Properties.swift */; };
 		FC75744723A668FC00B5064C /* PropertiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744623A668FC00B5064C /* PropertiesTests.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +51,8 @@
 		9ED78EF9232006E900886FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSubscript.swift; sourceTree = "<group>"; };
 		FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSubscriptsTests.swift; sourceTree = "<group>"; };
+		FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingSubscript.swift; sourceTree = "<group>"; };
+		FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingSubscriptTests.swift; sourceTree = "<group>"; };
 		FC75744423A6686900B5064C /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FC75744623A668FC00B5064C /* PropertiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */,
+				FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */,
 			);
 			path = Subscripts;
 			sourceTree = "<group>";
@@ -148,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */,
+				FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */,
 			);
 			path = Subscript;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6FB8E523F30E3400AB0FCF /* BasicSubscript.swift in Sources */,
+				FC6FB8EC23F31A0500AB0FCF /* EscapingSubscript.swift in Sources */,
 				FC75744523A6686900B5064C /* Properties.swift in Sources */,
 				9E7C0B00232013420061BD9B /* Basics.swift in Sources */,
 				9E5A50F12364B321003D01BE /* Escaping.swift in Sources */,
@@ -302,6 +309,7 @@
 				9E7C0AFE232012210061BD9B /* GeneratedMocks.swift in Sources */,
 				FC75744723A668FC00B5064C /* PropertiesTests.swift in Sources */,
 				9E5A50F32364B32E003D01BE /* EscapingTests.swift in Sources */,
+				FC6FB8EE23F31A5800AB0FCF /* EscapingSubscriptTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

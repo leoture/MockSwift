@@ -34,7 +34,7 @@ class BasicSubscriptTests: XCTestCase {
     // Given
     var parameters: [Any]?
     given(basicSubscript) {
-      $0[.match(when: \.isEmpty), .equalsTo(rhs: 1)].get.willReturn(true)
+      $0[.match(when: \.isEmpty), ==1].get.willReturn(true)
       $0[.any(), .any()].set(.isFalse()).will { parameters = $0 }
     }
 
@@ -48,8 +48,8 @@ class BasicSubscriptTests: XCTestCase {
     XCTAssertEqual(parameters?[1] as? Int, 2)
     XCTAssertEqual(parameters?[2] as? Bool, false)
     then(basicSubscript) {
-      $0[.equalsTo(rhs: ""), .equalsTo(rhs: 1)].get.called()
-      $0[.equalsTo(rhs: "hello"), .moreThan(rhs: 0)].set(.isFalse()).called()
+      $0[=="", ==1].get.called()
+      $0[=="hello", >0].set(.isFalse()).called()
     }
   }
 
