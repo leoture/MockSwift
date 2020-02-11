@@ -62,9 +62,11 @@ extension FunctionIdentifierTests {
     // to regenerate.
     static let __allTests__FunctionIdentifierTests = [
         ("test_callDescription_withGetProperty", test_callDescription_withGetProperty),
+        ("test_callDescription_withGetSubscript", test_callDescription_withGetSubscript),
         ("test_callDescription_withNoParametersWhenFunction", test_callDescription_withNoParametersWhenFunction),
         ("test_callDescription_withParametersWhenFuntion", test_callDescription_withParametersWhenFuntion),
         ("test_callDescription_withSetProperty", test_callDescription_withSetProperty),
+        ("test_callDescription_withSetSubscript", test_callDescription_withSetSubscript),
     ]
 }
 
@@ -188,6 +190,10 @@ extension MockGivenIntegrationTests {
         ("test_identifier_get_shouldReturnFromWillReturn", test_identifier_get_shouldReturnFromWillReturn),
         ("test_identifier_set_shouldNotReturnFromWillCompletion", test_identifier_set_shouldNotReturnFromWillCompletion),
         ("test_identifier_set_shouldReturnFromWillCompletion", test_identifier_set_shouldReturnFromWillCompletion),
+        ("test_subscriptFirstSecond_get_shouldReturnFromWillReturn", test_subscriptFirstSecond_get_shouldReturnFromWillReturn),
+        ("test_subscriptXY_get_shouldReturnFromWillReturn", test_subscriptXY_get_shouldReturnFromWillReturn),
+        ("test_subscriptXY_set_shouldNotReturnFromWillCompletion", test_subscriptXY_set_shouldNotReturnFromWillCompletion),
+        ("test_subscriptXY_set_shouldReturnFromWillCompletion", test_subscriptXY_set_shouldReturnFromWillCompletion),
     ]
 }
 
@@ -257,6 +263,10 @@ extension MockThenIntegrationTests {
         ("test_function_shouldBeCalledWhenParametersMatched", test_function_shouldBeCalledWhenParametersMatched),
         ("test_Readable_get_shouldBeCalled", test_Readable_get_shouldBeCalled),
         ("test_receivedParameters_whenParametersMatched", test_receivedParameters_whenParametersMatched),
+        ("test_subscriptFirstSecond_get_shouldBeCalled", test_subscriptFirstSecond_get_shouldBeCalled),
+        ("test_subscriptXY_get_shouldBeCalled", test_subscriptXY_get_shouldBeCalled),
+        ("test_subscriptXY_set_shouldBeCalledWhenParametersMatched", test_subscriptXY_set_shouldBeCalledWhenParametersMatched),
+        ("test_subscriptXY_set_shouldNotBeCalledWhenParametersDontMatch", test_subscriptXY_set_shouldNotBeCalledWhenParametersDontMatch),
         ("test_then_shouldCallCompletionWithMockThen", test_then_shouldCallCompletionWithMockThen),
         ("test_Writable_get_shouldBeCalled", test_Writable_get_shouldBeCalled),
         ("test_Writable_set_shouldBeCalledWhenParametersMatched", test_Writable_set_shouldBeCalledWhenParametersMatched),
