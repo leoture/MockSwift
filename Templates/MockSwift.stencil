@@ -76,11 +76,11 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro mockGivenSubscript subscript %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> MockableProperty.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> MockableProperty.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
    mockable({% call parametersOnInvoke subscript %})
   }
   {% endif %}
@@ -118,11 +118,11 @@ extension MockGiven where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro mockThenSubscript subscript %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableProperty.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableProperty.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
    verifiable({% call parametersOnInvoke subscript %})
   }
   {% endif %}

@@ -137,31 +137,31 @@ extension Mock: BasicSubscript where WrappedType == BasicSubscript {
 }
 
 extension MockGiven where WrappedType == BasicSubscript {
-  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> MockableProperty.Writable<Bool> {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> MockableSubscript.Writable<Bool> {
     mockable(arg1, arg2)
   }
-  public subscript(arg1: String, arg2: Int) -> MockableProperty.Writable<Bool> {
+  public subscript(arg1: String, arg2: Int) -> MockableSubscript.Writable<Bool> {
    mockable(arg1, arg2)
   }
-  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableProperty.Readable<String> {
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableSubscript.Readable<String> {
     mockable(arg1, arg2)
   }
-  public subscript(with arg1: String, and arg2: Int) -> MockableProperty.Readable<String> {
+  public subscript(with arg1: String, and arg2: Int) -> MockableSubscript.Readable<String> {
    mockable(arg1, arg2)
   }
 }
 
 extension MockThen where WrappedType == BasicSubscript {
-  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> VerifiableProperty.Writable<Bool> {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> VerifiableSubscript.Writable<Bool> {
     verifiable(arg1, arg2)
   }
-  public subscript(arg1: String, arg2: Int) -> VerifiableProperty.Writable<Bool> {
+  public subscript(arg1: String, arg2: Int) -> VerifiableSubscript.Writable<Bool> {
    verifiable(arg1, arg2)
   }
-  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableProperty.Readable<String> {
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableSubscript.Readable<String> {
     verifiable(arg1, arg2)
   }
-  public subscript(with arg1: String, and arg2: Int) -> VerifiableProperty.Readable<String> {
+  public subscript(with arg1: String, and arg2: Int) -> VerifiableSubscript.Readable<String> {
    verifiable(arg1, arg2)
   }
 }
@@ -204,19 +204,19 @@ extension Mock: EscapingSubscript where WrappedType == EscapingSubscript {
 }
 
 extension MockGiven where WrappedType == EscapingSubscript {
-  public subscript(block: Predicate<(String) -> Bool>) -> MockableProperty.Writable<Bool> {
+  public subscript(block: Predicate<(String) -> Bool>) -> MockableSubscript.Writable<Bool> {
     mockable(block)
   }
-  public subscript(block: @escaping (String) -> Bool) -> MockableProperty.Writable<Bool> {
+  public subscript(block: @escaping (String) -> Bool) -> MockableSubscript.Writable<Bool> {
    mockable(block)
   }
 }
 
 extension MockThen where WrappedType == EscapingSubscript {
-  public subscript(block: Predicate<(String) -> Bool>) -> VerifiableProperty.Writable<Bool> {
+  public subscript(block: Predicate<(String) -> Bool>) -> VerifiableSubscript.Writable<Bool> {
     verifiable(block)
   }
-  public subscript(block: @escaping (String) -> Bool) -> VerifiableProperty.Writable<Bool> {
+  public subscript(block: @escaping (String) -> Bool) -> VerifiableSubscript.Writable<Bool> {
    verifiable(block)
   }
 }
