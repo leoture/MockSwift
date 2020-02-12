@@ -32,17 +32,15 @@ final class MockablePropertyReadableTests: XCTestCase {
   private let builder = MockableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
-  private let expectedPredicates = [1, 2]
   private let expectedMockable = Mockable<Bool>.stub()
   private var readable: MockableProperty.Readable<Bool>!
 
   override func setUp() {
-    builder.mockablePredicatesReturn = expectedMockable
+    builder.mockableReturn = expectedMockable
     readable = MockableProperty.Readable<Bool>(property: expectedProperty,
                                                file: "file",
                                                line: expectedLine,
-                                               mockableBuilder: builder,
-                                               predicates: expectedPredicates)
+                                               mockableBuilder: builder)
   }
 
   func test_get_shouldCorrectlyCallBuilder() {
@@ -52,9 +50,9 @@ final class MockablePropertyReadableTests: XCTestCase {
     _  = readable.get
 
     // Then
-    XCTAssertEqual(builder.mockablePredicatesReceived.count, 1)
-    let (predicates, function, file, line) = builder.mockablePredicatesReceived[0]
-    XCTAssertEqual(predicates as? [Int], expectedPredicates)
+    XCTAssertEqual(builder.mockableReceived.count, 1)
+    let (parameters, function, file, line) = builder.mockableReceived[0]
+    XCTAssertTrue(parameters.isEmpty)
     XCTAssertEqual(function, expectedProperty)
     XCTAssertEqual(file, "file")
     XCTAssertEqual(line, expectedLine)

@@ -67,11 +67,11 @@ extension MockGiven where WrappedType == Custom {
 
   var computed: MockableProperty.Readable<String> { mockable() }
 
-  subscript(first: Int, second: String) -> MockableProperty.Readable<String> {
+  subscript(first: Int, second: String) -> MockableSubscript.Readable<String> {
     mockable(first, second)
   }
 
-  subscript(x first: Int, y second: Int) -> MockableProperty.Writable<String> {
+  subscript(x first: Int, y second: Int) -> MockableSubscript.Writable<String> {
     mockable(first, second)
   }
 

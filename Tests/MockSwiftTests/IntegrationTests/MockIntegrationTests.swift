@@ -34,15 +34,14 @@ private protocol Custom {
   var computed: String { get }
   func function(identifier: String) -> Int
   func functionStub() -> AnyClass
+  subscript(arg: String) -> Int { get }
 }
 
 extension Mock: Custom where WrappedType == Custom {
-  var computed: String {
-    mocked()
-  }
+  var computed: String { mocked() }
   func function(identifier: String) -> Int { mocked(identifier) }
-
   func functionStub() -> AnyClass { mocked() }
+  subscript(arg: String) -> Int { mocked(arg) }
 }
 
 extension MockGiven where WrappedType == Custom {
@@ -51,12 +50,15 @@ extension MockGiven where WrappedType == Custom {
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
 
   func functionStub() -> Mockable<AnyClass> { mockable() }
+
+  subscript(arg: String) -> MockableSubscript.Readable<Int> { mockable(arg) }
 }
 
 class MockIntegrationTests: XCTestCase {
   @Mock(stubs: [ AnyClass.self => AnyClass(identifier: "stub")
     ], {
       $0.computed.get.willReturn("id")
+      $0["value"].get.willReturn(2)
       $0.function(identifier: "id").willReturn(3)
   }) private var custom: Custom
 
@@ -68,6 +70,11 @@ class MockIntegrationTests: XCTestCase {
   func test_function_shouldReturnValueFromMockInitBlock() {
     let result = custom.function(identifier: "id")
     XCTAssertEqual(result, 3)
+  }
+
+  func test_subscript_shouldReturnValueFromMockInitBlock() {
+    let result = custom["value"]
+    XCTAssertEqual(result, 2)
   }
 
   func test_functionStub_shouldReturnValueFromStub() {
