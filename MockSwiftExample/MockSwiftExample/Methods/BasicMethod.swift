@@ -1,4 +1,4 @@
-//Generics.swift
+//BasicMethod.swift
 /*
  MIT License
  
@@ -26,10 +26,12 @@
 import Foundation
 
 //sourcery: AutoMockable
-protocol Generics {
-  func doSomething<T>() -> T
-  func doSomething<T: Sequence>(with arg: T) where T.Element == Int
-  func doSomething<T>(arg: T) throws -> T
-  func doSomething<T: Sequence, U>(arg1: T, arg2: U?) -> U where T.Element == U
-  func doSomething<T: Equatable, U: Equatable>(with arg1: T, and arg2: U) -> Bool
+protocol BasicMethod {
+  func doSomething()
+  func doSomething() -> Int
+  func doSomething() -> String?
+  func doSomething(arg: String) throws -> String
+  func doSomething(arg1: String, arg2: Int?) -> String
+  func doSomething(with arg: String) -> String
+  func doSomething(with arg1: String, and arg2: Bool) -> String
 }

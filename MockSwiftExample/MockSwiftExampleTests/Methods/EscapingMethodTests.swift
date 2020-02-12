@@ -1,4 +1,4 @@
-//EscapingTests.swift
+//EscapingMethodTests.swift
 /*
 MIT License
 
@@ -28,36 +28,36 @@ import XCTest
 import MockSwift
 @testable import MockSwiftExample
 
-class EscapingTests: XCTestCase {
-  @Mock private var escaping: Escaping
+class EscapingMethodTests: XCTestCase {
+  @Mock private var escapingMethod: EscapingMethod
 
   func test_call_withTypes() {
     // block cannot be used as predicate.
     // Given
     let block: (String) -> Bool = { $0.isEmpty }
-    given(escaping).call(block).will {
+    given(escapingMethod).call(block).will {
       ($0[0] as! (String) -> Bool)("")
     }
 
     // When
-    let result = escaping.call(block)
+    let result = escapingMethod.call(block)
 
     //Then
     XCTAssertFalse(result)
-    then(escaping).call(block).called(times: 0)
+    then(escapingMethod).call(block).called(times: 0)
   }
 
   func test_call_withPredicates() {
     // Given
-    given(escaping).call(.any()).will {
+    given(escapingMethod).call(.any()).will {
       ($0[0] as! (String) -> Bool)("")
     }
 
     // When
-    let result = escaping.call { $0.isEmpty }
+    let result = escapingMethod.call { $0.isEmpty }
 
     //Then
     XCTAssertTrue(result)
-    then(escaping).call(.any()).called()
+    then(escapingMethod).call(.any()).called()
   }
 }

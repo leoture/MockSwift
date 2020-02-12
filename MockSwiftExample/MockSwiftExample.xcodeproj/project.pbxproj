@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E0F3438235A53C0004231C0 /* Generics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F3437235A53C0004231C0 /* Generics.swift */; };
-		9E0F343A235A53D5004231C0 /* GenericsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F3439235A53D5004231C0 /* GenericsTests.swift */; };
-		9E5A50F12364B321003D01BE /* Escaping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A50F02364B321003D01BE /* Escaping.swift */; };
-		9E5A50F32364B32E003D01BE /* EscapingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A50F22364B32E003D01BE /* EscapingTests.swift */; };
+		9E0F3438235A53C0004231C0 /* GenericMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F3437235A53C0004231C0 /* GenericMethod.swift */; };
+		9E0F343A235A53D5004231C0 /* GenericMethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0F3439235A53D5004231C0 /* GenericMethodTests.swift */; };
+		9E5A50F12364B321003D01BE /* EscapingMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A50F02364B321003D01BE /* EscapingMethod.swift */; };
+		9E5A50F32364B32E003D01BE /* EscapingMethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A50F22364B32E003D01BE /* EscapingMethodTests.swift */; };
 		9E7C0AFE232012210061BD9B /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0AFD232012210061BD9B /* GeneratedMocks.swift */; };
-		9E7C0B00232013420061BD9B /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0AFF232013420061BD9B /* Basics.swift */; };
+		9E7C0B00232013420061BD9B /* BasicMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C0AFF232013420061BD9B /* BasicMethod.swift */; };
 		9E7C0B09232033510061BD9B /* MockSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E7C0B08232033510061BD9B /* MockSwift.framework */; };
 		9ED78EF3232006E900886FEA /* MockSwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ED78EE9232006E900886FEA /* MockSwiftExample.framework */; };
-		9ED78EF8232006E900886FEA /* BasicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED78EF7232006E900886FEA /* BasicsTests.swift */; };
+		9ED78EF8232006E900886FEA /* BasicMethodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED78EF7232006E900886FEA /* BasicMethodTests.swift */; };
 		9ED78EFA232006E900886FEA /* MockSwiftExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ED78EEC232006E900886FEA /* MockSwiftExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FC6FB8E523F30E3400AB0FCF /* BasicSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */; };
+		FC6FB8E823F30ED700AB0FCF /* BasicSubscriptsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */; };
+		FC6FB8EC23F31A0500AB0FCF /* EscapingSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */; };
+		FC6FB8EE23F31A5800AB0FCF /* EscapingSubscriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */; };
 		FC75744523A6686900B5064C /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744423A6686900B5064C /* Properties.swift */; };
 		FC75744723A668FC00B5064C /* PropertiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744623A668FC00B5064C /* PropertiesTests.swift */; };
 /* End PBXBuildFile section */
@@ -32,19 +36,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9E0F3437235A53C0004231C0 /* Generics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generics.swift; sourceTree = "<group>"; };
-		9E0F3439235A53D5004231C0 /* GenericsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsTests.swift; sourceTree = "<group>"; };
-		9E5A50F02364B321003D01BE /* Escaping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Escaping.swift; sourceTree = "<group>"; };
-		9E5A50F22364B32E003D01BE /* EscapingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingTests.swift; sourceTree = "<group>"; };
+		9E0F3437235A53C0004231C0 /* GenericMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMethod.swift; sourceTree = "<group>"; };
+		9E0F3439235A53D5004231C0 /* GenericMethodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMethodTests.swift; sourceTree = "<group>"; };
+		9E5A50F02364B321003D01BE /* EscapingMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingMethod.swift; sourceTree = "<group>"; };
+		9E5A50F22364B32E003D01BE /* EscapingMethodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingMethodTests.swift; sourceTree = "<group>"; };
 		9E7C0AFD232012210061BD9B /* GeneratedMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		9E7C0AFF232013420061BD9B /* Basics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basics.swift; sourceTree = "<group>"; };
+		9E7C0AFF232013420061BD9B /* BasicMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMethod.swift; sourceTree = "<group>"; };
 		9E7C0B08232033510061BD9B /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED78EE9232006E900886FEA /* MockSwiftExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockSwiftExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED78EEC232006E900886FEA /* MockSwiftExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockSwiftExample.h; sourceTree = "<group>"; };
 		9ED78EED232006E900886FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ED78EF2232006E900886FEA /* MockSwiftExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MockSwiftExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9ED78EF7232006E900886FEA /* BasicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicsTests.swift; sourceTree = "<group>"; };
+		9ED78EF7232006E900886FEA /* BasicMethodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMethodTests.swift; sourceTree = "<group>"; };
 		9ED78EF9232006E900886FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSubscript.swift; sourceTree = "<group>"; };
+		FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSubscriptsTests.swift; sourceTree = "<group>"; };
+		FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingSubscript.swift; sourceTree = "<group>"; };
+		FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscapingSubscriptTests.swift; sourceTree = "<group>"; };
 		FC75744423A6686900B5064C /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
 		FC75744623A668FC00B5064C /* PropertiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,12 +115,11 @@
 		9ED78EEB232006E900886FEA /* MockSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				FC6FB8F023F32F3D00AB0FCF /* Properties */,
+				FC6FB8EF23F32F3200AB0FCF /* Methods */,
+				FC6FB8E323F30E1000AB0FCF /* Subscripts */,
 				9ED78EEC232006E900886FEA /* MockSwiftExample.h */,
 				9ED78EED232006E900886FEA /* Info.plist */,
-				9E7C0AFF232013420061BD9B /* Basics.swift */,
-				9E0F3437235A53C0004231C0 /* Generics.swift */,
-				9E5A50F02364B321003D01BE /* Escaping.swift */,
-				FC75744423A6686900B5064C /* Properties.swift */,
 			);
 			path = MockSwiftExample;
 			sourceTree = "<group>";
@@ -120,14 +127,67 @@
 		9ED78EF6232006E900886FEA /* MockSwiftExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC6FB8F223F32F8C00AB0FCF /* Properties */,
+				FC6FB8F123F32F8300AB0FCF /* Methods */,
+				FC6FB8E623F30E7500AB0FCF /* Subscript */,
 				9E7C0AFC232012030061BD9B /* Generated */,
-				9ED78EF7232006E900886FEA /* BasicsTests.swift */,
 				9ED78EF9232006E900886FEA /* Info.plist */,
-				9E0F3439235A53D5004231C0 /* GenericsTests.swift */,
-				9E5A50F22364B32E003D01BE /* EscapingTests.swift */,
-				FC75744623A668FC00B5064C /* PropertiesTests.swift */,
 			);
 			path = MockSwiftExampleTests;
+			sourceTree = "<group>";
+		};
+		FC6FB8E323F30E1000AB0FCF /* Subscripts */ = {
+			isa = PBXGroup;
+			children = (
+				FC6FB8E423F30E3400AB0FCF /* BasicSubscript.swift */,
+				FC6FB8EB23F31A0500AB0FCF /* EscapingSubscript.swift */,
+			);
+			path = Subscripts;
+			sourceTree = "<group>";
+		};
+		FC6FB8E623F30E7500AB0FCF /* Subscript */ = {
+			isa = PBXGroup;
+			children = (
+				FC6FB8E723F30ED700AB0FCF /* BasicSubscriptsTests.swift */,
+				FC6FB8ED23F31A5800AB0FCF /* EscapingSubscriptTests.swift */,
+			);
+			path = Subscript;
+			sourceTree = "<group>";
+		};
+		FC6FB8EF23F32F3200AB0FCF /* Methods */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C0AFF232013420061BD9B /* BasicMethod.swift */,
+				9E0F3437235A53C0004231C0 /* GenericMethod.swift */,
+				9E5A50F02364B321003D01BE /* EscapingMethod.swift */,
+			);
+			path = Methods;
+			sourceTree = "<group>";
+		};
+		FC6FB8F023F32F3D00AB0FCF /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				FC75744423A6686900B5064C /* Properties.swift */,
+			);
+			path = Properties;
+			sourceTree = "<group>";
+		};
+		FC6FB8F123F32F8300AB0FCF /* Methods */ = {
+			isa = PBXGroup;
+			children = (
+				9ED78EF7232006E900886FEA /* BasicMethodTests.swift */,
+				9E0F3439235A53D5004231C0 /* GenericMethodTests.swift */,
+				9E5A50F22364B32E003D01BE /* EscapingMethodTests.swift */,
+			);
+			path = Methods;
+			sourceTree = "<group>";
+		};
+		FC6FB8F223F32F8C00AB0FCF /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				FC75744623A668FC00B5064C /* PropertiesTests.swift */,
+			);
+			path = Properties;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,10 +322,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC6FB8E523F30E3400AB0FCF /* BasicSubscript.swift in Sources */,
+				FC6FB8EC23F31A0500AB0FCF /* EscapingSubscript.swift in Sources */,
 				FC75744523A6686900B5064C /* Properties.swift in Sources */,
-				9E7C0B00232013420061BD9B /* Basics.swift in Sources */,
-				9E5A50F12364B321003D01BE /* Escaping.swift in Sources */,
-				9E0F3438235A53C0004231C0 /* Generics.swift in Sources */,
+				9E7C0B00232013420061BD9B /* BasicMethod.swift in Sources */,
+				9E5A50F12364B321003D01BE /* EscapingMethod.swift in Sources */,
+				9E0F3438235A53C0004231C0 /* GenericMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,11 +335,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E0F343A235A53D5004231C0 /* GenericsTests.swift in Sources */,
-				9ED78EF8232006E900886FEA /* BasicsTests.swift in Sources */,
+				FC6FB8E823F30ED700AB0FCF /* BasicSubscriptsTests.swift in Sources */,
+				9E0F343A235A53D5004231C0 /* GenericMethodTests.swift in Sources */,
+				9ED78EF8232006E900886FEA /* BasicMethodTests.swift in Sources */,
 				9E7C0AFE232012210061BD9B /* GeneratedMocks.swift in Sources */,
 				FC75744723A668FC00B5064C /* PropertiesTests.swift in Sources */,
-				9E5A50F32364B32E003D01BE /* EscapingTests.swift in Sources */,
+				9E5A50F32364B32E003D01BE /* EscapingMethodTests.swift in Sources */,
+				FC6FB8EE23F31A5800AB0FCF /* EscapingSubscriptTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,20 +26,28 @@
 import Foundation
 
 struct FunctionIdentifier: Equatable, Hashable {
-  private let identifier: String
+
+  // MARK: - Properties
+
+  private let identifier: String!
+
+  // MARK: - Initializers
 
   init<ReturnType>(function: String, return: ReturnType.Type) {
     var normalizedFunction = function
 
-    if !function.contains("(") {
-      if ReturnType.self == Void.self {
-        normalizedFunction = function+"(newValue:)"
-      } else {
-        normalizedFunction = function+"()"
-      }
+    if let normalized = normalizedAsProperty(function: function, return: ReturnType.self) {
+      normalizedFunction = normalized
     }
+
+    if let normalized = normalizedAsSubscript(function: function, return: ReturnType.self) {
+      normalizedFunction = normalized
+    }
+
     self.identifier = "\(normalizedFunction) -> \(ReturnType.self)"
   }
+
+  // MARK: - Methods
 
   func callDescription(with parameters: [ParameterType]) -> String {
     var callDescription: String = ""
@@ -65,4 +73,20 @@ struct FunctionIdentifier: Equatable, Hashable {
     return callDescription
   }
 
+}
+
+// MARK: - Private methods
+
+private func normalizedAsProperty<ReturnType>(function: String, return: ReturnType.Type) -> String? {
+  guard !function.contains("(") else {
+    return nil
+  }
+  return ReturnType.self == Void.self ? function+"(newValue:)" : function+"()"
+}
+
+private func normalizedAsSubscript<ReturnType>(function: String, return: ReturnType.Type) -> String? {
+  guard function.starts(with: "subscript(") else {
+    return nil
+  }
+  return ReturnType.self == Void.self ? function + "(newValue:)" : function
 }

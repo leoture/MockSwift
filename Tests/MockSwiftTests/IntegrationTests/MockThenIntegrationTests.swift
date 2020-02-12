@@ -29,6 +29,8 @@ import MockSwift
 private protocol Custom {
   var identifier: String { get set }
   var computed: String { get }
+  subscript(first: Int, second: String) -> String { get }
+  subscript(x first: Int, y second: Int) -> String { get set }
   func function(identifier: String) -> Int
   func function(identifier: String) -> String
 }
@@ -38,9 +40,24 @@ extension Mock: Custom where WrappedType == Custom {
     get { mocked() }
     set { mocked(newValue) }
   }
+
   var computed: String {
     mocked()
   }
+
+  subscript(first: Int, second: String) -> String {
+    mocked(first, second)
+  }
+
+  subscript(x first: Int, y second: Int) -> String {
+    get {
+    mocked(first, second)
+    }
+    set {
+      mocked(first, second, newValue)
+    }
+  }
+
   func function(identifier: String) -> Int { mocked(identifier) }
   func function(identifier: String) -> String { mocked(identifier) }
 }
@@ -49,6 +66,14 @@ extension MockThen where WrappedType == Custom {
   var identifier: VerifiableProperty.Writable<String> { verifiable() }
 
   var computed: VerifiableProperty.Readable<String> { verifiable() }
+
+  subscript(first: Predicate<Int>, second: Predicate<String>) -> VerifiableSubscript.Readable<String> {
+    verifiable(first, second)
+  }
+
+  subscript(x first: Int, y second: Int) -> VerifiableSubscript.Writable<String> {
+    verifiable(first, second)
+  }
 
   func function(identifier: String) -> Verifiable<Int> { verifiable(identifier) }
   func function(identifier: Predicate<String>) -> Verifiable<Int> { verifiable(identifier) }
@@ -157,5 +182,49 @@ class MockThenIntegrationTests: XCTestCase {
 
     // Then
     then(custom).identifier.set(.match(when: \.isEmpty)).called(times: 0)
+  }
+
+  func test_subscriptFirstSecond_get_shouldBeCalled() {
+    // Given
+
+    // When
+    _ = custom[1, "a"]
+    _ = custom[1, "b"]
+
+    // Then
+    then(custom)[==1, .match { $0 == "a" || $0 == "b" }].get.called(times: 2)
+  }
+
+  func test_subscriptXY_get_shouldBeCalled() {
+    // Given
+
+    // When
+    _ = custom[x: 1, y: 2]
+
+    // Then
+    then(custom)[x: 1, y: 2].get.called(times: 1)
+  }
+
+  func test_subscriptXY_set_shouldBeCalledWhenParametersMatched() {
+    // Given
+    let custom = Mock<Custom>()
+
+    // When
+    custom[x: 1, y: 2] = "value"
+
+    // Then
+    then(custom)[x: 1, y: 2].set(.not(.match(when: \.isEmpty))).called()
+    then(custom)[x: 1, y: 2].set("value").called()
+  }
+
+  func test_subscriptXY_set_shouldNotBeCalledWhenParametersDontMatch() {
+    // Given
+    let custom = Mock<Custom>()
+
+    // When
+    custom[x: 1, y: 2] = "value"
+
+    // Then
+    then(custom)[x: 1, y: 2].set(.match(when: \.isEmpty)).called(times: 0)
   }
 }

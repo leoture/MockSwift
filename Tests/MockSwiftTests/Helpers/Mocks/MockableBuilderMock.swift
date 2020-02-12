@@ -41,4 +41,13 @@ class MockableBuilderMock: MockableBuilder {
     return mockableReturn as! Mockable<ReturnType>
   }
 
+  var mockablePredicatesReturn: Any!
+  var mockablePredicatesReceived: [(predicates: [AnyPredicate], function: String, file: String, line: UInt)] = []
+  func mockable<ReturnType>(predicates: [AnyPredicate],
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> Mockable<ReturnType> {
+    mockablePredicatesReceived.append((predicates, function, file.description, line))
+    return mockablePredicatesReturn as! Mockable<ReturnType>
+  }
 }

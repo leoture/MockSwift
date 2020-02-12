@@ -19,8 +19,11 @@ import MockSwift
 
 
 
-// MARK: - Basics
-extension Mock: Basics where WrappedType == Basics {
+
+
+
+// MARK: - BasicMethod
+extension Mock: BasicMethod where WrappedType == BasicMethod {
   public func doSomething() {
     mocked()
   }
@@ -44,7 +47,7 @@ extension Mock: Basics where WrappedType == Basics {
   }
 }
 
-extension MockGiven where WrappedType == Basics {
+extension MockGiven where WrappedType == BasicMethod {
   public func doSomething() -> Mockable<Void> {
     mockable()
   }
@@ -80,7 +83,7 @@ extension MockGiven where WrappedType == Basics {
   }
 }
 
-extension MockThen where WrappedType == Basics {
+extension MockThen where WrappedType == BasicMethod {
   public func doSomething() -> Verifiable<Void> {
     verifiable()
   }
@@ -116,14 +119,61 @@ extension MockThen where WrappedType == Basics {
   }
 }
 
-// MARK: - Escaping
-extension Mock: Escaping where WrappedType == Escaping {
+// MARK: - BasicSubscript
+extension Mock: BasicSubscript where WrappedType == BasicSubscript {
+  public subscript(arg1: String, arg2: Int) -> Bool {
+    get {
+      mocked(arg1, arg2)
+    }
+    set {
+      mocked(arg1, arg2, newValue)
+    }
+  }
+  public subscript(with arg1: String, and arg2: Int) -> String {
+    get {
+      mocked(arg1, arg2)
+    }
+  }
+}
+
+extension MockGiven where WrappedType == BasicSubscript {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> MockableSubscript.Writable<Bool> {
+    mockable(arg1, arg2)
+  }
+  public subscript(arg1: String, arg2: Int) -> MockableSubscript.Writable<Bool> {
+   mockable(arg1, arg2)
+  }
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableSubscript.Readable<String> {
+    mockable(arg1, arg2)
+  }
+  public subscript(with arg1: String, and arg2: Int) -> MockableSubscript.Readable<String> {
+   mockable(arg1, arg2)
+  }
+}
+
+extension MockThen where WrappedType == BasicSubscript {
+  public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> VerifiableSubscript.Writable<Bool> {
+    verifiable(arg1, arg2)
+  }
+  public subscript(arg1: String, arg2: Int) -> VerifiableSubscript.Writable<Bool> {
+   verifiable(arg1, arg2)
+  }
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableSubscript.Readable<String> {
+    verifiable(arg1, arg2)
+  }
+  public subscript(with arg1: String, and arg2: Int) -> VerifiableSubscript.Readable<String> {
+   verifiable(arg1, arg2)
+  }
+}
+
+// MARK: - EscapingMethod
+extension Mock: EscapingMethod where WrappedType == EscapingMethod {
   public func call(_ block: @escaping (String) -> Bool) -> Bool {
     mocked(block)
   }
 }
 
-extension MockGiven where WrappedType == Escaping {
+extension MockGiven where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Mockable<Bool> {
     mockable(block)
   }
@@ -132,7 +182,7 @@ extension MockGiven where WrappedType == Escaping {
   }
 }
 
-extension MockThen where WrappedType == Escaping {
+extension MockThen where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Verifiable<Bool> {
     verifiable(block)
   }
@@ -141,8 +191,38 @@ extension MockThen where WrappedType == Escaping {
   }
 }
 
-// MARK: - Generics
-extension Mock: Generics where WrappedType == Generics {
+// MARK: - EscapingSubscript
+extension Mock: EscapingSubscript where WrappedType == EscapingSubscript {
+  public subscript(block: @escaping (String) -> Bool) -> Bool {
+    get {
+      mocked(block)
+    }
+    set {
+      mocked(block, newValue)
+    }
+  }
+}
+
+extension MockGiven where WrappedType == EscapingSubscript {
+  public subscript(block: Predicate<(String) -> Bool>) -> MockableSubscript.Writable<Bool> {
+    mockable(block)
+  }
+  public subscript(block: @escaping (String) -> Bool) -> MockableSubscript.Writable<Bool> {
+   mockable(block)
+  }
+}
+
+extension MockThen where WrappedType == EscapingSubscript {
+  public subscript(block: Predicate<(String) -> Bool>) -> VerifiableSubscript.Writable<Bool> {
+    verifiable(block)
+  }
+  public subscript(block: @escaping (String) -> Bool) -> VerifiableSubscript.Writable<Bool> {
+   verifiable(block)
+  }
+}
+
+// MARK: - GenericMethod
+extension Mock: GenericMethod where WrappedType == GenericMethod {
   public func doSomething<T>() -> T {
     mocked()
   }
@@ -160,7 +240,7 @@ extension Mock: Generics where WrappedType == Generics {
   }
 }
 
-extension MockGiven where WrappedType == Generics {
+extension MockGiven where WrappedType == GenericMethod {
   public func doSomething<T>() -> Mockable<T> {
     mockable()
   }
@@ -190,7 +270,7 @@ extension MockGiven where WrappedType == Generics {
   }
 }
 
-extension MockThen where WrappedType == Generics {
+extension MockThen where WrappedType == GenericMethod {
   public func doSomething<T>() -> Verifiable<T> {
     verifiable()
   }
