@@ -153,28 +153,22 @@ extension MockThen: VerifiableBuilder {
     line: UInt
   ) -> Verifiable<ReturnType> {
     Verifiable(callRegister: callRegister,
-                      functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
-                      parametersPredicates: predicates,
-                      failureRecorder: failureRecorder)
+               functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
+               parametersPredicates: predicates,
+               failureRecorder: failureRecorder)
   }
 }
 
 // MARK: - VerifiablePropertyBuilder
 
 protocol VerifiablePropertyBuilder {
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    property: String,
-    file: StaticString,
-    line: UInt
-  ) -> VerifiableProperty.Readable<ReturnType>
+  func verifiable<ReturnType>(property: String,
+                              file: StaticString,
+                              line: UInt) -> VerifiableProperty.Readable<ReturnType>
 
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    property: String,
-    file: StaticString,
-    line: UInt
-  ) -> VerifiableProperty.Writable<ReturnType>
+  func verifiable<ReturnType>(property: String,
+                              file: StaticString,
+                              line: UInt) -> VerifiableProperty.Writable<ReturnType>
 }
 
 extension MockThen: VerifiablePropertyBuilder {
@@ -205,19 +199,13 @@ extension MockThen: VerifiablePropertyBuilder {
   ///   - The return type must be a `Verifiable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableProperty.Readable<Int>`.
-  public func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    property: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
-    let predicates = parameters.compactMap {
-      Predicate<ParameterType>.match($0, file: file, line: line)
-    }
-    return VerifiableProperty.Readable(property: property,
-                                       file: file,
-                                       line: line,
-                                       verifiableBuilder: self,
-                                       predicates: predicates)
+  public func verifiable<ReturnType>(property: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableProperty.Readable<ReturnType> {
+    VerifiableProperty.Readable(property: property,
+                                file: file,
+                                line: line,
+                                verifiableBuilder: self)
   }
 
   /// Creates a `VerifiableProperty.Writable` for `property`.
@@ -244,18 +232,113 @@ extension MockThen: VerifiablePropertyBuilder {
   ///   - The return type must be a `Verifiable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableProperty.Writable<Int>`.
+  public func verifiable<ReturnType>(property: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {
+    VerifiableProperty.Writable(property: property,
+                                file: file,
+                                line: line,
+                                verifiableBuilder: self)
+  }
+}
+
+// MARK: - VerifiableSubscriptBuilder
+
+protocol VerifiableSubscriptBuilder {
+  func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> VerifiableSubscript.Readable<ReturnType>
+
+  func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String,
+    file: StaticString,
+    line: UInt
+  ) -> VerifiableSubscript.Writable<ReturnType>
+}
+
+extension MockThen: VerifiableSubscriptBuilder {
+
+  // MARK: - Public Methods
+
+  /// Creates a `VerifiableSubscript.Readable` for  a subscript.
+  /// - Parameter function: Function concerned by the `VerifiableSubscript`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `VerifiableSubscript.Readable<ReturnType>` that will be able to verify the subscript calls.
+  ///
+  /// You must use it during the extension of `MockThen`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   subscript(parameter1: String, parameter2: Int) -> Int { get }
+  /// }
+  /// extension MockThen where WrappedType == CustomType {
+  ///   subscript(parameter1: String, parameter2: Int) -> VerifiableSubscript.Readable<Int> {
+  ///     verifiable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The subscript where you call `verifiable` must respect the following rules:
+  ///   - The name must match the subscript from the `WrappedType`.
+  ///       - example: **subcript(parameter1:parameter2)**
+  ///   - The return type must be a `VerifiableSubscript.Readable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `VerifiableSubscript.Readable<Int>`.
   public func verifiable<ReturnType>(
     _ parameters: ParameterType...,
-    property: String = #function,
+    function: String = #function,
     file: StaticString = #file,
-    line: UInt = #line) -> VerifiableProperty.Writable<ReturnType> {
+    line: UInt = #line) -> VerifiableSubscript.Readable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
-    return VerifiableProperty.Writable(property: property,
-                                       file: file,
-                                       line: line,
-                                       verifiableBuilder: self,
-                                       predicates: predicates)
+    return VerifiableSubscript.Readable(function: function,
+                                        file: file,
+                                        line: line,
+                                        verifiableBuilder: self,
+                                        predicates: predicates)
+  }
+
+  /// Creates a `VerifiableSubscript.Writable` for  a subscript.
+  /// - Parameter function: Function concerned by the `VerifiableSubscript`.
+  /// - Parameter file: The file name where the method is called.
+  /// - Parameter line: The line where the method is called.
+  /// - Returns: A new `VerifiableSubscript.Writable<ReturnType>` that will be able to verify the subscript calls.
+  ///
+  /// You must use it during the extension of `MockThen`.
+  /// ```swift
+  /// protocol CustomType {
+  ///   subscript(parameter1: String, parameter2: Int) -> Int { get set }
+  /// }
+  /// extension MockThen where WrappedType == CustomType {
+  ///   subscript(parameter1: String, parameter2: Int) -> VerifiableSubscript.Writable<Int> {
+  ///     verifiable(parameter1, parameter2)
+  ///   }
+  /// }
+  /// ```
+  /// - Important:
+  /// The subscript where you call `verifiable` must respect the following rules:
+  ///   - The name must match the subscript from the `WrappedType`.
+  ///       - example: **subcript(parameter1:parameter2)**
+  ///   - The return type must be a `VerifiableSubscript.Writable` with, as generic type, the same type
+  ///   as the return type of the property in the `WrappedType`.
+  ///   In the example above, `Int` became `VerifiableSubscript.Writable<Int>`.
+  public func verifiable<ReturnType>(
+    _ parameters: ParameterType...,
+    function: String = #function,
+    file: StaticString = #file,
+    line: UInt = #line) -> VerifiableSubscript.Writable<ReturnType> {
+    let predicates = parameters.compactMap {
+      Predicate<ParameterType>.match($0, file: file, line: line)
+    }
+    return VerifiableSubscript.Writable(function: function,
+                                        file: file,
+                                        line: line,
+                                        verifiableBuilder: self,
+                                        predicates: predicates)
   }
 }

@@ -1,4 +1,4 @@
-//VerifiablePropertyReadableTests.swift
+//VerifiableSubscriptReadableTests.swift
 /*
  MIT License
 
@@ -27,20 +27,22 @@ import Foundation
 import XCTest
 @testable import MockSwift
 
-final class VerifiablePropertyReadableTests: XCTestCase {
+final class VerifiableSubscriptReadableTests: XCTestCase {
 
   private let builder = VerifiableBuilderMock()
-  private let expectedProperty = "property"
+  private let expectedFunction = "subcript(_:)"
   private let expectedLine: UInt = 1
+  private let expectedPredicates = [1, 2]
   private let expectedVerifiable = Verifiable<Bool>.stub()
-  private var readable: VerifiableProperty.Readable<Bool>!
+  private var readable: VerifiableSubscript.Readable<Bool>!
 
   override  func setUp() {
-    builder.verifiableReturn = expectedVerifiable
-    readable = VerifiableProperty.Readable<Bool>(property: expectedProperty,
-                                                 file: "file",
-                                                 line: expectedLine,
-                                                 verifiableBuilder: builder)
+    builder.verifiablePredicatesReturn = expectedVerifiable
+    readable = VerifiableSubscript.Readable<Bool>(function: expectedFunction,
+                                                  file: "file",
+                                                  line: expectedLine,
+                                                  verifiableBuilder: builder,
+                                                  predicates: expectedPredicates)
   }
 
   func test_get_shouldCorrectlyCallBuilder() {
@@ -50,10 +52,10 @@ final class VerifiablePropertyReadableTests: XCTestCase {
     _  = readable.get
 
     // Then
-    XCTAssertEqual(builder.verifiableReceived.count, 1)
-    let (parameters, function, file, line) = builder.verifiableReceived[0]
-    XCTAssertTrue(parameters.isEmpty)
-    XCTAssertEqual(function, expectedProperty)
+    XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)
+    let (parameters, function, file, line) = builder.verifiablePredicatesReceived[0]
+    XCTAssertEqual(parameters as? [Int], [1, 2])
+    XCTAssertEqual(function, expectedFunction)
     XCTAssertEqual(file, "file")
     XCTAssertEqual(line, expectedLine)
   }

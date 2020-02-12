@@ -314,9 +314,9 @@ extension MockGiven: MockableSubscriptBuilder {
   /// The subcript where you call `mockable` must respect the following rules:
   ///   - The name must match the subcript from the `WrappedType`.
   ///       - example: **subcript(parameter1:parameter2)**
-  ///   - The return type must be a `MockableSubscript.Readable` with, as generic type, the same type
+  ///   - The return type must be a `MockableSubscript.Writable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
-  ///   In the example above, `Int` became `MockableSubscript.Readable<Int>`.
+  ///   In the example above, `Int` became `MockableSubscript.Writable<Int>`.
   public func mockable<ReturnType>(
     _ parameters: ParameterType...,
     function: String = #function,

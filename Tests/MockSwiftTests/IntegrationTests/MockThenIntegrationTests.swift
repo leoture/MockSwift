@@ -67,11 +67,11 @@ extension MockThen where WrappedType == Custom {
 
   var computed: VerifiableProperty.Readable<String> { verifiable() }
 
-  subscript(first: Predicate<Int>, second: Predicate<String>) -> VerifiableProperty.Readable<String> {
+  subscript(first: Predicate<Int>, second: Predicate<String>) -> VerifiableSubscript.Readable<String> {
     verifiable(first, second)
   }
 
-  subscript(x first: Int, y second: Int) -> VerifiableProperty.Writable<String> {
+  subscript(x first: Int, y second: Int) -> VerifiableSubscript.Writable<String> {
     verifiable(first, second)
   }
 
