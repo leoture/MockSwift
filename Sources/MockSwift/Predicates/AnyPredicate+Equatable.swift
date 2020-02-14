@@ -25,6 +25,8 @@
 
 import Foundation
 
+extension NSObject: AnyPredicate {}
+
 public extension AnyPredicate where Self: Equatable {
 
   /// Check if an `element` satifies the predicate.
@@ -36,7 +38,9 @@ public extension AnyPredicate where Self: Equatable {
   }
 }
 
-extension Bool: AnyPredicate {}
-extension Int: AnyPredicate {}
-extension String: AnyPredicate {}
 extension Array: AnyPredicate where Element: Equatable {}
+
+extension BooleanLiteralType: AnyPredicate {}
+extension IntegerLiteralType: AnyPredicate {}
+extension StringLiteralType: AnyPredicate {}
+extension FloatLiteralType: AnyPredicate {}
