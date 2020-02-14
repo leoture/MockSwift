@@ -39,4 +39,4 @@ if !has_linuxmain_changes
 end
 
 swiftlint.verbose = true
-swiftlint.lint_files inline_mode: true fail_on_error: true
+swiftlint.lint_files(inline_mode: true, fail_on_error: true)

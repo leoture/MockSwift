@@ -38,6 +38,7 @@ class BasicSubscriptTests: XCTestCase {
       $0[.any(), .any()].set(.isFalse()).will { parameters = $0 }
     }
 
+    
     // When
     let result = basicSubscript["", 1]
     basicSubscript["hello", 2] = false
