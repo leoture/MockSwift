@@ -36,7 +36,6 @@ public extension AnyPredicate where Self: Equatable {
   }
 }
 
-
 extension Bool: AnyPredicate {}
 extension Int: AnyPredicate {}
 extension String: AnyPredicate {}
