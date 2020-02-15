@@ -26,18 +26,16 @@
 import XCTest
 import MockSwift
 
-private class Custom: Equatable {
+private class Custom: NSObject {
   var equalsReceived: (lhs: Custom, rhs: Custom)?
   var equalsReturn: Bool!
 
-  static func == (lhs: Custom, rhs: Custom) -> Bool {
-    lhs.equalsReceived = (lhs, rhs)
-    return lhs.equalsReturn
+  override func isEqual(_ object: Any?) -> Bool {
+    if let object = object as? Custom {
+      equalsReceived = (self, object)
+    }
+    return equalsReturn
   }
-}
-
-extension Custom: AnyPredicate {
-  var description: String { "" }
 }
 
 class AnyPredicateEquatableTests: XCTestCase {
@@ -108,4 +106,7 @@ class AnyPredicateEquatableTests: XCTestCase {
 
   func test_satify_shouldReturnTrueWithString() { XCTAssertTrue("value".satisfy(by: "value")) }
   func test_satify_shouldReturnFalseWithString() { XCTAssertFalse("value".satisfy(by: "")) }
+
+  func test_satify_shouldReturnTrueWithFloat() { XCTAssertTrue(2.0.satisfy(by: 2.0)) }
+  func test_satify_shouldReturnFalseWithFloat() { XCTAssertFalse(2.0.satisfy(by: 2.3)) }
 }
