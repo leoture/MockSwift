@@ -13,6 +13,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
 #### Added
+- NSObject as AnyPredicate [#83](https://github.com/leoture/MockSwift/pull/83) by [Jordhan Leoture](https://github.com/leoture)
 - Supports subscript [#80](https://github.com/leoture/MockSwift/pull/80) by [Jordhan Leoture](https://github.com/leoture)
 - Add Strategy configuration [#78](https://github.com/leoture/MockSwift/pull/78) by [Jordhan Leoture](https://github.com/leoture)
 
