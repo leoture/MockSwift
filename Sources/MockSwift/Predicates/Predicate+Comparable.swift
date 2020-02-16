@@ -42,34 +42,34 @@ public extension Predicate where Input: Equatable {
 }
 
 prefix operator >
-/// Creates a `Predicate<Input>` that can match any elements more than `rhs`
+/// Creates a `Predicate<Input>` that can match any elements greater than `rhs`
 /// - Parameter rhs: The element to compare to.
 /// - SeeAlso: `Predicate`
 public prefix func ><Input: Comparable>(rhs: Input) -> Predicate<Input> {
-  .moreThan(rhs: rhs)
+  .greaterThan(rhs: rhs)
 }
 
 prefix operator >=
-/// Creates a `Predicate<Input>` that can match any elements more than or equal to `rhs`
+/// Creates a `Predicate<Input>` that can match any elements greater than or equal to `rhs`
 /// - Parameter rhs: The element to compare to.
 /// - SeeAlso: `Predicate`
 public prefix func >=<Input: Comparable>(rhs: Input) -> Predicate<Input> {
-  .moreThanOrEqualsTo(rhs: rhs)
+  .greaterThanOrEqualsTo(rhs: rhs)
 }
 
 public extension Predicate where Input: Comparable {
-  /// Creates a `Predicate<Input>` that can match any elements more than `rhs`
+  /// Creates a `Predicate<Input>` that can match any elements greater than `rhs`
   /// - Parameter rhs: The element to compare to.
   /// - SeeAlso: `Predicate`
-  static func moreThan(rhs: Input) -> Predicate<Input> {
-    Predicate.match(description: "more than \(rhs)") { $0 > rhs }
+  static func greaterThan(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "greater than \(rhs)") { $0 > rhs }
   }
 
-  /// Creates a `Predicate<Input>` that can match any elements more than or equal to `rhs`
+  /// Creates a `Predicate<Input>` that can match any elements greater than or equal to `rhs`
   /// - Parameter rhs: The element to compare to.
   /// - SeeAlso: `Predicate`
-  static func moreThanOrEqualsTo(rhs: Input) -> Predicate<Input> {
-    Predicate.match(description: "more than or equals to \(rhs)") { $0 >= rhs }
+  static func greaterThanOrEqualsTo(rhs: Input) -> Predicate<Input> {
+    Predicate.match(description: "greater than or equals to \(rhs)") { $0 >= rhs }
   }
 
   /// Creates a `Predicate<Input>` that can match any elements less than `rhs`
