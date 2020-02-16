@@ -79,7 +79,7 @@ class BasicSubscriptTests: XCTestCase {
   func test_subscriptWithLabels_withPredicates() {
     // Given
     given(basicSubscript) {
-      $0[with: .match(when: \.isEmpty), and: .equalsTo(rhs: 1)].get.willReturn("value")
+      $0[with: .match(when: \.isEmpty), and: .equals(to: 1)].get.willReturn("value")
     }
 
     // When
@@ -88,7 +88,7 @@ class BasicSubscriptTests: XCTestCase {
     //Then
     XCTAssertEqual(result, "value")
     then(basicSubscript) {
-      $0[with: .equalsTo(rhs: ""), and: .equalsTo(rhs: 1)].get.called()
+      $0[with: .equals(to: ""), and: .equals(to: 1)].get.called()
     }
   }
 
