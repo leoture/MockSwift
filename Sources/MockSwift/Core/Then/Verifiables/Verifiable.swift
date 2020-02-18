@@ -76,7 +76,8 @@ public class Verifiable<ReturnType> {
     let count = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count
     if !times.satisfy(by: count) {
       let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
-      let message = "\(callDescription) expect to be called \(times) time(s) but is call \(count) time(s)"
+      let formatedTimes = times.description.replacingOccurrences(of: "greater", with: "more")
+      let message = "\(callDescription) expect to be called \(formatedTimes) time(s) but is call \(count) time(s)"
       failureRecorder.recordFailure(message: message, file: file, line: line)
     }
   }
