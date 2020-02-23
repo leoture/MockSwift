@@ -39,6 +39,13 @@ public extension Predicate where Input: Equatable {
   static func equals(to value: Input) -> Predicate<Input> {
     Predicate.match(description: "\(value)") { $0 == value }
   }
+
+  /// Creates a `Predicate<Input>` that can match any elements equal to `value`
+  /// - Parameter value: The element to compare to.
+  /// - SeeAlso: `Predicate`
+  static func eq(_ value: Input) -> Predicate<Input> {
+    .equals(to: value)
+  }
 }
 
 prefix operator >
@@ -65,11 +72,25 @@ public extension Predicate where Input: Comparable {
     Predicate.match(description: "greater than \(value)") { $0 > value }
   }
 
+  /// Creates a `Predicate<Input>` that can match any elements greater than `value`
+  /// - Parameter value: The element to compare to.
+  /// - SeeAlso: `Predicate`
+  static func gt(_ value: Input) -> Predicate<Input> {
+    .greater(than: value)
+  }
+
   /// Creates a `Predicate<Input>` that can match any elements greater than or equal to `value`
   /// - Parameter value: The element to compare to.
   /// - SeeAlso: `Predicate`
   static func greaterThanOrEquals(to value: Input) -> Predicate<Input> {
     Predicate.match(description: "greater than or equals to \(value)") { $0 >= value }
+  }
+
+  /// Creates a `Predicate<Input>` that can match any elements greater than or equal to `value`
+  /// - Parameter value: The element to compare to.
+  /// - SeeAlso: `Predicate`
+  static func ge(_ value: Input) -> Predicate<Input> {
+    .greaterThanOrEquals(to: value)
   }
 
   /// Creates a `Predicate<Input>` that can match any elements less than `value`
@@ -79,10 +100,24 @@ public extension Predicate where Input: Comparable {
     Predicate.match(description: "less than \(value)") { $0 < value }
   }
 
+  /// Creates a `Predicate<Input>` that can match any elements less than `value`
+  /// - Parameter value: The element to compare to.
+  /// - SeeAlso: `Predicate`
+  static func lt(_ value: Input) -> Predicate<Input> {
+    .less(than: value)
+  }
+
   /// Creates a `Predicate<Input>` that can match any elements less than or equal to `value`
   /// - Parameter value: The element to compare to.
   /// - SeeAlso: `Predicate`
   static func lessThanOrEquals(to value: Input) -> Predicate<Input> {
     Predicate.match(description: "less than or equals to \(value)") { $0 <= value }
+  }
+
+  /// Creates a `Predicate<Input>` that can match any elements less than or equal to `value`
+  /// - Parameter value: The element to compare to.
+  /// - SeeAlso: `Predicate`
+  static func le(_ value: Input) -> Predicate<Input> {
+    .lessThanOrEquals(to: value)
   }
 }
