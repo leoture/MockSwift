@@ -107,6 +107,8 @@
 		FCC042E123DF26E000EC2285 /* StrategyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */; };
 		FCD3202624027D2000C3817D /* Predicate+equalsToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */; };
 		FCD3202824027E0D00C3817D /* Predicate+greatherThanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */; };
+		FCD3202A2402A63900C3817D /* PredicateAnyObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD320292402A63900C3817D /* PredicateAnyObjectTests.swift */; };
+		FCD3202C2402A96B00C3817D /* Predicate+AnyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202B2402A96B00C3817D /* Predicate+AnyObject.swift */; };
 		OBJ_36 /* BehaviourRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BehaviourRegister.swift */; };
 		OBJ_37 /* CallRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CallRegister.swift */; };
 		OBJ_38 /* FunctionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FunctionBehaviour.swift */; };
@@ -228,6 +230,8 @@
 		FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyIdentifier.swift; sourceTree = "<group>"; };
 		FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+equalsToTests.swift"; sourceTree = "<group>"; };
 		FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+greatherThanTests.swift"; sourceTree = "<group>"; };
+		FCD320292402A63900C3817D /* PredicateAnyObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicateAnyObjectTests.swift; sourceTree = "<group>"; };
+		FCD3202B2402A96B00C3817D /* Predicate+AnyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+AnyObject.swift"; sourceTree = "<group>"; };
 		"MockSwift::MockSwift::Product" /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"MockSwift::MockSwiftTests::Product" /* MockSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MockSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* BehaviourRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviourRegister.swift; sourceTree = "<group>"; };
@@ -352,6 +356,7 @@
 				9EA5D1562301DE6F006F0A28 /* AnyPredicateEquatableTests.swift */,
 				9EAC378E234A248D00281F7B /* PredicateBoolTests.swift */,
 				9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */,
+				FCD320292402A63900C3817D /* PredicateAnyObjectTests.swift */,
 			);
 			path = Predicates;
 			sourceTree = "<group>";
@@ -364,6 +369,7 @@
 				9EA5D1622303F130006F0A28 /* Predicate+Comparable.swift */,
 				9EAC3790234A25B000281F7B /* Predicate+Bool.swift */,
 				9EAC3793234BA23F00281F7B /* Predicate+Optional.swift */,
+				FCD3202B2402A96B00C3817D /* Predicate+AnyObject.swift */,
 			);
 			path = Predicates;
 			sourceTree = "<group>";
@@ -850,6 +856,7 @@
 				FCC042E123DF26E000EC2285 /* StrategyIdentifier.swift in Sources */,
 				9E2F052422FB32B200E04F34 /* Behaviour.swift in Sources */,
 				FC75744323A6674900B5064C /* MockableProperty.swift in Sources */,
+				FCD3202C2402A96B00C3817D /* Predicate+AnyObject.swift in Sources */,
 				FC75744A23A66D2800B5064C /* VerifiableProperty.swift in Sources */,
 				9EAC3791234A25B000281F7B /* Predicate+Bool.swift in Sources */,
 			);
@@ -918,6 +925,7 @@
 				9E00715C230403DC00F040F4 /* MockThenIntegrationTests.swift in Sources */,
 				OBJ_61 /* CallRegisterMock.swift in Sources */,
 				OBJ_62 /* XCTestManifests.swift in Sources */,
+				FCD3202A2402A63900C3817D /* PredicateAnyObjectTests.swift in Sources */,
 				FC75744023A6643E00B5064C /* MockablePropertyWritableTests.swift in Sources */,
 				FC75745223A6899200B5064C /* VerifiableStub.swift in Sources */,
 				9E79EBD52355DB2F00979D90 /* InternalErrorTests.swift in Sources */,
