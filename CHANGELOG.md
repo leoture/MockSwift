@@ -13,7 +13,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
 #### Added
-- Add syntactic sugar for Predicate on Comparables [#xx](https://github.com/leoture/MockSwift/pull/xx) by [Jordhan Leoture](https://github.com/leoture)
+- Add syntactic sugar for Predicate on Comparables [#87](https://github.com/leoture/MockSwift/pull/87) by [Jordhan Leoture](https://github.com/leoture)
 - Rename moreThan to greaterThan [#85](https://github.com/leoture/MockSwift/pull/85) by [Jordhan Leoture](https://github.com/leoture)
 - NSObject as AnyPredicate [#83](https://github.com/leoture/MockSwift/pull/83) by [Jordhan Leoture](https://github.com/leoture)
 - Supports subscript [#80](https://github.com/leoture/MockSwift/pull/80) by [Jordhan Leoture](https://github.com/leoture)
