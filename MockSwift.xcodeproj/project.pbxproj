@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		9E00715A2304007700F040F4 /* PredicateComparableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0071592304007700F040F4 /* PredicateComparableTests.swift */; };
+		9E00715A2304007700F040F4 /* Predicate+lessThanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0071592304007700F040F4 /* Predicate+lessThanTests.swift */; };
 		9E00715C230403DC00F040F4 /* MockThenIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00715B230403DC00F040F4 /* MockThenIntegrationTests.swift */; };
 		9E00715F230406B300F040F4 /* FunctionCallRegisterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E00715E230406B300F040F4 /* FunctionCallRegisterTests.swift */; };
 		9E2372E6230070DD0083396B /* AnyPredicateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2372E5230070DD0083396B /* AnyPredicateMock.swift */; };
@@ -105,6 +105,8 @@
 		FCC042DD23DF22D300EC2285 /* MockStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042DC23DF22D300EC2285 /* MockStrategyFactory.swift */; };
 		FCC042DF23DF253B00EC2285 /* StrategyFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042DE23DF253B00EC2285 /* StrategyFactoryMock.swift */; };
 		FCC042E123DF26E000EC2285 /* StrategyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */; };
+		FCD3202624027D2000C3817D /* Predicate+equalsToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */; };
+		FCD3202824027E0D00C3817D /* Predicate+greatherThanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */; };
 		OBJ_36 /* BehaviourRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BehaviourRegister.swift */; };
 		OBJ_37 /* CallRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CallRegister.swift */; };
 		OBJ_38 /* FunctionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FunctionBehaviour.swift */; };
@@ -137,7 +139,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9E0071592304007700F040F4 /* PredicateComparableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicateComparableTests.swift; sourceTree = "<group>"; };
+		9E0071592304007700F040F4 /* Predicate+lessThanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+lessThanTests.swift"; sourceTree = "<group>"; };
 		9E00715B230403DC00F040F4 /* MockThenIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockThenIntegrationTests.swift; sourceTree = "<group>"; };
 		9E00715E230406B300F040F4 /* FunctionCallRegisterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallRegisterTests.swift; sourceTree = "<group>"; };
 		9E2372E5230070DD0083396B /* AnyPredicateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPredicateMock.swift; sourceTree = "<group>"; };
@@ -224,6 +226,8 @@
 		FCC042DC23DF22D300EC2285 /* MockStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStrategyFactory.swift; sourceTree = "<group>"; };
 		FCC042DE23DF253B00EC2285 /* StrategyFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyFactoryMock.swift; sourceTree = "<group>"; };
 		FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyIdentifier.swift; sourceTree = "<group>"; };
+		FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+equalsToTests.swift"; sourceTree = "<group>"; };
+		FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+greatherThanTests.swift"; sourceTree = "<group>"; };
 		"MockSwift::MockSwift::Product" /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"MockSwift::MockSwiftTests::Product" /* MockSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MockSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* BehaviourRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviourRegister.swift; sourceTree = "<group>"; };
@@ -343,9 +347,9 @@
 		9EA5D1512301DAAB006F0A28 /* Predicates */ = {
 			isa = PBXGroup;
 			children = (
+				FCD3202424027CB100C3817D /* Comparables */,
 				9EA5D1522301DABB006F0A28 /* PredicateTests.swift */,
 				9EA5D1562301DE6F006F0A28 /* AnyPredicateEquatableTests.swift */,
-				9E0071592304007700F040F4 /* PredicateComparableTests.swift */,
 				9EAC378E234A248D00281F7B /* PredicateBoolTests.swift */,
 				9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */,
 			);
@@ -581,6 +585,16 @@
 				FC48155823CB9D9400E0976A /* StubTypeRegister.swift */,
 			);
 			path = Stubs;
+			sourceTree = "<group>";
+		};
+		FCD3202424027CB100C3817D /* Comparables */ = {
+			isa = PBXGroup;
+			children = (
+				9E0071592304007700F040F4 /* Predicate+lessThanTests.swift */,
+				FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */,
+				FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */,
+			);
+			path = Comparables;
 			sourceTree = "<group>";
 		};
 		OBJ_16 /* Tests */ = {
@@ -856,7 +870,7 @@
 				FC48152E23CA3F1800E0976A /* GivenStrategyTests.swift in Sources */,
 				FC48154723CB7AE000E0976A /* GivenStrategyThrowableTests.swift in Sources */,
 				9E79EBD023549C0C00979D90 /* MockGivenTests.swift in Sources */,
-				9E00715A2304007700F040F4 /* PredicateComparableTests.swift in Sources */,
+				9E00715A2304007700F040F4 /* Predicate+lessThanTests.swift in Sources */,
 				9E2372E6230070DD0083396B /* AnyPredicateMock.swift in Sources */,
 				9E00715F230406B300F040F4 /* FunctionCallRegisterTests.swift in Sources */,
 				FC48155623CB994500E0976A /* Mock+StubRegisterTests.swift in Sources */,
@@ -866,6 +880,7 @@
 				9EAC3792234A25B800281F7B /* PredicateBoolTests.swift in Sources */,
 				FC25FC4F23F4949800C01726 /* MockableSubscriptReadableTests.swift in Sources */,
 				FC48154D23CB804A00E0976A /* GlobalStubStrategyTests.swift in Sources */,
+				FCD3202624027D2000C3817D /* Predicate+equalsToTests.swift in Sources */,
 				9EA5D1592301E43B006F0A28 /* MockGivenIntegrationTests.swift in Sources */,
 				9EA5D1532301DABB006F0A28 /* PredicateTests.swift in Sources */,
 				FC48156023CB9FCC00E0976A /* StubStrategyTests.swift in Sources */,
@@ -880,6 +895,7 @@
 				FC75745023A686DD00B5064C /* VerifiableBuilderMock.swift in Sources */,
 				9E79EBD7235628F100979D90 /* MockThrowableTests.swift in Sources */,
 				FCC042DF23DF253B00EC2285 /* StrategyFactoryMock.swift in Sources */,
+				FCD3202824027E0D00C3817D /* Predicate+greatherThanTests.swift in Sources */,
 				FC75744E23A6867C00B5064C /* VerifiablePropertyWritableTests.swift in Sources */,
 				FC25FC5523F49F7400C01726 /* VerifiableSubscriptReadableTests.swift in Sources */,
 				FCA31FE523E5F55D007C6DED /* MockStrategyFactoryTests.swift in Sources */,
