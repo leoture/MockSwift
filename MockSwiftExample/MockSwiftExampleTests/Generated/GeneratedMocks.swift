@@ -47,7 +47,7 @@ extension Mock: BasicMethod where WrappedType == BasicMethod {
   }
 }
 
-extension MockGiven where WrappedType == BasicMethod {
+extension Given where WrappedType == BasicMethod {
   public func doSomething() -> Mockable<Void> {
     mockable()
   }
@@ -136,7 +136,7 @@ extension Mock: BasicSubscript where WrappedType == BasicSubscript {
   }
 }
 
-extension MockGiven where WrappedType == BasicSubscript {
+extension Given where WrappedType == BasicSubscript {
   public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> MockableSubscript.Writable<Bool> {
     mockable(arg1, arg2)
   }
@@ -173,7 +173,7 @@ extension Mock: EscapingMethod where WrappedType == EscapingMethod {
   }
 }
 
-extension MockGiven where WrappedType == EscapingMethod {
+extension Given where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Mockable<Bool> {
     mockable(block)
   }
@@ -203,7 +203,7 @@ extension Mock: EscapingSubscript where WrappedType == EscapingSubscript {
   }
 }
 
-extension MockGiven where WrappedType == EscapingSubscript {
+extension Given where WrappedType == EscapingSubscript {
   public subscript(block: Predicate<(String) -> Bool>) -> MockableSubscript.Writable<Bool> {
     mockable(block)
   }
@@ -240,7 +240,7 @@ extension Mock: GenericMethod where WrappedType == GenericMethod {
   }
 }
 
-extension MockGiven where WrappedType == GenericMethod {
+extension Given where WrappedType == GenericMethod {
   public func doSomething<T>() -> Mockable<T> {
     mockable()
   }
@@ -311,7 +311,7 @@ extension Mock: Properties where WrappedType == Properties {
   }
 }
 
-extension MockGiven where WrappedType == Properties {
+extension Given where WrappedType == Properties {
   public var variable: MockableProperty.Writable<String> {
     mockable()
   }

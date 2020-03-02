@@ -1,4 +1,4 @@
-//MockGiven.swift
+//Given.swift
 /*
  MIT License
 
@@ -30,28 +30,28 @@ import Foundation
 func given<WrappedType>(_ value: WrappedType,
                         errorHandler: ErrorHandler,
                         file: StaticString,
-                        line: UInt) -> MockGiven<WrappedType> {
+                        line: UInt) -> Given<WrappedType> {
   guard let mock = value as? Mock<WrappedType> else {
     return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
   }
-  return MockGiven(mock)
+  return Given(mock)
 }
 
 // MARK: - Public Global Methods
 
-/// Creates a `MockGiven` based on `value`.
+/// Creates a `Given` based on `value`.
 /// - Parameter value: Object that will be stubbed.
 /// - Parameter file: The file name where the method is called.
 /// - Parameter line: The line where the method is called.
-/// - Returns: A new `MockGiven<WrappedType>` based on `value`.
+/// - Returns: A new `Given<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func given<WrappedType>(_ value: WrappedType,
                                file: StaticString = #file,
-                               line: UInt = #line) -> MockGiven<WrappedType> {
+                               line: UInt = #line) -> Given<WrappedType> {
   given(value, errorHandler: ErrorHandler(), file: file, line: line)
 }
 
-/// Call `completion` with  a `MockGiven` based on `value`.
+/// Call `completion` with  a `Given` based on `value`.
 /// - Parameter value: Object that will be stubbed.
 /// - Parameter file: The file name where the method is called.
 /// - Parameter line: The line where the method is called.
@@ -60,18 +60,18 @@ public func given<WrappedType>(_ value: WrappedType,
 public func given<WrappedType>(_ value: WrappedType,
                                file: StaticString = #file,
                                line: UInt = #line,
-                               _ completion: (MockGiven<WrappedType>) -> Void) {
+                               _ completion: (Given<WrappedType>) -> Void) {
   completion(given(value, file: file, line: line))
 }
 
-/// MockGiven is used to define behaviours.
+/// Given is used to define behaviours.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
 ///
-///     extension MockGiven where WrappedType == CustomType
+///     extension Given where WrappedType == CustomType
 ///
 ///
-public class MockGiven<WrappedType> {
+public class Given<WrappedType> {
 
   // MARK: - Properties
 
@@ -103,7 +103,7 @@ protocol MockableBuilder {
   ) -> Mockable<ReturnType>
 }
 
-extension MockGiven: MockableBuilder {
+extension Given: MockableBuilder {
 
   // MARK: - Public Methods
 
@@ -115,12 +115,12 @@ extension MockGiven: MockableBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `Mockable<ReturnType>` that will be able to create stubs for `function`.
   ///
-  /// You must use it during the extension of `MockGiven`.
+  /// You must use it during the extension of `Given`.
   /// ```swift
   /// protocol CustomType {
   ///   func doSomething(parameter1: String, parameter2: Bool) -> Int
   /// }
-  /// extension MockGiven where WrappedType == CustomType {
+  /// extension Given where WrappedType == CustomType {
   ///   func doSomething(parameter1: Predicate<String>, parameter2: Predicate<Bool>) -> Mockable<Int> {
   ///     mockable(parameter1, parameter2)
   ///   }
@@ -162,7 +162,7 @@ protocol MockablePropertyBuilder {
   func mockable<ReturnType>(property: String, file: StaticString, line: UInt) -> MockableProperty.Writable<ReturnType>
 }
 
-extension MockGiven: MockablePropertyBuilder {
+extension Given: MockablePropertyBuilder {
 
   // MARK: - Public Methods
 
@@ -172,12 +172,12 @@ extension MockGiven: MockablePropertyBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `MockableProperty.Readable<ReturnType>` that will be able to create stubs for `property`.
   ///
-  /// You must use it during the extension of `MockGiven`.
+  /// You must use it during the extension of `Given`.
   /// ```swift
   /// protocol CustomType {
   ///   var variable: Int { get }
   /// }
-  /// extension MockGiven where WrappedType == CustomType {
+  /// extension Given where WrappedType == CustomType {
   ///   var variable: MockableProperty.Readable<Int> {
   ///     mockable()
   ///   }
@@ -205,12 +205,12 @@ extension MockGiven: MockablePropertyBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `MockableProperty.Writable<ReturnType>` that will be able to create stubs for `property`.
   ///
-  /// You must use it during the extension of `MockGiven`.
+  /// You must use it during the extension of `Given`.
   /// ```swift
   /// protocol CustomType {
   ///   var variable: Int { get set }
   /// }
-  /// extension MockGiven where WrappedType == CustomType {
+  /// extension Given where WrappedType == CustomType {
   ///   var variable: MockableProperty.Writable<Int> {
   ///     mockable()
   ///   }
@@ -250,7 +250,7 @@ protocol MockableSubscriptBuilder {
     line: UInt) -> MockableSubscript.Writable<ReturnType>
 }
 
-extension MockGiven: MockableSubscriptBuilder {
+extension Given: MockableSubscriptBuilder {
 
   // MARK: - Public Methods
 
@@ -260,12 +260,12 @@ extension MockGiven: MockableSubscriptBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `MockableSubscript.Readable<ReturnType>` that will be able to create stubs for the subcript.
   ///
-  /// You must use it during the extension of `MockGiven`.
+  /// You must use it during the extension of `Given`.
   /// ```swift
   /// protocol CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> Int { get }
   /// }
-  /// extension MockGiven where WrappedType == CustomType {
+  /// extension Given where WrappedType == CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> MockableSubscript.Readable<Int> {
   ///     mockable(parameter1, parameter2)
   ///   }
@@ -299,12 +299,12 @@ extension MockGiven: MockableSubscriptBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `MockableSubscript.Writable<ReturnType>` that will be able to create stubs for the subcript.
   ///
-  /// You must use it during the extension of `MockGiven`.
+  /// You must use it during the extension of `Given`.
   /// ```swift
   /// protocol CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> Int { get set }
   /// }
-  /// extension MockGiven where WrappedType == CustomType {
+  /// extension Given where WrappedType == CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> MockableSubscript.Writable<Int> {
   ///     mockable(parameter1, parameter2)
   ///   }

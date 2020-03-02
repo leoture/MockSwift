@@ -1,4 +1,4 @@
-//MockGivenIntegrationTests.swift
+//GivenIntegrationTests.swift
 /*
  MIT License
  
@@ -62,7 +62,7 @@ extension Mock: Custom where WrappedType == Custom {
   func function(identifier: String) throws -> String { try mockedThrowable(identifier) }
 }
 
-extension MockGiven where WrappedType == Custom {
+extension Given where WrappedType == Custom {
   var identifier: MockableProperty.Writable<String> { mockable() }
 
   var computed: MockableProperty.Readable<String> { mockable() }
@@ -82,7 +82,7 @@ extension MockGiven where WrappedType == Custom {
   func function(identifier: Predicate<String>) -> Mockable<String> { mockable(identifier) }
 }
 
-class MockGivenIntegrationTests: XCTestCase {
+class GivenIntegrationTests: XCTestCase {
   @Mock private var custom: Custom
 
   func test_function_shouldReturnValueFromWillCompletion() {
@@ -209,15 +209,15 @@ class MockGivenIntegrationTests: XCTestCase {
     XCTAssertEqual(catchedErrors, [expectedError1, expectedError2, expectedError3, expectedError3])
   }
 
-  func test_given_shouldCallCompletionWithMockGiven() {
+  func test_given_shouldCallCompletionWithGivenCustom() {
     // Given
-    var mockGiven: MockGiven<Custom>?
+    var givenCustom: Given<Custom>?
 
     // When
-    given(custom) { mockGiven = $0 }
+    given(custom) { givenCustom = $0 }
 
     // Then
-    XCTAssertNotNil(mockGiven)
+    XCTAssertNotNil(givenCustom)
   }
 
   func test_computed_get_shouldReturnFromWillReturn() {
