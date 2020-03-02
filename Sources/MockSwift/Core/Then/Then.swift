@@ -1,4 +1,4 @@
-//MockThen.swift
+//Then.swift
 /*
  MIT License
 
@@ -30,28 +30,28 @@ import Foundation
 func then<WrappedType>(_ value: WrappedType,
                        errorHandler: ErrorHandler,
                        file: StaticString,
-                       line: UInt) -> MockThen<WrappedType> {
+                       line: UInt) -> Then<WrappedType> {
   guard let mock = value as? Mock<WrappedType> else {
     return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
   }
-  return MockThen(callRegister: mock, failureRecorder: XCTestFailureRecorder())
+  return Then(callRegister: mock, failureRecorder: XCTestFailureRecorder())
 }
 
 // MARK: - Public Global Methods
 
-/// Creates a `MockThen` based on `value`.
+/// Creates a `Then` based on `value`.
 /// - Parameter value: Object that will be verified.
 /// - Parameter file: The file name where the method is called.
 /// - Parameter line: The line where the method is called.
-/// - Returns: A new `MockThen<WrappedType>` based on `value`.
+/// - Returns: A new `Then<WrappedType>` based on `value`.
 /// - Important: If `value` cannot be cast to `Mock<WrappedType>` a `fatalError` will be raised.
 public func then<WrappedType>(_ value: WrappedType,
                               file: StaticString = #file,
-                              line: UInt = #line) -> MockThen<WrappedType> {
+                              line: UInt = #line) -> Then<WrappedType> {
   then(value, errorHandler: ErrorHandler(), file: file, line: line)
 }
 
-/// Call `completion` with a `MockThen` based on `value`.
+/// Call `completion` with a `Then` based on `value`.
 /// - Parameter value: Object that will be verified.
 /// - Parameter file: The file name where the method is called.
 /// - Parameter line: The line where the method is called.
@@ -60,18 +60,18 @@ public func then<WrappedType>(_ value: WrappedType,
 public func then<WrappedType>(_ value: WrappedType,
                               file: StaticString = #file,
                               line: UInt = #line,
-                              _ completion: (MockThen<WrappedType>) -> Void) {
+                              _ completion: (Then<WrappedType>) -> Void) {
   completion(then(value))
 }
 
-/// MockThen is used to verify method calls.
+/// Then is used to verify method calls.
 ///
 /// To be able to use it on a specific type `CustomType`, you must create an extension.
 ///
-///     extension MockThen where WrappedType == CustomType
+///     extension Then where WrappedType == CustomType
 ///
 ///
-public class MockThen<WrappedType> {
+public class Then<WrappedType> {
 
   // MARK: - Properties
 
@@ -104,7 +104,7 @@ protocol VerifiableBuilder {
   ) -> Verifiable<ReturnType>
 }
 
-extension MockThen: VerifiableBuilder {
+extension Then: VerifiableBuilder {
 
   // MARK: - Public Methods
 
@@ -116,12 +116,12 @@ extension MockThen: VerifiableBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `Verifiable<ReturnType>` that will be able to verify `function` calls.
   ///
-  /// You must use it during the extension of `MockThen`.
+  /// You must use it during the extension of `Then`.
   /// ```swift
   /// protocol CustomType {
   ///   func doSomething(parameter1: String, parameter2: Bool) -> Int
   /// }
-  /// extension MockThen where WrappedType == CustomType {
+  /// extension Then where WrappedType == CustomType {
   ///   func doSomething(parameter1: Predicate<String>, parameter2: Predicate<Bool>) -> Verifiable<Int> {
   ///     verifiable(parameter1, parameter2)
   ///   }
@@ -171,7 +171,7 @@ protocol VerifiablePropertyBuilder {
                               line: UInt) -> VerifiableProperty.Writable<ReturnType>
 }
 
-extension MockThen: VerifiablePropertyBuilder {
+extension Then: VerifiablePropertyBuilder {
 
   // MARK: - Public Methods
 
@@ -181,12 +181,12 @@ extension MockThen: VerifiablePropertyBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `VerifiableProperty.Readable<ReturnType>` that will be able to verify `property` calls.
   ///
-  /// You must use it during the extension of `MockThen`.
+  /// You must use it during the extension of `Then`.
   /// ```swift
   /// protocol CustomType {
   ///   var variable: Int { get }
   /// }
-  /// extension MockThen where WrappedType == CustomType {
+  /// extension Then where WrappedType == CustomType {
   ///   var variable: VerifiableProperty.Readable<Int>
   ///     verifiable()
   ///   }
@@ -214,12 +214,12 @@ extension MockThen: VerifiablePropertyBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `VerifiableProperty.Writable<ReturnType>` that will be able to verify `property` calls.
   ///
-  /// You must use it during the extension of `MockThen`.
+  /// You must use it during the extension of `Then`.
   /// ```swift
   /// protocol CustomType {
   ///   var variable: Int { get set }
   /// }
-  /// extension MockThen where WrappedType == CustomType {
+  /// extension Then where WrappedType == CustomType {
   ///   var variable: VerifiableProperty.Writable<Int>
   ///     verifiable()
   ///   }
@@ -260,7 +260,7 @@ protocol VerifiableSubscriptBuilder {
   ) -> VerifiableSubscript.Writable<ReturnType>
 }
 
-extension MockThen: VerifiableSubscriptBuilder {
+extension Then: VerifiableSubscriptBuilder {
 
   // MARK: - Public Methods
 
@@ -270,12 +270,12 @@ extension MockThen: VerifiableSubscriptBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `VerifiableSubscript.Readable<ReturnType>` that will be able to verify the subscript calls.
   ///
-  /// You must use it during the extension of `MockThen`.
+  /// You must use it during the extension of `Then`.
   /// ```swift
   /// protocol CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> Int { get }
   /// }
-  /// extension MockThen where WrappedType == CustomType {
+  /// extension Then where WrappedType == CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> VerifiableSubscript.Readable<Int> {
   ///     verifiable(parameter1, parameter2)
   ///   }
@@ -309,12 +309,12 @@ extension MockThen: VerifiableSubscriptBuilder {
   /// - Parameter line: The line where the method is called.
   /// - Returns: A new `VerifiableSubscript.Writable<ReturnType>` that will be able to verify the subscript calls.
   ///
-  /// You must use it during the extension of `MockThen`.
+  /// You must use it during the extension of `Then`.
   /// ```swift
   /// protocol CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> Int { get set }
   /// }
-  /// extension MockThen where WrappedType == CustomType {
+  /// extension Then where WrappedType == CustomType {
   ///   subscript(parameter1: String, parameter2: Int) -> VerifiableSubscript.Writable<Int> {
   ///     verifiable(parameter1, parameter2)
   ///   }

@@ -1,4 +1,4 @@
-//MockThenTests.swift
+//ThenTests.swift
 /*
  MIT License
  
@@ -32,29 +32,29 @@ private protocol Custom {}
 private class CustomImpl: Custom {}
 extension Mock: Custom where WrappedType == Custom {}
 
-class MockThenTests: XCTestCase {
+class ThenTests: XCTestCase {
   @Mock private var customMock: Custom
   private let customImpl = CustomImpl()
   private let errorHandler = ErrorHandlerMock()
 
   func test_then_shouldPass() {
-    let _: MockThen<Custom> = then(customMock)
+    let _: Then<Custom> = then(customMock)
   }
 
   func test_thenCompletion_shouldPass() {
-    then(customMock) { (_ : MockThen<Custom>) in }
+    then(customMock) { (_ : Then<Custom>) in }
   }
 
   func test_then_shouldFailWithCast() {
     // Given
-    let mockThen: MockThen<Custom> = then(customMock)
-    errorHandler.handleReturn = mockThen
+    let thenCustom: Then<Custom> = then(customMock)
+    errorHandler.handleReturn = thenCustom
 
     // When
-    let result: MockThen<Custom> = then(customImpl, errorHandler: errorHandler, file: "file", line: 42)
+    let result: Then<Custom> = then(customImpl, errorHandler: errorHandler, file: "file", line: 42)
 
     // Then
-    XCTAssertTrue(result === mockThen)
+    XCTAssertTrue(result === thenCustom)
     XCTAssertEqual(errorHandler.handleReceived[0], .cast(source: customImpl, target: Mock<Custom>.self))
   }
 }

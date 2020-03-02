@@ -1,4 +1,4 @@
-//MockThenIntegrationTests.swift
+//ThenIntegrationTests.swift
 /*
  MIT License
 
@@ -62,7 +62,7 @@ extension Mock: Custom where WrappedType == Custom {
   func function(identifier: String) -> String { mocked(identifier) }
 }
 
-extension MockThen where WrappedType == Custom {
+extension Then where WrappedType == Custom {
   var identifier: VerifiableProperty.Writable<String> { verifiable() }
 
   var computed: VerifiableProperty.Readable<String> { verifiable() }
@@ -82,7 +82,7 @@ extension MockThen where WrappedType == Custom {
   func function(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
 }
 
-class MockThenIntegrationTests: XCTestCase {
+class ThenIntegrationTests: XCTestCase {
   @Mock private var custom: Custom
 
   func test_function_shouldBeCalledWhenParametersMatched() {
@@ -98,15 +98,15 @@ class MockThenIntegrationTests: XCTestCase {
       .called(times: >1)
   }
 
-  func test_then_shouldCallCompletionWithMockThen() {
+  func test_then_shouldCallCompletionWithThenCustom() {
     // Given
-    var mockThen: MockThen<Custom>?
+    var thenCustom: Then<Custom>?
 
     // When
-    then(custom) { mockThen = $0 }
+    then(custom) { thenCustom = $0 }
 
     //Then
-    XCTAssertNotNil(mockThen)
+    XCTAssertNotNil(thenCustom)
   }
 
   func test_receivedParameters_whenParametersMatched() {

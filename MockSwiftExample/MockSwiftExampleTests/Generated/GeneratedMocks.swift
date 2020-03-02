@@ -83,7 +83,7 @@ extension Given where WrappedType == BasicMethod {
   }
 }
 
-extension MockThen where WrappedType == BasicMethod {
+extension Then where WrappedType == BasicMethod {
   public func doSomething() -> Verifiable<Void> {
     verifiable()
   }
@@ -151,7 +151,7 @@ extension Given where WrappedType == BasicSubscript {
   }
 }
 
-extension MockThen where WrappedType == BasicSubscript {
+extension Then where WrappedType == BasicSubscript {
   public subscript(arg1: Predicate<String>, arg2: Predicate<Int>) -> VerifiableSubscript.Writable<Bool> {
     verifiable(arg1, arg2)
   }
@@ -182,7 +182,7 @@ extension Given where WrappedType == EscapingMethod {
   }
 }
 
-extension MockThen where WrappedType == EscapingMethod {
+extension Then where WrappedType == EscapingMethod {
   public func call(_ block: Predicate<(String) -> Bool>) -> Verifiable<Bool> {
     verifiable(block)
   }
@@ -212,7 +212,7 @@ extension Given where WrappedType == EscapingSubscript {
   }
 }
 
-extension MockThen where WrappedType == EscapingSubscript {
+extension Then where WrappedType == EscapingSubscript {
   public subscript(block: Predicate<(String) -> Bool>) -> VerifiableSubscript.Writable<Bool> {
     verifiable(block)
   }
@@ -270,7 +270,7 @@ extension Given where WrappedType == GenericMethod {
   }
 }
 
-extension MockThen where WrappedType == GenericMethod {
+extension Then where WrappedType == GenericMethod {
   public func doSomething<T>() -> Verifiable<T> {
     verifiable()
   }
@@ -320,7 +320,7 @@ extension Given where WrappedType == Properties {
   }
 }
 
-extension MockThen where WrappedType == Properties {
+extension Then where WrappedType == Properties {
   public var variable: VerifiableProperty.Writable<String> {
     verifiable()
   }

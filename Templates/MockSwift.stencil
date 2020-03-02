@@ -100,13 +100,13 @@ extension Given where WrappedType == {{ type.name }} {
 }
 {% endmacro %}
 
-{% macro mockThenVariable variable %}
+{% macro thenMockVariable variable %}
   public var {{ variable.name }}: VerifiableProperty.{% if variable.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType variable.typeName %} {
     verifiable()
   }
 {% endmacro %}
 
-{% macro mockThenMethod method %}
+{% macro thenMockMethod method %}
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
@@ -117,7 +117,7 @@ extension Given where WrappedType == {{ type.name }} {
   {% endif %}
 {% endmacro %}
 
-{% macro mockThenSubscript subscript %}
+{% macro thenMockSubscript subscript %}
   public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
@@ -128,16 +128,16 @@ extension Given where WrappedType == {{ type.name }} {
   {% endif %}
 {% endmacro %}
 
-{% macro mockThen type %}
-extension MockThen where WrappedType == {{ type.name }} {
+{% macro then type %}
+extension Then where WrappedType == {{ type.name }} {
   {% for variable in type.allVariables|!definedInExtension %}
-    {% call mockThenVariable variable %}
+    {% call thenMockVariable variable %}
   {% endfor %}
   {% for method in type.allMethods|!definedInExtension %}
-    {% call mockThenMethod method %}
+    {% call thenMockMethod method %}
   {% endfor %}
   {% for method in type.allSubscripts|!definedInExtension %}
-    {% call mockThenSubscript method %}
+    {% call thenMockSubscript method %}
   {% endfor %}
 }
 {% endmacro %}
@@ -148,6 +148,6 @@ extension MockThen where WrappedType == {{ type.name }} {
 
   {% call given type %}
 
-  {% call mockThen type %}
+  {% call then type %}
 {% endfor %}
 

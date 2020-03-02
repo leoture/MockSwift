@@ -21,7 +21,7 @@ extension Given where WrappedType == UserService {
   func fetch(identifier: Predicate<String>) -> Mockable<String> { mockable(identifier) }
 }
 
-extension MockThen where WrappedType == UserService {
+extension Then where WrappedType == UserService {
   func fetch(identifier: Predicate<String>) -> Verifiable<User> { verifiable(identifier) }
   func fetch(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
 }
