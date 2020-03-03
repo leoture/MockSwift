@@ -20,7 +20,7 @@
 - Add Strategy configuration [#78](https://github.com/leoture/MockSwift/pull/78) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
-- Rename MockThen to Then [#90](https://github.com/leoture/MockSwift/pull/90) by [Jordhan Leoture](https://github.com/leoture)
+- Rename MockThen to Then [#89](https://github.com/leoture/MockSwift/pull/89) by [Jordhan Leoture](https://github.com/leoture)
 - Rename MockGiven to Given [#89](https://github.com/leoture/MockSwift/pull/89) by [Jordhan Leoture](https://github.com/leoture)
 - Rename moreThan to greaterThan [#85](https://github.com/leoture/MockSwift/pull/85) by [Jordhan Leoture](https://github.com/leoture)
 
