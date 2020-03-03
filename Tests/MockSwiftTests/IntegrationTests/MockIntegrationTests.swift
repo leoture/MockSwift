@@ -44,7 +44,7 @@ extension Mock: Custom where WrappedType == Custom {
   subscript(arg: String) -> Int { mocked(arg) }
 }
 
-extension MockGiven where WrappedType == Custom {
+extension Given where WrappedType == Custom {
   var computed: MockableProperty.Readable<String> { mockable() }
 
   func function(identifier: String) -> Mockable<Int> { mockable(identifier) }

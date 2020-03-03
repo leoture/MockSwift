@@ -1,4 +1,4 @@
-//MockGivenTests.swift
+//GivenTests.swift
 /*
  MIT License
 
@@ -32,29 +32,29 @@ private protocol Custom {}
 private class CustomImpl: Custom {}
 extension Mock: Custom where WrappedType == Custom {}
 
-class MockGivenTests: XCTestCase {
+class GivenTests: XCTestCase {
   @Mock private var customMock: Custom
   private let customImpl = CustomImpl()
   private let errorHandler = ErrorHandlerMock()
 
   func test_given_shouldPass() {
-    let _: MockGiven<Custom> = given(customMock)
+    let _: Given<Custom> = given(customMock)
   }
 
   func test_givenCompletion_shouldPass() {
-    given(customMock) { (_ : MockGiven<Custom>) in }
+    given(customMock) { (_ : Given<Custom>) in }
   }
 
   func test_given_shouldFailWithCast() {
     // Given
-    let mockGiven: MockGiven<Custom> = given(customMock)
-    errorHandler.handleReturn = mockGiven
+    let givenCustom: Given<Custom> = given(customMock)
+    errorHandler.handleReturn = givenCustom
 
     // When
-    let result: MockGiven<Custom> = given(customImpl, errorHandler: errorHandler, file: "file", line: 42)
+    let result: Given<Custom> = given(customImpl, errorHandler: errorHandler, file: "file", line: 42)
 
     // Then
-    XCTAssertTrue(result === mockGiven)
+    XCTAssertTrue(result === givenCustom)
     XCTAssertEqual(errorHandler.handleReceived[0], .cast(source: customImpl, target: Mock<Custom>.self))
   }
 }

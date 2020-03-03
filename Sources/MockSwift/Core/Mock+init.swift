@@ -33,7 +33,7 @@ public extension Mock {
   /// - Parameter completion: Block where to define behaviours.
   convenience init(strategy: [StrategyIdentifier] = .default,
                    stubs: [Stub] = [],
-                   _ completion: (MockGiven<WrappedType>) -> Void = { _ in }) {
+                   _ completion: (Given<WrappedType>) -> Void = { _ in }) {
     self.init(strategies: strategy)
     stubs.forEach(record)
     given(wrappedValue, completion)
