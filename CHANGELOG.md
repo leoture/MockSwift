@@ -15,12 +15,14 @@
 #### Added
 - Add identical Predicate [#88](https://github.com/leoture/MockSwift/pull/88) by [Jordhan Leoture](https://github.com/leoture)
 - Add syntactic sugar for Predicate on Comparables [#87](https://github.com/leoture/MockSwift/pull/87) by [Jordhan Leoture](https://github.com/leoture)
-- Rename moreThan to greaterThan [#85](https://github.com/leoture/MockSwift/pull/85) by [Jordhan Leoture](https://github.com/leoture)
 - NSObject as AnyPredicate [#83](https://github.com/leoture/MockSwift/pull/83) by [Jordhan Leoture](https://github.com/leoture)
 - Supports subscript [#80](https://github.com/leoture/MockSwift/pull/80) by [Jordhan Leoture](https://github.com/leoture)
 - Add Strategy configuration [#78](https://github.com/leoture/MockSwift/pull/78) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
+- Rename MockThen to Then [#90](https://github.com/leoture/MockSwift/pull/90) by [Jordhan Leoture](https://github.com/leoture)
+- Rename MockGiven to Given [#89](https://github.com/leoture/MockSwift/pull/89) by [Jordhan Leoture](https://github.com/leoture)
+- Rename moreThan to greaterThan [#85](https://github.com/leoture/MockSwift/pull/85) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Deprecated
 
