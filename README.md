@@ -13,20 +13,41 @@ Welcome to MockSwift!
 [![Swift](https://img.shields.io/badge/Swift-5.1-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
-MockSwift is a Mock library for Swift inspired by [Mockito](https://site.mockito.org).
+**MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#write-mocks). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.    
+Initially MockSwift is inspired by [Mockito](https://site.mockito.org).  
 
-> # ⚠️ This README is out of date. Full documentation coming soon.  
 
 ###### Table of Contents
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Documentation](#documentation)
 - [Playgrounds](#playgrounds)
 - [Contribution](#contribution)
 - [License](#license)
 
+# Features
+Actually MockSwift supports:
+- **Mocking**
+  - [x] **protocol** (methods, properties, subscripts)
+  - [ ] class ([v2](https://github.com/leoture/MockSwift/projects/2))
+  - [ ] struct ([v2](https://github.com/leoture/MockSwift/projects/2))
+  - [ ] enum ([v2](https://github.com/leoture/MockSwift/projects/2))
+- **Call verification**
+  - [x] **protocol** (methods, properties, subscripts)
+  - [ ] class ([v2](https://github.com/leoture/MockSwift/projects/2))
+  - [ ] struct ([v2](https://github.com/leoture/MockSwift/projects/2))
+  - [ ] enum ([v2](https://github.com/leoture/MockSwift/projects/2))
+- [x] **Generics**
+- [x] **Parameters matching**
+- [x] **Default values for Types**
+
+#### CHANGELOG
+You can see all changes and new features [here](https://github.com/leoture/MockSwift/blob/master/CHANGELOG.md).
+
 # Installation
 ## Swift Package Manager
-MockSwift is thinking to work with [Swift Package Manager](https://swift.org/package-manager/).
+MockSwift has been designed to work with [Swift Package Manager](https://swift.org/package-manager/).
 ```swift
 // swift-tools-version:5.1
 
@@ -35,7 +56,7 @@ import PackageDescription
 let package = Package(
   name: "MyProject",
   dependencies: [
-    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.4.0")
+    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.6.0")
   ],
   targets: [
     .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
@@ -44,9 +65,6 @@ let package = Package(
 ```
 
 # Usage
-
-If you need more details about the API, you can check out our [API documentation](https://leoture.github.io/MockSwift/) or our [GitBook](https://mockswift.gitbook.io/mockswift/).
-
 Suppose that you have a `UserService` protocol.
 ```swift
 struct User: Equatable {
@@ -59,35 +77,117 @@ protocol UserService {
 }
 ```
 
-### Basic usage
-Now, you can use `UserService` into your tests with the `@Mock` annotation.
+And you want to test this `UserCore` class.
 ```swift
-class MyTests: XCTestCase {
+class UserCore {
+  private let service: UserService
+
+  init(_ service: UserService) {
+    self.service = service
+  }
+
+  func fetchCurrentUser() -> User {
+    service.fetch(identifier: "current")
+  }
+}
+```
+
+## Make better tests
+
+Now, with MockSwift, you can use a mocked `UserService` in your tests with the `@Mock` annotation.
+```swift
+@Mock private var service: UserService
+
+// equivalent to
+
+private var service: UserService = Mock()
+```
+
+And easly configure it to fully test `UseCore`.
+```swift
+class UserCoreTests: XCTestCase {
+
+  private var core: UserCore!
   @Mock private var service: UserService
 
-  func test_fetch() {
-    // Given
-    let expectedUser = User(identifier: "id", name: "John")
+  override func setUp() {
+    core = UserCore(service)
+  }
 
-    given(service)
-      .fetch(identifier: .any())
-      .willReturn(expectedUser)
+  func test_fetchCurrentUser() {
+    // Given
+    let expectedUser = User(identifier: "current", name: "John")
+
+    given(service).fetch(identifier: .any()).willReturn(expectedUser)
 
     // When
-    let user = service.fetch(identifier: "id")
+    let user = core.fetchCurrentUser()
 
     // Then
-    then(service)
-      .fetch(identifier: .any())
-      .called()
+    then(service).fetch(identifier: .any()).called()
     XCTAssertEqual(user, expectedUser)
   }
 }
 ```
 
-### GlobalStub
-You can define a global stub for any type.  
-This value will be returned for any mocked method returning this type, only if no behaviour has been defined.  
+### Given
+`given()` enables you to define behaviours.  
+example:
+```swift
+given(service).fetch(identifier: .any()).willReturn(expectedUser)
+
+// equivalent to
+
+given(service) {
+  $0.fetch(identifier: .any()).willReturn(expectedUser)
+}
+```
+
+```swift
+given(service) {
+  $0.fetch(identifier: "current")
+    .willReturn(expectedUser, expectedUser1, expectedUser2)
+
+  $0.fetch(identifier: .match(when: \.isEmpty))
+    .will { (params) -> User in
+            // do something else
+            return expectedUser
+          }
+}
+```
+
+you can also define behaviours when you instantiate the mock.
+
+```swift
+@Mock({
+  $0.fetch(identifier: .any()).willReturn(expectedUser)
+})
+private var service: UserService
+```
+### Then
+`then()` enables you to verify calls.  
+example:
+```swift
+then(service).fetch(identifier: .any()).called()
+
+// equivalent to
+
+then(service) {
+  $0.fetch(identifier: .any()).called()
+}
+```
+```swift
+then(service) {
+  $0.fetch(identifier: "current").called(times: >=2)
+
+  $0.fetch(identifier: =="").called(times: 0)
+}
+```
+### Stubs
+In MockSwift, stubs are default values that are returned when no behaviours has been found.
+#### Global Stubs
+You can define a **global stub** for any type.
+It will concern **all mocks** you will use in **every tests**.
 ```swift
 extension User: GlobalStub {
   static func stub() -> User {
@@ -95,20 +195,89 @@ extension User: GlobalStub {
   }
 }
 ```
+#### Local Stubs
+You can also define a **stub localy** for any type.
+It will concern only the **current mock**.
+```swift
+@Mock(localStubs: [
+      User.self => User(identifier: "id", name: "John")
+])
+private var service: UserService
+```
+
+### Strategy
+The default strategy is to find behaviour defined with `given()`. If no behaviour is found, it will return a local stub. If no local stub is found, it will return a global stub.
 
 ```swift
-func test_fetch_withDefault() {
-    // Given
-    let expectedUser = User(identifier: "id", name: "John")
+@Mock private var service: UserService
 
-    // When
-    let user = service.fetch(identifier: "id")
+// equivalent to
 
-    // Then
-    XCTAssertEqual(user, expectedUser)
+@Mock(strategy: .default)
+private var service: UserService
+
+// equivalent to
+
+@Mock(strategy: [.given, .localStubs, .globalStubs])
+private var service: UserService
+```
+
+You can change the order of the strategy list or remove items as you want.
+
+## Write mocks
+### Automatically
+MockSwift provides a [stencil template](https://github.com/leoture/MockSwift/blob/master/Templates/MockSwift.stencil) for [sourcery](https://github.com/krzysztofzablocki/Sourcery). You can use the `AutoMockable` annotation to generate code.
+```swift
+// sourcery: AutoMockable
+protocol UserService {
+  func fetch(identifier: String) -> User
 }
 ```
 
+To generate code at every build, you can add a build phase before `Compile Sources`.
+```
+sourcery \
+--sources MyLibrary \
+--templates MyLibraryTests/path/to/MockSwift.stencil \
+--output MyLibraryTests/path/to/GeneratedMocks.swift \
+--args module=MyLibrary
+```
+
+### Manually
+To enable MockSwift for UserService type, you have to extend **Mock**.
+```swift
+extension Mock: UserService where WrappedType == UserService {
+  public func fetch(identifier: String) -> User {
+    mocked(identifier)
+  }
+}
+```
+
+To allow behaviour definition through `given()` method, you have to extend **Given**.
+```swift
+extension Given where WrappedType == UserService {
+  public func fetch(identifier: Predicate<String>) -> Mockable<User> {
+    mockable(identifier)
+  }
+  public func fetch(identifier: String) -> Mockable<User> {
+    mockable(identifier)
+  }
+}
+```
+
+To allow call verification through `then()` method, you have to extend **Then**.
+```swift
+extension Then where WrappedType == UserService {
+  public func fetch(identifier: Predicate<String>) -> Verifiable<User> {
+    verifiable(identifier)
+  }
+  public func fetch(identifier: String) -> Verifiable<User> {
+    verifiable(identifier)
+  }
+}
+```
+# Documentation
+If you need more details about the API, you can check out our [API documentation](https://leoture.github.io/MockSwift/) or our [GitBook](https://mockswift.gitbook.io/mockswift/).
 # Playgrounds
 This project contains playgrounds that can help you experiment **MockSwift** .  
 To use playgrounds:
