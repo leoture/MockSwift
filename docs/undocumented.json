@@ -22,24 +22,10 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
+      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Strategy/StrategyIdentifier.swift",
       "line": 26,
-      "symbol": "Stub",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
-      "line": 30,
-      "symbol": "Stub.init(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jordhanleoture/XcodeProjects/MockSwift/Sources/MockSwift/Core/Mock/Stub/Stub.swift",
-      "line": 38,
-      "symbol": "=>(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
+      "symbol": "StrategyIdentifier",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     }
   ],
