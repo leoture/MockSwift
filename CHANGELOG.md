@@ -3,6 +3,7 @@
 [Unrelease](#Unrelease)
 
 ##### 0.x Releases
+- [0.6.0](#0.6.0)
 - [0.5.0](#0.5.0)
 - [0.4.0](#0.4.0)
 - [0.3.0](#0.3.0)
@@ -11,7 +12,22 @@
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
+---
+## [0.6.0](https://github.com/leoture/MockSwift/releases/tag/v0.6.0) - 2020-03-11
+[Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
 #### Added
 - Add identical Predicate [#88](https://github.com/leoture/MockSwift/pull/88) by [Jordhan Leoture](https://github.com/leoture)
 - Add syntactic sugar for Predicate on Comparables [#87](https://github.com/leoture/MockSwift/pull/87) by [Jordhan Leoture](https://github.com/leoture)
@@ -23,14 +39,6 @@
 - Rename MockThen to Then [#89](https://github.com/leoture/MockSwift/pull/89) by [Jordhan Leoture](https://github.com/leoture)
 - Rename MockGiven to Given [#89](https://github.com/leoture/MockSwift/pull/89) by [Jordhan Leoture](https://github.com/leoture)
 - Rename moreThan to greaterThan [#85](https://github.com/leoture/MockSwift/pull/85) by [Jordhan Leoture](https://github.com/leoture)
-
-#### Deprecated
-
-#### Removed
-
-#### Fixed
-
-#### Security
 
 ---
 ## [0.5.0](https://github.com/leoture/MockSwift/releases/tag/v0.5.0) - 2020-01-25
