@@ -13,7 +13,7 @@ Welcome to MockSwift!
 [![Swift](https://img.shields.io/badge/Swift-5.1-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
-**MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#write-mocks). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.    
+**MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#make-better-tests). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.    
 Initially MockSwift is inspired by [Mockito](https://site.mockito.org).  
 
 
