@@ -27,7 +27,7 @@ class GivenStrategy: StrategyDecorate {
 
   let behaviourRegister: BehaviourRegister
   let errorHandler: ErrorHandler
-
+ 
   init(next stategy: Strategy,
        behaviourRegister: BehaviourRegister,
        errorHandler: ErrorHandler) {
