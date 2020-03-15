@@ -1,4 +1,4 @@
-//Mock+BehaviourRegisterTests.swift
+// Mock+BehaviourRegisterTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 private protocol AnyProtocol {}
 
@@ -34,7 +34,6 @@ private struct DummyBehaviour: Behaviour, Equatable {
   func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { nil }
 
   func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? { nil }
-
 }
 
 final class MockBehaviourRegisterTests: XCTestCase {
@@ -58,7 +57,7 @@ final class MockBehaviourRegisterTests: XCTestCase {
     // When
     mock.record(expectedBehaviour, for: expectedIdenfitier, when: ["1", 2])
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let (behaviour, identifier, predicates) = behaviourRegister.recordReceived[0]
     XCTAssertEqual(behaviour as? DummyBehaviour, expectedBehaviour)
@@ -76,7 +75,7 @@ final class MockBehaviourRegisterTests: XCTestCase {
     // When
     let result = mock.recordedBehaviours(for: expectedIdenfitier, concernedBy: ["1", 2])
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, predicates) = behaviourRegister.recordedBehavioursReceived[0]
     XCTAssertEqual(identifier, expectedIdenfitier)

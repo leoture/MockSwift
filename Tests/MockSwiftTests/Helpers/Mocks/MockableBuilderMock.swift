@@ -1,4 +1,4 @@
-//MockableBuilderMock.swift
+// MockableBuilderMock.swift
 /*
  MIT License
 
@@ -29,14 +29,12 @@ import Foundation
 // swiftlint:disable large_tuple
 // swiftlint:disable force_cast
 class MockableBuilderMock: MockableBuilder {
-
   var mockableReturn: Any!
   var mockableReceived: [(parameters: [ParameterType], function: String, file: String, line: UInt)] = []
-  func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt) -> Mockable<ReturnType> {
+  func mockable<ReturnType>(_ parameters: ParameterType...,
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> Mockable<ReturnType> {
     mockableReceived.append((parameters, function, file.description, line))
     return mockableReturn as! Mockable<ReturnType>
   }

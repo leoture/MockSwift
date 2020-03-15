@@ -1,4 +1,4 @@
-//FunctionBehaviourTests.swift
+// FunctionBehaviourTests.swift
 /*
  MIT License
 
@@ -23,20 +23,19 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class FunctionBehaviourTests: XCTestCase {
-
   func test_handle_shouldCallHandlerWithCorrectParameters() {
     // Given
     var capture: [ParameterType]?
-    let behaviour = FunctionBehaviour { parameters in  capture = parameters}
+    let behaviour = FunctionBehaviour { parameters in capture = parameters }
 
     // When
     behaviour.handle(with: ["first", 1, true]) as Void?
 
-    //Then
+    // Then
     XCTAssertEqual(capture?.count, 3)
     XCTAssertEqual(capture?[0] as? String, "first")
     XCTAssertEqual(capture?[1] as? Int, 1)
@@ -51,7 +50,7 @@ class FunctionBehaviourTests: XCTestCase {
     // When
     let value: UUID? = behaviour.handle(with: [])
 
-    //Then
+    // Then
     XCTAssertEqual(value, uuid)
   }
 
@@ -62,7 +61,7 @@ class FunctionBehaviourTests: XCTestCase {
     // When
     let value: UUID? = behaviour.handle(with: [])
 
-    //Then
+    // Then
     XCTAssertNil(value)
   }
 
@@ -73,19 +72,19 @@ class FunctionBehaviourTests: XCTestCase {
     // When
     let value: UUID? = behaviour.handle(with: [])
 
-    //Then
+    // Then
     XCTAssertNil(value)
   }
 
   func test_handleThrowable_shouldCallHandlerWithCorrectParameters() {
     // Given
     var capture: [ParameterType]?
-    let behaviour = FunctionBehaviour { parameters in  capture = parameters}
+    let behaviour = FunctionBehaviour { parameters in capture = parameters }
 
     // When
     try? behaviour.handleThrowable(with: ["first", 1, true]) as Void?
 
-    //Then
+    // Then
     XCTAssertEqual(capture?.count, 3)
     XCTAssertEqual(capture?[0] as? String, "first")
     XCTAssertEqual(capture?[1] as? Int, 1)
@@ -100,7 +99,7 @@ class FunctionBehaviourTests: XCTestCase {
     // When
     let value: UUID? = try? behaviour.handleThrowable(with: [])
 
-    //Then
+    // Then
     XCTAssertEqual(value, uuid)
   }
 
@@ -116,7 +115,7 @@ class FunctionBehaviourTests: XCTestCase {
       XCTFail("handleThrowable should not throws")
     }
 
-    //Then
+    // Then
     XCTAssertNil(value)
   }
 
@@ -134,7 +133,7 @@ class FunctionBehaviourTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertNil(value)
     XCTAssertTrue(expectedError === catchedError!)
   }

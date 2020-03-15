@@ -1,4 +1,4 @@
-//Predicate+Comparable.swift
+// Predicate+Comparable.swift
 /*
  MIT License
 
@@ -29,10 +29,9 @@ prefix operator ==
 /// Creates a `Predicate<Input>` that can match any elements equal to `value`
 /// - Parameter value: The element to compare to.
 /// - SeeAlso: `Predicate`
-public prefix func ==<Input: Equatable>(value: Input) -> Predicate<Input> { .equals(to: value) }
+public prefix func == <Input: Equatable>(value: Input) -> Predicate<Input> { .equals(to: value) }
 
 public extension Predicate where Input: Equatable {
-
   /// Creates a `Predicate<Input>` that can match any elements equal to `value`
   /// - Parameter value: The element to compare to.
   /// - SeeAlso: `Predicate`
@@ -52,7 +51,7 @@ prefix operator >
 /// Creates a `Predicate<Input>` that can match any elements greater than `value`
 /// - Parameter value: The element to compare to.
 /// - SeeAlso: `Predicate`
-public prefix func ><Input: Comparable>(value: Input) -> Predicate<Input> {
+public prefix func > <Input: Comparable>(value: Input) -> Predicate<Input> {
   .greater(than: value)
 }
 
@@ -60,7 +59,7 @@ prefix operator >=
 /// Creates a `Predicate<Input>` that can match any elements greater than or equal to `value`
 /// - Parameter value: The element to compare to.
 /// - SeeAlso: `Predicate`
-public prefix func >=<Input: Comparable>(value: Input) -> Predicate<Input> {
+public prefix func >= <Input: Comparable>(value: Input) -> Predicate<Input> {
   .greaterThanOrEquals(to: value)
 }
 

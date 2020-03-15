@@ -1,4 +1,4 @@
-//Mock.swift
+// Mock.swift
 /*
  MIT License
 
@@ -34,7 +34,6 @@ import Foundation
 ///
 ///
 public class Mock<WrappedType> {
-
   // MARK: - Properties
 
   private let strategy: Strategy
@@ -237,7 +236,6 @@ extension Mock: CallRegister {
   func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
     callRegister.recordedCall(for: identifier, when: matchs)
   }
-
 }
 
 // MARK: - BehaviourRegister
@@ -250,8 +248,8 @@ extension Mock: BehaviourRegister {
   func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
     behaviourRegister.record(behaviour, for: identifier, when: matchs)
   }
-
 }
+
 // MARK: - StubRegister
 
 extension Mock: StubRegister {
@@ -262,5 +260,4 @@ extension Mock: StubRegister {
   func record(_ stub: Stub) {
     stubRegister.record(stub)
   }
-
 }

@@ -1,4 +1,4 @@
-//VerifiableSubcriptWritableTests.swift
+// VerifiableSubcriptWritableTests.swift
 /*
  MIT License
 
@@ -24,18 +24,17 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class VerifiableSubcriptWritableTests: XCTestCase {
-
   private let builder = VerifiableBuilderMock()
   private let expectedSubcript = "subcript(_:)"
   private let expectedLine: UInt = 1
   private let expectedPredicates = [1, 2]
   private var writable: VerifiableSubscript.Writable<Bool>!
 
-  override  func setUp() {
+  override func setUp() {
     writable = VerifiableSubscript.Writable<Bool>(function: expectedSubcript,
                                                   file: "file",
                                                   line: expectedLine,
@@ -49,7 +48,7 @@ final class VerifiableSubcriptWritableTests: XCTestCase {
     builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
-    _  = writable.get
+    _ = writable.get
 
     // Then
     XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)
@@ -78,7 +77,7 @@ final class VerifiableSubcriptWritableTests: XCTestCase {
     builder.verifiablePredicatesReturn = expectedVerifiable
 
     // When
-    _  = writable.set(true)
+    _ = writable.set(true)
 
     // Then
     XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)

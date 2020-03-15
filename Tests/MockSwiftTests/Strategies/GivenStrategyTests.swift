@@ -1,4 +1,4 @@
-//GivenStrategyTests.swift
+// GivenStrategyTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class GivenStrategyTests: XCTestCase {
   private var givenStrategy: GivenStrategy!
@@ -51,7 +51,7 @@ final class GivenStrategyTests: XCTestCase {
     let result: String = givenStrategy.resolve(for: functionIdentifier,
                                                concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -72,7 +72,7 @@ final class GivenStrategyTests: XCTestCase {
     let result: String = givenStrategy.resolve(for: functionIdentifier,
                                                concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -87,16 +87,14 @@ final class GivenStrategyTests: XCTestCase {
     // Given
     let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in "" },
-      FunctionBehaviour { _ in "" }
-    ]
+    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" },
+                                                  FunctionBehaviour { _ in "" }]
     errorHandler.handleReturn = "error"
 
     // When
     let result: String = givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters)
 
-    //Then
+    // Then
     XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
     XCTAssertEqual(result, "error")
   }
@@ -110,7 +108,7 @@ final class GivenStrategyTests: XCTestCase {
     // When
     let result: UUID = givenStrategy.resolve(for: functionIdentifier, concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
     XCTAssertEqual(identifier, functionIdentifier)
@@ -130,7 +128,7 @@ final class GivenStrategyTests: XCTestCase {
     givenStrategy.resolve(for: functionIdentifier,
                           concernedBy: ["parameter1", 2, true]) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -150,7 +148,7 @@ final class GivenStrategyTests: XCTestCase {
     givenStrategy.resolve(for: functionIdentifier,
                           concernedBy: ["parameter1", 2, true]) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -164,16 +162,14 @@ final class GivenStrategyTests: XCTestCase {
     // Given
     let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in },
-      FunctionBehaviour { _ in }
-    ]
+    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in },
+                                                  FunctionBehaviour { _ in }]
     errorHandler.handleReturn = ()
 
     // When
     givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
   }
 }

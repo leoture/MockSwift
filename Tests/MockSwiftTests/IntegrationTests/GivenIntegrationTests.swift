@@ -1,19 +1,19 @@
-//GivenIntegrationTests.swift
+// GivenIntegrationTests.swift
 /*
  MIT License
- 
+
  Copyright (c) 2019 Jordhan Leoture
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private protocol Custom {
   var identifier: String { get set }
@@ -51,7 +51,7 @@ extension Mock: Custom where WrappedType == Custom {
 
   subscript(x first: Int, y second: Int) -> String {
     get {
-    mocked(first, second)
+      mocked(first, second)
     }
     set {
       mocked(first, second, newValue)
@@ -137,12 +137,10 @@ class GivenIntegrationTests: XCTestCase {
       .willReturn(0, 1, 2)
 
     // When
-    let results: [Int] = [
-      custom.function(identifier: "value"),
-      custom.function(identifier: "value"),
-      custom.function(identifier: "value"),
-      custom.function(identifier: "value")
-    ]
+    let results: [Int] = [custom.function(identifier: "value"),
+                          custom.function(identifier: "value"),
+                          custom.function(identifier: "value"),
+                          custom.function(identifier: "value")]
 
     // Then
     XCTAssertEqual(results, [0, 1, 2, 2])
@@ -150,7 +148,7 @@ class GivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnDefaultValueIfNoMatch() {
     // Given
-    given(custom).function(identifier: .match { _ in false})
+    given(custom).function(identifier: .match { _ in false })
       .disambiguate(with: Int.self)
       .willReturn(42)
 
@@ -198,12 +196,10 @@ class GivenIntegrationTests: XCTestCase {
         return error as NSError
       }
     }
-    let catchedErrors: [NSError?] = [
-      completion(),
-      completion(),
-      completion(),
-      completion()
-    ]
+    let catchedErrors: [NSError?] = [completion(),
+                                     completion(),
+                                     completion(),
+                                     completion()]
 
     // Then
     XCTAssertEqual(catchedErrors, [expectedError1, expectedError2, expectedError3, expectedError3])
@@ -319,5 +315,4 @@ class GivenIntegrationTests: XCTestCase {
     // Then
     XCTAssertNil(completionParameters)
   }
-
 }

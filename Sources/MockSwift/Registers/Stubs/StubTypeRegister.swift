@@ -1,4 +1,4 @@
-//StubTypeRegister.swift
+// StubTypeRegister.swift
 /*
  MIT License
 
@@ -24,7 +24,6 @@
  */
 
 class StubTypeRegister: StubRegister {
-
   private var stubs: [String: Any] = [:]
 
   func recordedStub<ReturnType>(for returnType: ReturnType.Type) -> ReturnType? {
@@ -34,5 +33,4 @@ class StubTypeRegister: StubRegister {
   func record(_ stub: Stub) {
     stubs["\(stub.returnType)"] = stub.value
   }
-
 }

@@ -1,4 +1,4 @@
-//FunctionBehaviourRegister.swift
+// FunctionBehaviourRegister.swift
 /*
  MIT License
 

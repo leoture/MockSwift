@@ -1,4 +1,4 @@
-//Then.swift
+// Then.swift
 /*
  MIT License
 
@@ -72,7 +72,6 @@ public func then<WrappedType>(_ value: WrappedType,
 ///
 ///
 public class Then<WrappedType> {
-
   // MARK: - Properties
 
   private let callRegister: CallRegister
@@ -84,28 +83,23 @@ public class Then<WrappedType> {
     self.callRegister = callRegister
     self.failureRecorder = failureRecorder
   }
-
 }
 
 // MARK: - VerifiableBuilder
-protocol VerifiableBuilder {
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Verifiable<ReturnType>
 
-  func verifiable<ReturnType>(
-    predicates: [AnyPredicate],
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Verifiable<ReturnType>
+protocol VerifiableBuilder {
+  func verifiable<ReturnType>(_ parameters: ParameterType...,
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> Verifiable<ReturnType>
+
+  func verifiable<ReturnType>(predicates: [AnyPredicate],
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> Verifiable<ReturnType>
 }
 
 extension Then: VerifiableBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `Verifiable` for `function` with `parameters`.
@@ -134,24 +128,20 @@ extension Then: VerifiableBuilder {
   ///   - The return type must be a `Verifiable` with, as generic type, the same type
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Verifiable<Int>`.
   ///   - Call `verifiable` with all parameters in the same order.
-  public func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line
-  ) -> Verifiable<ReturnType> {
+  public func verifiable<ReturnType>(_ parameters: ParameterType...,
+                                     function: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> Verifiable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
     return verifiable(predicates: predicates, function: function, file: file, line: line)
   }
 
-  func verifiable<ReturnType>(
-    predicates: [AnyPredicate],
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Verifiable<ReturnType> {
+  func verifiable<ReturnType>(predicates: [AnyPredicate],
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> Verifiable<ReturnType> {
     Verifiable(callRegister: callRegister,
                functionIdentifier: FunctionIdentifier(function: function, return: ReturnType.self),
                parametersPredicates: predicates,
@@ -172,7 +162,6 @@ protocol VerifiablePropertyBuilder {
 }
 
 extension Then: VerifiablePropertyBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `VerifiableProperty.Readable` for `property`.
@@ -245,23 +234,18 @@ extension Then: VerifiablePropertyBuilder {
 // MARK: - VerifiableSubscriptBuilder
 
 protocol VerifiableSubscriptBuilder {
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> VerifiableSubscript.Readable<ReturnType>
+  func verifiable<ReturnType>(_ parameters: ParameterType...,
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> VerifiableSubscript.Readable<ReturnType>
 
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> VerifiableSubscript.Writable<ReturnType>
+  func verifiable<ReturnType>(_ parameters: ParameterType...,
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> VerifiableSubscript.Writable<ReturnType>
 }
 
 extension Then: VerifiableSubscriptBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `VerifiableSubscript.Readable` for  a subscript.
@@ -288,11 +272,10 @@ extension Then: VerifiableSubscriptBuilder {
   ///   - The return type must be a `VerifiableSubscript.Readable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableSubscript.Readable<Int>`.
-  public func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> VerifiableSubscript.Readable<ReturnType> {
+  public func verifiable<ReturnType>(_ parameters: ParameterType...,
+                                     function: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableSubscript.Readable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
@@ -327,11 +310,10 @@ extension Then: VerifiableSubscriptBuilder {
   ///   - The return type must be a `VerifiableSubscript.Writable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `VerifiableSubscript.Writable<Int>`.
-  public func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> VerifiableSubscript.Writable<ReturnType> {
+  public func verifiable<ReturnType>(_ parameters: ParameterType...,
+                                     function: String = #function,
+                                     file: StaticString = #file,
+                                     line: UInt = #line) -> VerifiableSubscript.Writable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }

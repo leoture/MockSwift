@@ -1,4 +1,4 @@
-//VerifiablePropertyWritableTests.swift
+// VerifiablePropertyWritableTests.swift
 /*
  MIT License
 
@@ -24,17 +24,16 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class VerifiablePropertyWritableTests: XCTestCase {
-
   private let builder = VerifiableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
   private var writable: VerifiableProperty.Writable<Bool>!
 
-  override  func setUp() {
+  override func setUp() {
     writable = VerifiableProperty.Writable<Bool>(property: expectedProperty,
                                                  file: "file",
                                                  line: expectedLine,
@@ -47,7 +46,7 @@ final class VerifiablePropertyWritableTests: XCTestCase {
     builder.verifiableReturn = expectedVerifiable
 
     // When
-    _  = writable.get
+    _ = writable.get
 
     // Then
     XCTAssertEqual(builder.verifiableReceived.count, 1)
@@ -76,7 +75,7 @@ final class VerifiablePropertyWritableTests: XCTestCase {
     builder.verifiableReturn = expectedVerifiable
 
     // When
-    _  = writable.set(true)
+    _ = writable.set(true)
 
     // Then
     XCTAssertEqual(builder.verifiableReceived.count, 1)

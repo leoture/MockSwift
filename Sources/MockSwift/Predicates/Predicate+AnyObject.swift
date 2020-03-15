@@ -1,4 +1,4 @@
-//Predicate+AnyObject.swift
+// Predicate+AnyObject.swift
 /*
  MIT License
 
@@ -27,12 +27,11 @@ prefix operator ===
 /// Creates a `Predicate<Input>` that can match any elements identical  to `value`
 /// - Parameter value: The element to compare to.
 /// - SeeAlso: `Predicate`
-public prefix func ===<Input: AnyObject>(value: Input) -> Predicate<Input> {
+public prefix func === <Input: AnyObject>(value: Input) -> Predicate<Input> {
   .identical(to: value)
 }
 
 public extension Predicate where Input: AnyObject {
-
   /// Creates a `Predicate<Input>` that can match any elements identical  to `value`
   /// - Parameter value: The element to compare to.
   /// - SeeAlso: `Predicate`

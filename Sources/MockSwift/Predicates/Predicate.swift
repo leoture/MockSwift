@@ -1,4 +1,4 @@
-//Predicate.swift
+// Predicate.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Predicate represents a condition on an `Input`.
 public class Predicate<Input> {
-
   // MARK: - Properties
 
   /// Description of  the Predicate.
@@ -94,10 +93,11 @@ public class Predicate<Input> {
     switch value {
     case let value as AnyPredicate: return value
     case let value as AnyObject: return Predicate<AnyObject>.match(description: "\(value)") { $0 === value }
-    default: return ErrorHandler().handle(
-      InternalError.castTwice(source: value, firstTarget: AnyPredicate.self, secondTarget: AnyObject.self),
-      file: file,
-      line: line)
+    default: return ErrorHandler().handle(InternalError.castTwice(source: value,
+                                                                  firstTarget: AnyPredicate.self,
+                                                                  secondTarget: AnyObject.self),
+                                          file: file,
+                                          line: line)
     }
   }
 }
@@ -105,7 +105,6 @@ public class Predicate<Input> {
 // MARK: - AnyPredicate
 
 extension Predicate: AnyPredicate {
-
   /// Check if an `element` satifies the predicate.
   /// - Parameter element: The element to check.
   /// - Returns: True if `element` is of type `Input` and satisfies the predicate, false otherwise.

@@ -1,4 +1,4 @@
-//MockIntegrationTests.swift
+// MockIntegrationTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private struct AnyClass {
   let identifier: String
@@ -55,11 +55,10 @@ extension Given where WrappedType == Custom {
 }
 
 class MockIntegrationTests: XCTestCase {
-  @Mock(stubs: [ AnyClass.self => AnyClass(identifier: "stub")
-    ], {
-      $0.computed.get.willReturn("id")
-      $0["value"].get.willReturn(2)
-      $0.function(identifier: "id").willReturn(3)
+  @Mock(stubs: [AnyClass.self => AnyClass(identifier: "stub")], {
+    $0.computed.get.willReturn("id")
+    $0["value"].get.willReturn(2)
+    $0.function(identifier: "id").willReturn(3)
   }) private var custom: Custom
 
   func test_computed_get_shouldReturnFromMockInitBlock() {

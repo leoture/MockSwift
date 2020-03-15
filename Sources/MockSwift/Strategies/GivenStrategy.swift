@@ -1,4 +1,4 @@
-//GivenStrategy.swift
+// GivenStrategy.swift
 /*
  MIT License
 
@@ -24,10 +24,9 @@
  */
 
 class GivenStrategy: StrategyDecorate {
-
   let behaviourRegister: BehaviourRegister
   let errorHandler: ErrorHandler
- 
+
   init(next stategy: Strategy,
        behaviourRegister: BehaviourRegister,
        errorHandler: ErrorHandler) {
@@ -61,5 +60,4 @@ class GivenStrategy: StrategyDecorate {
     default: return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
     }
   }
-
 }

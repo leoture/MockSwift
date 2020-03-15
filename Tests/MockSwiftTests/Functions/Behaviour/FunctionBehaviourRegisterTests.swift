@@ -1,4 +1,4 @@
-//FunctionBehaviourRegisterTests.swift
+// FunctionBehaviourRegisterTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class FunctionBehaviourRegisterTests: XCTestCase {
   private var functionBehaviourRegister: FunctionBehaviourRegister!
@@ -37,12 +37,12 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     // Given
     let predicate = AnyPredicateMock()
     predicate.satisfyReturn = false
-    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in }), for: .stub(), when: [predicate])
+    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }), for: .stub(), when: [predicate])
 
     // When
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
-    //Then
+    // Then
     XCTAssertTrue(behaviours.isEmpty)
   }
 
@@ -54,20 +54,20 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     predicateFalse.satisfyReturn = false
     let firstHandlerReturn = UUID()
     let secondHandlerReturn = UUID()
-    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in firstHandlerReturn}),
+    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in firstHandlerReturn }),
                                      for: .stub(),
                                      when: [predicateTrue])
-    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in secondHandlerReturn}),
+    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in secondHandlerReturn }),
                                      for: .stub(),
                                      when: [predicateTrue])
-    functionBehaviourRegister.record(FunctionBehaviour(handler: {_ in }),
+    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }),
                                      for: .stub(),
                                      when: [predicateFalse])
 
     // When
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
-    //Then
+    // Then
     XCTAssertEqual(behaviours.count, 2)
     XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
     XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)

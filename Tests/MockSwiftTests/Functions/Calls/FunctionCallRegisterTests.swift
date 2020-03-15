@@ -1,4 +1,4 @@
-//FunctionCallRegisterTests.swift
+// FunctionCallRegisterTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class FunctionCallRegisterTests: XCTestCase {
-
   private var functionCallRegister: FunctionCallRegister!
 
   override func setUp() {
@@ -41,7 +40,7 @@ class FunctionCallRegisterTests: XCTestCase {
     // When
     let calls = functionCallRegister.recordedCall(for: .stub(), when: [predicate])
 
-    //Then
+    // Then
     XCTAssertTrue(calls.isEmpty)
   }
 
@@ -54,7 +53,7 @@ class FunctionCallRegisterTests: XCTestCase {
     // When
     let calls = functionCallRegister.recordedCall(for: .stub(), when: [predicate])
 
-    //Then
+    // Then
     XCTAssertTrue(calls.isEmpty)
   }
 
@@ -71,12 +70,12 @@ class FunctionCallRegisterTests: XCTestCase {
     functionCallRegister.recordCall(for: .stub(), with: [secondParameter])
     functionCallRegister.recordCall(for: .stub(), with: [UUID()])
 
-    let predicate = Predicate<UUID>.match { $0 == firstParameter || $0 == secondParameter}
+    let predicate = Predicate<UUID>.match { $0 == firstParameter || $0 == secondParameter }
 
     // When
     let calls = functionCallRegister.recordedCall(for: .stub(), when: [predicate])
 
-    //Then
+    // Then
     XCTAssertEqual(calls.count, 2)
     XCTAssertEqual(calls[0].parameters[0] as? UUID, firstParameter)
     XCTAssertEqual(calls[1].parameters[0] as? UUID, secondParameter)

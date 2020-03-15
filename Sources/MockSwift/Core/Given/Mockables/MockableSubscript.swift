@@ -1,4 +1,4 @@
-//MockableSubscript.swift
+// MockableSubscript.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Represents a subcript call that can be stubbed.
 public class MockableSubscript {
-
   // MARK: - Properties
 
   private let mockableBuilder: MockableBuilder
@@ -48,12 +47,10 @@ public class MockableSubscript {
 }
 
 extension MockableSubscript {
-
   // MARK: - Public Methods
 
   /// Represents a subcript call that returns `ReturnType` and can be stubbed with read access only.
   public class Readable<ReturnType>: MockableSubscript {
-
     /// Creates a `Mockable` for `get` method of the concerned subcript.
     public var get: Mockable<ReturnType> {
       mockableBuilder.mockable(predicates: predicates, function: function, file: file, line: line)
@@ -62,7 +59,6 @@ extension MockableSubscript {
 
   /// Represents a subcript call that returns `ReturnType` and can be stubbed with read and wirte access.
   public class Writable<ReturnType>: MockableSubscript {
-
     /// Creates a `Mockable` for `get` method of the concerned subcript.
     public var get: Mockable<ReturnType> {
       mockableBuilder.mockable(predicates: predicates, function: function, file: file, line: line)

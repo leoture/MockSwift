@@ -1,4 +1,4 @@
-//Mock+init.swift
+// Mock+init.swift
 /*
  MIT License
 
@@ -26,7 +26,6 @@
 import Foundation
 
 public extension Mock {
-
   /// Creates a `Mock<WrappedType>` with a custom configuration.
   /// - Parameter strategy: List of strategies used to resolve behaviours.
   /// - Parameter stubs: List of default stub.
@@ -38,5 +37,4 @@ public extension Mock {
     stubs.forEach(record)
     given(wrappedValue, completion)
   }
-
 }

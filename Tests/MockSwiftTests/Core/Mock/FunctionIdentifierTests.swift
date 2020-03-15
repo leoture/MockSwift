@@ -1,4 +1,4 @@
-//FunctionIdentifierTests.swift
+// FunctionIdentifierTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class FunctionIdentifierTests: XCTestCase {
-
   func test_callDescription_withNoParametersWhenFunction() {
     let description = FunctionIdentifier(function: "f()", return: Int.self).callDescription(with: [])
     XCTAssertEqual(description, "f() -> Int")

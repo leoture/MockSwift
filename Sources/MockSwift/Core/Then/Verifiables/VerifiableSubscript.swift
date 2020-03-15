@@ -1,4 +1,4 @@
-//VerifiableSubscript.swift
+// VerifiableSubscript.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Represents a property call that can be checked.
 public class VerifiableSubscript {
-
   // MARK: - Properties
 
   private let verifiableBuilder: VerifiableBuilder
@@ -52,12 +51,10 @@ public class VerifiableSubscript {
 }
 
 extension VerifiableSubscript {
-
   // MARK: - Public Methods
 
   /// Represents a property call that returns `ReturnType` and can be checked with read access only.
   public class Readable<ReturnType>: VerifiableSubscript {
-
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
       verifiableBuilder.verifiable(predicates: predicates, function: function, file: file, line: line)
@@ -66,7 +63,6 @@ extension VerifiableSubscript {
 
   /// Represents a property call that returns `ReturnType` and can be checked with read and wirte access.
   public class Writable<ReturnType>: VerifiableSubscript {
-
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
       verifiableBuilder.verifiable(predicates: predicates, function: function, file: file, line: line)
@@ -87,7 +83,7 @@ extension VerifiableSubscript {
     /// to determine if it can handle the call.
     /// - Returns: A new `Verifiable<Void>` that will be able to check `set`method calls.
     public func set(_ value: ReturnType, file: StaticString = #file, line: UInt = #line) -> Verifiable<Void> {
-      var predicates: [AnyPredicate] =  self.predicates
+      var predicates: [AnyPredicate] = self.predicates
       predicates.append(Predicate<ReturnType>.match(value, file: file, line: line))
       return verifiableBuilder.verifiable(predicates: predicates, function: function, file: self.file, line: self.line)
     }

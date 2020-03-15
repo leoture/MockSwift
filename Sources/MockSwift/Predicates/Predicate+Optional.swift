@@ -1,4 +1,4 @@
-//Predicate+Optional.swift
+// Predicate+Optional.swift
 /*
  MIT License
 
@@ -26,7 +26,6 @@
 import Foundation
 
 public extension Predicate {
-
   /// Creates a `Predicate<Input?>` able to match `nil`.
   static func isNil<Input>() -> Predicate<Input?> {
     .match(description: "nil") { $0 == nil }

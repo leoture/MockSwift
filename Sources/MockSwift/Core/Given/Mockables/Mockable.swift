@@ -1,4 +1,4 @@
-//Mockable.swift
+// Mockable.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Represents a function call that returns `ReturnType` and can be stubbed.
 public class Mockable<ReturnType> {
-
   // MARK: - Properties
 
   private let behaviourRegister: BehaviourRegister
@@ -66,7 +65,7 @@ public class Mockable<ReturnType> {
   /// Used to disambiguate the `ReturnType`.
   /// - Parameter type: The type to disambiguate.
   /// - Returns: `self` with `ReturnType` disambiguated.
-  public  func disambiguate(with type: ReturnType.Type) -> Self { self }
+  public func disambiguate(with type: ReturnType.Type) -> Self { self }
 
   /// Registers a block to excecute.
   /// - Parameter completion: Block to be excecuted.

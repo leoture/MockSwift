@@ -1,4 +1,4 @@
-//BehaviourRegister.swift
+// BehaviourRegister.swift
 /*
  MIT License
 

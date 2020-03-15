@@ -1,4 +1,4 @@
-//AnyPredicateMock.swift
+// AnyPredicateMock.swift
 /*
  MIT License
 

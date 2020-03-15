@@ -1,4 +1,4 @@
-//UnresolvedStrategy.swift
+// UnresolvedStrategy.swift
 /*
  MIT License
 
@@ -38,5 +38,4 @@ class UnresolvedStrategy: Strategy {
                                     concernedBy parameters: [ParameterType]) throws -> ReturnType {
     errorHandler.handle(.noDefinedBehaviour(for: identifier, with: parameters))
   }
-
 }

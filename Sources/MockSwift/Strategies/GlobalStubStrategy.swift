@@ -1,4 +1,4 @@
-//GlobalStubStrategy.swift
+// GlobalStubStrategy.swift
 /*
  MIT License
 
@@ -24,7 +24,6 @@
  */
 
 class GlobalStubStrategy: StrategyDecorate {
-
   override func resolve<ReturnType>(for identifier: FunctionIdentifier,
                                     concernedBy parameters: [ParameterType]) -> ReturnType {
     defaultValue() ?? super.resolve(for: identifier, concernedBy: parameters)

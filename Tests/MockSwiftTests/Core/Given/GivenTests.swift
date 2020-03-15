@@ -1,4 +1,4 @@
-//GivenTests.swift
+// GivenTests.swift
 /*
  MIT License
 
@@ -24,8 +24,8 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 private protocol Custom {}
 
@@ -42,7 +42,7 @@ class GivenTests: XCTestCase {
   }
 
   func test_givenCompletion_shouldPass() {
-    given(customMock) { (_ : Given<Custom>) in }
+    given(customMock) { (_: Given<Custom>) in }
   }
 
   func test_given_shouldFailWithCast() {

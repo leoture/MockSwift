@@ -1,4 +1,4 @@
-//VerifiablePropertyReadableTests.swift
+// VerifiablePropertyReadableTests.swift
 /*
  MIT License
 
@@ -24,18 +24,17 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class VerifiablePropertyReadableTests: XCTestCase {
-
   private let builder = VerifiableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
   private let expectedVerifiable = Verifiable<Bool>.stub()
   private var readable: VerifiableProperty.Readable<Bool>!
 
-  override  func setUp() {
+  override func setUp() {
     builder.verifiableReturn = expectedVerifiable
     readable = VerifiableProperty.Readable<Bool>(property: expectedProperty,
                                                  file: "file",
@@ -47,7 +46,7 @@ final class VerifiablePropertyReadableTests: XCTestCase {
     // Given
 
     // When
-    _  = readable.get
+    _ = readable.get
 
     // Then
     XCTAssertEqual(builder.verifiableReceived.count, 1)

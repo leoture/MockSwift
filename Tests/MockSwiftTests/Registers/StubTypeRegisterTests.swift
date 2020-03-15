@@ -1,4 +1,4 @@
-//StubTypeRegisterTests.swift
+// StubTypeRegisterTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class StubTypeRegisterTests: XCTestCase {
-
   private let register = StubTypeRegister()
 
   func test_recordedStub_shouldReturnNilWhenValueNotRecordedBefore() {

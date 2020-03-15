@@ -1,4 +1,4 @@
-//FunctionIdentifierStub.swift
+// FunctionIdentifierStub.swift
 /*
  MIT License
 
@@ -33,6 +33,6 @@ extension FunctionIdentifier {
 
   static func stub<ReturnType>(function: String = "function()",
                                returnType: ReturnType.Type = ReturnType.self) -> FunctionIdentifier {
-    return FunctionIdentifier(function: function, return: returnType)
+    FunctionIdentifier(function: function, return: returnType)
   }
 }

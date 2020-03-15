@@ -1,4 +1,4 @@
-//StubStrategy.swift
+// StubStrategy.swift
 /*
  MIT License
 

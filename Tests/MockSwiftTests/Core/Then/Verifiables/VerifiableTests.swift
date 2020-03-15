@@ -1,4 +1,4 @@
-//VerifiableTests.swift
+// VerifiableTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class VerifiableTests: XCTestCase {
-
   private var callRegister: CallRegisterMock!
   private var functionIdentifier: FunctionIdentifier!
   private var failureRecorder: FailureRecorderMock!
@@ -49,7 +48,7 @@ class VerifiableTests: XCTestCase {
     // When
     let disambiguatedVerifiable: Verifiable<String> = verifiable.disambiguate(with: String.self)
 
-    //Then
+    // Then
     XCTAssertTrue(disambiguatedVerifiable === verifiable)
   }
 
@@ -66,7 +65,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called(file: "file", line: 42)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -92,7 +91,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called()
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -104,10 +103,8 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
+                                       FunctionCall(parameters: [])]
     let predicate = AnyPredicateMock()
     predicate.description = "description"
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
@@ -118,7 +115,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called(times: >2, file: "file", line: 42)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -134,11 +131,9 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
+                                       FunctionCall(parameters: []),
+                                       FunctionCall(parameters: [])]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -148,7 +143,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called(times: >2)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -160,10 +155,8 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
+                                       FunctionCall(parameters: [])]
     let predicate = AnyPredicateMock()
     predicate.description = "description"
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
@@ -174,7 +167,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called(times: 3, file: "file", line: 42)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -189,11 +182,9 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: []),
-      FunctionCall(parameters: [])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
+                                       FunctionCall(parameters: []),
+                                       FunctionCall(parameters: [])]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -203,7 +194,7 @@ class VerifiableTests: XCTestCase {
     // When
     verifiable.called(times: 3)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -225,7 +216,7 @@ class VerifiableTests: XCTestCase {
     // When
     let result = verifiable.receivedParameters
 
-    //Then
+    // Then
     XCTAssertTrue(result.isEmpty)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -235,10 +226,8 @@ class VerifiableTests: XCTestCase {
 
   func test_receivedParameters_shouldReturnAllCallsParametersWhenFunctionCallFromCallRegisterMatched() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: ["arg1", 1]),
-      FunctionCall(parameters: ["arg2", 2])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: ["arg1", 1]),
+                                       FunctionCall(parameters: ["arg2", 2])]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -248,7 +237,7 @@ class VerifiableTests: XCTestCase {
     // When
     let result = verifiable.receivedParameters
 
-    //Then
+    // Then
     XCTAssertEqual(result.count, 2)
     XCTAssertEqual(result[0].count, 2)
     XCTAssertEqual(result[0][0] as? String, "arg1")
@@ -274,7 +263,7 @@ class VerifiableTests: XCTestCase {
     // When
     let result = verifiable.callCount
 
-    //Then
+    // Then
     XCTAssertEqual(result, 0)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -284,10 +273,8 @@ class VerifiableTests: XCTestCase {
 
   func test_callCount_shouldReturnNumberOfMatchedFunctionCallFromCallRegister() {
     // Given
-    callRegister.recordedCallReturn = [
-      FunctionCall(parameters: ["arg1", 1]),
-      FunctionCall(parameters: ["arg2", 2])
-    ]
+    callRegister.recordedCallReturn = [FunctionCall(parameters: ["arg1", 1]),
+                                       FunctionCall(parameters: ["arg2", 2])]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -297,7 +284,7 @@ class VerifiableTests: XCTestCase {
     // When
     let result = verifiable.callCount
 
-    //Then
+    // Then
     XCTAssertEqual(result, 2)
     let (identifier, matchs) = callRegister.recordedCallReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)

@@ -1,4 +1,4 @@
-//StrategyDecorate.swift
+// StrategyDecorate.swift
 /*
  MIT License
 
@@ -24,7 +24,6 @@
  */
 
 class StrategyDecorate: Strategy {
-
   let strategy: Strategy
 
   init(_ strategy: Strategy) {
@@ -39,5 +38,4 @@ class StrategyDecorate: Strategy {
                                     concernedBy parameters: [ParameterType]) throws -> ReturnType {
     try strategy.resolveThrowable(for: identifier, concernedBy: parameters)
   }
-
 }

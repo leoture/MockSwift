@@ -1,4 +1,4 @@
-//VerifiableProperty.swift
+// VerifiableProperty.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Represents a property call that can be checked.
 public class VerifiableProperty {
-
   // MARK: - Properties
 
   private let verifiableBuilder: VerifiableBuilder
@@ -46,12 +45,10 @@ public class VerifiableProperty {
 }
 
 extension VerifiableProperty {
-
   // MARK: - Public Methods
 
   /// Represents a property call that returns `ReturnType` and can be checked with read access only.
   public class Readable<ReturnType>: VerifiableProperty {
-
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
       verifiableBuilder.verifiable(function: property, file: file, line: line)
@@ -60,7 +57,6 @@ extension VerifiableProperty {
 
   /// Represents a property call that returns `ReturnType` and can be checked with read and wirte access.
   public class Writable<ReturnType>: VerifiableProperty {
-
     /// Creates a `Verifiable` for `get` method of the concerned property.
     public var get: Verifiable<ReturnType> {
       verifiableBuilder.verifiable(function: property, file: file, line: line)

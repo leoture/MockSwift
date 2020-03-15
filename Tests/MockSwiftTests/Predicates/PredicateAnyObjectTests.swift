@@ -1,4 +1,4 @@
-//PredicateAnyObjectTests.swift
+// PredicateAnyObjectTests.swift
 /*
  MIT License
 
@@ -23,14 +23,12 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
-private class Custom {
-}
+private class Custom {}
 
 class PredicateAnyObjectTests: XCTestCase {
-
   // MARK: - Operator
 
   func test_operator_identicalTo_shouldReturnFalse() {
@@ -41,7 +39,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = (===customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
   }
 
@@ -53,7 +51,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = (===customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
   }
 
@@ -65,7 +63,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let description = (===customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, reference)
   }
 
@@ -79,7 +77,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = Predicate<Custom>.identical(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
   }
 
@@ -91,7 +89,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = Predicate<Custom>.identical(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
   }
 
@@ -103,7 +101,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let description = Predicate<Custom>.identical(to: customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, reference)
   }
 
@@ -117,7 +115,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = Predicate<Custom>.id(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
   }
 
@@ -129,7 +127,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let result = Predicate<Custom>.id(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
   }
 
@@ -141,8 +139,7 @@ class PredicateAnyObjectTests: XCTestCase {
     // When
     let description = Predicate<Custom>.id(customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, reference)
   }
-
 }

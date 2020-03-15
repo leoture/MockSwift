@@ -1,4 +1,4 @@
-//PredicateTests.swift
+// PredicateTests.swift
 /*
  MIT License
 
@@ -23,13 +23,12 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 private class Custom {}
 
 class PredicateTests: XCTestCase {
-
   // MARK: - match(description:any type:_ predicate:)
 
   func test_match_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
@@ -45,7 +44,7 @@ class PredicateTests: XCTestCase {
       XCTAssertFalse(predicate.satisfy(by: "not Empty"))
     }
 
-    assertion(.match(any: String.self) {$0.isEmpty})
+    assertion(.match(any: String.self) { $0.isEmpty })
   }
 
   func test_match_shouldReturnTrueIfInputMatched() {
@@ -53,7 +52,7 @@ class PredicateTests: XCTestCase {
       XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
-    assertion(.match(any: String.self) {$0.isEmpty})
+    assertion(.match(any: String.self) { $0.isEmpty })
   }
 
   func test_match_description() {

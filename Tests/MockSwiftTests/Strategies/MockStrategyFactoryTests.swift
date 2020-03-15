@@ -1,4 +1,4 @@
-//MockStrategyFactoryTests.swift
+// MockStrategyFactoryTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class MockStrategyFactoryTests: XCTestCase {
   private var factory: MockStrategyFactory!
@@ -77,12 +77,12 @@ class MockStrategyFactoryTests: XCTestCase {
   }
 
   func test_create_shouldReturnCorrectStrategyChainWhenDefault() {
-     // Given
+    // Given
 
-     // When
+    // When
     let strategy = factory.create(strategy: .default)
 
-     // Then
+    // Then
     let givenStrategy = strategy as? GivenStrategy
     let behaviourRegisterMock = givenStrategy?.behaviourRegister as? BehaviourRegisterMock
     XCTAssertTrue(behaviourRegisterMock === behaviourRegister)
@@ -93,9 +93,9 @@ class MockStrategyFactoryTests: XCTestCase {
     XCTAssertTrue(stubRegisterMock === stubRegister)
 
     let globalStubStrategy = localStubStrategy?.strategy as? GlobalStubStrategy
-     XCTAssertNotNil(globalStubStrategy)
+    XCTAssertNotNil(globalStubStrategy)
 
-     let unresolvedStrategy = globalStubStrategy?.strategy as? UnresolvedStrategy
-     XCTAssertTrue(unresolvedStrategy!.errorHandler === errorHandler)
-   }
+    let unresolvedStrategy = globalStubStrategy?.strategy as? UnresolvedStrategy
+    XCTAssertTrue(unresolvedStrategy!.errorHandler === errorHandler)
+  }
 }

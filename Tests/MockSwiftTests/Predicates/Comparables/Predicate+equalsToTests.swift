@@ -1,4 +1,4 @@
-//Predicate+equalsToTests.swift
+// Predicate+equalsToTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private class Custom: Equatable, CustomStringConvertible {
   var comparisonReceived: Custom?
@@ -38,7 +38,6 @@ private class Custom: Equatable, CustomStringConvertible {
 }
 
 class PredicateEqualsToTests: XCTestCase {
-
   // MARK: - Operator
 
   func test_operator_equalsTo_shouldReturnFalseIfComparisonReturnFalse() {
@@ -50,7 +49,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = (==customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -64,7 +63,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = (==customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -77,7 +76,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let description = (==customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "description")
   }
 
@@ -92,7 +91,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = Predicate<Custom>.equals(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -106,7 +105,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = Predicate<Custom>.equals(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -119,7 +118,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let description = Predicate<Custom>.equals(to: customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "description")
   }
 
@@ -134,7 +133,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = Predicate<Custom>.eq(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -148,7 +147,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let result = Predicate<Custom>.eq(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -161,7 +160,7 @@ class PredicateEqualsToTests: XCTestCase {
     // When
     let description = Predicate<Custom>.eq(customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "description")
   }
 }
