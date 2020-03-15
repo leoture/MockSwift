@@ -74,6 +74,10 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (~> 1)
+    danger-plugin-api (1.0.0)
+      danger (> 2.0)
+    danger-swiftformat (0.7.0)
+      danger-plugin-api (~> 1.0)
     danger-swiftlint (0.24.1)
       danger
       rake (> 10)
@@ -270,6 +274,7 @@ PLATFORMS
 
 DEPENDENCIES
   danger (~> 6.1.0)
+  danger-swiftformat (~> 0.7.0)
   danger-swiftlint (~> 0.24.0)
   fastlane (~> 2)
   jazzy (~> 0.11.0)
