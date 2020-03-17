@@ -1,4 +1,4 @@
-//InternalErrorTests.swift
+// InternalErrorTests.swift
 /*
  MIT License
 
@@ -24,11 +24,10 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class InternalErrorTests: XCTestCase {
-
   func test_description_withCast() {
     let error = InternalError.cast(source: true, target: Mock<Bool>.self)
     XCTAssertEqual(error.description, "true can not be cast to Mock<Bool>.")

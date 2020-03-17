@@ -1,4 +1,4 @@
-//MockableTests.swift
+// MockableTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class MockableTests: XCTestCase {
-
   func test_willReturn_shouldCorrectlyRegisterBahaviour() {
     // Given
     let behaviourRegister = BehaviourRegisterMock()
@@ -39,7 +38,7 @@ class MockableTests: XCTestCase {
     // When
     mockable.willReturn(expectedBehaviourReturn)
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedBehaviourReturn)
@@ -60,7 +59,7 @@ class MockableTests: XCTestCase {
     // When
     mockable.willReturn(expectedFirstBehaviourReturn, expectedSecondBehaviourReturn)
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.behaviour.handle(with: []), expectedFirstBehaviourReturn)
@@ -86,7 +85,7 @@ class MockableTests: XCTestCase {
       return expectedBehaviourReturn
     }
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     let expectedBehaviourReceived = [UUID()]
@@ -105,7 +104,7 @@ class MockableTests: XCTestCase {
     // When
     let disambiguatedMockable: Mockable<String> = mockable.disambiguate(with: String.self)
 
-    //Then
+    // Then
     XCTAssertTrue(disambiguatedMockable === mockable)
   }
 
@@ -120,7 +119,7 @@ class MockableTests: XCTestCase {
     // When
     mockable.willThrow(expectedBehaviourError)
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.identifier, identifier)

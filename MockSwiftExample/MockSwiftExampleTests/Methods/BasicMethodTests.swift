@@ -1,4 +1,4 @@
-//BasicMethodTests.swift
+// BasicMethodTests.swift
 /*
  MIT License
 
@@ -23,9 +23,9 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
 @testable import MockSwiftExample
+import XCTest
 
 class BasicMethodTests: XCTestCase {
   @Mock private var basicMethod: BasicMethod
@@ -60,7 +60,7 @@ class BasicMethodTests: XCTestCase {
     let result4 = basicMethod.doSomething(with: "4")
     let result5 = basicMethod.doSomething(with: "5", and: true)
 
-    //Then
+    // Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertNil(result1)
@@ -110,7 +110,7 @@ class BasicMethodTests: XCTestCase {
     let result4 = basicMethod.doSomething(with: "4")
     let result5 = basicMethod.doSomething(with: "5", and: true)
 
-    //Then
+    // Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertNil(result1)

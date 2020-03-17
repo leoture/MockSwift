@@ -1,4 +1,4 @@
-//MockablePropertyWritableTests.swift
+// MockablePropertyWritableTests.swift
 /*
  MIT License
 
@@ -24,11 +24,10 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class MockablePropertyWritableTests: XCTestCase {
-
   private let builder = MockableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
@@ -47,7 +46,7 @@ final class MockablePropertyWritableTests: XCTestCase {
     builder.mockableReturn = expectedMockable
 
     // When
-    _  = writable.get
+    _ = writable.get
 
     // Then
     XCTAssertEqual(builder.mockableReceived.count, 1)
@@ -76,7 +75,7 @@ final class MockablePropertyWritableTests: XCTestCase {
     builder.mockableReturn = expectedMockable
 
     // When
-    _  = writable.set(true)
+    _ = writable.set(true)
 
     // Then
     XCTAssertEqual(builder.mockableReceived.count, 1)

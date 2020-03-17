@@ -1,4 +1,4 @@
-//MockablePropertyReadableTests.swift
+// MockablePropertyReadableTests.swift
 /*
  MIT License
 
@@ -24,11 +24,10 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class MockablePropertyReadableTests: XCTestCase {
-
   private let builder = MockableBuilderMock()
   private let expectedProperty = "property"
   private let expectedLine: UInt = 1
@@ -47,7 +46,7 @@ final class MockablePropertyReadableTests: XCTestCase {
     // Given
 
     // When
-    _  = readable.get
+    _ = readable.get
 
     // Then
     XCTAssertEqual(builder.mockableReceived.count, 1)

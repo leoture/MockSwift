@@ -1,4 +1,4 @@
-//GlobalStubIntegrationTests.swift
+// GlobalStubIntegrationTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private struct CustomReturnType: Equatable {
   let identifier: String

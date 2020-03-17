@@ -1,4 +1,4 @@
-//Stub.swift
+// Stub.swift
 /*
  MIT License
 
@@ -28,10 +28,10 @@ public class Stub {
   let value: Any
   let returnType: Any
 
-    /// Creates a Stub
-    /// - Parameters:
-    ///   - returnType: Type to define a stub value
-    ///   - value: Stub value
+  /// Creates a Stub
+  /// - Parameters:
+  ///   - returnType: Type to define a stub value
+  ///   - value: Stub value
   public init<ReturnType>(_ returnType: ReturnType.Type, _ value: ReturnType) {
     self.returnType = returnType
     self.value = value
@@ -44,6 +44,6 @@ infix operator =>
 /// - Parameters:
 ///   - lhs: Type to define a stub value
 ///   - rhs: Stub value
-public func =><ReturnType>(lhs: ReturnType.Type, rhs: ReturnType) -> Stub {
+public func => <ReturnType>(lhs: ReturnType.Type, rhs: ReturnType) -> Stub {
   Stub(lhs, rhs)
 }

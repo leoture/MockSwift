@@ -1,4 +1,4 @@
-//GlobalStub.swift
+// GlobalStub.swift
 /*
  MIT License
 

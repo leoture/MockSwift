@@ -1,4 +1,4 @@
-//StubStrategyTests.swift
+// StubStrategyTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class StubStrategyTests: XCTestCase {
   private var stubStrategy: StubStrategy!
@@ -49,7 +49,7 @@ final class StubStrategyTests: XCTestCase {
     let result: UUID = stubStrategy.resolve(for: functionIdentifier,
                                             concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -68,7 +68,7 @@ final class StubStrategyTests: XCTestCase {
     // When
     let result: UUID = stubStrategy.resolve(for: .stub(), concernedBy: [])
 
-    //Then
+    // Then
     XCTAssertEqual(result, uuid)
   }
 
@@ -83,7 +83,7 @@ final class StubStrategyTests: XCTestCase {
     let result = try? stubStrategy.resolveThrowable(for: functionIdentifier,
                                                     concernedBy: ["parameter1", 2, true]) as UUID
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -102,7 +102,7 @@ final class StubStrategyTests: XCTestCase {
     // When
     let result = try? stubStrategy.resolveThrowable(for: .stub(), concernedBy: []) as UUID
 
-    //Then
+    // Then
     XCTAssertEqual(result, uuid)
   }
 
@@ -121,7 +121,7 @@ final class StubStrategyTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -131,5 +131,4 @@ final class StubStrategyTests: XCTestCase {
     XCTAssertEqual(parameters[2] as? Bool, true)
     XCTAssertTrue(catchedError === expectedError)
   }
-
 }

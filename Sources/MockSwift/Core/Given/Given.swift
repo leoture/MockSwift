@@ -1,4 +1,4 @@
-//Given.swift
+// Given.swift
 /*
  MIT License
 
@@ -72,7 +72,6 @@ public func given<WrappedType>(_ value: WrappedType,
 ///
 ///
 public class Given<WrappedType> {
-
   // MARK: - Properties
 
   private let behaviourRegister: BehaviourRegister
@@ -82,29 +81,23 @@ public class Given<WrappedType> {
   fileprivate init(_ behaviourRegister: BehaviourRegister) {
     self.behaviourRegister = behaviourRegister
   }
-
 }
 
 // MARK: - MockableBuilder
 
 protocol MockableBuilder {
-  func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Mockable<ReturnType>
+  func mockable<ReturnType>(_ parameters: ParameterType...,
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> Mockable<ReturnType>
 
-  func mockable<ReturnType>(
-    predicates: [AnyPredicate],
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Mockable<ReturnType>
+  func mockable<ReturnType>(predicates: [AnyPredicate],
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> Mockable<ReturnType>
 }
 
 extension Given: MockableBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `Mockable` for `function` with `parameters`.
@@ -133,24 +126,20 @@ extension Given: MockableBuilder {
   ///   - The return type must be a `Mockable` with, as generic type, the same type
   ///   as the return type of the method in the `WrappedType`. In the example above, `Int` became `Mockable<Int>`.
   ///   - Call `mockable` with all parameters in the same order.
-  public func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line
-  ) -> Mockable<ReturnType> {
+  public func mockable<ReturnType>(_ parameters: ParameterType...,
+                                   function: String = #function,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) -> Mockable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
     return mockable(predicates: predicates, function: function, file: file, line: line)
   }
 
-  func mockable<ReturnType>(
-    predicates: [AnyPredicate],
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> Mockable<ReturnType> {
+  func mockable<ReturnType>(predicates: [AnyPredicate],
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> Mockable<ReturnType> {
     Mockable(behaviourRegister, FunctionIdentifier(function: function, return: ReturnType.self), predicates)
   }
 }
@@ -163,7 +152,6 @@ protocol MockablePropertyBuilder {
 }
 
 extension Given: MockablePropertyBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `MockableProperty.Readable` for `property`.
@@ -236,22 +224,18 @@ extension Given: MockablePropertyBuilder {
 // MARK: - MockableSubscriptBuilder
 
 protocol MockableSubscriptBuilder {
-  func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt
-  ) -> MockableSubscript.Readable<ReturnType>
+  func mockable<ReturnType>(_ parameters: ParameterType...,
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> MockableSubscript.Readable<ReturnType>
 
-  func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt) -> MockableSubscript.Writable<ReturnType>
+  func mockable<ReturnType>(_ parameters: ParameterType...,
+                            function: String,
+                            file: StaticString,
+                            line: UInt) -> MockableSubscript.Writable<ReturnType>
 }
 
 extension Given: MockableSubscriptBuilder {
-
   // MARK: - Public Methods
 
   /// Creates a `MockableSubscript.Readable` for a subcript.
@@ -278,11 +262,10 @@ extension Given: MockableSubscriptBuilder {
   ///   - The return type must be a `MockableSubscript.Readable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `MockableSubscript.Readable<Int>`.
-  public func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> MockableSubscript.Readable<ReturnType> {
+  public func mockable<ReturnType>(_ parameters: ParameterType...,
+                                   function: String = #function,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) -> MockableSubscript.Readable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }
@@ -317,11 +300,10 @@ extension Given: MockableSubscriptBuilder {
   ///   - The return type must be a `MockableSubscript.Writable` with, as generic type, the same type
   ///   as the return type of the property in the `WrappedType`.
   ///   In the example above, `Int` became `MockableSubscript.Writable<Int>`.
-  public func mockable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String = #function,
-    file: StaticString = #file,
-    line: UInt = #line) -> MockableSubscript.Writable<ReturnType> {
+  public func mockable<ReturnType>(_ parameters: ParameterType...,
+                                   function: String = #function,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) -> MockableSubscript.Writable<ReturnType> {
     let predicates = parameters.compactMap {
       Predicate<ParameterType>.match($0, file: file, line: line)
     }

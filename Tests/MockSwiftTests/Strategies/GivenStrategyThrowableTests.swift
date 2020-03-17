@@ -1,30 +1,30 @@
-//GivenStrategyThrowableTests.swift
+// GivenStrategyThrowableTests.swift
 /*
-MIT License
+ MIT License
 
-Copyright (c) 2019 Jordhan Leoture
+ Copyright (c) 2019 Jordhan Leoture
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class GivenStrategyThrowableTests: XCTestCase {
   private var givenStrategy: GivenStrategy!
@@ -51,7 +51,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
     let result: String? = try? givenStrategy.resolveThrowable(for: functionIdentifier,
                                                               concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -72,7 +72,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
     let result: String? = try? givenStrategy.resolveThrowable(for: functionIdentifier,
                                                               concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -87,16 +87,14 @@ final class GivenStrategyThrowableTests: XCTestCase {
     // Given
     let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in "" },
-      FunctionBehaviour { _ in "" }
-    ]
+    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" },
+                                                  FunctionBehaviour { _ in "" }]
     errorHandler.handleReturn = "error"
 
     // When
     let result: String? = try? givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: parameters)
 
-    //Then
+    // Then
     XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
     XCTAssertEqual(result, "error")
   }
@@ -111,7 +109,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
     let result: UUID? = try? givenStrategy.resolveThrowable(for: functionIdentifier,
                                                             concernedBy: ["parameter1", 2, true])
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
     XCTAssertEqual(identifier, functionIdentifier)
@@ -135,7 +133,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
     XCTAssertEqual(identifier, functionIdentifier)
@@ -156,12 +154,12 @@ final class GivenStrategyThrowableTests: XCTestCase {
     var catchedError: NSError?
     do {
       _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
-                                            concernedBy: ["parameter1", 2, true]) as UUID
+                                             concernedBy: ["parameter1", 2, true]) as UUID
     } catch {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -182,7 +180,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
     try? givenStrategy.resolveThrowable(for: functionIdentifier,
                                         concernedBy: ["parameter1", 2, true]) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -202,7 +200,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
     try? givenStrategy.resolveThrowable(for: functionIdentifier,
                                         concernedBy: ["parameter1", 2, true]) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)
@@ -216,16 +214,14 @@ final class GivenStrategyThrowableTests: XCTestCase {
     // Given
     let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
     let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [
-      FunctionBehaviour { _ in },
-      FunctionBehaviour { _ in }
-    ]
+    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in },
+                                                  FunctionBehaviour { _ in }]
     errorHandler.handleReturn = ()
 
     // When
     try? givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: parameters) as Void
 
-    //Then
+    // Then
     XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
   }
 
@@ -243,7 +239,7 @@ final class GivenStrategyThrowableTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
     let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
     XCTAssertEqual(identifier, functionIdentifier)
@@ -264,12 +260,12 @@ final class GivenStrategyThrowableTests: XCTestCase {
     var catchedError: NSError?
     do {
       _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
-                                            concernedBy: ["parameter1", 2, true]) as Void
+                                             concernedBy: ["parameter1", 2, true]) as Void
     } catch {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(nextStrategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = nextStrategy.resolveThrowableReceived[0]
     XCTAssertEqual(identifier, functionIdentifier)

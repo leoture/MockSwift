@@ -30,7 +30,7 @@ jobs:
         restore-keys: ${{ runner.os }}-gem-
     - name: Prepare
       run: |
-        brew install swiftlint sourcery
+        brew install swiftlint sourcery swiftformat
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
         swift --version
@@ -42,7 +42,7 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
     - name: Run fastlane
-      run: fastlane mac_tests
+      run: bundle exec fastlane mac_tests
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate

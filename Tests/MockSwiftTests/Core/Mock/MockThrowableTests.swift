@@ -1,4 +1,4 @@
-//MockThrowableTests.swift
+// MockThrowableTests.swift
 /*
  MIT License
 
@@ -24,8 +24,8 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 private protocol AnyProtocol {}
 
@@ -57,7 +57,7 @@ final class MockThrowableTests: XCTestCase {
     // When
     _ = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordCallReceived.count, 1)
     let (identifier, parameters) = callRegister.recordCallReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
@@ -79,7 +79,7 @@ final class MockThrowableTests: XCTestCase {
     // When
     let result = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
-    //Then
+    // Then
     XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
@@ -106,7 +106,7 @@ final class MockThrowableTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: UUID.self))
@@ -127,7 +127,7 @@ final class MockThrowableTests: XCTestCase {
     // When
     try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
-    //Then
+    // Then
     XCTAssertEqual(callRegister.recordCallReceived.count, 1)
     let (identifier, parameters) = callRegister.recordCallReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
@@ -148,7 +148,7 @@ final class MockThrowableTests: XCTestCase {
     // When
     try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
 
-    //Then
+    // Then
     XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
@@ -174,7 +174,7 @@ final class MockThrowableTests: XCTestCase {
       catchedError = error as NSError
     }
 
-    //Then
+    // Then
     XCTAssertEqual(strategy.resolveThrowableReceived.count, 1)
     let (identifier, parameters) = strategy.resolveThrowableReceived.first!
     XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))

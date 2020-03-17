@@ -1,4 +1,4 @@
-//StubRegisterMock.swift
+// StubRegisterMock.swift
 /*
  MIT License
 
@@ -26,7 +26,6 @@
 @testable import MockSwift
 
 class StubRegisterMock: StubRegister {
-
   var recordedStubReturn: Any?
   var recordedStubReceived: [Any] = []
   func recordedStub<ReturnType>(for returnType: ReturnType.Type) -> ReturnType? {

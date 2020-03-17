@@ -1,4 +1,4 @@
-//AnyPredicateEquatableTests.swift
+// AnyPredicateEquatableTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private class Custom: NSObject {
   var equalsReceived: (lhs: Custom, rhs: Custom)?
@@ -39,7 +39,6 @@ private class Custom: NSObject {
 }
 
 class AnyPredicateEquatableTests: XCTestCase {
-
   func test_satisfy_shouldReturnTrueIfEquals() {
     // Given
     let lhsCustom = Custom()
@@ -49,7 +48,7 @@ class AnyPredicateEquatableTests: XCTestCase {
     // When
     let result = lhsCustom.satisfy(by: rhsCustom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     let argument = lhsCustom.equalsReceived
     XCTAssertTrue(argument?.lhs === lhsCustom)
@@ -65,7 +64,7 @@ class AnyPredicateEquatableTests: XCTestCase {
     // When
     let result = lhsCustom.satisfy(by: rhsCustom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     let argument = lhsCustom.equalsReceived
     XCTAssertTrue(argument?.lhs === lhsCustom)
@@ -81,7 +80,7 @@ class AnyPredicateEquatableTests: XCTestCase {
     // When
     let result = [lhsCustom].satisfy(by: [rhsCustom])
 
-    //Then
+    // Then
     XCTAssertTrue(result)
   }
 
@@ -94,7 +93,7 @@ class AnyPredicateEquatableTests: XCTestCase {
     // When
     let result = [lhsCustom].satisfy(by: [rhsCustom])
 
-    //Then
+    // Then
     XCTAssertFalse(result)
   }
 

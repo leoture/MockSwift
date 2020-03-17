@@ -1,4 +1,4 @@
-//Verifiable.swift
+// Verifiable.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 
 /// Represents a function call that returns `ReturnType` and can be checked.
 public class Verifiable<ReturnType> {
-
   // MARK: - Properties
 
   private let callRegister: CallRegister
@@ -46,7 +45,7 @@ public class Verifiable<ReturnType> {
   /// Return the number of times that the function was called.
   public var callCount: Int {
     callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
-    .count
+      .count
   }
 
   // MARK: - Init
@@ -72,7 +71,7 @@ public class Verifiable<ReturnType> {
   /// - Parameter times: Predicate that corresponds to the number of calls.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public  func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
+  public func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
     let count = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count
     if !times.satisfy(by: count) {
       let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
@@ -86,7 +85,7 @@ public class Verifiable<ReturnType> {
   /// - Parameter times: The expected number of calls.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public  func called(times: Int, file: StaticString = #file, line: UInt = #line) {
+  public func called(times: Int, file: StaticString = #file, line: UInt = #line) {
     called(times: ==times, file: file, line: line)
   }
 }

@@ -1,4 +1,4 @@
-//MockDefaultExtensionTests.swift
+// MockDefaultExtensionTests.swift
 /*
  MIT License
 
@@ -23,11 +23,10 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 class MockDefaultExtensionTests: XCTestCase {
-
   func test_stub_Bool() { XCTAssertEqual(Bool.stub(), false) }
   func test_stub_Int() { XCTAssertEqual(Int.stub(), 0) }
   func test_stub_String() { XCTAssertEqual(String.stub(), "") }

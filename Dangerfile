@@ -38,5 +38,7 @@ if !has_linuxmain_changes
   fail("XCTestManifests.swift has not been updated. Please run `swift test --generate-linuxmain` to include all tests in linux CI.")
 end
 
+swiftformat.check_format
+
 swiftlint.verbose = true
-swiftlint.lint_files(inline_mode: true, fail_on_error: true)
+swiftlint.lint_files(inline_mode: true)

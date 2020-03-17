@@ -1,4 +1,4 @@
-//MockStrategyFactory.swift
+// MockStrategyFactory.swift
 /*
  MIT License
 
@@ -24,7 +24,6 @@
  */
 
 class MockStrategyFactory: StrategyFactory {
-
   private let errorHandler: ErrorHandler
   private let behaviourRegister: BehaviourRegister
   private let stubRegister: StubRegister

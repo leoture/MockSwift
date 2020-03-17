@@ -1,4 +1,4 @@
-//VerifiableStub.swift
+// VerifiableStub.swift
 /*
  MIT License
 

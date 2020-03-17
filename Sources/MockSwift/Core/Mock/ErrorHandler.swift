@@ -1,4 +1,4 @@
-//ErrorHandler.swift
+// ErrorHandler.swift
 /*
  MIT License
 
@@ -39,7 +39,6 @@ enum InternalError {
 }
 
 extension InternalError: CustomStringConvertible {
-
   var description: String {
     switch self {
     case let .cast(source: source, target: target):
@@ -48,10 +47,10 @@ extension InternalError: CustomStringConvertible {
       return "\(source) can not be cast to \(firstTarget) or to \(secondTarget)."
     case let .noDefinedBehaviour(for: function, with: parameters):
       return "Attempt to call \(function.callDescription(with: parameters))" +
-      " but there is no defined behaviour for this call."
+        " but there is no defined behaviour for this call."
     case let .tooManyDefinedBehaviour(for: function, with: parameters):
       return "Attempt to call \(function.callDescription(with: parameters))" +
-      " but there too many defined behaviour."
+        " but there too many defined behaviour."
     }
   }
 }
@@ -67,5 +66,4 @@ extension InternalError: Equatable {
     default: return false
     }
   }
-
 }

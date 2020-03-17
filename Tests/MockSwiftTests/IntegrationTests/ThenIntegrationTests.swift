@@ -1,4 +1,4 @@
-//ThenIntegrationTests.swift
+// ThenIntegrationTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private protocol Custom {
   var identifier: String { get set }
@@ -51,7 +51,7 @@ extension Mock: Custom where WrappedType == Custom {
 
   subscript(x first: Int, y second: Int) -> String {
     get {
-    mocked(first, second)
+      mocked(first, second)
     }
     set {
       mocked(first, second, newValue)
@@ -92,7 +92,7 @@ class ThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "value")
     let _: String = custom.function(identifier: "value")
 
-    //Then
+    // Then
     then(custom).function(identifier: .match { !$0.isEmpty })
       .disambiguate(with: String.self)
       .called(times: >1)
@@ -105,7 +105,7 @@ class ThenIntegrationTests: XCTestCase {
     // When
     then(custom) { thenCustom = $0 }
 
-    //Then
+    // Then
     XCTAssertNotNil(thenCustom)
   }
 
@@ -117,7 +117,7 @@ class ThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "")
     let _: String = custom.function(identifier: "arg2")
 
-    //Then
+    // Then
     let receivedParameters = then(custom).function(identifier: .not(.match(when: \.isEmpty)))
       .disambiguate(with: String.self)
       .receivedParameters
@@ -132,7 +132,7 @@ class ThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "")
     let _: String = custom.function(identifier: "arg2")
 
-    //Then
+    // Then
     let callCount = then(custom).function(identifier: .not(.match(when: \.isEmpty)))
       .disambiguate(with: String.self)
       .callCount

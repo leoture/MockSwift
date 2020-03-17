@@ -1,4 +1,4 @@
-//VerifiableSubscriptReadableTests.swift
+// VerifiableSubscriptReadableTests.swift
 /*
  MIT License
 
@@ -24,11 +24,10 @@
  */
 
 import Foundation
-import XCTest
 @testable import MockSwift
+import XCTest
 
 final class VerifiableSubscriptReadableTests: XCTestCase {
-
   private let builder = VerifiableBuilderMock()
   private let expectedFunction = "subcript(_:)"
   private let expectedLine: UInt = 1
@@ -36,7 +35,7 @@ final class VerifiableSubscriptReadableTests: XCTestCase {
   private let expectedVerifiable = Verifiable<Bool>.stub()
   private var readable: VerifiableSubscript.Readable<Bool>!
 
-  override  func setUp() {
+  override func setUp() {
     builder.verifiablePredicatesReturn = expectedVerifiable
     readable = VerifiableSubscript.Readable<Bool>(function: expectedFunction,
                                                   file: "file",
@@ -49,7 +48,7 @@ final class VerifiableSubscriptReadableTests: XCTestCase {
     // Given
 
     // When
-    _  = readable.get
+    _ = readable.get
 
     // Then
     XCTAssertEqual(builder.verifiablePredicatesReceived.count, 1)

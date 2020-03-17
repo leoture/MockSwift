@@ -1,4 +1,4 @@
-//Mock+StubRegisterTests.swift
+// Mock+StubRegisterTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 @testable import MockSwift
+import XCTest
 
 private protocol AnyProtocol {}
 
@@ -48,7 +48,7 @@ class MockStubRegisterTests: XCTestCase {
     // When
     let result = mock.recordedStub(for: String.self)
 
-    //Then
+    // Then
     XCTAssertEqual(stubRegister.recordedStubReceived.count, 1)
     let value = stubRegister.recordedStubReceived[0] as? String.Type
     XCTAssertTrue(value == String.self)
@@ -61,7 +61,7 @@ class MockStubRegisterTests: XCTestCase {
     // When
     mock.record(Stub(String.self, "value"))
 
-    //Then
+    // Then
     XCTAssertEqual(stubRegister.recordReceived.count, 1)
     let stub = stubRegister.recordReceived[0]
     XCTAssertNotNil(stub.returnType as? String.Type)

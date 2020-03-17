@@ -1,4 +1,4 @@
-//GenericMethodTests.swift
+// GenericMethodTests.swift
 /*
  MIT License
 
@@ -23,9 +23,9 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
 @testable import MockSwiftExample
+import XCTest
 
 class GenericMethodTests: XCTestCase {
   @Mock private var genericMethod: GenericMethod
@@ -45,8 +45,8 @@ class GenericMethodTests: XCTestCase {
 
     // When
     genericMethod.doSomething(with: [])
-    let result0: Int  = genericMethod.doSomething()
-    let result1: String  = genericMethod.doSomething()
+    let result0: Int = genericMethod.doSomething()
+    let result1: String = genericMethod.doSomething()
     var resultError: NSError?
     do {
       _ = try genericMethod.doSomething(arg: true)
@@ -56,7 +56,7 @@ class GenericMethodTests: XCTestCase {
     let result2 = genericMethod.doSomething(arg1: [2], arg2: nil)
     let result3 = genericMethod.doSomething(with: 3, and: "3")
 
-    //Then
+    // Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertEqual(result1, "1")
@@ -88,8 +88,8 @@ class GenericMethodTests: XCTestCase {
 
     // When
     genericMethod.doSomething(with: [])
-    let result0: Int  = genericMethod.doSomething()
-    let result1: String  = genericMethod.doSomething()
+    let result0: Int = genericMethod.doSomething()
+    let result1: String = genericMethod.doSomething()
     var resultError: NSError?
     do {
       _ = try genericMethod.doSomething(arg: true)
@@ -99,7 +99,7 @@ class GenericMethodTests: XCTestCase {
     let result2 = genericMethod.doSomething(arg1: [2], arg2: nil)
     let result3 = genericMethod.doSomething(with: 3, and: "3")
 
-    //Then
+    // Then
     XCTAssertTrue(blockDone)
     XCTAssertEqual(result0, 0)
     XCTAssertEqual(result1, "1")

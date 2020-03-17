@@ -1,4 +1,4 @@
-//MockableStub.swift
+// MockableStub.swift
 /*
  MIT License
 

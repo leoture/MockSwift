@@ -1,4 +1,4 @@
-//VerifiableBuilderMock.swift
+// VerifiableBuilderMock.swift
 /*
  MIT License
 
@@ -29,27 +29,23 @@ import Foundation
 // swiftlint:disable large_tuple
 // swiftlint:disable force_cast
 class VerifiableBuilderMock: VerifiableBuilder {
-
   var verifiableReturn: Any!
   var verifiableReceived: [(parameters: [ParameterType], function: String, file: String, line: UInt)] = []
-  func verifiable<ReturnType>(
-    _ parameters: ParameterType...,
-    function: String,
-    file: StaticString,
-    line: UInt) -> Verifiable<ReturnType> {
+  func verifiable<ReturnType>(_ parameters: ParameterType...,
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> Verifiable<ReturnType> {
     verifiableReceived.append((parameters, function, file.description, line))
     return verifiableReturn as! Verifiable<ReturnType>
   }
 
   var verifiablePredicatesReturn: Any!
   var verifiablePredicatesReceived: [(predicates: [AnyPredicate], function: String, file: String, line: UInt)] = []
-  func verifiable<ReturnType>(
-    predicates: [AnyPredicate],
-    function: String,
-    file: StaticString,
-    line: UInt) -> Verifiable<ReturnType> {
+  func verifiable<ReturnType>(predicates: [AnyPredicate],
+                              function: String,
+                              file: StaticString,
+                              line: UInt) -> Verifiable<ReturnType> {
     verifiablePredicatesReceived.append((predicates, function, file.description, line))
     return verifiablePredicatesReturn as! Verifiable<ReturnType>
   }
-
 }

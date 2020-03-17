@@ -1,4 +1,4 @@
-//BehaviourRegisterMock.swift
+// BehaviourRegisterMock.swift
 /*
  MIT License
 
@@ -28,7 +28,6 @@ import Foundation
 
 // swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
-
   var recordedBehavioursReturn: [Behaviour]!
   var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
   func recordedBehaviours(for identifier: FunctionIdentifier,

@@ -1,4 +1,4 @@
-//PropertiesTests.swift
+// PropertiesTests.swift
 /*
  MIT License
 
@@ -24,9 +24,9 @@
  */
 
 import Foundation
-import XCTest
 import MockSwift
 @testable import MockSwiftExample
+import XCTest
 
 class PropertiesTests: XCTestCase {
   @Mock private var properties: Properties
@@ -36,7 +36,7 @@ class PropertiesTests: XCTestCase {
     var newValue: String?
     given(properties) {
       $0.variable.get.willReturn("variable")
-      $0.variable.set(.match(when: \.isEmpty)).will {  newValue = $0[0] as? String }
+      $0.variable.set(.match(when: \.isEmpty)).will { newValue = $0[0] as? String }
       $0.constant.get.willReturn(true)
     }
 
@@ -56,7 +56,7 @@ class PropertiesTests: XCTestCase {
     var newValue: String?
     given(properties).variable
       .set("value2")
-      .will {  newValue = $0[0] as? String }
+      .will { newValue = $0[0] as? String }
 
     // When
     properties.variable = "value2"

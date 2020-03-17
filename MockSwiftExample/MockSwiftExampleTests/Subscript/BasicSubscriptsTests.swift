@@ -1,4 +1,4 @@
-//BasicSubscriptsTests.swift
+// BasicSubscriptsTests.swift
 /*
  MIT License
 
@@ -23,9 +23,9 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
 @testable import MockSwiftExample
+import XCTest
 
 class BasicSubscriptTests: XCTestCase {
   @Mock private var basicSubscript: BasicSubscript
@@ -42,7 +42,7 @@ class BasicSubscriptTests: XCTestCase {
     let result = basicSubscript["", 1]
     basicSubscript["hello", 2] = false
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertEqual(parameters?[0] as? String, "hello")
     XCTAssertEqual(parameters?[1] as? Int, 2)
@@ -65,7 +65,7 @@ class BasicSubscriptTests: XCTestCase {
     let result = basicSubscript["", 1]
     basicSubscript["hello", 2] = false
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertEqual(parameters?[0] as? String, "hello")
     XCTAssertEqual(parameters?[1] as? Int, 2)
@@ -85,7 +85,7 @@ class BasicSubscriptTests: XCTestCase {
     // When
     let result = basicSubscript[with: "", and: 1]
 
-    //Then
+    // Then
     XCTAssertEqual(result, "value")
     then(basicSubscript) {
       $0[with: .equals(to: ""), and: .equals(to: 1)].get.called()
@@ -101,11 +101,10 @@ class BasicSubscriptTests: XCTestCase {
     // When
     let result = basicSubscript[with: "", and: 1]
 
-    //Then
+    // Then
     XCTAssertEqual(result, "value")
     then(basicSubscript) {
       $0[with: "", and: 1].get.called()
     }
   }
 }
-

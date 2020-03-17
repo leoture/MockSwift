@@ -1,4 +1,4 @@
-//CallRegisterMock.swift
+// CallRegisterMock.swift
 /*
  MIT License
 
@@ -27,7 +27,6 @@ import Foundation
 @testable import MockSwift
 
 class CallRegisterMock: CallRegister {
-
   var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     recordCallReceived.append((identifier, parameters))

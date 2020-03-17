@@ -1,4 +1,4 @@
-//Predicate+lessThanTests.swift
+// Predicate+lessThanTests.swift
 /*
  MIT License
 
@@ -23,8 +23,8 @@
  SOFTWARE.
  */
 
-import XCTest
 import MockSwift
+import XCTest
 
 private class Custom: Comparable, CustomStringConvertible {
   var comparisonReceived: Custom?
@@ -58,7 +58,6 @@ private class Custom: Comparable, CustomStringConvertible {
 }
 
 class PredicateLessThaneTests: XCTestCase {
-
   // MARK: - LessThan
 
   func test_lessThan_shouldReturnFalseIfComparisonReturnFalse() {
@@ -70,7 +69,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.less(than: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -84,7 +83,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.less(than: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -97,7 +96,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let description = Predicate<Custom>.less(than: customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "less than description")
   }
 
@@ -110,7 +109,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.lt(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -124,7 +123,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.lt(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -137,7 +136,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let description = Predicate<Custom>.lt(customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "less than description")
   }
 
@@ -152,7 +151,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.lessThanOrEquals(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -166,7 +165,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.lessThanOrEquals(to: customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -179,7 +178,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let description = Predicate<Custom>.lessThanOrEquals(to: customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "less than or equals to description")
   }
 
@@ -192,7 +191,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.le(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertFalse(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -206,7 +205,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let result = Predicate<Custom>.le(customCompared).satisfy(by: custom)
 
-    //Then
+    // Then
     XCTAssertTrue(result)
     XCTAssertTrue(custom.comparisonReceived === customCompared)
   }
@@ -219,7 +218,7 @@ class PredicateLessThaneTests: XCTestCase {
     // When
     let description = Predicate<Custom>.le(customCompared).description
 
-    //Then
+    // Then
     XCTAssertEqual(description, "less than or equals to description")
   }
 }

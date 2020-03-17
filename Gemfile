@@ -5,6 +5,7 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'danger', '~> 6.1.0'
+gem 'danger-swiftformat', '~> 0.7.0'
 gem 'danger-swiftlint', '~> 0.24.0'
 gem 'fastlane', '~> 2'
 gem 'jazzy', '~> 0.11.0'
