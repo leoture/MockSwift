@@ -8,7 +8,7 @@ gem 'danger', '~> 6.1.0'
 gem 'danger-swiftformat', '~> 0.7.0'
 gem 'danger-swiftlint', '~> 0.24.0'
 gem 'fastlane', '~> 2'
-gem 'jazzy', '~> 0.11.0'
+gem 'jazzy', '~> 0.13.0'
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)
