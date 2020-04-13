@@ -11,10 +11,10 @@ jobs:
     name: Ubuntu Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: YOCKOW/Action-setup-swift@master
       with:
-        swift-version: '5.1'
+        swift-version: '5.2'
     - name: Build and test
       run: swift test
 
@@ -22,7 +22,7 @@ jobs:
     name: macOS Tests
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/cache@v1
       with:
         path: vendor/bundle
