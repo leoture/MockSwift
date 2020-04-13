@@ -10,7 +10,7 @@ Welcome to MockSwift!
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/test_coverage)](https://codeclimate.com/github/leoture/MockSwift/test_coverage)
 [![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen)](https://github.com/apple/swift-package-manager)
-[![Swift](https://img.shields.io/badge/Swift-5.1-important)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-5.2-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
 **MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#make-better-tests). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.    
