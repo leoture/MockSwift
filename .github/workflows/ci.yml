@@ -51,7 +51,7 @@ jobs:
       run: |
         export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
         export GIT_COMMIT_SHA=$(git rev-parse HEAD)
-        xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
+        xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.xcresult > coverage.json
         ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
       env:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
