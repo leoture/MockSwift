@@ -4,6 +4,7 @@
 
 Welcome to MockSwift!  
 =======
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e71430b5e4b84b818cffadaaad3ba57c)](https://app.codacy.com/manual/jordhan.leoture/MockSwift?utm_source=github.com&utm_medium=referral&utm_content=leoture/MockSwift&utm_campaign=Badge_Grade_Dashboard)
 [![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master)](https://github.com/leoture/MockSwift/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1a16a774c75308d97f27/maintainability)](https://codeclimate.com/github/leoture/MockSwift/maintainability)
