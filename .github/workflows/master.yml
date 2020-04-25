@@ -46,6 +46,8 @@ jobs:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
+    - name: Code coverage
+      run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
       run: |
         export GIT_BRANCH=master
