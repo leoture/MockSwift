@@ -2,3 +2,8 @@
 engines:
  duplication:
    enabled: false
+exclude_paths:
+  - 'docs/**'
+  - 'fastlane/**'
+  - '.github/**'
+  - '*.md'

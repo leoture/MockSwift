@@ -47,6 +47,8 @@ jobs:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Codacy
       run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      env:
+        CODACY_PROJECT_TOKEN: $${{ secrets.CODACY_TOKEN }}
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
