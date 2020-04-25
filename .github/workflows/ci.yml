@@ -11,10 +11,10 @@ jobs:
     name: Ubuntu Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: YOCKOW/Action-setup-swift@master
       with:
-        swift-version: '5.1'
+        swift-version: '5.2'
     - name: Build and test
       run: swift test
 
@@ -22,7 +22,7 @@ jobs:
     name: macOS Tests
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/cache@v1
       with:
         path: vendor/bundle
@@ -43,15 +43,23 @@ jobs:
         ./cc-test-reporter before-build
     - name: Run fastlane
       run: bundle exec fastlane mac_tests
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
       run: |
+        swift --version
         export GIT_BRANCH=${GITHUB_HEAD_REF//refs\/heads\//}
         export GIT_COMMIT_SHA=$(git rev-parse HEAD)
-        xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.test_result.xcresult > coverage.json
+        xcrun xccov view --report --json fastlane/test_output/MockSwift-Package.xcresult > coverage.json
         ./cc-test-reporter after-build -d -t xccov --exit-code $? -r ${{ secrets.CC_TEST_REPORTER_ID }}
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Danger
-      run: bundle exec danger
+      run: |
+        swift --version
+        bundle exec danger
       env:
         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
