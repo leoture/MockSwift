@@ -1,0 +1,4 @@
+---
+engines:
+ duplication:
+   enabled: false
