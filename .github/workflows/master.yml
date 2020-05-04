@@ -45,9 +45,9 @@ jobs:
       env:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Codacy
-      run: |
-        curl -LS -o codacy-coverage-reporter-assembly.jar "$(curl -LSs https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | endswith(".jar"))) | .[0].browser_download_url')"
-        java -jar codacy-coverage-reporter-assembly.jar report -l Swift -r cobertura.xml
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_TOKEN }}
       env:
         CODACY_PROJECT_TOKEN: $${{ secrets.CODACY_TOKEN }}
     - name: Code coverage
