@@ -44,12 +44,9 @@ jobs:
       run: bundle exec fastlane mac_tests
       env:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
-    - name: Codacy
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_TOKEN }}
-      env:
-        CODACY_PROJECT_TOKEN: $${{ secrets.CODACY_TOKEN }}
+    - uses: codacy/codacy-coverage-reporter-action@master
+      with:
+        project-token: ${{ secrets.CODACY_TOKEN }}
     - name: Code coverage
       run: bash <(curl -s 'https://codecov.io/bash') -J '^MockSwift$' -t ${{secrets.CODECOV_TOKEN}}
     - name: Code climate
