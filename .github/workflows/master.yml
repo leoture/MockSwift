@@ -41,4 +41,4 @@ jobs:
     - name: Codacy
       run: sh <(curl -Ls https://coverage.codacy.com/get.sh) report -l Swift --force-language -r cobertura.xml
       env:
-        CODACY_PROJECT_TOKEN: $${{ secrets.CODACY_TOKEN }}
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
