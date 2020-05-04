@@ -38,6 +38,13 @@ platform :mac do
       code_coverage: true,
       result_bundle: true
     )
+    slather(
+      cobertura_xml: true,
+      output_directory: ".",
+      scheme: "MockSwift-Package",
+      proj: "MockSwift.xcodeproj",
+      workspace: "MockSwift.xcworkspace"
+    )
   end
 
   desc "Run MockSwiftExample tests"

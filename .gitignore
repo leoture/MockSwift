@@ -5,3 +5,6 @@ xcuserdata/
 .xcmake/bin
 fastlane/report.xml
 fastlane/test_output
+cobertura.xml
+codacy-coverage.json
+.codacy-coverage
