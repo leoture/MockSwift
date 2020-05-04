@@ -45,7 +45,7 @@ jobs:
       env:
         DEVELOPER_DIR: /Applications/Xcode_11.4.app/Contents/Developer
     - name: Codacy
-      run: sh <(curl -Ls https://coverage.codacy.com/get.sh) report -l Swift -r cobertura.xml
+      run: sh <(curl -Ls https://coverage.codacy.com/get.sh) report -r cobertura.xml
       env:
         CODACY_PROJECT_TOKEN: $${{ secrets.CODACY_TOKEN }}
     - name: Code coverage
