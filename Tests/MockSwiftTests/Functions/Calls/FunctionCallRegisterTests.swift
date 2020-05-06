@@ -80,4 +80,27 @@ class FunctionCallRegisterTests: XCTestCase {
     XCTAssertEqual(calls[0].parameters[0] as? UUID, firstParameter)
     XCTAssertEqual(calls[1].parameters[0] as? UUID, secondParameter)
   }
+
+  func test_isEmpty_whenCallHasNotBeenRecordedShouldReturnTrue() {
+    // Given
+
+    // When
+    let result = functionCallRegister.isEmpty
+
+    // Then
+    XCTAssertTrue(result)
+  }
+
+  func test_isEmpty_whenCallHasBeenRecordedShouldReturnFalse() {
+    // Given
+    let predicate = AnyPredicateMock()
+    predicate.satisfyReturn = false
+    functionCallRegister.recordCall(for: .stub(), with: [0])
+
+    // When
+    let result = functionCallRegister.isEmpty
+
+    // Then
+    XCTAssertFalse(result)
+  }
 }

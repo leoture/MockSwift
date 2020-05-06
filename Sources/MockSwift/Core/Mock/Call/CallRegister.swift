@@ -26,6 +26,7 @@
 import Foundation
 
 protocol CallRegister {
+  var isEmpty: Bool { get }
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType])
   func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]
 }

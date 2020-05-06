@@ -27,6 +27,13 @@ import Foundation
 @testable import MockSwift
 
 class CallRegisterMock: CallRegister {
+  var isEmptyReturn: Bool!
+  private(set) var isEmptyCallCount = 0
+  var isEmpty: Bool {
+    isEmptyCallCount += 1
+    return isEmptyReturn
+  }
+
   var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     recordCallReceived.append((identifier, parameters))

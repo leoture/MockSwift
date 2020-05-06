@@ -76,4 +76,16 @@ final class MockCallRegisterTests: XCTestCase {
     XCTAssertEqual(result.count, 1)
     XCTAssertEqual(result[0].parameters as? [Int], [1, 2])
   }
+
+  func test_isEmpty_shouldReturnFromCallRegister() {
+    // Given
+    callRegister.isEmptyReturn = true
+
+    // When
+    let result = mock.isEmpty
+
+    // Then
+    XCTAssertEqual(callRegister.isEmptyCallCount, 1)
+    XCTAssertTrue(result)
+  }
 }

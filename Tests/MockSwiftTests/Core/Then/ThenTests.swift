@@ -33,10 +33,21 @@ private class CustomImpl: Custom {}
 extension Mock: Custom where WrappedType == Custom {}
 
 class ThenTests: XCTestCase {
-  @Mock private var customMock: Custom
-  private let customImpl = CustomImpl()
-  private let errorHandler = ErrorHandlerMock()
+  private var customMock: Mock<Custom>!
+  private var errorHandler: ErrorHandlerMock!
+  private var callRegister: CallRegisterMock!
+  private var failureRecorder: FailureRecorderMock!
 
+  override func setUp() {
+    errorHandler = ErrorHandlerMock()
+    failureRecorder = FailureRecorderMock()
+    callRegister = CallRegisterMock()
+    customMock = Mock(callRegister: callRegister,
+                      behaviourRegister: BehaviourRegisterMock(),
+                      stubRegister: StubRegisterMock(),
+                      strategy: UnresolvedStrategy(errorHandler),
+                      errorHandler: errorHandler)
+  }
   func test_then_shouldPass() {
     let _: Then<Custom> = then(customMock)
   }
@@ -45,16 +56,62 @@ class ThenTests: XCTestCase {
     then(customMock) { (_: Then<Custom>) in }
   }
 
-  func test_then_shouldFailWithCast() {
+  func test_then_whenTypeIsNotAMockShouldFailWithCast() {
     // Given
+    let customImpl = CustomImpl()
     let thenCustom: Then<Custom> = then(customMock)
     errorHandler.handleReturn = thenCustom
 
     // When
-    let result: Then<Custom> = then(customImpl, errorHandler: errorHandler, file: "file", line: 42)
+    let result: Then<Custom> = then(customImpl,
+                                    errorHandler: errorHandler,
+                                    failureRecorder: failureRecorder,
+                                    file: "file",
+                                    line: 42)
 
     // Then
     XCTAssertTrue(result === thenCustom)
     XCTAssertEqual(errorHandler.handleReceived[0], .cast(source: customImpl, target: Mock<Custom>.self))
+  }
+
+  func test_noInteraction_whenWhenCallRegisterIsEmptyShouldCorrectlyCallFailureRecorder() {
+    // Given
+    let thenCustom: Then<Custom> = then(customMock)
+    errorHandler.handleReturn = thenCustom
+    callRegister.isEmptyReturn = false
+
+    // When
+    let result: Then<Custom> = then(customMock,
+                                    errorHandler: errorHandler,
+                                    failureRecorder: failureRecorder,
+                                    file: "",
+                                    line: 0)
+    result.noInteraction(file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.isEmptyCallCount, 1)
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "Custom expect to have no interaction.")
+    XCTAssertEqual("\(file) \(line)", "file 42")
+  }
+
+  func test_noInteraction_whenWhenCallRegisterIsNotEmptyShouldNotCallFailureRecorder() {
+    // Given
+    let thenCustom: Then<Custom> = then(customMock)
+    errorHandler.handleReturn = thenCustom
+    callRegister.isEmptyReturn = true
+
+    // When
+    let result: Then<Custom> = then(customMock,
+                                    errorHandler: errorHandler,
+                                    failureRecorder: failureRecorder,
+                                    file: "",
+                                    line: 0)
+    result.noInteraction(file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.isEmptyCallCount, 1)
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
   }
 }

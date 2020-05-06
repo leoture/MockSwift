@@ -229,6 +229,10 @@ public class Mock<WrappedType> {
 // MARK: - CallRegister
 
 extension Mock: CallRegister {
+  var isEmpty: Bool {
+    callRegister.isEmpty
+  }
+
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     callRegister.recordCall(for: identifier, with: parameters)
   }
