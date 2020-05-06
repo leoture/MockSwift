@@ -26,7 +26,6 @@
 import Foundation
 
 class FunctionCallRegister: CallRegister {
-
   private var calls: [FunctionIdentifier: [FunctionCall]]
 
   var isEmpty: Bool {
@@ -44,6 +43,6 @@ class FunctionCallRegister: CallRegister {
   func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
     calls[identifier]?.filter { functionCall in
       matchs.satisfy(by: functionCall.parameters)
-      } ?? []
+    } ?? []
   }
 }

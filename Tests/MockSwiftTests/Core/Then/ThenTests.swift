@@ -48,6 +48,7 @@ class ThenTests: XCTestCase {
                       strategy: UnresolvedStrategy(errorHandler),
                       errorHandler: errorHandler)
   }
+
   func test_then_shouldPass() {
     let _: Then<Custom> = then(customMock)
   }
