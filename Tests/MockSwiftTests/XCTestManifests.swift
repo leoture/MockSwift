@@ -52,6 +52,8 @@ extension FunctionCallRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__FunctionCallRegisterTests = [
+        ("test_isEmpty_whenCallHasBeenRecordedShouldReturnFalse", test_isEmpty_whenCallHasBeenRecordedShouldReturnFalse),
+        ("test_isEmpty_whenCallHasNotBeenRecordedShouldReturnTrue", test_isEmpty_whenCallHasNotBeenRecordedShouldReturnTrue),
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall),
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched),
         ("test_recordedCalls_shouldReturnFunctionCallsMatched", test_recordedCalls_shouldReturnFunctionCallsMatched),
@@ -194,6 +196,7 @@ extension MockCallRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockCallRegisterTests = [
+        ("test_isEmpty_shouldReturnFromCallRegister", test_isEmpty_shouldReturnFromCallRegister),
         ("test_recordCall_shouldCallRegister", test_recordCall_shouldCallRegister),
         ("test_recordedCall_shouldReturnFromCallRegister", test_recordedCall_shouldReturnFromCallRegister),
     ]
@@ -488,6 +491,7 @@ extension ThenIntegrationTests {
     static let __allTests__ThenIntegrationTests = [
         ("test_callCount_whenParametersMatched", test_callCount_whenParametersMatched),
         ("test_function_shouldBeCalledWhenParametersMatched", test_function_shouldBeCalledWhenParametersMatched),
+        ("test_noInteraction_whenNoInteractionWithMockShouldSucceed", test_noInteraction_whenNoInteractionWithMockShouldSucceed),
         ("test_Readable_get_shouldBeCalled", test_Readable_get_shouldBeCalled),
         ("test_receivedParameters_whenParametersMatched", test_receivedParameters_whenParametersMatched),
         ("test_subscriptFirstSecond_get_shouldBeCalled", test_subscriptFirstSecond_get_shouldBeCalled),
@@ -506,8 +510,10 @@ extension ThenTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ThenTests = [
-        ("test_then_shouldFailWithCast", test_then_shouldFailWithCast),
+        ("test_noInteraction_whenWhenCallRegisterIsEmptyShouldCorrectlyCallFailureRecorder", test_noInteraction_whenWhenCallRegisterIsEmptyShouldCorrectlyCallFailureRecorder),
+        ("test_noInteraction_whenWhenCallRegisterIsNotEmptyShouldNotCallFailureRecorder", test_noInteraction_whenWhenCallRegisterIsNotEmptyShouldNotCallFailureRecorder),
         ("test_then_shouldPass", test_then_shouldPass),
+        ("test_then_whenTypeIsNotAMockShouldFailWithCast", test_then_whenTypeIsNotAMockShouldFailWithCast),
         ("test_thenCompletion_shouldPass", test_thenCompletion_shouldPass),
     ]
 }

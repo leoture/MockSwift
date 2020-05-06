@@ -28,6 +28,10 @@ import Foundation
 class FunctionCallRegister: CallRegister {
   private var calls: [FunctionIdentifier: [FunctionCall]]
 
+  var isEmpty: Bool {
+    calls.isEmpty
+  }
+
   init() {
     calls = [:]
   }

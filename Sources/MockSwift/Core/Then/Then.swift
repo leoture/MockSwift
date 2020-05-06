@@ -29,12 +29,13 @@ import Foundation
 
 func then<WrappedType>(_ value: WrappedType,
                        errorHandler: ErrorHandler,
+                       failureRecorder: FailureRecorder,
                        file: StaticString,
                        line: UInt) -> Then<WrappedType> {
   guard let mock = value as? Mock<WrappedType> else {
     return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
   }
-  return Then(callRegister: mock, failureRecorder: XCTestFailureRecorder())
+  return Then(callRegister: mock, failureRecorder: failureRecorder)
 }
 
 // MARK: - Public Global Methods
@@ -48,7 +49,7 @@ func then<WrappedType>(_ value: WrappedType,
 public func then<WrappedType>(_ value: WrappedType,
                               file: StaticString = #file,
                               line: UInt = #line) -> Then<WrappedType> {
-  then(value, errorHandler: ErrorHandler(), file: file, line: line)
+  then(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder(), file: file, line: line)
 }
 
 /// Call `completion` with a `Then` based on `value`.
@@ -82,6 +83,20 @@ public class Then<WrappedType> {
   init(callRegister: CallRegister, failureRecorder: FailureRecorder) {
     self.callRegister = callRegister
     self.failureRecorder = failureRecorder
+  }
+}
+
+public extension Then {
+  /// Checks that the `WrappedType` value has not registered calls.
+  /// - Parameters:
+  ///   - file: The file name where the method is called.
+  ///   - line: The line where the method is called.
+  func noInteraction(file: StaticString = #file, line: UInt = #line) {
+    if !callRegister.isEmpty {
+      failureRecorder.recordFailure(message: "\(WrappedType.self) expect to have no interaction.",
+                                    file: file,
+                                    line: line)
+    }
   }
 }
 

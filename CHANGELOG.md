@@ -14,6 +14,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
 #### Added
+- Add noInteraction for Then [#98](https://github.com/leoture/MockSwift/pull/98) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
