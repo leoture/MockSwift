@@ -27,17 +27,21 @@ import Foundation
 
 class FunctionCallRegister: CallRegister {
   private var calls: [FunctionIdentifier: [FunctionCall]]
+  private var unverifiedCalls: [UUID]
 
-  var isEmpty: Bool {
-    calls.isEmpty
+  var allCallHaveBeenVerified: Bool {
+    unverifiedCalls.isEmpty
   }
 
   init() {
     calls = [:]
+    unverifiedCalls = []
   }
 
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
-    calls[identifier, default: []].append(FunctionCall(parameters: parameters))
+    let callIdentifier = UUID()
+    calls[identifier, default: []].append(FunctionCall(identifier: callIdentifier, parameters: parameters))
+    unverifiedCalls.append(callIdentifier)
   }
 
   func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
@@ -45,4 +49,8 @@ class FunctionCallRegister: CallRegister {
       matchs.satisfy(by: functionCall.parameters)
     } ?? []
   }
+
+  func makeCallVerified(for identifier: UUID) {
+    unverifiedCalls.removeAll { $0 == identifier }
+    }
 }

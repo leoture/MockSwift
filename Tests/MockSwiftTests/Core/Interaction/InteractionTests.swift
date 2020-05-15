@@ -1,4 +1,4 @@
-// ThenTests.swift
+// InteractionTests.swift
 /*
  MIT License
 
@@ -28,11 +28,10 @@ import Foundation
 import XCTest
 
 private protocol Custom {}
-
 private class CustomImpl: Custom {}
 extension Mock: Custom where WrappedType == Custom {}
 
-class ThenTests: XCTestCase {
+class InteractionTests: XCTestCase {
   private var customMock: Mock<Custom>!
   private var errorHandler: ErrorHandlerMock!
   private var callRegister: CallRegisterMock!
@@ -49,29 +48,54 @@ class ThenTests: XCTestCase {
                       errorHandler: errorHandler)
   }
 
-  func test_then_shouldPass() {
-    let _: Then<Custom> = then(customMock)
+  func test_interaction_whenTypeIsAMockShouldPass() {
+    let _: Interaction<Custom> = interaction(customMock,
+                                             errorHandler: errorHandler,
+                                             failureRecorder: failureRecorder)
   }
 
-  func test_thenCompletion_shouldPass() {
-    then(customMock) { (_: Then<Custom>) in }
-  }
-
-  func test_then_whenTypeIsNotAMockShouldFailWithCast() {
+  func test_Interaction_whenTypeIsNotAMockShouldFailWithCast() {
     // Given
     let customImpl = CustomImpl()
-    let thenCustom: Then<Custom> = then(customMock)
-    errorHandler.handleReturn = thenCustom
+    let interactionCustom: Interaction<Custom> = interaction(with: customMock)
+    errorHandler.handleReturn = interactionCustom
 
     // When
-    let result: Then<Custom> = then(customImpl,
-                                    errorHandler: errorHandler,
-                                    failureRecorder: failureRecorder,
-                                    file: "file",
-                                    line: 42)
+    let result: Interaction<Custom> = interaction(customImpl,
+                                                  errorHandler: errorHandler,
+                                                  failureRecorder: failureRecorder)
 
     // Then
-    XCTAssertTrue(result === thenCustom)
+    XCTAssertTrue(result === interactionCustom)
     XCTAssertEqual(errorHandler.handleReceived[0], .cast(source: customImpl, target: Mock<Custom>.self))
+  }
+
+  func test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder() {
+    // Given
+    callRegister.allCallHaveBeenVerifiedReturn = false
+
+    // When
+    Interaction<Custom>(callRegister: callRegister, failureRecorder: failureRecorder)
+      .ended(file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "Custom expects to have no more interactions to check.")
+    XCTAssertEqual("\(file) \(line)", "file 42")
+  }
+
+  func test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder() {
+    // Given
+    callRegister.allCallHaveBeenVerifiedReturn = true
+
+    // When
+    Interaction<Custom>(callRegister: callRegister, failureRecorder: failureRecorder)
+      .ended(file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
   }
 }

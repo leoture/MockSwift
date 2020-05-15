@@ -72,6 +72,7 @@ public func then<WrappedType>(_ value: WrappedType,
 ///     extension Then where WrappedType == CustomType
 ///
 ///
+/// - SeeAlso: `Interaction`
 public class Then<WrappedType> {
   // MARK: - Properties
 
@@ -83,20 +84,6 @@ public class Then<WrappedType> {
   init(callRegister: CallRegister, failureRecorder: FailureRecorder) {
     self.callRegister = callRegister
     self.failureRecorder = failureRecorder
-  }
-}
-
-public extension Then {
-  /// Checks that the `WrappedType` value has not registered calls.
-  /// - Parameters:
-  ///   - file: The file name where the method is called.
-  ///   - line: The line where the method is called.
-  func noInteraction(file: StaticString = #file, line: UInt = #line) {
-    if !callRegister.isEmpty {
-      failureRecorder.recordFailure(message: "\(WrappedType.self) expect to have no interaction.",
-                                    file: file,
-                                    line: line)
-    }
   }
 }
 

@@ -1,4 +1,4 @@
-// CallRegisterMock.swift
+// FunctionCallStub.swift
 /*
  MIT License
 
@@ -26,28 +26,8 @@
 import Foundation
 @testable import MockSwift
 
-class CallRegisterMock: CallRegister {
-  var allCallHaveBeenVerifiedReturn: Bool!
-  private(set) var allCallHaveBeenVerifiedCallCount = 0
-  var allCallHaveBeenVerified: Bool {
-    allCallHaveBeenVerifiedCallCount += 1
-    return allCallHaveBeenVerifiedReturn
-  }
-
-  var makeCallVerifiedReceived: [UUID] = []
-  func makeCallVerified(for identifier: UUID) {
-    makeCallVerifiedReceived.append(identifier)
-  }
-
-  var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
-    recordCallReceived.append((identifier, parameters))
-  }
-
-  var recordedCallReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
-  var recordedCallReturn: [FunctionCall]!
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
-    recordedCallReceived.append((identifier, matchs))
-    return recordedCallReturn
+extension FunctionCall {
+  static func stub() -> FunctionCall {
+    FunctionCall(identifier: UUID(), parameters: [])
   }
 }

@@ -81,7 +81,7 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatched() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: [])]
+    callRegister.recordedCallReturn = [.stub()]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -103,8 +103,7 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
-                                       FunctionCall(parameters: [])]
+    callRegister.recordedCallReturn = [.stub(), .stub()]
     let predicate = AnyPredicateMock()
     predicate.description = "description"
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
@@ -131,9 +130,7 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimes() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
-                                       FunctionCall(parameters: []),
-                                       FunctionCall(parameters: [])]
+    callRegister.recordedCallReturn = [.stub(), .stub(), .stub()]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -155,8 +152,7 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldRecordFailureWhenNoFunctionCallFromCallRegisterMatchedTimesExactly() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
-                                       FunctionCall(parameters: [])]
+    callRegister.recordedCallReturn = [.stub(), .stub()]
     let predicate = AnyPredicateMock()
     predicate.description = "description"
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
@@ -182,9 +178,7 @@ class VerifiableTests: XCTestCase {
 
   func test_called_shouldNotRecordFailureWhenFunctionCallFromCallRegisterMatchedTimesExactly() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: []),
-                                       FunctionCall(parameters: []),
-                                       FunctionCall(parameters: [])]
+    callRegister.recordedCallReturn = [.stub(), .stub(), .stub()]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -226,8 +220,8 @@ class VerifiableTests: XCTestCase {
 
   func test_receivedParameters_shouldReturnAllCallsParametersWhenFunctionCallFromCallRegisterMatched() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: ["arg1", 1]),
-                                       FunctionCall(parameters: ["arg2", 2])]
+    callRegister.recordedCallReturn = [FunctionCall(identifier: UUID(), parameters: ["arg1", 1]),
+                                       FunctionCall(identifier: UUID(), parameters: ["arg2", 2])]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,
@@ -273,8 +267,7 @@ class VerifiableTests: XCTestCase {
 
   func test_callCount_shouldReturnNumberOfMatchedFunctionCallFromCallRegister() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(parameters: ["arg1", 1]),
-                                       FunctionCall(parameters: ["arg2", 2])]
+    callRegister.recordedCallReturn = [.stub(), .stub()]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,

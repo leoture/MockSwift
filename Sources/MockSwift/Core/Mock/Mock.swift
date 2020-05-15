@@ -229,8 +229,12 @@ public class Mock<WrappedType> {
 // MARK: - CallRegister
 
 extension Mock: CallRegister {
-  var isEmpty: Bool {
-    callRegister.isEmpty
+  var allCallHaveBeenVerified: Bool {
+    callRegister.allCallHaveBeenVerified
+  }
+
+  func makeCallVerified(for identifier: UUID) {
+    callRegister.makeCallVerified(for: identifier)
   }
 
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {

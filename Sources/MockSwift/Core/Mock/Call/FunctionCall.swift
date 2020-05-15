@@ -26,5 +26,6 @@
 import Foundation
 
 struct FunctionCall {
+  let identifier: UUID
   let parameters: [ParameterType]
 }
