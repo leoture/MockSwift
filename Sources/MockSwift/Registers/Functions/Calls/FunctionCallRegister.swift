@@ -52,5 +52,5 @@ class FunctionCallRegister: CallRegister {
 
   func makeCallVerified(for identifier: UUID) {
     unverifiedCalls.removeAll { $0 == identifier }
-    }
+  }
 }

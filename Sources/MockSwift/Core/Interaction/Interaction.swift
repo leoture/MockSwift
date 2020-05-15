@@ -38,7 +38,7 @@ func interaction<WrappedType>(_ value: WrappedType,
 
 /// Creates an `Interaction` based on `value`.
 public func interaction<WrappedType>(with value: WrappedType) -> Interaction<WrappedType> {
-  return interaction(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder())
+  interaction(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder())
 }
 
 /// `Interaction` is used to verify method calls.
