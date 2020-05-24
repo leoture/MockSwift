@@ -60,7 +60,7 @@ final class MockCallRegisterTests: XCTestCase {
   func test_recordedCall_shouldReturnFromCallRegister() {
     // Given
     let expectedIdentifier = FunctionIdentifier.stub()
-    let expectedResult = FunctionCall(parameters: [1, 2])
+    let expectedResult = FunctionCall(identifier: UUID(), parameters: [1, 2])
     callRegister.recordedCallReturn = [expectedResult]
 
     // When
@@ -74,18 +74,31 @@ final class MockCallRegisterTests: XCTestCase {
     XCTAssertEqual(parameters[0] as? String, "1")
     XCTAssertEqual(parameters[1] as? Int, 2)
     XCTAssertEqual(result.count, 1)
+    XCTAssertEqual(result[0].identifier, expectedResult.identifier)
     XCTAssertEqual(result[0].parameters as? [Int], [1, 2])
   }
 
-  func test_isEmpty_shouldReturnFromCallRegister() {
+  func test_allCallHaveBeenVerified_shouldReturnFromCallRegister() {
     // Given
-    callRegister.isEmptyReturn = true
+    callRegister.allCallHaveBeenVerifiedReturn = true
 
     // When
-    let result = mock.isEmpty
+    let result = mock.allCallHaveBeenVerified
 
     // Then
-    XCTAssertEqual(callRegister.isEmptyCallCount, 1)
+    XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
     XCTAssertTrue(result)
+  }
+
+  func test_makeCallVerified_shouldReturnFromCallRegister() {
+    // Given
+    let expectedUUID = UUID()
+
+    // When
+    mock.makeCallVerified(for: expectedUUID)
+
+    // Then
+    XCTAssertEqual(callRegister.makeCallVerifiedReceived.count, 1)
+    XCTAssertEqual(callRegister.makeCallVerifiedReceived[0], expectedUUID)
   }
 }

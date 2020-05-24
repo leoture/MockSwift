@@ -227,8 +227,4 @@ class ThenIntegrationTests: XCTestCase {
     // Then
     then(custom)[x: 1, y: 2].set(.match(when: \.isEmpty)).called(times: 0)
   }
-
-  func test_noInteraction_whenNoInteractionWithMockShouldSucceed() {
-    then(custom).noInteraction()
-  }
 }

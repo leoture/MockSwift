@@ -72,7 +72,9 @@ public class Verifiable<ReturnType> {
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
   public func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
-    let count = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates).count
+    let calls = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
+    let count = calls.count
     if !times.satisfy(by: count) {
       let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
       let formatedTimes = times.description.replacingOccurrences(of: "greater", with: "more")
