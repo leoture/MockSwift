@@ -1,4 +1,4 @@
-//CallAssertion.swift
+// CallAssertion.swift
 /*
  MIT License
 
@@ -25,46 +25,70 @@
 
 import Foundation
 
-//TODO: to test
-public class Assertion {
+class CallAssertion {
+  // MARK: - Properties
+
   let times: Predicate<Int>
   let functionIdentifier: FunctionIdentifier
   let parametersPredicates: [AnyPredicate]
   let calls: [FunctionCall]
-  let file: StaticString
-  let line: UInt
+  let previous: Assertion?
+
+  // MARK: - Initializers
 
   init(times: Predicate<Int>,
        functionIdentifier: FunctionIdentifier,
        parametersPredicates: [AnyPredicate],
-       file: StaticString,
-       line: UInt,
-       calls: [FunctionCall] ) {
+       calls: [FunctionCall],
+       previous: Assertion? = nil) {
     self.times = times
     self.functionIdentifier = functionIdentifier
     self.parametersPredicates = parametersPredicates
-    self.file = file
-    self.line = line
     self.calls = calls
+    self.previous = previous
   }
 
-  func reduced() -> Assertion {
-    guard !calls.isEmpty else {
-      return self
-    }
-    var sortedCalls = self.calls.sorted { (lhs, rhs) -> Bool in
+  // MARK: - Private methods
+
+  private func minimumCalls() -> [FunctionCall] {
+    var sortedCalls = calls.sorted { (lhs, rhs) -> Bool in
       lhs.time < rhs.time
     }
 
-    var minimumCalls: [FunctionCall] = []
-    while !times.satisfy(by: minimumCalls.count) {
-      minimumCalls.append(sortedCalls.removeFirst())
+    var result: [FunctionCall] = []
+
+    while !times.satisfy(by: result.count) {
+      result.append(sortedCalls.removeFirst())
     }
-    return Assertion(times: times,
-                     functionIdentifier: functionIdentifier,
-                     parametersPredicates: parametersPredicates,
-                     file: file,
-                     line: line,
-                     calls: minimumCalls)
+    return result
+  }
+}
+
+// MARK: - Assertion
+
+extension CallAssertion: Assertion {
+  var isValid: Bool {
+    times.satisfy(by: calls.count)
+  }
+
+  var firstValidTime: TimeInterval {
+    minimumCalls().map(\.time).max() ?? previous?.firstValidTime ?? 0
+  }
+
+  var description: String {
+    let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
+    let formatedTimes = times.description.replacingOccurrences(of: "greater", with: "more")
+
+    var previousDescription = ""
+    if let previous = self.previous {
+      previousDescription = " after \(previous)"
+    }
+
+    if isValid {
+      return "\(callDescription) has been called \(formatedTimes) time(s)\(previousDescription)."
+    } else {
+      return "\(callDescription)" +
+      " is expected to be called \(formatedTimes) time(s) but is called \(calls.count) time(s)\(previousDescription)."
+    }
   }
 }

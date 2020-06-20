@@ -119,6 +119,8 @@ class ThenIntegrationTests: XCTestCase {
       .disambiguate(with: Int.self).called(after: assertion)
     assertion = then(custom2).function(identifier: .any())
       .disambiguate(with: Int.self).called(times: 0, after: assertion)
+    then(custom1).function(identifier: =="4")
+      .disambiguate(with: Int.self).called(times: 0, after: assertion)
    }
 
   func test_then_shouldCallCompletionWithThenCustom() {
