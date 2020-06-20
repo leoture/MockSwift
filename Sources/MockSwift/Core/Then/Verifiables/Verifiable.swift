@@ -69,25 +69,52 @@ public class Verifiable<ReturnType> {
 
   /// Checks that the function has been called a number of times corresponding to the predicate.
   /// - Parameter times: Predicate that corresponds to the number of calls.
+  /// - Parameter assertion: Previous assertion. nil by default.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
-    let calls = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+  /// - Returns: A new `Assertion`.
+  @discardableResult
+  public func called(times: Predicate<Int> = >0,
+                     after assertion: Assertion? = nil,
+                     file: StaticString = #file,
+                     line: UInt = #line) -> Assertion {
+    var calls = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    if let assertion = assertion,
+      let startedTime = assertion.reduced().calls.map(\.time).max() {
+      calls = calls.filter { $0.time > startedTime }
+    }
     calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
     let count = calls.count
     if !times.satisfy(by: count) {
       let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
       let formatedTimes = times.description.replacingOccurrences(of: "greater", with: "more")
-      let message = "\(callDescription) expect to be called \(formatedTimes) time(s) but is call \(count) time(s)"
+
+      var assertionMessage = ""
+      if let assertion = assertion {
+        let previousCallDescription = assertion.functionIdentifier.callDescription(with: assertion.parametersPredicates)
+        let formatedPreviousTimes = assertion.calls.count.description.replacingOccurrences(of: "greater", with: "more")
+        assertionMessage = " after \(previousCallDescription) has been called \(formatedPreviousTimes) time(s)"
+      }
+      let message = "\(callDescription) is expected to be called \(formatedTimes) time(s) but is called \(count) time(s)\(assertionMessage)."
       failureRecorder.recordFailure(message: message, file: file, line: line)
     }
+    return Assertion(times: times,
+                     functionIdentifier: functionIdentifier,
+                     parametersPredicates: parametersPredicates,
+                     file: file,
+                     line: line,
+                     calls: calls)
   }
 
   /// Checks that the function has been called.
   /// - Parameter times: The expected number of calls.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public func called(times: Int, file: StaticString = #file, line: UInt = #line) {
-    called(times: ==times, file: file, line: line)
+  @discardableResult
+  public func called(times: Int,
+                     after assertion: Assertion? = nil,
+                     file: StaticString = #file,
+                     line: UInt = #line) -> Assertion {
+    called(times: ==times, after: assertion, file: file, line: line)
   }
 }

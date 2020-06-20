@@ -38,9 +38,12 @@ class FunctionCallRegister: CallRegister {
     unverifiedCalls = []
   }
 
+  //TODO: to test
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     let callIdentifier = UUID()
-    calls[identifier, default: []].append(FunctionCall(identifier: callIdentifier, parameters: parameters))
+    calls[identifier, default: []].append(FunctionCall(identifier: callIdentifier,
+                                                       parameters: parameters,
+                                                       time: Date().timeIntervalSince1970))
     unverifiedCalls.append(callIdentifier)
   }
 

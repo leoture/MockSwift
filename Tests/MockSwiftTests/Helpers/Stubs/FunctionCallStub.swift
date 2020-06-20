@@ -27,7 +27,9 @@ import Foundation
 @testable import MockSwift
 
 extension FunctionCall {
-  static func stub() -> FunctionCall {
-    FunctionCall(identifier: UUID(), parameters: [])
+  static func stub(identifier: UUID = UUID(),
+                   parameters: [AnyPredicate] = [],
+                   time: TimeInterval = 0) -> FunctionCall {
+    FunctionCall(identifier: identifier, parameters: parameters, time: time)
   }
 }

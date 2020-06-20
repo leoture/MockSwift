@@ -28,4 +28,11 @@ import Foundation
 struct FunctionCall {
   let identifier: UUID
   let parameters: [ParameterType]
+  let time: TimeInterval
+}
+
+extension FunctionCall: Equatable {
+  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
+    lhs.identifier == rhs.identifier
+  }
 }

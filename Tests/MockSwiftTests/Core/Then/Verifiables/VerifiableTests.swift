@@ -74,8 +74,8 @@ class VerifiableTests: XCTestCase {
 
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) ->" +
-      " Int expect to be called more than 0 time(s) but is call 0 time(s)")
+    XCTAssertEqual(message, "function(arg: description) -> Int " +
+      "is expected to be called more than 0 time(s) but is called 0 time(s).")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
@@ -123,8 +123,8 @@ class VerifiableTests: XCTestCase {
 
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) ->" +
-      " Int expect to be called more than 2 time(s) but is call 2 time(s)")
+    XCTAssertEqual(message, "function(arg: description) -> Int " +
+      "is expected to be called more than 2 time(s) but is called 2 time(s).")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
@@ -172,7 +172,8 @@ class VerifiableTests: XCTestCase {
 
     XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
     let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int expect to be called 3 time(s) but is call 2 time(s)")
+    XCTAssertEqual(message, "function(arg: description) -> Int " +
+      "is expected to be called 3 time(s) but is called 2 time(s).")
     XCTAssertEqual("\(file) \(line)", "file 42")
   }
 
@@ -187,6 +188,100 @@ class VerifiableTests: XCTestCase {
 
     // When
     verifiable.called(times: 3)
+
+    // Then
+    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+  }
+
+  func test_calledAfterAssertion_when_noFunctionCallFromCallRegister_should_recordFailure() {
+    // Given
+    callRegister.recordedCallReturn = []
+    let predicate = AnyPredicateMock()
+    predicate.description = "description"
+    let assertion = Assertion(times: ==2,
+                              functionIdentifier: .init(function: "otherFunction(arg:)", return: String.self),
+                              parametersPredicates: [predicate],
+                              file: "",
+                              line: 0,
+                              calls: [.stub(time: 1), .stub(time: 2)])
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+    // When
+    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
+      "but is called 0 time(s) " +
+      "after otherFunction(arg: description) -> String has been called 2 time(s).")
+    XCTAssertEqual("\(file) \(line)", "file 42")
+  }
+
+  func test_calledAfterAssertion_when_notEnoughFunctionCallFound_should_recordFailure() {
+    // Given
+    callRegister.recordedCallReturn = [.stub(time: 0), .stub(time: 3)]
+    let predicate = AnyPredicateMock()
+    predicate.description = "description"
+    let assertion = Assertion(times: >1,
+                              functionIdentifier: .init(function: "otherFunction(arg:)", return: String.self),
+                              parametersPredicates: [predicate],
+                              file: "",
+                              line: 0,
+                              calls: [.stub(time: 1), .stub(time: 2)])
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+    // When
+    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+
+    // Then
+    XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
+    let (identifier, matchs) = callRegister.recordedCallReceived[0]
+    XCTAssertEqual(identifier, functionIdentifier)
+    XCTAssertEqual(matchs.count, 1)
+    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+
+    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+    let (message, file, line) = failureRecorder.recordFailureReceived[0]
+    XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
+      "but is called 1 time(s) " +
+      "after otherFunction(arg: description) -> String has been called 2 time(s).")
+    XCTAssertEqual("\(file) \(line)", "file 42")
+  }
+
+  func test_calledAfterAssertion_when_enoughFunctionCallFound_should_notRecordFailure() {
+    // Given
+    callRegister.recordedCallReturn = [.stub(time: 0), .stub(time: 3), .stub(time: 4)]
+    let predicate = AnyPredicateMock()
+    predicate.description = "description"
+    let assertion = Assertion(times: >1,
+                              functionIdentifier: .init(function: "otherFunction(arg:)", return: String.self),
+                              parametersPredicates: [predicate],
+                              file: "",
+                              line: 0,
+                              calls: [.stub(time: 1), .stub(time: 2)])
+    let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
+                                                  functionIdentifier: functionIdentifier,
+                                                  parametersPredicates: [predicate],
+                                                  failureRecorder: failureRecorder)
+    // When
+    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
 
     // Then
     XCTAssertEqual(callRegister.recordedCallReceived.count, 1)
@@ -220,8 +315,8 @@ class VerifiableTests: XCTestCase {
 
   func test_receivedParameters_shouldReturnAllCallsParametersWhenFunctionCallFromCallRegisterMatched() {
     // Given
-    callRegister.recordedCallReturn = [FunctionCall(identifier: UUID(), parameters: ["arg1", 1]),
-                                       FunctionCall(identifier: UUID(), parameters: ["arg2", 2])]
+    callRegister.recordedCallReturn = [FunctionCall(identifier: UUID(), parameters: ["arg1", 1], time: 0),
+                                       FunctionCall(identifier: UUID(), parameters: ["arg2", 2], time: 0)]
     let predicate = AnyPredicateMock()
     let verifiable: Verifiable<Void> = Verifiable(callRegister: callRegister,
                                                   functionIdentifier: functionIdentifier,

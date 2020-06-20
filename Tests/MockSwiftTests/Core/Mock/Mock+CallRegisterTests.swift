@@ -60,7 +60,7 @@ final class MockCallRegisterTests: XCTestCase {
   func test_recordedCall_shouldReturnFromCallRegister() {
     // Given
     let expectedIdentifier = FunctionIdentifier.stub()
-    let expectedResult = FunctionCall(identifier: UUID(), parameters: [1, 2])
+    let expectedResult = FunctionCall(identifier: UUID(), parameters: [1, 2], time: 0)
     callRegister.recordedCallReturn = [expectedResult]
 
     // When
