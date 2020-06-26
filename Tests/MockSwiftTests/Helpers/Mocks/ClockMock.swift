@@ -1,4 +1,4 @@
-// VerifiableStub.swift
+// ClockMock.swift
 /*
  MIT License
 
@@ -26,11 +26,9 @@
 import Foundation
 @testable import MockSwift
 
-extension Verifiable {
-  static func stub() -> Verifiable<ReturnType> {
-    Verifiable(callRegister: FunctionCallRegister(clock: ClockSystem()),
-               functionIdentifier: .stub(),
-               parametersPredicates: [],
-               failureRecorder: XCTestFailureRecorder())
+class ClockMock: Clock {
+  var currentTimeReturn: TimeInterval!
+  var currentTime: TimeInterval {
+    currentTimeReturn
   }
 }

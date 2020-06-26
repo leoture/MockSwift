@@ -26,28 +26,29 @@
 import Foundation
 
 class FunctionCallRegister: CallRegister {
-  private var calls: [FunctionIdentifier: [FunctionCall]]
-  private var unverifiedCalls: [UUID]
+  private let clock: Clock
+  private(set) var calls: [FunctionIdentifier: [FunctionCall]]
+  private(set) var unverifiedCalls: [UUID]
 
   var allCallHaveBeenVerified: Bool {
     unverifiedCalls.isEmpty
   }
 
-  init() {
+  init(clock: Clock) {
+    self.clock = clock
     calls = [:]
     unverifiedCalls = []
   }
 
-  //TODO: to test
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
     let callIdentifier = UUID()
     calls[identifier, default: []].append(FunctionCall(identifier: callIdentifier,
                                                        parameters: parameters,
-                                                       time: Date().timeIntervalSince1970))
+                                                       time: clock.currentTime))
     unverifiedCalls.append(callIdentifier)
   }
 
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
     calls[identifier]?.filter { functionCall in
       matchs.satisfy(by: functionCall.parameters)
     } ?? []

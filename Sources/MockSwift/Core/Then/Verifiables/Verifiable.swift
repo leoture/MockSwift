@@ -38,13 +38,13 @@ public class Verifiable<ReturnType> {
 
   /// Return a list of all parameters' list with whom the function was called.
   public var receivedParameters: [[ParameterType]] {
-    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
       .map { $0.parameters }
   }
 
   /// Return the number of times that the function was called.
   public var callCount: Int {
-    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
       .count
   }
 
@@ -78,7 +78,7 @@ public class Verifiable<ReturnType> {
                      after assertion: Assertion? = nil,
                      file: StaticString = #file,
                      line: UInt = #line) -> Assertion {
-    var calls = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    var calls = callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
 
     if let assertion = assertion {
       let startedTime = assertion.firstValidTime
