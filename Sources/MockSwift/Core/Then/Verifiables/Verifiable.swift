@@ -91,10 +91,10 @@ public class Verifiable<ReturnType> {
     calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
 
     let currentAssertion = CallAssertion(times: times,
-                     functionIdentifier: functionIdentifier,
-                     parametersPredicates: parametersPredicates,
-                     calls: calls,
-                     previous: assertion)
+                                         functionIdentifier: functionIdentifier,
+                                         parametersPredicates: parametersPredicates,
+                                         calls: calls,
+                                         previous: assertion)
 
     if !currentAssertion.isValid {
       failureRecorder.recordFailure(message: currentAssertion.description, file: file, line: line)

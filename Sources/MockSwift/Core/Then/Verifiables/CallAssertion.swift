@@ -88,7 +88,7 @@ extension CallAssertion: Assertion {
       return "\(callDescription) has been called \(formatedTimes) time(s)\(previousDescription)."
     } else {
       return "\(callDescription)" +
-      " is expected to be called \(formatedTimes) time(s) but is called \(calls.count) time(s)\(previousDescription)."
+        " is expected to be called \(formatedTimes) time(s) but is called \(calls.count) time(s)\(previousDescription)."
     }
   }
 }

@@ -53,18 +53,18 @@ class CallAssertionTests: XCTestCase {
                                   calls: [.stub(), .stub(), .stub()],
                                   previous: previousAssertion)
     XCTAssertEqual(assertion.description, "function(arg: 1) -> String has been called more than 2 time(s)" +
-    " after previous.")
+      " after previous.")
   }
 
   func test_description_should_returnCorrectDescription_when_isValidAndPreviousNil() {
-     let functionIdentifier = FunctionIdentifier(function: "function(arg:)", return: String.self)
-     let assertion = CallAssertion(times: >2,
-                                   functionIdentifier: functionIdentifier,
-                                   parametersPredicates: [Predicate<Int>.eq(1)],
-                                   calls: [.stub(), .stub(), .stub()],
-                                   previous: nil)
-     XCTAssertEqual(assertion.description, "function(arg: 1) -> String has been called more than 2 time(s).")
-   }
+    let functionIdentifier = FunctionIdentifier(function: "function(arg:)", return: String.self)
+    let assertion = CallAssertion(times: >2,
+                                  functionIdentifier: functionIdentifier,
+                                  parametersPredicates: [Predicate<Int>.eq(1)],
+                                  calls: [.stub(), .stub(), .stub()],
+                                  previous: nil)
+    XCTAssertEqual(assertion.description, "function(arg: 1) -> String has been called more than 2 time(s).")
+  }
 
   func test_description_should_returnCorrectDescription_when_isNotValidAndPreviousNotNil() {
     let previousAssertion = AssertionMock()
