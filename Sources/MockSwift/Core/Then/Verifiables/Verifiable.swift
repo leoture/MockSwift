@@ -73,6 +73,9 @@ public class Verifiable<ReturnType> {
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
   /// - Returns: A new `Assertion`.
+  /// - Important:
+  /// When **assertion** is specify, only calls that appear after
+  /// the minimum amount of calls required by the previous assertion will be considered.
   @discardableResult
   public func called(times: Predicate<Int> = >0,
                      after assertion: Assertion? = nil,
@@ -102,8 +105,13 @@ public class Verifiable<ReturnType> {
 
   /// Checks that the function has been called.
   /// - Parameter times: The expected number of calls.
+  /// - Parameter assertion: Previous assertion. nil by default.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
+  /// - Returns: A new `Assertion`.
+  /// - Important:
+  /// When **assertion** is specify, only calls that appear after
+  /// the minimum amount of calls required by the previous assertion will be considered.
   @discardableResult
   public func called(times: Int,
                      after assertion: Assertion? = nil,
