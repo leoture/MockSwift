@@ -45,6 +45,7 @@ class VerifiableCalledTests: XCTestCase {
   }
 
   // MARK: - Private methods
+
   private func callRegisterCalled(with functionIdentifier: FunctionIdentifier, and predicate: AnyPredicateMock) {
     XCTAssertEqual(callRegister.recordedCallsReceived.count, 1)
     let (identifier, matchs) = callRegister.recordedCallsReceived[0]

@@ -14,7 +14,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
 #### Added
-- Add called with order [#xx](https://github.com/leoture/MockSwift/pull/xx) by [Jordhan Leoture](https://github.com/leoture)
+- Add called with order [#102](https://github.com/leoture/MockSwift/pull/102) by [Jordhan Leoture](https://github.com/leoture)
 - Add Interaction.ended() [#101](https://github.com/leoture/MockSwift/pull/101) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
