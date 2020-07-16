@@ -38,13 +38,13 @@ public class Verifiable<ReturnType> {
 
   /// Return a list of all parameters' list with whom the function was called.
   public var receivedParameters: [[ParameterType]] {
-    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
       .map { $0.parameters }
   }
 
   /// Return the number of times that the function was called.
   public var callCount: Int {
-    callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
+    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
       .count
   }
 
@@ -69,25 +69,54 @@ public class Verifiable<ReturnType> {
 
   /// Checks that the function has been called a number of times corresponding to the predicate.
   /// - Parameter times: Predicate that corresponds to the number of calls.
+  /// - Parameter assertion: Previous assertion. nil by default.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public func called(times: Predicate<Int> = >0, file: StaticString = #file, line: UInt = #line) {
-    let calls = callRegister.recordedCall(for: functionIdentifier, when: parametersPredicates)
-    calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
-    let count = calls.count
-    if !times.satisfy(by: count) {
-      let callDescription = functionIdentifier.callDescription(with: parametersPredicates)
-      let formatedTimes = times.description.replacingOccurrences(of: "greater", with: "more")
-      let message = "\(callDescription) expect to be called \(formatedTimes) time(s) but is call \(count) time(s)"
-      failureRecorder.recordFailure(message: message, file: file, line: line)
+  /// - Returns: A new `Assertion`.
+  /// - Important:
+  /// When **assertion** is specify, only calls that appear after
+  /// the minimum amount of calls required by the previous assertion will be considered.
+  @discardableResult
+  public func called(times: Predicate<Int> = >0,
+                     after assertion: Assertion? = nil,
+                     file: StaticString = #file,
+                     line: UInt = #line) -> Assertion {
+    var calls = callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
+
+    if let assertion = assertion {
+      let startedTime = assertion.firstValidTime
+      calls = calls.filter { $0.time > startedTime }
     }
+
+    calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
+
+    let currentAssertion = CallAssertion(times: times,
+                                         functionIdentifier: functionIdentifier,
+                                         parametersPredicates: parametersPredicates,
+                                         calls: calls,
+                                         previous: assertion)
+
+    if !currentAssertion.isValid {
+      failureRecorder.recordFailure(message: currentAssertion.description, file: file, line: line)
+    }
+
+    return currentAssertion
   }
 
   /// Checks that the function has been called.
   /// - Parameter times: The expected number of calls.
+  /// - Parameter assertion: Previous assertion. nil by default.
   /// - Parameter file: File where `called` is called.
   /// - Parameter line: Line where `called`is called.
-  public func called(times: Int, file: StaticString = #file, line: UInt = #line) {
-    called(times: ==times, file: file, line: line)
+  /// - Returns: A new `Assertion`.
+  /// - Important:
+  /// When **assertion** is specify, only calls that appear after
+  /// the minimum amount of calls required by the previous assertion will be considered.
+  @discardableResult
+  public func called(times: Int,
+                     after assertion: Assertion? = nil,
+                     file: StaticString = #file,
+                     line: UInt = #line) -> Assertion {
+    called(times: ==times, after: assertion, file: file, line: line)
   }
 }

@@ -1,4 +1,4 @@
-// FunctionCall.swift
+// ClockMock.swift
 /*
  MIT License
 
@@ -24,15 +24,11 @@
  */
 
 import Foundation
+@testable import MockSwift
 
-struct FunctionCall {
-  let identifier: UUID
-  let parameters: [ParameterType]
-  let time: TimeInterval
-}
-
-extension FunctionCall: Equatable {
-  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
-    lhs.identifier == rhs.identifier
+class ClockMock: Clock {
+  var currentTimeReturn: TimeInterval!
+  var currentTime: TimeInterval {
+    currentTimeReturn
   }
 }

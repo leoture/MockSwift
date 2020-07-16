@@ -44,10 +44,10 @@ class CallRegisterMock: CallRegister {
     recordCallReceived.append((identifier, parameters))
   }
 
-  var recordedCallReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
-  var recordedCallReturn: [FunctionCall]!
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
-    recordedCallReceived.append((identifier, matchs))
-    return recordedCallReturn
+  var recordedCallsReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+  var recordedCallsReturn: [FunctionCall]!
+  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+    recordedCallsReceived.append((identifier, matchs))
+    return recordedCallsReturn
   }
 }

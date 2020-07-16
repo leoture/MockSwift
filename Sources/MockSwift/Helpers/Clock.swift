@@ -1,4 +1,4 @@
-// FunctionCall.swift
+// Clock.swift
 /*
  MIT License
 
@@ -25,14 +25,12 @@
 
 import Foundation
 
-struct FunctionCall {
-  let identifier: UUID
-  let parameters: [ParameterType]
-  let time: TimeInterval
+protocol Clock {
+  var currentTime: TimeInterval { get }
 }
 
-extension FunctionCall: Equatable {
-  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
-    lhs.identifier == rhs.identifier
+class ClockSystem: Clock {
+  var currentTime: TimeInterval {
+    Date().timeIntervalSince1970
   }
 }

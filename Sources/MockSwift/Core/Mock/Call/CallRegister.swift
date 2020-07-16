@@ -29,5 +29,5 @@ protocol CallRegister {
   var allCallHaveBeenVerified: Bool { get }
   func makeCallVerified(for identifier: UUID)
   func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType])
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]
+  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]
 }

@@ -28,7 +28,7 @@ import Foundation
 
 extension Verifiable {
   static func stub() -> Verifiable<ReturnType> {
-    Verifiable(callRegister: FunctionCallRegister(),
+    Verifiable(callRegister: FunctionCallRegister(clock: ClockSystem()),
                functionIdentifier: .stub(),
                parametersPredicates: [],
                failureRecorder: XCTestFailureRecorder())

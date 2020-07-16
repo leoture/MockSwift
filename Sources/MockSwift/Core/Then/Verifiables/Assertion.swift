@@ -1,4 +1,4 @@
-// FunctionCall.swift
+// Assertion.swift
 /*
  MIT License
 
@@ -25,14 +25,8 @@
 
 import Foundation
 
-struct FunctionCall {
-  let identifier: UUID
-  let parameters: [ParameterType]
-  let time: TimeInterval
-}
-
-extension FunctionCall: Equatable {
-  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
-    lhs.identifier == rhs.identifier
-  }
+public protocol Assertion: CustomStringConvertible {
+  var description: String { get }
+  var firstValidTime: TimeInterval { get }
+  var isValid: Bool { get }
 }

@@ -98,6 +98,31 @@ class ThenIntegrationTests: XCTestCase {
       .called(times: >1)
   }
 
+  func test_function_should_beCalledInOrder() {
+    // Given
+    let custom1 = Mock<Custom>()
+    let custom2 = Mock<Custom>()
+
+    // When
+    let _: Int = custom1.function(identifier: "1")
+    let _: Int = custom2.function(identifier: "2")
+    let _: Int = custom2.function(identifier: "2")
+    let _: Int = custom1.function(identifier: "4")
+    let _: Int = custom1.function(identifier: "3")
+
+    // Then
+    var assertion = then(custom1).function(identifier: .any())
+      .disambiguate(with: Int.self).called()
+    assertion = then(custom2).function(identifier: =="2")
+      .disambiguate(with: Int.self).called(times: 2, after: assertion)
+    assertion = then(custom1).function(identifier: =="3")
+      .disambiguate(with: Int.self).called(after: assertion)
+    assertion = then(custom2).function(identifier: .any())
+      .disambiguate(with: Int.self).called(times: 0, after: assertion)
+    then(custom1).function(identifier: =="4")
+      .disambiguate(with: Int.self).called(times: 0, after: assertion)
+  }
+
   func test_then_shouldCallCompletionWithThenCustom() {
     // Given
     var thenCustom: Then<Custom>?

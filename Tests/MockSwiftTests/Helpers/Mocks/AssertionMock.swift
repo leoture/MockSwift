@@ -1,4 +1,4 @@
-// FunctionCall.swift
+// AssertionMock.swift
 /*
  MIT License
 
@@ -24,15 +24,21 @@
  */
 
 import Foundation
+@testable import MockSwift
 
-struct FunctionCall {
-  let identifier: UUID
-  let parameters: [ParameterType]
-  let time: TimeInterval
-}
+class AssertionMock: Assertion {
+  var descriptionReturn: String!
+  var description: String {
+    descriptionReturn
+  }
 
-extension FunctionCall: Equatable {
-  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
-    lhs.identifier == rhs.identifier
+  var firstValidTimeReturn: TimeInterval!
+  var firstValidTime: TimeInterval {
+    firstValidTimeReturn
+  }
+
+  var isValidReturn: Bool!
+  var isValid: Bool {
+    isValidReturn
   }
 }

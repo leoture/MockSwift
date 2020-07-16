@@ -46,7 +46,7 @@
 		9EA5D1592301E43B006F0A28 /* GivenIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D1582301E43B006F0A28 /* GivenIntegrationTests.swift */; };
 		9EA5D15B2302EDD2006F0A28 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D15A2302EDD2006F0A28 /* Then.swift */; };
 		9EA5D15D2302EE7B006F0A28 /* Verifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */; };
-		9EA5D15F2302EEAC006F0A28 /* VerifiableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */; };
+		9EA5D15F2302EEAC006F0A28 /* VerifiableCalledTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D15E2302EEAC006F0A28 /* VerifiableCalledTests.swift */; };
 		9EA5D1612302FCB7006F0A28 /* FunctionCallRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D1602302FCB7006F0A28 /* FunctionCallRegister.swift */; };
 		9EA5D1632303F130006F0A28 /* Predicate+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5D1622303F130006F0A28 /* Predicate+Comparable.swift */; };
 		9EAC378D234378DD00281F7B /* ParameterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC378C234378DD00281F7B /* ParameterType.swift */; };
@@ -90,8 +90,11 @@
 		FC48156023CB9FCC00E0976A /* StubStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC48155F23CB9FCC00E0976A /* StubStrategyTests.swift */; };
 		FC61C6DA23A2BC7A007DE003 /* MockableBuilderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC61C6D923A2BC7A007DE003 /* MockableBuilderMock.swift */; };
 		FC61C6DC23A2BEAA007DE003 /* MockableStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC61C6DB23A2BEAA007DE003 /* MockableStub.swift */; };
+		FC62D46D24A5E0CD0008F10B /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC62D46C24A5E0CD0008F10B /* Clock.swift */; };
+		FC62D46F24A5E1390008F10B /* ClockMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC62D46E24A5E1390008F10B /* ClockMock.swift */; };
 		FC66A25723CA25CD001F1821 /* MockIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC66A25623CA25CD001F1821 /* MockIntegrationTests.swift */; };
 		FC66A25923CA29A6001F1821 /* Mock+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC66A25823CA29A6001F1821 /* Mock+init.swift */; };
+		FC74EEA62483A99100F27EDC /* CallAssertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC74EEA52483A99100F27EDC /* CallAssertion.swift */; };
 		FC75744023A6643E00B5064C /* MockablePropertyWritableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */; };
 		FC75744323A6674900B5064C /* MockableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744223A6674900B5064C /* MockableProperty.swift */; };
 		FC75744A23A66D2800B5064C /* VerifiableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC75744923A66D2800B5064C /* VerifiableProperty.swift */; };
@@ -105,6 +108,10 @@
 		FCC042DD23DF22D300EC2285 /* MockStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042DC23DF22D300EC2285 /* MockStrategyFactory.swift */; };
 		FCC042DF23DF253B00EC2285 /* StrategyFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042DE23DF253B00EC2285 /* StrategyFactoryMock.swift */; };
 		FCC042E123DF26E000EC2285 /* StrategyIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */; };
+		FCC900F1249E079300A20E97 /* AssertionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC900F0249E079300A20E97 /* AssertionMock.swift */; };
+		FCC900F3249E10A900A20E97 /* CallAssertionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC900F2249E10A900A20E97 /* CallAssertionTests.swift */; };
+		FCC900F5249E197900A20E97 /* Assertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC900F4249E197900A20E97 /* Assertion.swift */; };
+		FCC900F7249E28B700A20E97 /* VerifiableBasicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC900F6249E28B700A20E97 /* VerifiableBasicTests.swift */; };
 		FCD3202624027D2000C3817D /* Predicate+equalsToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */; };
 		FCD3202824027E0D00C3817D /* Predicate+greatherThanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */; };
 		FCD3202A2402A63900C3817D /* PredicateAnyObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD320292402A63900C3817D /* PredicateAnyObjectTests.swift */; };
@@ -171,7 +178,7 @@
 		9EA5D1582301E43B006F0A28 /* GivenIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GivenIntegrationTests.swift; sourceTree = "<group>"; };
 		9EA5D15A2302EDD2006F0A28 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
 		9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifiable.swift; sourceTree = "<group>"; };
-		9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableTests.swift; sourceTree = "<group>"; };
+		9EA5D15E2302EEAC006F0A28 /* VerifiableCalledTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableCalledTests.swift; sourceTree = "<group>"; };
 		9EA5D1602302FCB7006F0A28 /* FunctionCallRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallRegister.swift; sourceTree = "<group>"; };
 		9EA5D1622303F130006F0A28 /* Predicate+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+Comparable.swift"; sourceTree = "<group>"; };
 		9EA77EF4230EE7C900DAE694 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
@@ -217,8 +224,11 @@
 		FC48155F23CB9FCC00E0976A /* StubStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubStrategyTests.swift; sourceTree = "<group>"; };
 		FC61C6D923A2BC7A007DE003 /* MockableBuilderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockableBuilderMock.swift; sourceTree = "<group>"; };
 		FC61C6DB23A2BEAA007DE003 /* MockableStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockableStub.swift; sourceTree = "<group>"; };
+		FC62D46C24A5E0CD0008F10B /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		FC62D46E24A5E1390008F10B /* ClockMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockMock.swift; sourceTree = "<group>"; };
 		FC66A25623CA25CD001F1821 /* MockIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIntegrationTests.swift; sourceTree = "<group>"; };
 		FC66A25823CA29A6001F1821 /* Mock+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mock+init.swift"; sourceTree = "<group>"; };
+		FC74EEA52483A99100F27EDC /* CallAssertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAssertion.swift; sourceTree = "<group>"; };
 		FC75743F23A6643E00B5064C /* MockablePropertyWritableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockablePropertyWritableTests.swift; sourceTree = "<group>"; };
 		FC75744223A6674900B5064C /* MockableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockableProperty.swift; sourceTree = "<group>"; };
 		FC75744923A66D2800B5064C /* VerifiableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableProperty.swift; sourceTree = "<group>"; };
@@ -232,6 +242,10 @@
 		FCC042DC23DF22D300EC2285 /* MockStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStrategyFactory.swift; sourceTree = "<group>"; };
 		FCC042DE23DF253B00EC2285 /* StrategyFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyFactoryMock.swift; sourceTree = "<group>"; };
 		FCC042E023DF26E000EC2285 /* StrategyIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyIdentifier.swift; sourceTree = "<group>"; };
+		FCC900F0249E079300A20E97 /* AssertionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertionMock.swift; sourceTree = "<group>"; };
+		FCC900F2249E10A900A20E97 /* CallAssertionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAssertionTests.swift; sourceTree = "<group>"; };
+		FCC900F4249E197900A20E97 /* Assertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assertion.swift; sourceTree = "<group>"; };
+		FCC900F6249E28B700A20E97 /* VerifiableBasicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableBasicTests.swift; sourceTree = "<group>"; };
 		FCD3202524027D2000C3817D /* Predicate+equalsToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+equalsToTests.swift"; sourceTree = "<group>"; };
 		FCD3202724027E0D00C3817D /* Predicate+greatherThanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+greatherThanTests.swift"; sourceTree = "<group>"; };
 		FCD320292402A63900C3817D /* PredicateAnyObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicateAnyObjectTests.swift; sourceTree = "<group>"; };
@@ -537,6 +551,14 @@
 			path = Registers;
 			sourceTree = "<group>";
 		};
+		FC62D46B24A5E0BB0008F10B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FC62D46C24A5E0CD0008F10B /* Clock.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		FC75744123A666FB00B5064C /* Mockables */ = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +576,8 @@
 				9EA5D15C2302EE7B006F0A28 /* Verifiable.swift */,
 				FC75744923A66D2800B5064C /* VerifiableProperty.swift */,
 				FC25FC5223F49DBE00C01726 /* VerifiableSubscript.swift */,
+				FC74EEA52483A99100F27EDC /* CallAssertion.swift */,
+				FCC900F4249E197900A20E97 /* Assertion.swift */,
 			);
 			path = Verifiables;
 			sourceTree = "<group>";
@@ -561,11 +585,13 @@
 		FC75745323A690D900B5064C /* Verifiables */ = {
 			isa = PBXGroup;
 			children = (
-				9EA5D15E2302EEAC006F0A28 /* VerifiableTests.swift */,
+				9EA5D15E2302EEAC006F0A28 /* VerifiableCalledTests.swift */,
 				FC75744B23A6867000B5064C /* VerifiablePropertyReadableTests.swift */,
 				FC75744D23A6867C00B5064C /* VerifiablePropertyWritableTests.swift */,
 				FC25FC5423F49F7400C01726 /* VerifiableSubscriptReadableTests.swift */,
 				FC25FC5623F49F9500C01726 /* VerifiableSubscriptWritableTests.swift */,
+				FCC900F2249E10A900A20E97 /* CallAssertionTests.swift */,
+				FCC900F6249E28B700A20E97 /* VerifiableBasicTests.swift */,
 			);
 			path = Verifiables;
 			sourceTree = "<group>";
@@ -677,6 +703,8 @@
 				FC48152F23CA475C00E0976A /* StrategyMock.swift */,
 				FC48155323CB97BA00E0976A /* StubRegisterMock.swift */,
 				FCC042DE23DF253B00EC2285 /* StrategyFactoryMock.swift */,
+				FCC900F0249E079300A20E97 /* AssertionMock.swift */,
+				FC62D46E24A5E1390008F10B /* ClockMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -716,6 +744,7 @@
 		OBJ_8 /* MockSwift */ = {
 			isa = PBXGroup;
 			children = (
+				FC62D46B24A5E0BB0008F10B /* Helpers */,
 				FC48155723CB9D7A00E0976A /* Registers */,
 				FC48154023CB6FFC00E0976A /* Strategies */,
 				9ED0E95D230C170D008D2329 /* Assertions */,
@@ -865,6 +894,7 @@
 				9EA5D1612302FCB7006F0A28 /* FunctionCallRegister.swift in Sources */,
 				FC48154523CB748A00E0976A /* UnresolvedStrategy.swift in Sources */,
 				FC48154323CB72FA00E0976A /* StrategyDecorate.swift in Sources */,
+				FC62D46D24A5E0CD0008F10B /* Clock.swift in Sources */,
 				OBJ_39 /* FunctionCall.swift in Sources */,
 				9EA5D1632303F130006F0A28 /* Predicate+Comparable.swift in Sources */,
 				9E79EBCC2350E0FA00979D90 /* ErrorHandler.swift in Sources */,
@@ -874,9 +904,11 @@
 				9EB5543423005A2900449662 /* Mockable.swift in Sources */,
 				9EA5D1552301DE3F006F0A28 /* AnyPredicate+Equatable.swift in Sources */,
 				9EAC378D234378DD00281F7B /* ParameterType.swift in Sources */,
+				FC74EEA62483A99100F27EDC /* CallAssertion.swift in Sources */,
 				FC48154B23CB7F5B00E0976A /* GlobalStubStrategy.swift in Sources */,
 				9EA5D1502301DA6E006F0A28 /* Predicate.swift in Sources */,
 				OBJ_40 /* FunctionIdentifier.swift in Sources */,
+				FCC900F5249E197900A20E97 /* Assertion.swift in Sources */,
 				OBJ_41 /* Mock.swift in Sources */,
 				9EA5D15D2302EE7B006F0A28 /* Verifiable.swift in Sources */,
 				FCDA1DA8246B0DD00063A8EA /* Interaction.swift in Sources */,
@@ -916,6 +948,7 @@
 				9EAC3792234A25B800281F7B /* PredicateBoolTests.swift in Sources */,
 				FCDA1DC7246C687E0063A8EA /* FunctionCallStub.swift in Sources */,
 				FC25FC4F23F4949800C01726 /* MockableSubscriptReadableTests.swift in Sources */,
+				FC62D46F24A5E1390008F10B /* ClockMock.swift in Sources */,
 				FC48154D23CB804A00E0976A /* GlobalStubStrategyTests.swift in Sources */,
 				FCD3202624027D2000C3817D /* Predicate+equalsToTests.swift in Sources */,
 				9EA5D1592301E43B006F0A28 /* GivenIntegrationTests.swift in Sources */,
@@ -926,6 +959,7 @@
 				FC66A25723CA25CD001F1821 /* MockIntegrationTests.swift in Sources */,
 				9EA55228230D93D200E82139 /* FunctionIdentifierTests.swift in Sources */,
 				9EA55224230D661E00E82139 /* FailureRecorderMock.swift in Sources */,
+				FCC900F3249E10A900A20E97 /* CallAssertionTests.swift in Sources */,
 				FC48154923CB7B9700E0976A /* UnresolvedStrategyTests.swift in Sources */,
 				FC48155423CB97BA00E0976A /* StubRegisterMock.swift in Sources */,
 				FC75744C23A6867000B5064C /* VerifiablePropertyReadableTests.swift in Sources */,
@@ -947,9 +981,10 @@
 				FC48153A23CB630F00E0976A /* Mock+BehaviourRegisterTests.swift in Sources */,
 				FCDA1DA5246B0C910063A8EA /* InteractionIntegrationTests.swift in Sources */,
 				FC61C6DA23A2BC7A007DE003 /* MockableBuilderMock.swift in Sources */,
+				FCC900F1249E079300A20E97 /* AssertionMock.swift in Sources */,
 				9E2F052622FB354C00E04F34 /* FunctionBehaviourTests.swift in Sources */,
 				9E79EBD22354C54E00979D90 /* ThenTests.swift in Sources */,
-				9EA5D15F2302EEAC006F0A28 /* VerifiableTests.swift in Sources */,
+				9EA5D15F2302EEAC006F0A28 /* VerifiableCalledTests.swift in Sources */,
 				9EB5543623005BB000449662 /* MockableTests.swift in Sources */,
 				FC48153823CB5E0600E0976A /* Mock+CallRegisterTests.swift in Sources */,
 				FC25FC5723F49F9500C01726 /* VerifiableSubscriptWritableTests.swift in Sources */,
@@ -960,6 +995,7 @@
 				FCD3202A2402A63900C3817D /* PredicateAnyObjectTests.swift in Sources */,
 				FC75744023A6643E00B5064C /* MockablePropertyWritableTests.swift in Sources */,
 				FC75745223A6899200B5064C /* VerifiableStub.swift in Sources */,
+				FCC900F7249E28B700A20E97 /* VerifiableBasicTests.swift in Sources */,
 				9E79EBD52355DB2F00979D90 /* InternalErrorTests.swift in Sources */,
 				FC25FC5123F494FC00C01726 /* MockableSubscriptWritableTests.swift in Sources */,
 			);

@@ -71,7 +71,7 @@ public class Mock<WrappedType> {
                    factory: StrategyFactory,
                    strategies: [StrategyIdentifier],
                    errorHandler: ErrorHandler) {
-    self.init(callRegister: FunctionCallRegister(),
+    self.init(callRegister: FunctionCallRegister(clock: ClockSystem()),
               behaviourRegister: behaviourRegister,
               stubRegister: stubRegister,
               strategy: factory.create(strategy: strategies),
@@ -82,7 +82,7 @@ public class Mock<WrappedType> {
     let errorHandler = ErrorHandler()
     let behaviourRegister = FunctionBehaviourRegister()
     let stubRegister = StubTypeRegister()
-    self.init(callRegister: FunctionCallRegister(),
+    self.init(callRegister: FunctionCallRegister(clock: ClockSystem()),
               behaviourRegister: behaviourRegister,
               stubRegister: stubRegister,
               factory: MockStrategyFactory(errorHandler: errorHandler,
@@ -241,8 +241,8 @@ extension Mock: CallRegister {
     callRegister.recordCall(for: identifier, with: parameters)
   }
 
-  func recordedCall(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
-    callRegister.recordedCall(for: identifier, when: matchs)
+  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+    callRegister.recordedCalls(for: identifier, when: matchs)
   }
 }
 
