@@ -10,7 +10,7 @@ Welcome to MockSwift!
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/f059404f3fbe43b3b4c4713b1afab699)](https://www.codacy.com/manual/jordhan.leoture/MockSwift?utm_source=github.com&utm_medium=referral&utm_content=leoture/MockSwift&utm_campaign=Badge_Coverage)
 [![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen)](https://github.com/apple/swift-package-manager)
-[![Swift](https://img.shields.io/badge/Swift-5.2-important)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-5.3-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
 **MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#make-better-tests). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.    
@@ -49,7 +49,7 @@ You can see all changes and new features [here](https://github.com/leoture/MockS
 ## Swift Package Manager
 MockSwift has been designed to work with [Swift Package Manager](https://swift.org/package-manager/).
 ```swift
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 
 import PackageDescription
 
