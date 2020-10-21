@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bool Extension Reference</title>
+    <title>Interaction Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/Bool" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/Interaction" class="dashAnchor"></a>
 
-    <a title="Bool Extension Reference"></a>
+    <a title="Interaction Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MockSwift Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Bool Extension Reference
+      Interaction Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -224,28 +224,43 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>Bool</h1>
+            <h1>Interaction</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Bool</span><span class="p">:</span> <span class="kt"><a href="../Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Interaction</span><span class="o">&lt;</span><span class="kt">WrappedType</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
-            
+            <p><code>Interaction</code> is used to verify method calls.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Classes/Then.html">Then</a></code>
+
+</div>
+
           </div>
         </section>
 
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Init"></a>
+                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Init"></a>
+                  <h3 class="section-name"><p>Init</p>
+</h3>
+                </div>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sb9MockSwiftE4stubSbyFZ"></a>
-                    <a name="//apple_ref/swift/Method/stub()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sb9MockSwiftE4stubSbyFZ">stub()</a>
+                    <a name="/s:9MockSwift11InteractionC5ended4file4lineys12StaticStringV_SutF"></a>
+                    <a name="//apple_ref/swift/Method/ended(file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9MockSwift11InteractionC5ended4file4lineys12StaticStringV_SutF">ended(file:<wbr>line:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -253,16 +268,47 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates a stub value of <code>Bool</code>.</p>
+                        <p>Checks that the <code>WrappedType</code> value has no calls to check anymore.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">stub</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">ended</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>file</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The file name where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The line where the method is called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>

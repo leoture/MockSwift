@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           MockSwift Docs
         </a>
-         (96% documented)
+         (94% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -40,7 +40,7 @@
         </p>
     
         <p class="header-col header-col--secondary">
-          <a class="header-link" href="dash-feed://https%3A%2F%2Fleoture%2Egithub%2Eio%2FMockSwift%2Fdocsets%2FMockSwift%2Exml">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fleoture.github.io%2FMockSwift%2Fdocsets%2FMockSwift.xml">
             <img class="header-icon" src="img/dash.png"/>
             Install in Dash
           </a>
@@ -61,6 +61,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Given.html">Given</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Interaction.html">Interaction</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Mock.html">Mock</a>
@@ -136,10 +139,25 @@
                 <a class="nav-group-task-link" href="Extensions/Bool.html">Bool</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions.html#/s:s18BooleanLiteralTypea">BooleanLiteralType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions.html#/s:s16FloatLiteralTypea">FloatLiteralType</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/Int.html">Int</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions.html#/s:s18IntegerLiteralTypea">IntegerLiteralType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions.html#/c:objc(cs)NSObject">NSObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions.html#/s:s17StringLiteralTypea">StringLiteralType</a>
               </li>
             </ul>
           </li>
@@ -168,6 +186,9 @@
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift5given_4file4line_yx_s12StaticStringVSuyAA5GivenCyxGXEtlF">given(_:file:line:_:)</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift11interaction4withAA11InteractionCyxGx_tlF">interaction(with:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:9MockSwift4then_4file4lineAA4ThenCyxGx_s12StaticStringVSutlF">then(_:file:line:)</a>
               </li>
               <li class="nav-group-task">
@@ -180,6 +201,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/AnyPredicate.html">AnyPredicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/Assertion.html">Assertion</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/GlobalStub.html">GlobalStub</a>
@@ -199,7 +223,7 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             <h1>Extensions</h1>
             <p>The following extensions are available globally.</p>
 
@@ -230,18 +254,144 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@frozen</span>
-<span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Array</span> <span class="k">where</span> <span class="kt">Element</span> <span class="o">==</span> <span class="kt"><a href="Enums/StrategyIdentifier.html">StrategyIdentifier</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">Array</span> <span class="k">where</span> <span class="kt">Element</span> <span class="o">==</span> <span class="kt"><a href="Enums/StrategyIdentifier.html">StrategyIdentifier</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Array</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)NSObject"></a>
+                    <a name="//apple_ref/swift/Extension/NSObject" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)NSObject">NSObject</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">NSObject</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s18BooleanLiteralTypea"></a>
+                    <a name="//apple_ref/swift/Extension/BooleanLiteralType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s18BooleanLiteralTypea">BooleanLiteralType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">BooleanLiteralType</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s18IntegerLiteralTypea"></a>
+                    <a name="//apple_ref/swift/Extension/IntegerLiteralType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s18IntegerLiteralTypea">IntegerLiteralType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">IntegerLiteralType</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s17StringLiteralTypea"></a>
+                    <a name="//apple_ref/swift/Extension/StringLiteralType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s17StringLiteralTypea">StringLiteralType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">StringLiteralType</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s16FloatLiteralTypea"></a>
+                    <a name="//apple_ref/swift/Extension/FloatLiteralType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s16FloatLiteralTypea">FloatLiteralType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FloatLiteralType</span><span class="p">:</span> <span class="kt"><a href="Protocols/AnyPredicate.html">AnyPredicate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -262,8 +412,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@frozen</span>
-<span class="kd">extension</span> <span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
 
                         </div>
                       </div>
@@ -290,8 +439,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@frozen</span>
-<span class="kd">extension</span> <span class="kt">Int</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Int</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
 
                         </div>
                       </div>
@@ -318,8 +466,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@frozen</span>
-<span class="kd">extension</span> <span class="kt">Bool</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Bool</span><span class="p">:</span> <span class="kt"><a href="Protocols/GlobalStub.html">GlobalStub</a></span></code></pre>
 
                         </div>
                       </div>
@@ -334,8 +481,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2020-03-11)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Jordhan Leoture</a>. All rights reserved. (Last updated: 2020-10-21)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
