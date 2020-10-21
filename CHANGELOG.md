@@ -3,6 +3,7 @@
 [Unrelease](#Unrelease)
 
 ##### 0.x Releases
+- [0.7.0](#0.7.0)
 - [0.6.0](#0.6.0)
 - [0.5.0](#0.5.0)
 - [0.4.0](#0.4.0)
@@ -12,10 +13,8 @@
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v0.7.0...HEAD)
 #### Added
-- Add called with order [#102](https://github.com/leoture/MockSwift/pull/102) by [Jordhan Leoture](https://github.com/leoture)
-- Add Interaction.ended() [#101](https://github.com/leoture/MockSwift/pull/101) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
@@ -28,8 +27,15 @@
 #### Security
 
 ---
+## [0.7.0](https://github.com/leoture/MockSwift/releases/tag/v0.7.0) - 2020-10-21
+[Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...v0.7.0)
+#### Added
+- Add called with order [#102](https://github.com/leoture/MockSwift/pull/102) by [Jordhan Leoture](https://github.com/leoture)
+- Add Interaction.ended() [#101](https://github.com/leoture/MockSwift/pull/101) by [Jordhan Leoture](https://github.com/leoture)
+
+---
 ## [0.6.0](https://github.com/leoture/MockSwift/releases/tag/v0.6.0) - 2020-03-11
-[Compare](https://github.com/leoture/MockSwift/compare/v0.6.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v0.5.0...v0.6.0)
 #### Added
 - Add identical Predicate [#88](https://github.com/leoture/MockSwift/pull/88) by [Jordhan Leoture](https://github.com/leoture)
 - Add syntactic sugar for Predicate on Comparables [#87](https://github.com/leoture/MockSwift/pull/87) by [Jordhan Leoture](https://github.com/leoture)
