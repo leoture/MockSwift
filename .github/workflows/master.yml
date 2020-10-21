@@ -36,6 +36,8 @@ jobs:
         swift --version
     - name: Run fastlane
       run: bundle exec fastlane mac_tests
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_12.1.app/Contents/Developer
     - name: Codacy
       run: sh <(curl -Ls https://coverage.codacy.com/get.sh) report -l Swift --force-language -r cobertura.xml
       env:

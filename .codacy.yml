@@ -8,3 +8,4 @@ exclude_paths:
   - 'fastlane/**'
   - '.github/**'
   - '*.md'
+  - 'Tests/MockSwiftTests/XCTestManifests.swift'
