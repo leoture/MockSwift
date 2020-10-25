@@ -97,6 +97,27 @@ class MockableTests: XCTestCase {
     XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
   }
 
+  func test_willDoNothing_shouldCorrectlyRegisterBahaviour() {
+    // Given
+    let behaviourRegister = BehaviourRegisterMock()
+    let identifier = FunctionIdentifier.stub()
+    let predicate = AnyPredicateMock()
+    let mockable: Mockable<Void> = Mockable(behaviourRegister, identifier, [predicate])
+
+    // When
+    mockable.willDoNothing()
+
+    // Then
+    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+    let parameters = behaviourRegister.recordReceived[0]
+    let expectedBehaviourReceived = [UUID()]
+    let behaviourResult: Void? = parameters.behaviour.handle(with: expectedBehaviourReceived)
+    XCTAssertNotNil(behaviourResult)
+    XCTAssertEqual(parameters.identifier, identifier)
+    XCTAssertEqual(parameters.matchs.count, 1)
+    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+  }
+
   func test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType() {
     // Given
     let mockable = Mockable(BehaviourRegisterMock(), .stub(), []).disambiguate(with: String.self)
