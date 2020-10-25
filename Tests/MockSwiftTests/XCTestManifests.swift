@@ -600,6 +600,12 @@ extension VerifiableCalledTests {
         ("test_calledAfterAssertion_should_recordFailure_when_recordedCallsDontReturnEnoughFunctionCall", test_calledAfterAssertion_should_recordFailure_when_recordedCallsDontReturnEnoughFunctionCall),
         ("test_calledAfterAssertion_should_recordFailure_when_recordedCallsReturnEmpty", test_calledAfterAssertion_should_recordFailure_when_recordedCallsReturnEmpty),
         ("test_calledAfterAssertion_should_returnCorrectAssertion", test_calledAfterAssertion_should_returnCorrectAssertion),
+        ("test_neverCalled_should_notRecordFailure_when_recordedCallsReturnNoCalls", test_neverCalled_should_notRecordFailure_when_recordedCallsReturnNoCalls),
+        ("test_neverCalled_should_recordFailure_when_recordedCallsReturnCalls", test_neverCalled_should_recordFailure_when_recordedCallsReturnCalls),
+        ("test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEmpty", test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEmpty),
+        ("test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnNoCall", test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnNoCall),
+        ("test_neverCalledAfterAssertion_should_recordFailure_when_recordedCallsReturnCall", test_neverCalledAfterAssertion_should_recordFailure_when_recordedCallsReturnCall),
+        ("test_neverCalledAfterAssertion_should_returnCorrectAssertion", test_neverCalledAfterAssertion_should_returnCorrectAssertion),
     ]
 }
 
