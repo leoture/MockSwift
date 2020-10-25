@@ -134,5 +134,4 @@ public class Verifiable<ReturnType> {
                           line: UInt = #line) -> Assertion {
     called(times: ==0, after: assertion, file: file, line: line)
   }
-
 }
