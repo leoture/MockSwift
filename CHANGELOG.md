@@ -15,6 +15,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v0.7.0...HEAD)
 #### Added
+- Add neverCalled [#106](https://github.com/leoture/MockSwift/pull/106) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
