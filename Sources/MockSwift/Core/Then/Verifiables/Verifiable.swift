@@ -119,4 +119,20 @@ public class Verifiable<ReturnType> {
                      line: UInt = #line) -> Assertion {
     called(times: ==times, after: assertion, file: file, line: line)
   }
+
+  /// Checks that the function has never been called.
+  /// - Parameter assertion: Previous assertion. nil by default.
+  /// - Parameter file: File where `called` is called.
+  /// - Parameter line: Line where `called`is called.
+  /// - Returns: A new `Assertion`.
+  /// - Important:
+  /// When **assertion** is specify, only calls that appear after
+  /// the minimum amount of calls required by the previous assertion will be considered.
+  @discardableResult
+  public func neverCalled(after assertion: Assertion? = nil,
+                          file: StaticString = #file,
+                          line: UInt = #line) -> Assertion {
+    called(times: ==0, after: assertion, file: file, line: line)
+  }
+
 }
