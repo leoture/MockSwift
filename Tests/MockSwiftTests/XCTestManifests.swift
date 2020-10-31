@@ -371,6 +371,7 @@ extension MockableTests {
     static let __allTests__MockableTests = [
         ("test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType", test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType),
         ("test_will_shouldCorrectlyRegisterBahaviour", test_will_shouldCorrectlyRegisterBahaviour),
+        ("test_willDoNothing_shouldCorrectlyRegisterBahaviour", test_willDoNothing_shouldCorrectlyRegisterBahaviour),
         ("test_willReturn_shouldCorrectlyRegisterBahaviour", test_willReturn_shouldCorrectlyRegisterBahaviour),
         ("test_willReturn_withListShouldCorrectlyRegisterBahaviour", test_willReturn_withListShouldCorrectlyRegisterBahaviour),
         ("test_willThrow_shouldCorrectlyRegisterBahaviour", test_willThrow_shouldCorrectlyRegisterBahaviour),

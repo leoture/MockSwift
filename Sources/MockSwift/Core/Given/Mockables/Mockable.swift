@@ -91,3 +91,11 @@ public class Mockable<ReturnType> {
     behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
   }
 }
+
+public extension Mockable where ReturnType == Void {
+  /// Registers an empty block to excecute.
+  /// - SeeAlso: `will(_ completion:)`
+  func willDoNothing() {
+    will { _ in }
+  }
+}
