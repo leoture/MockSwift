@@ -87,7 +87,7 @@ class GivenIntegrationTests: XCTestCase {
 
   func test_function_shouldReturnValueFromWillCompletion() {
     // Given
-    given(custom).function(identifier: .not(.match(when: \.isEmpty)))
+    given(custom).function(identifier: .not(.match(\.isEmpty)))
       .disambiguate(with: String.self)
       .will { parameters in (parameters[0] as? String ?? "") + "1" }
 
@@ -242,7 +242,7 @@ class GivenIntegrationTests: XCTestCase {
     // Given
     let custom = Mock<Custom>()
     var completionParameters: [Any]?
-    given(custom).identifier.set(.not(.match(when: \.isEmpty))).will { completionParameters = $0 }
+    given(custom).identifier.set(.not(.match(\.isEmpty))).will { completionParameters = $0 }
 
     // When
     custom.identifier = "value"
@@ -291,7 +291,7 @@ class GivenIntegrationTests: XCTestCase {
     // Given
     let custom = Mock<Custom>()
     var completionParameters: [Any]?
-    given(custom)[x: 1, y: 2].set(.not(.match(when: \.isEmpty))).will { completionParameters = $0 }
+    given(custom)[x: 1, y: 2].set(.not(.match(\.isEmpty))).will { completionParameters = $0 }
 
     // When
     custom[x: 1, y: 2] = "value"
