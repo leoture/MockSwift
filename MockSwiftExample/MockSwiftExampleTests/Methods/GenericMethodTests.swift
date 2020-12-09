@@ -37,7 +37,7 @@ class GenericMethodTests: XCTestCase {
     given(genericMethod) {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn("1")
-      $0.doSomething(with: .match(any: [Int].self, when: \.isEmpty)).will { _ in blockDone = true }
+      $0.doSomething(with: .match(any: [Int].self, \.isEmpty)).will { _ in blockDone = true }
       $0.doSomething(arg: .isTrue()).willThrow(error)
       $0.doSomething(arg1: ==[2], arg2: .isNil()).willReturn(2)
       $0.doSomething(with: ==3, and: =="3").willReturn(true)
@@ -66,7 +66,7 @@ class GenericMethodTests: XCTestCase {
     then(genericMethod) {
       $0.doSomething().disambiguate(with: Int.self).called(times: 1)
       $0.doSomething().disambiguate(with: String.self).called(times: 1)
-      $0.doSomething(with: .match(any: [Int].self, when: \.isEmpty)).called(times: 1)
+      $0.doSomething(with: .match(any: [Int].self, \.isEmpty)).called(times: 1)
       $0.doSomething(arg: .isTrue()).called(times: 1)
       $0.doSomething(arg1: ==[2], arg2: .isNil()).called(times: 1)
       $0.doSomething(with: ==3, and: =="3").called(times: 1)

@@ -34,7 +34,7 @@ class BasicSubscriptTests: XCTestCase {
     // Given
     var parameters: [Any]?
     given(basicSubscript) {
-      $0[.match(when: \.isEmpty), ==1].get.willReturn(true)
+      $0[.match(\.isEmpty), ==1].get.willReturn(true)
       $0[.any(), .any()].set(.isFalse()).will { parameters = $0 }
     }
 
@@ -79,7 +79,7 @@ class BasicSubscriptTests: XCTestCase {
   func test_subscriptWithLabels_withPredicates() {
     // Given
     given(basicSubscript) {
-      $0[with: .match(when: \.isEmpty), and: .equals(to: 1)].get.willReturn("value")
+      $0[with: .match(\.isEmpty), and: .equals(to: 1)].get.willReturn("value")
     }
 
     // When

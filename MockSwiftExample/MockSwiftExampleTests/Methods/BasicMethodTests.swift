@@ -39,7 +39,7 @@ class BasicMethodTests: XCTestCase {
       $0.doSomething().willReturn(0)
       $0.doSomething().willReturn(nil)
       $0.doSomething(arg: =="2").willReturn("2")
-      $0.doSomething(arg: .match(when: \.isEmpty)).willThrow(error)
+      $0.doSomething(arg: .match(\.isEmpty)).willThrow(error)
       $0.doSomething(arg1: =="3", arg2: .isNil()).willReturn("3")
       $0.doSomething(with: =="4").willReturn("4")
       $0.doSomething(with: =="5", and: .isTrue()).willReturn("5")
