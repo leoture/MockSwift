@@ -27,301 +27,350 @@
 import XCTest
 
 class VerifiableCalledTests: XCTestCase {
-  private var callRegister: CallRegisterMock!
-  private var functionIdentifier: FunctionIdentifier!
-  private var failureRecorder: FailureRecorderMock!
-  private var predicate: AnyPredicateMock!
-  private var verifiable: Verifiable<Void>!
+    private var callRegister: CallRegisterMock!
+    private var functionIdentifier: FunctionIdentifier!
+    private var failureRecorder: FailureRecorderMock!
+    private var predicate: AnyPredicateMock!
+    private var verifiable: Verifiable<Void>!
 
-  override func setUp() {
-    callRegister = CallRegisterMock()
-    functionIdentifier = .stub(function: "function(arg:)", returnType: Int.self)
-    failureRecorder = FailureRecorderMock()
-    predicate = AnyPredicateMock()
-    verifiable = Verifiable(callRegister: callRegister,
-                            functionIdentifier: functionIdentifier,
-                            parametersPredicates: [predicate],
-                            failureRecorder: failureRecorder)
-  }
+    override func setUp() {
+        callRegister = CallRegisterMock()
+        functionIdentifier = .stub(function: "function(arg:)", returnType: Int.self)
+        failureRecorder = FailureRecorderMock()
+        predicate = AnyPredicateMock()
+        verifiable = Verifiable(callRegister: callRegister,
+                                functionIdentifier: functionIdentifier,
+                                parametersPredicates: [predicate],
+                                failureRecorder: failureRecorder)
+    }
 
-  // MARK: - Private methods
+    // MARK: - Private methods
 
-  private func callRegisterCalled(with functionIdentifier: FunctionIdentifier, and predicate: AnyPredicateMock) {
-    XCTAssertEqual(callRegister.recordedCallsReceived.count, 1)
-    let (identifier, matchs) = callRegister.recordedCallsReceived[0]
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(matchs.count, 1)
-    XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
-  }
+    private func callRegisterCalled(with functionIdentifier: FunctionIdentifier, and predicate: AnyPredicateMock) {
+        XCTAssertEqual(callRegister.recordedCallsReceived.count, 1)
+        let (identifier, matchs) = callRegister.recordedCallsReceived[0]
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(matchs.count, 1)
+        XCTAssertTrue(matchs[0] as? AnyPredicateMock === predicate)
+    }
 
-  // MARK: - called times:Predicate<Int>
+    // MARK: - called times:Predicate<Int>
 
-  func test_called_should_recordFailure_when_recordedCallsReturnEmpty() {
-    // Given
-    callRegister.recordedCallsReturn = []
-    predicate.description = "description"
+    func test_called_should_recordFailure_when_recordedCallsReturnEmpty() {
+        // Given
+        callRegister.recordedCallsReturn = []
+        predicate.description = "description"
 
-    // When
-    verifiable.called(file: "file", line: 42)
+        // When
+        verifiable.called(file: "file", line: 42)
 
-    // Then
-    callRegisterCalled(with: functionIdentifier, and: predicate)
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int " +
-      "is expected to be called more than 0 time(s) but is called 0 time(s).")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called more than 0 time(s) but is called 0 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-  func test_called_should_notRecordFailure_when_recordedCallsReturnCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub()]
+    func test_called_should_notRecordFailure_when_recordedCallsReturnCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub()]
 
-    // When
-    verifiable.called(file: "file", line: 42)
+        // When
+        verifiable.called(file: "file", line: 42)
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-  func test_called_should_recordFailure_when_recordedCallsDontReturnEnoughCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(), .stub()]
-    predicate.description = "description"
+    func test_called_should_recordFailure_when_recordedCallsDontReturnEnoughCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(), .stub()]
+        predicate.description = "description"
 
-    // When
-    verifiable.called(times: >2, file: "file", line: 42)
+        // When
+        verifiable.called(times: >2, file: "file", line: 42)
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int " +
-      "is expected to be called more than 2 time(s) but is called 2 time(s).")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called more than 2 time(s) but is called 2 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-  func test_called_should_notRecordFailure_when_recordedCallsReturnEnoughCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(), .stub(), .stub()]
+    func test_called_should_notRecordFailure_when_recordedCallsReturnEnoughCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(), .stub(), .stub()]
 
-    // When
-    verifiable.called(times: >2)
+        // When
+        verifiable.called(times: >2)
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-  // MARK: - called times:Int
+    // MARK: - called times:Int
 
-  func test_called_should_recordFailure_when_recordedCallsDontReturnExactNumberOfCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(), .stub()]
-    predicate.description = "description"
+    func test_called_should_recordFailure_when_recordedCallsDontReturnExactNumberOfCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(), .stub()]
+        predicate.description = "description"
 
-    // When
-    verifiable.called(times: 3, file: "file", line: 42)
+        // When
+        verifiable.called(times: 3, file: "file", line: 42)
 
-    // Then
-    callRegisterCalled(with: functionIdentifier, and: predicate)
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int " +
-      "is expected to be called 3 time(s) but is called 2 time(s).")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called 3 time(s) but is called 2 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-  func test_called_should_notRecordFailure_when_recordedCallsReturnExactNumberOfCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(), .stub(), .stub()]
+    func test_called_should_notRecordFailure_when_recordedCallsReturnExactNumberOfCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(), .stub(), .stub()]
 
-    // When
-    verifiable.called(times: 3)
+        // When
+        verifiable.called(times: 3)
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-  // MARK: - neverCalled
+    // MARK: - neverCalled
 
-  func test_neverCalled_should_recordFailure_when_recordedCallsReturnCalls() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(), .stub()]
-    predicate.description = "description"
+    func test_neverCalled_should_recordFailure_when_recordedCallsReturnCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(), .stub()]
+        predicate.description = "description"
 
-    // When
-    verifiable.neverCalled(file: "file", line: 42)
+        // When
+        verifiable.neverCalled(file: "file", line: 42)
 
-    // Then
-    callRegisterCalled(with: functionIdentifier, and: predicate)
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int " +
-      "is expected to be called 0 time(s) but is called 2 time(s).")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called 0 time(s) but is called 2 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-  func test_neverCalled_should_notRecordFailure_when_recordedCallsReturnNoCalls() {
-    // Given
-    callRegister.recordedCallsReturn = []
+    func test_neverCalled_should_notRecordFailure_when_recordedCallsReturnNoCalls() {
+        // Given
+        callRegister.recordedCallsReturn = []
 
-    // When
-    verifiable.neverCalled()
+        // When
+        verifiable.neverCalled()
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-  // MARK: - called after Assertion
+    // MARK: - calledOnce
 
-  func test_calledAfterAssertion_should_recordFailure_when_recordedCallsReturnEmpty() {
-    // Given
-    callRegister.recordedCallsReturn = []
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.descriptionReturn = "assertion description"
-    assertion.firstValidTimeReturn = 0
+    func test_calledOnce_should_recordFailure_when_recordedCallsReturnNoCalls() {
+        // Given
+        callRegister.recordedCallsReturn = []
+        predicate.description = "description"
 
-    // When
-    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+        // When
+        verifiable.calledOnce(file: "file", line: 42)
 
-    // Then
-    callRegisterCalled(with: functionIdentifier, and: predicate)
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
-      "but is called 0 time(s) " +
-      "after assertion description.")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called 1 time(s) but is called 0 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-  func test_calledAfterAssertion_should_recordFailure_when_recordedCallsDontReturnEnoughFunctionCall() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3)]
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.descriptionReturn = "assertion description"
-    assertion.firstValidTimeReturn = 2
+    func test_calledOnce_should_recordFailure_when_recordedCallsReturnMoreThanOneCall() {
+        // Given
+        callRegister.recordedCallsReturn = [ .stub(), .stub()]
+        predicate.description = "description"
 
-    // When
-    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+        // When
+        verifiable.calledOnce(file: "file", line: 42)
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
-      "but is called 1 time(s) " +
-      "after assertion description.")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-  func test_calledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEnoughFunctionCall() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3), .stub(time: 4)]
-    let assertion = AssertionMock()
-    assertion.firstValidTimeReturn = 2
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int " +
+                        "is expected to be called 1 time(s) but is called 2 time(s).")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-    // When
-    verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+    func test_calledOnce_should_notRecordFailure_when_recordedCallsReturnOneCalls() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub()]
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // When
+        verifiable.calledOnce()
 
-  func test_calledAfterAssertion_should_returnCorrectAssertion() {
-    // Given
-    let expectedCall1: FunctionCall = .stub(time: 3)
-    let expectedCall2: FunctionCall = .stub(time: 4)
-    callRegister.recordedCallsReturn = [.stub(time: 0), expectedCall1, expectedCall2]
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.firstValidTimeReturn = 2
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-    // When
-    let result = verifiable.called(times: >=2, after: assertion, file: "file", line: 42)
+    // MARK: - called after Assertion
 
-    // Then
-    XCTAssertTrue(result is CallAssertion)
-    let callAssertion = result as? CallAssertion
-    XCTAssertEqual(callAssertion?.times.description, (>=2).description)
-    XCTAssertEqual(callAssertion?.functionIdentifier, functionIdentifier)
-    XCTAssertEqual(callAssertion?.parametersPredicates.map { $0.description }, [predicate.description])
-    XCTAssertEqual(callAssertion?.calls, [expectedCall1, expectedCall2])
-    XCTAssertTrue(callAssertion?.previous as AnyObject === assertion)
-  }
+    func test_calledAfterAssertion_should_recordFailure_when_recordedCallsReturnEmpty() {
+        // Given
+        callRegister.recordedCallsReturn = []
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.firstValidTimeReturn = 0
 
-  // MARK: - neverCalled after Assertion
+        // When
+        verifiable.called(times: >1, after: assertion, file: "file", line: 42)
 
-  func test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEmpty() {
-    // Given
-    callRegister.recordedCallsReturn = []
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.descriptionReturn = "assertion description"
-    assertion.firstValidTimeReturn = 0
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
 
-    // When
-    verifiable.neverCalled(after: assertion, file: "file", line: 42)
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
+                        "but is called 0 time(s) " +
+                        "after assertion description.")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-    // Then
-    callRegisterCalled(with: functionIdentifier, and: predicate)
+    func test_calledAfterAssertion_should_recordFailure_when_recordedCallsDontReturnEnoughFunctionCall() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3)]
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.firstValidTimeReturn = 2
 
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // When
+        verifiable.called(times: >1, after: assertion, file: "file", line: 42)
 
-  func test_neverCalledAfterAssertion_should_recordFailure_when_recordedCallsReturnCall() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 2)]
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.descriptionReturn = "assertion description"
-    assertion.firstValidTimeReturn = 1
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called more than 1 time(s) " +
+                        "but is called 1 time(s) " +
+                        "after assertion description.")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
 
-    // When
-    verifiable.neverCalled(after: assertion, file: "file", line: 42)
+    func test_calledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEnoughFunctionCall() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3), .stub(time: 4)]
+        let assertion = AssertionMock()
+        assertion.firstValidTimeReturn = 2
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
-    let (message, file, line) = failureRecorder.recordFailureReceived[0]
-    XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called 0 time(s) " +
-      "but is called 1 time(s) " +
-      "after assertion description.")
-    XCTAssertEqual("\(file) \(line)", "file 42")
-  }
+        // When
+        verifiable.called(times: >1, after: assertion, file: "file", line: 42)
 
-  func test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnNoCall() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 1)]
-    let assertion = AssertionMock()
-    assertion.firstValidTimeReturn = 2
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
 
-    // When
-    verifiable.neverCalled(after: assertion, file: "file", line: 42)
+    func test_calledAfterAssertion_should_returnCorrectAssertion() {
+        // Given
+        let expectedCall1: FunctionCall = .stub(time: 3)
+        let expectedCall2: FunctionCall = .stub(time: 4)
+        callRegister.recordedCallsReturn = [.stub(time: 0), expectedCall1, expectedCall2]
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.firstValidTimeReturn = 2
 
-    // Then
-    XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
-  }
+        // When
+        let result = verifiable.called(times: >=2, after: assertion, file: "file", line: 42)
 
-  func test_neverCalledAfterAssertion_should_returnCorrectAssertion() {
-    // Given
-    callRegister.recordedCallsReturn = [.stub(time: 0)]
-    predicate.description = "description"
-    let assertion = AssertionMock()
-    assertion.firstValidTimeReturn = 1
+        // Then
+        XCTAssertTrue(result is CallAssertion)
+        let callAssertion = result as? CallAssertion
+        XCTAssertEqual(callAssertion?.times.description, (>=2).description)
+        XCTAssertEqual(callAssertion?.functionIdentifier, functionIdentifier)
+        XCTAssertEqual(callAssertion?.parametersPredicates.map { $0.description }, [predicate.description])
+        XCTAssertEqual(callAssertion?.calls, [expectedCall1, expectedCall2])
+        XCTAssertTrue(callAssertion?.previous as AnyObject === assertion)
+    }
 
-    // When
-    let result = verifiable.neverCalled(after: assertion, file: "file", line: 42)
+    // MARK: - neverCalled after Assertion
 
-    // Then
-    XCTAssertTrue(result is CallAssertion)
-    let callAssertion = result as? CallAssertion
-    XCTAssertEqual(callAssertion?.times.description, (==0).description)
-    XCTAssertEqual(callAssertion?.functionIdentifier, functionIdentifier)
-    XCTAssertEqual(callAssertion?.parametersPredicates.map { $0.description }, [predicate.description])
-    XCTAssertEqual(callAssertion?.calls.count, 0)
-    XCTAssertTrue(callAssertion?.previous as AnyObject === assertion)
-  }
+    func test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEmpty() {
+        // Given
+        callRegister.recordedCallsReturn = []
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.firstValidTimeReturn = 0
+
+        // When
+        verifiable.neverCalled(after: assertion, file: "file", line: 42)
+
+        // Then
+        callRegisterCalled(with: functionIdentifier, and: predicate)
+
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
+
+    func test_neverCalledAfterAssertion_should_recordFailure_when_recordedCallsReturnCall() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 2)]
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.firstValidTimeReturn = 1
+
+        // When
+        verifiable.neverCalled(after: assertion, file: "file", line: 42)
+
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "function(arg: description) -> Int is expected to be called 0 time(s) " +
+                        "but is called 1 time(s) " +
+                        "after assertion description.")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
+
+    func test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnNoCall() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 1)]
+        let assertion = AssertionMock()
+        assertion.firstValidTimeReturn = 2
+
+        // When
+        verifiable.neverCalled(after: assertion, file: "file", line: 42)
+
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
+    }
+
+    func test_neverCalledAfterAssertion_should_returnCorrectAssertion() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0)]
+        predicate.description = "description"
+        let assertion = AssertionMock()
+        assertion.firstValidTimeReturn = 1
+
+        // When
+        let result = verifiable.neverCalled(after: assertion, file: "file", line: 42)
+
+        // Then
+        XCTAssertTrue(result is CallAssertion)
+        let callAssertion = result as? CallAssertion
+        XCTAssertEqual(callAssertion?.times.description, (==0).description)
+        XCTAssertEqual(callAssertion?.functionIdentifier, functionIdentifier)
+        XCTAssertEqual(callAssertion?.parametersPredicates.map { $0.description }, [predicate.description])
+        XCTAssertEqual(callAssertion?.calls.count, 0)
+        XCTAssertTrue(callAssertion?.previous as AnyObject === assertion)
+    }
 }
