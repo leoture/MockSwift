@@ -27,111 +27,126 @@ import Foundation
 
 /// Represents a function call that returns `ReturnType` and can be checked.
 public class Verifiable<ReturnType> {
-  // MARK: - Properties
+    // MARK: - Properties
 
-  private let callRegister: CallRegister
-  private let functionIdentifier: FunctionIdentifier
-  private let parametersPredicates: [AnyPredicate]
-  private let failureRecorder: FailureRecorder
+    private let callRegister: CallRegister
+    private let functionIdentifier: FunctionIdentifier
+    private let parametersPredicates: [AnyPredicate]
+    private let failureRecorder: FailureRecorder
 
-  // MARK: - Public Properties
+    // MARK: - Public Properties
 
-  /// Return a list of all parameters' list with whom the function was called.
-  public var receivedParameters: [[ParameterType]] {
-    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
-      .map { $0.parameters }
-  }
-
-  /// Return the number of times that the function was called.
-  public var callCount: Int {
-    callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
-      .count
-  }
-
-  // MARK: - Init
-
-  init(callRegister: CallRegister,
-       functionIdentifier: FunctionIdentifier,
-       parametersPredicates: [AnyPredicate],
-       failureRecorder: FailureRecorder) {
-    self.callRegister = callRegister
-    self.functionIdentifier = functionIdentifier
-    self.parametersPredicates = parametersPredicates
-    self.failureRecorder = failureRecorder
-  }
-
-  // MARK: - Public Methods
-
-  /// Used to disambiguate the `ReturnType`.
-  /// - Parameter type: The type to disambiguate.
-  /// - Returns: `self` with `ReturnType` disambiguated.
-  public func disambiguate(with type: ReturnType.Type) -> Self { self }
-
-  /// Checks that the function has been called a number of times corresponding to the predicate.
-  /// - Parameter times: Predicate that corresponds to the number of calls.
-  /// - Parameter assertion: Previous assertion. nil by default.
-  /// - Parameter file: File where `called` is called.
-  /// - Parameter line: Line where `called`is called.
-  /// - Returns: A new `Assertion`.
-  /// - Important:
-  /// When **assertion** is specify, only calls that appear after
-  /// the minimum amount of calls required by the previous assertion will be considered.
-  @discardableResult
-  public func called(times: Predicate<Int> = >0,
-                     after assertion: Assertion? = nil,
-                     file: StaticString = #file,
-                     line: UInt = #line) -> Assertion {
-    var calls = callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
-
-    if let assertion = assertion {
-      let startedTime = assertion.firstValidTime
-      calls = calls.filter { $0.time > startedTime }
+    /// Return a list of all parameters' list with whom the function was called.
+    public var receivedParameters: [[ParameterType]] {
+        callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
+            .map { $0.parameters }
     }
 
-    calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
-
-    let currentAssertion = CallAssertion(times: times,
-                                         functionIdentifier: functionIdentifier,
-                                         parametersPredicates: parametersPredicates,
-                                         calls: calls,
-                                         previous: assertion)
-
-    if !currentAssertion.isValid {
-      failureRecorder.recordFailure(message: currentAssertion.description, file: file, line: line)
+    /// Return the number of times that the function was called.
+    public var callCount: Int {
+        callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
+            .count
     }
 
-    return currentAssertion
-  }
+    // MARK: - Init
 
-  /// Checks that the function has been called.
-  /// - Parameter times: The expected number of calls.
-  /// - Parameter assertion: Previous assertion. nil by default.
-  /// - Parameter file: File where `called` is called.
-  /// - Parameter line: Line where `called`is called.
-  /// - Returns: A new `Assertion`.
-  /// - Important:
-  /// When **assertion** is specify, only calls that appear after
-  /// the minimum amount of calls required by the previous assertion will be considered.
-  @discardableResult
-  public func called(times: Int,
-                     after assertion: Assertion? = nil,
-                     file: StaticString = #file,
-                     line: UInt = #line) -> Assertion {
-    called(times: ==times, after: assertion, file: file, line: line)
-  }
+    init(callRegister: CallRegister,
+         functionIdentifier: FunctionIdentifier,
+         parametersPredicates: [AnyPredicate],
+         failureRecorder: FailureRecorder) {
+        self.callRegister = callRegister
+        self.functionIdentifier = functionIdentifier
+        self.parametersPredicates = parametersPredicates
+        self.failureRecorder = failureRecorder
+    }
 
-  /// Checks that the function has never been called.
-  /// - Parameter assertion: Previous assertion. nil by default.
-  /// - Parameter file: File where `called` is called.
-  /// - Parameter line: Line where `called`is called.
-  /// - Returns: A new `Assertion`.
-  /// - Important:
-  /// When **assertion** is specify, only calls that appear after
-  /// the minimum amount of calls required by the previous assertion will be considered.
-  @discardableResult
-  public func neverCalled(after assertion: Assertion? = nil,
-                          file: StaticString = #file,
-                          line: UInt = #line) -> Assertion {
-    called(times: ==0, after: assertion, file: file, line: line)
-  }
+    // MARK: - Public Methods
+
+    /// Used to disambiguate the `ReturnType`.
+    /// - Parameter type: The type to disambiguate.
+    /// - Returns: `self` with `ReturnType` disambiguated.
+    public func disambiguate(with type: ReturnType.Type) -> Self { self }
+
+    /// Checks that the function has been called a number of times corresponding to the predicate.
+    /// - Parameter times: Predicate that corresponds to the number of calls.
+    /// - Parameter assertion: Previous assertion. nil by default.
+    /// - Parameter file: File where `called` is called.
+    /// - Parameter line: Line where `called`is called.
+    /// - Returns: A new `Assertion`.
+    /// - Important:
+    /// When **assertion** is specify, only calls that appear after
+    /// the minimum amount of calls required by the previous assertion will be considered.
+    @discardableResult
+    public func called(times: Predicate<Int> = >0,
+                       after assertion: Assertion? = nil,
+                       file: StaticString = #file,
+                       line: UInt = #line) -> Assertion {
+        var calls = callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
+
+        if let assertion = assertion {
+            let startedTime = assertion.firstValidTime
+            calls = calls.filter { $0.time > startedTime }
+        }
+
+        calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
+
+        let currentAssertion = CallAssertion(times: times,
+                                             functionIdentifier: functionIdentifier,
+                                             parametersPredicates: parametersPredicates,
+                                             calls: calls,
+                                             previous: assertion)
+
+        if !currentAssertion.isValid {
+            failureRecorder.recordFailure(message: currentAssertion.description, file: file, line: line)
+        }
+
+        return currentAssertion
+    }
+
+    /// Checks that the function has been called.
+    /// - Parameter times: The expected number of calls.
+    /// - Parameter assertion: Previous assertion. nil by default.
+    /// - Parameter file: File where `called` is called.
+    /// - Parameter line: Line where `called`is called.
+    /// - Returns: A new `Assertion`.
+    /// - Important:
+    /// When **assertion** is specify, only calls that appear after
+    /// the minimum amount of calls required by the previous assertion will be considered.
+    @discardableResult
+    public func called(times: Int,
+                       after assertion: Assertion? = nil,
+                       file: StaticString = #file,
+                       line: UInt = #line) -> Assertion {
+        called(times: ==times, after: assertion, file: file, line: line)
+    }
+
+    /// Checks that the function has never been called.
+    /// - Parameter assertion: Previous assertion. nil by default.
+    /// - Parameter file: File where `called` is called.
+    /// - Parameter line: Line where `called`is called.
+    /// - Returns: A new `Assertion`.
+    /// - Important:
+    /// When **assertion** is specify, only calls that appear after
+    /// the minimum amount of calls required by the previous assertion will be considered.
+    @discardableResult
+    public func neverCalled(after assertion: Assertion? = nil,
+                            file: StaticString = #file,
+                            line: UInt = #line) -> Assertion {
+        called(times: ==0, after: assertion, file: file, line: line)
+    }
+
+    /// Checks that the function has been called once.
+    /// - Parameter assertion: Previous assertion. nil by default.
+    /// - Parameter file: File where `called` is called.
+    /// - Parameter line: Line where `called`is called.
+    /// - Returns: A new `Assertion`.
+    /// - Important:
+    /// When **assertion** is specify, only calls that appear after
+    /// the minimum amount of calls required by the previous assertion will be considered.
+    @discardableResult
+    public func calledOnce(after assertion: Assertion? = nil,
+                           file: StaticString = #file,
+                           line: UInt = #line) -> Assertion {
+        called(times: ==1, after: assertion, file: file, line: line)
+    }
 }

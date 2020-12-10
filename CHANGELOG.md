@@ -17,12 +17,14 @@
 #### Added
 - Add willDoNothing [#107](https://github.com/leoture/MockSwift/pull/107) by [Jordhan Leoture](https://github.com/leoture)
 - Add neverCalled [#106](https://github.com/leoture/MockSwift/pull/106) by [Jordhan Leoture](https://github.com/leoture)
+- Add calledOnce [#108](https://github.com/leoture/MockSwift/pull/108) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
 #### Deprecated
 
 #### Removed
+- Remove Predicate.match(description:keyPath:) [#108](https://github.com/leoture/MockSwift/pull/108) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Fixed
 

@@ -54,17 +54,6 @@ public class Predicate<Input> {
     Predicate(description: description ?? "a \(type)", predicate: predicate)
   }
 
-  /// Creates a `Predicate<Input>`.
-  /// - Parameter description: The description of the Predicate.
-  /// - Parameter type: The type to match.
-  /// - Parameter keyPath: The keyPath that will be used to verify that the entry statisfies the Predicate.
-  /// - Returns: A new `Predicate<Input>`.
-  public class func match(description: String? = nil,
-                          any type: Input.Type = Input.self,
-                          when keyPath: KeyPath<Input, Bool>) -> Predicate<Input> {
-    .match(description: description ?? "a \(type)") { $0[keyPath: keyPath] }
-  }
-
   /// Creates a `Predicate<Input>` able to match any value of type `Input`.
   /// - Parameter type: The type to match.
   /// - Returns: A new `Predicate<Input>`.

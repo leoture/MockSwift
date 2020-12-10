@@ -143,7 +143,7 @@ class ThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "arg2")
 
     // Then
-    let receivedParameters = then(custom).function(identifier: .not(.match(when: \.isEmpty)))
+    let receivedParameters = then(custom).function(identifier: .not(.match(\.isEmpty)))
       .disambiguate(with: String.self)
       .receivedParameters
     XCTAssertEqual(receivedParameters as? [[String]], [["arg1"], ["arg2"]])
@@ -158,7 +158,7 @@ class ThenIntegrationTests: XCTestCase {
     let _: String = custom.function(identifier: "arg2")
 
     // Then
-    let callCount = then(custom).function(identifier: .not(.match(when: \.isEmpty)))
+    let callCount = then(custom).function(identifier: .not(.match(\.isEmpty)))
       .disambiguate(with: String.self)
       .callCount
     XCTAssertEqual(callCount, 2)
@@ -194,7 +194,7 @@ class ThenIntegrationTests: XCTestCase {
     custom.identifier = "value"
 
     // Then
-    then(custom).identifier.set(.not(.match(when: \.isEmpty))).called()
+    then(custom).identifier.set(.not(.match(\.isEmpty))).called()
     then(custom).identifier.set("value").called()
   }
 
@@ -206,7 +206,7 @@ class ThenIntegrationTests: XCTestCase {
     custom.identifier = "value"
 
     // Then
-    then(custom).identifier.set(.match(when: \.isEmpty)).called(times: 0)
+    then(custom).identifier.set(.match(\.isEmpty)).called(times: 0)
   }
 
   func test_subscriptFirstSecond_get_shouldBeCalled() {
@@ -238,7 +238,7 @@ class ThenIntegrationTests: XCTestCase {
     custom[x: 1, y: 2] = "value"
 
     // Then
-    then(custom)[x: 1, y: 2].set(.not(.match(when: \.isEmpty))).called()
+    then(custom)[x: 1, y: 2].set(.not(.match(\.isEmpty))).called()
     then(custom)[x: 1, y: 2].set("value").called()
   }
 
@@ -250,6 +250,6 @@ class ThenIntegrationTests: XCTestCase {
     custom[x: 1, y: 2] = "value"
 
     // Then
-    then(custom)[x: 1, y: 2].set(.match(when: \.isEmpty)).called(times: 0)
+    then(custom)[x: 1, y: 2].set(.match(\.isEmpty)).called(times: 0)
   }
 }

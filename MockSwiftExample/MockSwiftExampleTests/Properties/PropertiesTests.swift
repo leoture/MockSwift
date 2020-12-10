@@ -36,7 +36,7 @@ class PropertiesTests: XCTestCase {
     var newValue: String?
     given(properties) {
       $0.variable.get.willReturn("variable")
-      $0.variable.set(.match(when: \.isEmpty)).will { newValue = $0[0] as? String }
+      $0.variable.set(.match(\.isEmpty)).will { newValue = $0[0] as? String }
       $0.constant.get.willReturn(true)
     }
 

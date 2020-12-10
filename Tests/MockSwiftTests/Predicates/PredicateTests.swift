@@ -103,7 +103,7 @@ class PredicateTests: XCTestCase {
       XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
-    assertion(.match(any: String.self, when: \.isEmpty))
+    assertion(.match(any: String.self, \.isEmpty))
   }
 
   func test_match_shouldReturnFalseIfKeyPathReturnFalse() {
@@ -111,11 +111,11 @@ class PredicateTests: XCTestCase {
       XCTAssertFalse(predicate.satisfy(by: "not Empty"))
     }
 
-    assertion(.match(any: String.self, when: \.isEmpty))
+    assertion(.match(any: String.self, \.isEmpty))
   }
 
   func test_match_KeyPathDescription() {
-    let predicate: Predicate<String> = .match(when: \.isEmpty)
+    let predicate: Predicate<String> = .match(\.isEmpty)
 
     XCTAssertEqual("\(predicate)", "a String")
   }
