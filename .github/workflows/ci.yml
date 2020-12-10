@@ -20,7 +20,7 @@ jobs:
 
   macos-tests:
     name: macOS Tests
-    runs-on: macOS-11.0
+    runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
