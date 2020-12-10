@@ -18,6 +18,14 @@
 - Add willDoNothing [#107](https://github.com/leoture/MockSwift/pull/107) by [Jordhan Leoture](https://github.com/leoture)
 - Add neverCalled [#106](https://github.com/leoture/MockSwift/pull/106) by [Jordhan Leoture](https://github.com/leoture)
 - Add calledOnce [#108](https://github.com/leoture/MockSwift/pull/108) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByNilLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByBooleanLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByIntegerLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByFloatLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByStringLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByStringInterpolation [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByArrayLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
+- Add GlobalStub for ExpressibleByDictionaryLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 
