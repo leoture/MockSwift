@@ -62,7 +62,7 @@ class GlobalStubExtensionTests: XCTestCase {
     func test_stub_Set() { XCTAssertEqual(Set<Int>.stub(), []) }
 
     // MARK: - ExpressibleByDictionaryLiteral
-    
+
     func test_stub_Dictionary() { XCTAssertEqual([Int: Int].stub(), [:]) }
     func test_stub_KeyValuePairs() { XCTAssertNotNil(KeyValuePairs<Int, Int>.stub()) }
 }
