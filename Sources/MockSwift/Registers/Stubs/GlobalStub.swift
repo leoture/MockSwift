@@ -27,21 +27,88 @@ import Foundation
 
 /// GlobalStub represents an entity able to give a stub value.
 public protocol GlobalStub {
-  /// Creates a stub value of `Self`.
-  static func stub() -> Self
+    /// Creates a stub value of `Self`.
+    static func stub() -> Self
 }
 
-extension String: GlobalStub {
-  /// Creates a stub value of `String`.
-  public static func stub() -> Self { "" }
+// MARK: - ExpressibleByNilLiteral
+
+extension GlobalStub where Self: ExpressibleByNilLiteral {
+    public static func stub() -> Self { nil }
 }
 
-extension Int: GlobalStub {
-  /// Creates a stub value of `Int`.
-  public static func stub() -> Self { 0 }
+extension Optional: GlobalStub {}
+
+// MARK: - ExpressibleByBooleanLiteral
+
+extension GlobalStub where Self: ExpressibleByBooleanLiteral {
+    public static func stub() -> Self { false }
 }
 
-extension Bool: GlobalStub {
-  /// Creates a stub value of `Bool`.
-  public static func stub() -> Self { false }
+extension Bool: GlobalStub {}
+
+// MARK: - ExpressibleByIntegerLiteral
+
+extension GlobalStub where Self: ExpressibleByIntegerLiteral {
+    public static func stub() -> Self { 0 }
 }
+
+extension Int: GlobalStub {}
+
+// MARK: - ExpressibleByFloatLiteral
+
+extension GlobalStub where Self: ExpressibleByFloatLiteral {
+    public static func stub() -> Self { 0.0 }
+}
+
+extension Double: GlobalStub {
+    public static func stub() -> Self { 0.0 }
+}
+extension Float: GlobalStub {
+    public static func stub() -> Self { 0.0 }
+}
+extension Float80: GlobalStub {
+    public static func stub() -> Self { 0.0 }
+}
+extension Decimal: GlobalStub {
+    public static func stub() -> Self { 0.0 }
+}
+extension NSNumber: GlobalStub {
+    public static func stub() -> Self { 0.0 }
+}
+
+// MARK: - ExpressibleByStringLiteral
+
+extension GlobalStub where Self: ExpressibleByStringLiteral {
+    public static func stub() -> Self { "" }
+}
+extension String: GlobalStub {}
+extension Substring: GlobalStub {}
+extension StaticString: GlobalStub {}
+
+// MARK: - ExpressibleByStringInterpolation
+
+extension GlobalStub where Self: ExpressibleByStringInterpolation {
+    public static func stub() -> Self { "" }
+}
+
+// MARK: - ExpressibleByArrayLiteral
+
+extension GlobalStub where Self: ExpressibleByArrayLiteral {
+    public static func stub() -> Self { [] }
+}
+
+extension Array: GlobalStub {}
+extension ArraySlice: GlobalStub {}
+extension ContiguousArray: GlobalStub {}
+extension IndexPath: GlobalStub {}
+extension Set: GlobalStub {}
+
+// MARK: - ExpressibleByDictionaryLiteral
+
+extension GlobalStub where Self: ExpressibleByDictionaryLiteral {
+    public static func stub() -> Self { [:] }
+}
+
+extension Dictionary: GlobalStub {}
+extension KeyValuePairs: GlobalStub {}

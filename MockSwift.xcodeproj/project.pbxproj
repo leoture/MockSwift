@@ -55,7 +55,7 @@
 		9EAC3794234BA23F00281F7B /* Predicate+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC3793234BA23F00281F7B /* Predicate+Optional.swift */; };
 		9EAC3796234BA25A00281F7B /* PredicateOptionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */; };
 		9EB5542422FDDDEB00449662 /* GlobalStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542322FDDDEB00449662 /* GlobalStub.swift */; };
-		9EB5542622FDDF2C00449662 /* MockDefaultExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542522FDDF2C00449662 /* MockDefaultExtensionTests.swift */; };
+		9EB5542622FDDF2C00449662 /* GlobalStubExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542522FDDF2C00449662 /* GlobalStubExtensionTests.swift */; };
 		9EB5542B22FDE44300449662 /* GlobalStubIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */; };
 		9EB5542F2300591500449662 /* Given.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB5542E2300591500449662 /* Given.swift */; };
 		9EB55432230059D800449662 /* AnyPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB55431230059D800449662 /* AnyPredicate.swift */; };
@@ -189,7 +189,7 @@
 		9EAC3793234BA23F00281F7B /* Predicate+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Predicate+Optional.swift"; sourceTree = "<group>"; };
 		9EAC3795234BA25A00281F7B /* PredicateOptionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicateOptionalTests.swift; sourceTree = "<group>"; };
 		9EB5542322FDDDEB00449662 /* GlobalStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStub.swift; sourceTree = "<group>"; };
-		9EB5542522FDDF2C00449662 /* MockDefaultExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultExtensionTests.swift; sourceTree = "<group>"; };
+		9EB5542522FDDF2C00449662 /* GlobalStubExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStubExtensionTests.swift; sourceTree = "<group>"; };
 		9EB5542A22FDE44300449662 /* GlobalStubIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStubIntegrationTests.swift; sourceTree = "<group>"; };
 		9EB5542E2300591500449662 /* Given.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Given.swift; sourceTree = "<group>"; };
 		9EB55431230059D800449662 /* AnyPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPredicate.swift; sourceTree = "<group>"; };
@@ -347,7 +347,7 @@
 			children = (
 				9E2F051C22FAF1B900E04F34 /* FunctionBehaviourRegisterTests.swift */,
 				9E2F052522FB354C00E04F34 /* FunctionBehaviourTests.swift */,
-				9EB5542522FDDF2C00449662 /* MockDefaultExtensionTests.swift */,
+				9EB5542522FDDF2C00449662 /* GlobalStubExtensionTests.swift */,
 			);
 			path = Behaviour;
 			sourceTree = "<group>";
@@ -944,7 +944,7 @@
 				FC48155623CB994500E0976A /* Mock+StubRegisterTests.swift in Sources */,
 				OBJ_59 /* MockTests.swift in Sources */,
 				FC48155C23CB9DBE00E0976A /* StubTypeRegisterTests.swift in Sources */,
-				9EB5542622FDDF2C00449662 /* MockDefaultExtensionTests.swift in Sources */,
+				9EB5542622FDDF2C00449662 /* GlobalStubExtensionTests.swift in Sources */,
 				9EAC3792234A25B800281F7B /* PredicateBoolTests.swift in Sources */,
 				FCDA1DC7246C687E0063A8EA /* FunctionCallStub.swift in Sources */,
 				FC25FC4F23F4949800C01726 /* MockableSubscriptReadableTests.swift in Sources */,
