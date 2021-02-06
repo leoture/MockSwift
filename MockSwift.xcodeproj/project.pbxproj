@@ -120,6 +120,7 @@
 		FCDA1DA8246B0DD00063A8EA /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDA1DA7246B0DD00063A8EA /* Interaction.swift */; };
 		FCDA1DAB246B0E8F0063A8EA /* InteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDA1DAA246B0E8F0063A8EA /* InteractionTests.swift */; };
 		FCDA1DC7246C687E0063A8EA /* FunctionCallStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDA1DC6246C687E0063A8EA /* FunctionCallStub.swift */; };
+		FCF23CA425CEF7AB00409A82 /* VerifiableNeverCalledTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF23CA325CEF7AB00409A82 /* VerifiableNeverCalledTests.swift */; };
 		OBJ_36 /* BehaviourRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BehaviourRegister.swift */; };
 		OBJ_37 /* CallRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* CallRegister.swift */; };
 		OBJ_38 /* FunctionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FunctionBehaviour.swift */; };
@@ -254,6 +255,7 @@
 		FCDA1DA7246B0DD00063A8EA /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		FCDA1DAA246B0E8F0063A8EA /* InteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionTests.swift; sourceTree = "<group>"; };
 		FCDA1DC6246C687E0063A8EA /* FunctionCallStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCallStub.swift; sourceTree = "<group>"; };
+		FCF23CA325CEF7AB00409A82 /* VerifiableNeverCalledTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiableNeverCalledTests.swift; sourceTree = "<group>"; };
 		"MockSwift::MockSwift::Product" /* MockSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MockSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"MockSwift::MockSwiftTests::Product" /* MockSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MockSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* BehaviourRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviourRegister.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				FC25FC5623F49F9500C01726 /* VerifiableSubscriptWritableTests.swift */,
 				FCC900F2249E10A900A20E97 /* CallAssertionTests.swift */,
 				FCC900F6249E28B700A20E97 /* VerifiableBasicTests.swift */,
+				FCF23CA325CEF7AB00409A82 /* VerifiableNeverCalledTests.swift */,
 			);
 			path = Verifiables;
 			sourceTree = "<group>";
@@ -959,6 +962,7 @@
 				FC66A25723CA25CD001F1821 /* MockIntegrationTests.swift in Sources */,
 				9EA55228230D93D200E82139 /* FunctionIdentifierTests.swift in Sources */,
 				9EA55224230D661E00E82139 /* FailureRecorderMock.swift in Sources */,
+				FCF23CA425CEF7AB00409A82 /* VerifiableNeverCalledTests.swift in Sources */,
 				FCC900F3249E10A900A20E97 /* CallAssertionTests.swift in Sources */,
 				FC48154923CB7B9700E0976A /* UnresolvedStrategyTests.swift in Sources */,
 				FC48155423CB97BA00E0976A /* StubRegisterMock.swift in Sources */,
