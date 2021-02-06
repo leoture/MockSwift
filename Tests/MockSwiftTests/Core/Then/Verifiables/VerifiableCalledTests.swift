@@ -230,6 +230,7 @@ class VerifiableCalledTests: XCTestCase {
         callRegister.recordedCallsReturn = []
         predicate.description = "description"
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.descriptionReturn = "assertion description"
         assertion.firstValidTimeReturn = 0
 
@@ -252,6 +253,7 @@ class VerifiableCalledTests: XCTestCase {
         callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3)]
         predicate.description = "description"
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.descriptionReturn = "assertion description"
         assertion.firstValidTimeReturn = 2
 
@@ -267,10 +269,28 @@ class VerifiableCalledTests: XCTestCase {
         XCTAssertEqual("\(file) \(line)", "file 42")
     }
 
+    func test_calledAfterAssertion_should_recordFailure_when_previousAssertionIsNotValid() {
+        // Given
+        callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3), .stub(time: 4)]
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.isValidReturn = false
+
+        // When
+        verifiable.called(times: >1, after: assertion, file: "file", line: 42)
+
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "assertion description")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
+
     func test_calledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnEnoughFunctionCall() {
         // Given
         callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 3), .stub(time: 4)]
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 2
 
         // When
@@ -287,6 +307,7 @@ class VerifiableCalledTests: XCTestCase {
         callRegister.recordedCallsReturn = [.stub(time: 0), expectedCall1, expectedCall2]
         predicate.description = "description"
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 2
 
         // When
@@ -310,6 +331,7 @@ class VerifiableCalledTests: XCTestCase {
         predicate.description = "description"
         let assertion = AssertionMock()
         assertion.descriptionReturn = "assertion description"
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 0
 
         // When
@@ -327,6 +349,7 @@ class VerifiableCalledTests: XCTestCase {
         predicate.description = "description"
         let assertion = AssertionMock()
         assertion.descriptionReturn = "assertion description"
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 1
 
         // When
@@ -341,10 +364,28 @@ class VerifiableCalledTests: XCTestCase {
         XCTAssertEqual("\(file) \(line)", "file 42")
     }
 
+    func test_neverCalledAfterAssertion_should_recordFailure_when_previousAssertionIsNotValid() {
+        // Given
+        callRegister.recordedCallsReturn = []
+        let assertion = AssertionMock()
+        assertion.descriptionReturn = "assertion description"
+        assertion.isValidReturn = false
+
+        // When
+        verifiable.neverCalled(after: assertion, file: "file", line: 42)
+
+        // Then
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        let (message, file, line) = failureRecorder.recordFailureReceived[0]
+        XCTAssertEqual(message, "assertion description")
+        XCTAssertEqual("\(file) \(line)", "file 42")
+    }
+
     func test_neverCalledAfterAssertion_should_notRecordFailure_when_recordedCallsReturnNoCall() {
         // Given
         callRegister.recordedCallsReturn = [.stub(time: 0), .stub(time: 1)]
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 2
 
         // When
@@ -359,6 +400,7 @@ class VerifiableCalledTests: XCTestCase {
         callRegister.recordedCallsReturn = [.stub(time: 0)]
         predicate.description = "description"
         let assertion = AssertionMock()
+        assertion.isValidReturn = true
         assertion.firstValidTimeReturn = 1
 
         // When
