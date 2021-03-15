@@ -34,7 +34,7 @@ import MockSwift
     get {
       mocked({% call parametersOnInvoke subcript %})
     }
-    {% if subscript.writeAccess != "" %}
+    {% if subscript.isMutable %}
     set {
       mocked({% call parametersOnInvoke subcript %}, newValue)
     }
@@ -44,13 +44,13 @@ import MockSwift
 
 {% macro mock type %}
 extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
-  {% for variable in type.allVariables|!definedInExtension %}
+  {% for variable in type.rawVariables|!definedInExtension %}
     {% call mockVariable variable %}
   {% endfor %}
-  {% for method in type.allMethods|!definedInExtension %}
+  {% for method in type.rawMethods|!definedInExtension %}
     {% call mockMethod method %}
   {% endfor %}
-  {% for method in type.allSubscripts|!definedInExtension %}
+  {% for method in type.rawSubscripts|!definedInExtension %}
     {% call mockSubscript method %}
   {% endfor %}
 }
@@ -76,11 +76,11 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro givenMockSubscript subscript %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> MockableSubscript.{% if subscript.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
    mockable({% call parametersOnInvoke subscript %})
   }
   {% endif %}
@@ -88,13 +88,13 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 
 {% macro given type %}
 extension Given where WrappedType == {{ type.name }} {
-  {% for variable in type.allVariables|!definedInExtension %}
+  {% for variable in type.rawVariables|!definedInExtension %}
     {% call givenMockVariable variable %}
   {% endfor %}
-  {% for method in type.allMethods|!definedInExtension %}
+  {% for method in type.rawMethods|!definedInExtension %}
     {% call givenMockMethod method %}
   {% endfor %}
-  {% for method in type.allSubscripts|!definedInExtension %}
+  {% for method in type.rawSubscripts|!definedInExtension %}
     {% call givenMockSubscript method %}
   {% endfor %}
 }
@@ -118,11 +118,11 @@ extension Given where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro thenMockSubscript subscript %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: Predicate<{{ param.unwrappedTypeName if param.typeAttributes.escaping else param.typeName }}>{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% if method.parameters.count > 0 %}
-  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.writeAccess != "" %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
+  public subscript({% for param in subscript.parameters %}{% if param.argumentLabel != null and param.argumentLabel != param.name %}{{ param.argumentLabel }} {% endif %}{{ param.name }}: {{ param.typeName }}{{ ', ' if not forloop.last }}{% endfor %}) -> VerifiableSubscript.{% if subscript.isMutable %}Writable{% else %}Readable{% endif %}{% call normalizeReturnType subscript.actualReturnTypeName %} {
    verifiable({% call parametersOnInvoke subscript %})
   }
   {% endif %}
@@ -130,13 +130,13 @@ extension Given where WrappedType == {{ type.name }} {
 
 {% macro then type %}
 extension Then where WrappedType == {{ type.name }} {
-  {% for variable in type.allVariables|!definedInExtension %}
+  {% for variable in type.rawVariables|!definedInExtension %}
     {% call thenMockVariable variable %}
   {% endfor %}
-  {% for method in type.allMethods|!definedInExtension %}
+  {% for method in type.rawMethods|!definedInExtension %}
     {% call thenMockMethod method %}
   {% endfor %}
-  {% for method in type.allSubscripts|!definedInExtension %}
+  {% for method in type.rawSubscripts|!definedInExtension %}
     {% call thenMockSubscript method %}
   {% endfor %}
 }

@@ -313,7 +313,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sourcery \\\n--sources MockSwiftExample \\\n--templates ../Templates/MockSwift.stencil \\\n--output MockSwiftExampleTests/Generated/GeneratedMocks.swift \\\n--args module=MockSwiftExample\n\ncat MockSwiftExampleTests/Generated/GeneratedMocks.swift\n";
+			shellScript = "sourcery \\\n--sources MockSwiftExample \\\n--templates ../Templates/MockSwift.stencil \\\n--output MockSwiftExampleTests/Generated/GeneratedMocks.swift \\\n--args module=MockSwiftExample\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

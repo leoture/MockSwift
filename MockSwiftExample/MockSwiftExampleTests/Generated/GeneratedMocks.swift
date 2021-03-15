@@ -1,6 +1,5 @@
-// Generated using Sourcery 1.0.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.3.4 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-
 
 import Foundation
 import MockSwift
@@ -133,6 +132,9 @@ extension Mock: BasicSubscript where WrappedType == BasicSubscript {
     get {
       mocked(arg1, arg2)
     }
+    set {
+      mocked(arg1, arg2, newValue)
+    }
   }
 }
 
@@ -143,10 +145,10 @@ extension Given where WrappedType == BasicSubscript {
   public subscript(arg1: String, arg2: Int) -> MockableSubscript.Writable<Bool> {
    mockable(arg1, arg2)
   }
-  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableSubscript.Readable<String> {
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> MockableSubscript.Writable<String> {
     mockable(arg1, arg2)
   }
-  public subscript(with arg1: String, and arg2: Int) -> MockableSubscript.Readable<String> {
+  public subscript(with arg1: String, and arg2: Int) -> MockableSubscript.Writable<String> {
    mockable(arg1, arg2)
   }
 }
@@ -158,10 +160,10 @@ extension Then where WrappedType == BasicSubscript {
   public subscript(arg1: String, arg2: Int) -> VerifiableSubscript.Writable<Bool> {
    verifiable(arg1, arg2)
   }
-  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableSubscript.Readable<String> {
+  public subscript(with arg1: Predicate<String>, and arg2: Predicate<Int>) -> VerifiableSubscript.Writable<String> {
     verifiable(arg1, arg2)
   }
-  public subscript(with arg1: String, and arg2: Int) -> VerifiableSubscript.Readable<String> {
+  public subscript(with arg1: String, and arg2: Int) -> VerifiableSubscript.Writable<String> {
    verifiable(arg1, arg2)
   }
 }
