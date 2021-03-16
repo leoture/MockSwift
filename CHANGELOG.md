@@ -35,6 +35,7 @@
 - Remove Predicate.match(description:keyPath:) [#108](https://github.com/leoture/MockSwift/pull/108) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Fixed
+- Make called(after:) fail when previsous Assertion is not valid [#110](https://github.com/leoture/MockSwift/pull/110) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Security
 
