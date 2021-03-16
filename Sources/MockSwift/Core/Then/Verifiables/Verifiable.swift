@@ -84,8 +84,13 @@ public class Verifiable<ReturnType> {
         var calls = callRegister.recordedCalls(for: functionIdentifier, when: parametersPredicates)
 
         if let assertion = assertion {
-            let startedTime = assertion.firstValidTime
-            calls = calls.filter { $0.time > startedTime }
+            if assertion.isValid {
+                let startedTime = assertion.firstValidTime
+                calls = calls.filter { $0.time > startedTime }
+            } else {
+                failureRecorder.recordFailure(message: assertion.description, file: file, line: line)
+            }
+
         }
 
         calls.forEach { self.callRegister.makeCallVerified(for: $0.identifier) }
