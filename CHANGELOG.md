@@ -2,6 +2,9 @@
 
 [Unrelease](#Unrelease)
 
+##### 1.x Releases
+- [1.0.0](#1.0.0)
+
 ##### 0.x Releases
 - [0.7.0](#0.7.0)
 - [0.6.0](#0.6.0)
@@ -13,7 +16,22 @@
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v0.7.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v1.0.0...HEAD)
+#### Added
+
+#### Changed
+
+#### Deprecated
+
+#### Removed
+
+#### Fixed
+
+#### Security
+
+---
+## [1.0.0](https://github.com/leoture/MockSwift/releases/tag/v1.0.0) - 2021-04-14
+[Compare](https://github.com/leoture/MockSwift/compare/v0.7.0...v1.0.0)
 #### Added
 - Add willDoNothing [#107](https://github.com/leoture/MockSwift/pull/107) by [Jordhan Leoture](https://github.com/leoture)
 - Add neverCalled [#106](https://github.com/leoture/MockSwift/pull/106) by [Jordhan Leoture](https://github.com/leoture)
@@ -27,17 +45,11 @@
 - Add GlobalStub for ExpressibleByArrayLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
 - Add GlobalStub for ExpressibleByDictionaryLiteral [#109](https://github.com/leoture/MockSwift/pull/109) by [Jordhan Leoture](https://github.com/leoture)
 
-#### Changed
-
-#### Deprecated
-
 #### Removed
 - Remove Predicate.match(description:keyPath:) [#108](https://github.com/leoture/MockSwift/pull/108) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Fixed
 - Make called(after:) fail when previsous Assertion is not valid [#110](https://github.com/leoture/MockSwift/pull/110) by [Jordhan Leoture](https://github.com/leoture)
-
-#### Security
 
 ---
 ## [0.7.0](https://github.com/leoture/MockSwift/releases/tag/v0.7.0) - 2020-10-21
