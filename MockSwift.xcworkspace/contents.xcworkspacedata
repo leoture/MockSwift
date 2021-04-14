@@ -5,9 +5,6 @@
       location = "group:MockSwiftExample/MockSwiftExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MockSwiftPlayground/MockSwiftPlayground.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:MockSwift.xcodeproj">
    </FileRef>
 </Workspace>

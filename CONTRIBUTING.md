@@ -22,7 +22,6 @@ We will make our best to answer you as quickly as possible!
 #### With Xcode
 - Open `MockSwift.xcworkspace`.
 - To build or test the project: choose `MockSwift-Package` scheme on `My Mac`.
-- Before using playgrounds build the `MockSwiftPlayground` scheme.
 
 #### With Swift Package Manager
 - To build or test the project: use the respective commands `swift build` and `swift test`.
