@@ -64,7 +64,7 @@ import PackageDescription
 let package = Package(
   name: "MyProject",
   dependencies: [
-    .package(url: "https://github.com/leoture/MockSwift.git", from: "0.7.0")
+    .package(url: "https://github.com/leoture/MockSwift.git", from: "1.0.0")
   ],
   targets: [
     .testTarget(name: "MyProjectTests", dependencies: ["MockSwift"])
