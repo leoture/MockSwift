@@ -13,7 +13,7 @@ Before you start contributing, please read this file and do your best to comply 
 
 ## 🤔 Asking Questions
 If you have a question, check that nobody asked this question before.  
-Otherwise, please open an issue as a [**Bug Report**](https://github.com/leoture/MockSwift/issues/new?assignees=&labels=bug&template=bug_report.md&title=) and add `question` label.  
+Otherwise, please open an issue as a [**Question**](https://github.com/leoture/MockSwift/issues/new?assignees=&labels=question&template=question.md&title=).  
 We will make our best to answer you as quickly as possible!
 >If you find that this question has already been asked in an issue, add 👍 as *reaction* on the issue.
 
