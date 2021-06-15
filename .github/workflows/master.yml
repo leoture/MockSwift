@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: YOCKOW/Action-setup-swift@master
+    - uses: YOCKOW/Action-setup-swift@main
       with:
-        swift-version: '5.3'
+        swift-version: '5.4'
     - name: Build and test
       run: swift test
 
