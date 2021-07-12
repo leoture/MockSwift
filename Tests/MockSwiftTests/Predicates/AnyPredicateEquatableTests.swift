@@ -27,85 +27,92 @@ import MockSwift
 import XCTest
 
 private class Custom: NSObject {
-  var equalsReceived: (lhs: Custom, rhs: Custom)?
-  var equalsReturn: Bool!
+    var equalsReceived: (lhs: Custom, rhs: Custom)?
+    var equalsReturn: Bool!
 
-  override func isEqual(_ object: Any?) -> Bool {
-    if let object = object as? Custom {
-      equalsReceived = (self, object)
+    override func isEqual(_ object: Any?) -> Bool {
+        if let object = object as? Custom {
+            equalsReceived = (self, object)
+        }
+        return equalsReturn
     }
-    return equalsReturn
-  }
 }
 
 class AnyPredicateEquatableTests: XCTestCase {
-  func test_satisfy_shouldReturnTrueIfEquals() {
-    // Given
-    let lhsCustom = Custom()
-    let rhsCustom = Custom()
-    lhsCustom.equalsReturn = true
+    func test_satisfy_shouldReturnTrueIfEquals() {
+        // Given
+        let lhsCustom = Custom()
+        let rhsCustom = Custom()
+        lhsCustom.equalsReturn = true
 
-    // When
-    let result = lhsCustom.satisfy(by: rhsCustom)
+        // When
+        let result = lhsCustom.satisfy(by: rhsCustom)
 
-    // Then
-    XCTAssertTrue(result)
-    let argument = lhsCustom.equalsReceived
-    XCTAssertTrue(argument?.lhs === lhsCustom)
-    XCTAssertTrue(argument?.rhs === rhsCustom)
-  }
+        // Then
+        XCTAssertTrue(result)
+        let argument = lhsCustom.equalsReceived
+        XCTAssertTrue(argument?.lhs === lhsCustom)
+        XCTAssertTrue(argument?.rhs === rhsCustom)
+    }
 
-  func test_satisfy_shouldReturnFalseIfNotEquals() {
-    // Given
-    let lhsCustom = Custom()
-    let rhsCustom = Custom()
-    lhsCustom.equalsReturn = false
+    func test_satisfy_shouldReturnFalseIfNotEquals() {
+        // Given
+        let lhsCustom = Custom()
+        let rhsCustom = Custom()
+        lhsCustom.equalsReturn = false
 
-    // When
-    let result = lhsCustom.satisfy(by: rhsCustom)
+        // When
+        let result = lhsCustom.satisfy(by: rhsCustom)
 
-    // Then
-    XCTAssertFalse(result)
-    let argument = lhsCustom.equalsReceived
-    XCTAssertTrue(argument?.lhs === lhsCustom)
-    XCTAssertTrue(argument?.rhs === rhsCustom)
-  }
+        // Then
+        XCTAssertFalse(result)
+        let argument = lhsCustom.equalsReceived
+        XCTAssertTrue(argument?.lhs === lhsCustom)
+        XCTAssertTrue(argument?.rhs === rhsCustom)
+    }
 
-  func test_satify_shouldReturnTrueWithArray() {
-    // Given
-    let lhsCustom = Custom()
-    let rhsCustom = Custom()
-    lhsCustom.equalsReturn = true
+    func test_satify_shouldReturnTrueWithArray() {
+        // Given
+        let lhsCustom = Custom()
+        let rhsCustom = Custom()
+        lhsCustom.equalsReturn = true
 
-    // When
-    let result = [lhsCustom].satisfy(by: [rhsCustom])
+        // When
+        let result = [lhsCustom].satisfy(by: [rhsCustom])
 
-    // Then
-    XCTAssertTrue(result)
-  }
+        // Then
+        XCTAssertTrue(result)
+    }
 
-  func test_satify_shouldReturnFalseWithArray() {
-    // Given
-    let lhsCustom = Custom()
-    let rhsCustom = Custom()
-    lhsCustom.equalsReturn = false
+    func test_satify_shouldReturnFalseWithArray() {
+        // Given
+        let lhsCustom = Custom()
+        let rhsCustom = Custom()
+        lhsCustom.equalsReturn = false
 
-    // When
-    let result = [lhsCustom].satisfy(by: [rhsCustom])
+        // When
+        let result = [lhsCustom].satisfy(by: [rhsCustom])
 
-    // Then
-    XCTAssertFalse(result)
-  }
+        // Then
+        XCTAssertFalse(result)
+    }
 
-  func test_satify_shouldReturnTrueWithBool() { XCTAssertTrue(false.satisfy(by: false)) }
-  func test_satify_shouldReturnFalseWithBool() { XCTAssertFalse(false.satisfy(by: true)) }
+    func test_satify_shouldReturnTrueWithBool() { XCTAssertTrue(false.satisfy(by: false)) }
+    func test_satify_shouldReturnFalseWithBool() { XCTAssertFalse(false.satisfy(by: true)) }
 
-  func test_satify_shoudReturnTrueWithInt() { XCTAssertTrue(0.satisfy(by: 0)) }
-  func test_satify_shoudReturnFalseWithInt() { XCTAssertFalse(0.satisfy(by: 1)) }
+    func test_satify_shoudReturnTrueWithInt() { XCTAssertTrue(0.satisfy(by: 0)) }
+    func test_satify_shoudReturnFalseWithInt() { XCTAssertFalse(0.satisfy(by: 1)) }
 
-  func test_satify_shouldReturnTrueWithString() { XCTAssertTrue("value".satisfy(by: "value")) }
-  func test_satify_shouldReturnFalseWithString() { XCTAssertFalse("value".satisfy(by: "")) }
+    func test_satify_shouldReturnTrueWithString() { XCTAssertTrue("value".satisfy(by: "value")) }
+    func test_satify_shouldReturnFalseWithString() { XCTAssertFalse("value".satisfy(by: "")) }
 
-  func test_satify_shouldReturnTrueWithFloat() { XCTAssertTrue(2.0.satisfy(by: 2.0)) }
-  func test_satify_shouldReturnFalseWithFloat() { XCTAssertFalse(2.0.satisfy(by: 2.3)) }
+    func test_satify_shouldReturnTrueWithFloat() { XCTAssertTrue(2.0.satisfy(by: 2.0)) }
+    func test_satify_shouldReturnFalseWithFloat() { XCTAssertFalse(2.0.satisfy(by: 2.3)) }
+
+    func test_satify_shouldReturnTrueWithUUID() {
+        let uuid1 = UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!
+        let uuid2 = UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")
+        XCTAssertTrue(uuid1.satisfy(by: uuid2))
+    }
+    func test_satify_shouldReturnFalseWithUUID() { XCTAssertFalse(UUID().satisfy(by: UUID())) }
 }

@@ -12,10 +12,12 @@ extension AnyPredicateEquatableTests {
         ("test_satify_shouldReturnFalseWithBool", test_satify_shouldReturnFalseWithBool),
         ("test_satify_shouldReturnFalseWithFloat", test_satify_shouldReturnFalseWithFloat),
         ("test_satify_shouldReturnFalseWithString", test_satify_shouldReturnFalseWithString),
+        ("test_satify_shouldReturnFalseWithUUID", test_satify_shouldReturnFalseWithUUID),
         ("test_satify_shouldReturnTrueWithArray", test_satify_shouldReturnTrueWithArray),
         ("test_satify_shouldReturnTrueWithBool", test_satify_shouldReturnTrueWithBool),
         ("test_satify_shouldReturnTrueWithFloat", test_satify_shouldReturnTrueWithFloat),
         ("test_satify_shouldReturnTrueWithString", test_satify_shouldReturnTrueWithString),
+        ("test_satify_shouldReturnTrueWithUUID", test_satify_shouldReturnTrueWithUUID),
         ("test_satisfy_shouldReturnFalseIfNotEquals", test_satisfy_shouldReturnFalseIfNotEquals),
         ("test_satisfy_shouldReturnTrueIfEquals", test_satisfy_shouldReturnTrueIfEquals),
     ]
