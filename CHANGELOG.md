@@ -18,6 +18,7 @@
 ## Unrelease
 [Compare](https://github.com/leoture/MockSwift/compare/v1.0.0...HEAD)
 #### Added
+- Make UUID conform to AnyPredicate [#114](https://github.com/leoture/MockSwift/pull/114) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Changed
 

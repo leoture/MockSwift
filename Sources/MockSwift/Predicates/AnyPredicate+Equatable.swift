@@ -28,13 +28,13 @@ import Foundation
 extension NSObject: AnyPredicate {}
 
 public extension AnyPredicate where Self: Equatable {
-  /// Check if an `element` satifies the predicate.
-  /// - Parameter element: The element to check.
-  /// - Returns: True if `element` is equals to `self`, false otherwise.
-  /// - SeeAlso: `AnyPredicate`
-  func satisfy(by element: Any?) -> Bool {
-    self == (element as? Self)
-  }
+    /// Check if an `element` satifies the predicate.
+    /// - Parameter element: The element to check.
+    /// - Returns: True if `element` is equals to `self`, false otherwise.
+    /// - SeeAlso: `AnyPredicate`
+    func satisfy(by element: Any?) -> Bool {
+        self == (element as? Self)
+    }
 }
 
 extension Array: AnyPredicate where Element: Equatable {}
@@ -43,3 +43,4 @@ extension BooleanLiteralType: AnyPredicate {}
 extension IntegerLiteralType: AnyPredicate {}
 extension StringLiteralType: AnyPredicate {}
 extension FloatLiteralType: AnyPredicate {}
+extension UUID: AnyPredicate {}
