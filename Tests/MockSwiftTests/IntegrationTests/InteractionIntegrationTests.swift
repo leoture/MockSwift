@@ -29,6 +29,8 @@ import XCTest
 class InteractionIntegrationTests: XCTestCase {
     @Mock private var custom: DummyProtocol
 
+    // MARK: - Ended
+
     func test_interaction_ended_shouldPass() {
         interaction(with: custom).ended()
     }
@@ -86,5 +88,66 @@ class InteractionIntegrationTests: XCTestCase {
 
         // Then
         interaction(with: custom).ended()
+    }
+
+    // MARK: - failOnUnusedBehaviours
+
+    func test_interaction_failOnUnusedBehaviours_shouldPass() {
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        let _: Int = custom.function(identifier: "id")
+
+        // When
+        then(custom).function(identifier: "id").disambiguate(with: Int.self).called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom.read
+
+        // When
+        then(custom).read.get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom.write
+
+        // When
+        then(custom).write.get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom[0, ""]
+
+        // When
+        then(custom)[0, ""].get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom[x: 0, y: 0]
+
+        // When
+        then(custom)[x: 0, y: 0].get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
     }
 }

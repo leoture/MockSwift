@@ -45,6 +45,9 @@ extension FunctionBehaviourRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__FunctionBehaviourRegisterTests = [
+        ("test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed", test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed),
+        ("test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed", test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed),
+        ("test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour", test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour),
         ("test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs", test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs),
         ("test_recordedBehaviours_shouldReturnFunctionBehaviourMatched", test_recordedBehaviours_shouldReturnFunctionBehaviourMatched),
     ]
@@ -227,6 +230,12 @@ extension InteractionIntegrationTests {
         ("test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass),
         ("test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass),
         ("test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_shouldPass", test_interaction_failOnUnusedBehaviours_shouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass),
     ]
 }
 
@@ -237,8 +246,10 @@ extension InteractionTests {
     static let __allTests__InteractionTests = [
         ("test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder", test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder),
         ("test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder", test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder),
+        ("test_failOnUnusedBehaviours_whenAllBehavioursHaveBeenUsedShouldNotCallFailureRecorder", test_failOnUnusedBehaviours_whenAllBehavioursHaveBeenUsedShouldNotCallFailureRecorder),
+        ("test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder", test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder),
         ("test_interaction_whenTypeIsAMockShouldPass", test_interaction_whenTypeIsAMockShouldPass),
-        ("test_Interaction_whenTypeIsNotAMockShouldFailWithCast", test_Interaction_whenTypeIsNotAMockShouldFailWithCast),
+        ("test_interaction_whenTypeIsNotAMockShouldFailWithCast", test_interaction_whenTypeIsNotAMockShouldFailWithCast),
     ]
 }
 
@@ -259,6 +270,7 @@ extension MockBehaviourRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockBehaviourRegisterTests = [
+        ("test_allBehavioursHaveBeenUsed_shouldReturnFromBehaviourRegister", test_allBehavioursHaveBeenUsed_shouldReturnFromBehaviourRegister),
         ("test_record_shouldCallBehaviourRegister", test_record_shouldCallBehaviourRegister),
         ("test_recordedCall_shouldReturnFromBehaviourRegister", test_recordedCall_shouldReturnFromBehaviourRegister),
     ]

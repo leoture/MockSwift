@@ -26,6 +26,8 @@
 import Foundation
 
 protocol BehaviourRegister {
+    var allBehavioursHaveBeenUsed: Bool { get }
+
     func recordedBehaviours(for identifier: FunctionIdentifier,
                             concernedBy parameters: [ParameterType]) -> [FunctionBehaviour]
 

@@ -72,4 +72,41 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
     XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
   }
+
+    func test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour() {
+        // Given
+
+        // When
+        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
+
+        // Then
+        XCTAssertTrue(result)
+    }
+
+    func test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed() {
+        // Given
+        let usedBehaviour = FunctionBehaviour(handler: { _ in })
+        functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }), for: .stub(), when: [])
+        functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
+        functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
+
+        // When
+        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
+
+        // Then
+        XCTAssertFalse(result)
+    }
+
+    func test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed() {
+        // Given
+        let usedBehaviour = FunctionBehaviour(handler: { _ in })
+        functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
+        functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
+
+        // When
+        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
+
+        // Then
+        XCTAssertTrue(result)
+    }
 }

@@ -26,15 +26,21 @@
 import Foundation
 
 class FunctionBehaviourRegister: BehaviourRegister {
-    var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]]
+    private var functionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]]
+    private var unusedBehaviours: [UUID]
+
+    var allBehavioursHaveBeenUsed: Bool {
+        unusedBehaviours.isEmpty
+    }
 
     init() {
-        functionBehaviour = [:]
+        functionBehaviours = [:]
+        unusedBehaviours = []
     }
 
     func recordedBehaviours(for identifier: FunctionIdentifier,
                             concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
-        functionBehaviour[identifier, default: []]
+        functionBehaviours[identifier, default: []]
             .filter { $0.predicates.satisfy(by: parameters) }
             .map { $0.behaviour }
     }
@@ -42,6 +48,11 @@ class FunctionBehaviourRegister: BehaviourRegister {
     func record(_ behaviour: FunctionBehaviour,
                 for identifier: FunctionIdentifier,
                 when matchs: [AnyPredicate]) {
-        functionBehaviour[identifier, default: []].append((matchs, behaviour))
+        functionBehaviours[identifier, default: []].append((matchs, behaviour))
+        unusedBehaviours.append(behaviour.identifier)
+    }
+
+    func makeBehaviourUsed(for identifier: UUID) {
+        unusedBehaviours.removeAll { $0 == identifier }
     }
 }

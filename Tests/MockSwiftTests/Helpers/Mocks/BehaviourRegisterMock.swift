@@ -28,6 +28,13 @@ import Foundation
 
 // swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
+    var allBehavioursHaveBeenUsedReturn: Bool!
+    var allBehavioursHaveBeenUsedCount = 0
+    var allBehavioursHaveBeenUsed: Bool {
+        allBehavioursHaveBeenUsedCount += 1
+        return allBehavioursHaveBeenUsedReturn
+    }
+
     var recordedBehavioursReturn: [FunctionBehaviour]!
     var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
 
