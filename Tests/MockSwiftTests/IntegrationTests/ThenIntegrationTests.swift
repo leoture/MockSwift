@@ -26,230 +26,174 @@
 import MockSwift
 import XCTest
 
-private protocol Custom {
-  var identifier: String { get set }
-  var computed: String { get }
-  subscript(first: Int, second: String) -> String { get }
-  subscript(x first: Int, y second: Int) -> String { get set }
-  func function(identifier: String) -> Int
-  func function(identifier: String) -> String
-}
-
-extension Mock: Custom where WrappedType == Custom {
-  var identifier: String {
-    get { mocked() }
-    set { mocked(newValue) }
-  }
-
-  var computed: String {
-    mocked()
-  }
-
-  subscript(first: Int, second: String) -> String {
-    mocked(first, second)
-  }
-
-  subscript(x first: Int, y second: Int) -> String {
-    get {
-      mocked(first, second)
-    }
-    set {
-      mocked(first, second, newValue)
-    }
-  }
-
-  func function(identifier: String) -> Int { mocked(identifier) }
-  func function(identifier: String) -> String { mocked(identifier) }
-}
-
-extension Then where WrappedType == Custom {
-  var identifier: VerifiableProperty.Writable<String> { verifiable() }
-
-  var computed: VerifiableProperty.Readable<String> { verifiable() }
-
-  subscript(first: Predicate<Int>, second: Predicate<String>) -> VerifiableSubscript.Readable<String> {
-    verifiable(first, second)
-  }
-
-  subscript(x first: Int, y second: Int) -> VerifiableSubscript.Writable<String> {
-    verifiable(first, second)
-  }
-
-  func function(identifier: String) -> Verifiable<Int> { verifiable(identifier) }
-  func function(identifier: Predicate<String>) -> Verifiable<Int> { verifiable(identifier) }
-
-  func function(identifier: String) -> Verifiable<String> { verifiable(identifier) }
-  func function(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
-}
-
 class ThenIntegrationTests: XCTestCase {
-  @Mock private var custom: Custom
+    @Mock private var custom: DummyProtocol
 
-  func test_function_shouldBeCalledWhenParametersMatched() {
-    // Given
+    func test_function_shouldBeCalledWhenParametersMatched() {
+        // Given
 
-    // When
-    let _: String = custom.function(identifier: "value")
-    let _: String = custom.function(identifier: "value")
+        // When
+        let _: String? = try? custom.function(identifier: "value")
+        let _: String? = try? custom.function(identifier: "value")
 
-    // Then
-    then(custom).function(identifier: .match { !$0.isEmpty })
-      .disambiguate(with: String.self)
-      .called(times: >1)
-  }
+        // Then
+        then(custom).function(identifier: .match { !$0.isEmpty })
+            .disambiguate(with: String.self)
+            .called(times: >1)
+    }
 
-  func test_function_should_beCalledInOrder() {
-    // Given
-    let custom1 = Mock<Custom>()
-    let custom2 = Mock<Custom>()
+    func test_function_should_beCalledInOrder() {
+        // Given
+        let custom1 = Mock<DummyProtocol>()
+        let custom2 = Mock<DummyProtocol>()
 
-    // When
-    let _: Int = custom1.function(identifier: "1")
-    let _: Int = custom2.function(identifier: "2")
-    let _: Int = custom2.function(identifier: "2")
-    let _: Int = custom1.function(identifier: "4")
-    let _: Int = custom1.function(identifier: "3")
+        // When
+        let _: Int = custom1.function(identifier: "1")
+        let _: Int = custom2.function(identifier: "2")
+        let _: Int = custom2.function(identifier: "2")
+        let _: Int = custom1.function(identifier: "4")
+        let _: Int = custom1.function(identifier: "3")
 
-    // Then
-    var assertion = then(custom1).function(identifier: .any())
-      .disambiguate(with: Int.self).called()
-    assertion = then(custom2).function(identifier: =="2")
-      .disambiguate(with: Int.self).called(times: 2, after: assertion)
-    assertion = then(custom1).function(identifier: =="3")
-      .disambiguate(with: Int.self).called(after: assertion)
-    assertion = then(custom2).function(identifier: .any())
-      .disambiguate(with: Int.self).called(times: 0, after: assertion)
-    then(custom1).function(identifier: =="4")
-      .disambiguate(with: Int.self).called(times: 0, after: assertion)
-  }
+        // Then
+        var assertion = then(custom1).function(identifier: .any())
+            .disambiguate(with: Int.self).called()
+        assertion = then(custom2).function(identifier: =="2")
+            .disambiguate(with: Int.self).called(times: 2, after: assertion)
+        assertion = then(custom1).function(identifier: =="3")
+            .disambiguate(with: Int.self).called(after: assertion)
+        assertion = then(custom2).function(identifier: .any())
+            .disambiguate(with: Int.self).called(times: 0, after: assertion)
+        then(custom1).function(identifier: =="4")
+            .disambiguate(with: Int.self).called(times: 0, after: assertion)
+    }
 
-  func test_then_shouldCallCompletionWithThenCustom() {
-    // Given
-    var thenCustom: Then<Custom>?
+    func test_then_shouldCallCompletionWithThenCustom() {
+        // Given
+        var thenCustom: Then<DummyProtocol>?
 
-    // When
-    then(custom) { thenCustom = $0 }
+        // When
+        then(custom) { thenCustom = $0 }
 
-    // Then
-    XCTAssertNotNil(thenCustom)
-  }
+        // Then
+        XCTAssertNotNil(thenCustom)
+    }
 
-  func test_receivedParameters_whenParametersMatched() {
-    // Given
+    func test_receivedParameters_whenParametersMatched() {
+        // Given
 
-    // When
-    let _: String = custom.function(identifier: "arg1")
-    let _: String = custom.function(identifier: "")
-    let _: String = custom.function(identifier: "arg2")
+        // When
+        let _: String? = try? custom.function(identifier: "arg1")
+        let _: String? = try? custom.function(identifier: "")
+        let _: String? = try? custom.function(identifier: "arg2")
 
-    // Then
-    let receivedParameters = then(custom).function(identifier: .not(.match(\.isEmpty)))
-      .disambiguate(with: String.self)
-      .receivedParameters
-    XCTAssertEqual(receivedParameters as? [[String]], [["arg1"], ["arg2"]])
-  }
+        // Then
+        let receivedParameters = then(custom).function(identifier: .not(.match(\.isEmpty)))
+            .disambiguate(with: String.self)
+            .receivedParameters
+        XCTAssertEqual(receivedParameters as? [[String]], [["arg1"], ["arg2"]])
+    }
 
-  func test_callCount_whenParametersMatched() {
-    // Given
+    func test_callCount_whenParametersMatched() {
+        // Given
 
-    // When
-    let _: String = custom.function(identifier: "arg1")
-    let _: String = custom.function(identifier: "")
-    let _: String = custom.function(identifier: "arg2")
+        // When
+        let _: String? = try? custom.function(identifier: "arg1")
+        let _: String? = try? custom.function(identifier: "")
+        let _: String? = try? custom.function(identifier: "arg2")
 
-    // Then
-    let callCount = then(custom).function(identifier: .not(.match(\.isEmpty)))
-      .disambiguate(with: String.self)
-      .callCount
-    XCTAssertEqual(callCount, 2)
-  }
+        // Then
+        let callCount = then(custom).function(identifier: .not(.match(\.isEmpty)))
+            .disambiguate(with: String.self)
+            .callCount
+        XCTAssertEqual(callCount, 2)
+    }
 
-  func test_Readable_get_shouldBeCalled() {
-    // Given
+    func test_Readable_get_shouldBeCalled() {
+        // Given
 
-    // When
-    _ = custom.computed
-    _ = custom.computed
+        // When
+        _ = custom.read
+        _ = custom.read
 
-    // Then
-    then(custom).computed.get.called(times: 2)
-  }
+        // Then
+        then(custom).read.get.called(times: 2)
+    }
 
-  func test_Writable_get_shouldBeCalled() {
-    // Given
+    func test_Writable_get_shouldBeCalled() {
+        // Given
 
-    // When
-    _ = custom.identifier
-    _ = custom.identifier
+        // When
+        _ = custom.write
+        _ = custom.write
 
-    // Then
-    then(custom).identifier.get.called(times: 2)
-  }
+        // Then
+        then(custom).write.get.called(times: 2)
+    }
 
-  func test_Writable_set_shouldBeCalledWhenParametersMatched() {
-    // Given
-    let custom = Mock<Custom>()
+    func test_Writable_set_shouldBeCalledWhenParametersMatched() {
+        // Given
+        let custom = Mock<DummyProtocol>()
 
-    // When
-    custom.identifier = "value"
+        // When
+        custom.write = "value"
 
-    // Then
-    then(custom).identifier.set(.not(.match(\.isEmpty))).called()
-    then(custom).identifier.set("value").called()
-  }
+        // Then
+        then(custom).write.set(.not(.match(\.isEmpty))).called()
+        then(custom).write.set("value").called()
+    }
 
-  func test_Writable_set_shouldNotBeCalledWhenParametersDontMatch() {
-    // Given
-    let custom = Mock<Custom>()
+    func test_Writable_set_shouldNotBeCalledWhenParametersDontMatch() {
+        // Given
+        let custom = Mock<DummyProtocol>()
 
-    // When
-    custom.identifier = "value"
+        // When
+        custom.write = "value"
 
-    // Then
-    then(custom).identifier.set(.match(\.isEmpty)).called(times: 0)
-  }
+        // Then
+        then(custom).write.set(.match(\.isEmpty)).called(times: 0)
+    }
 
-  func test_subscriptFirstSecond_get_shouldBeCalled() {
-    // Given
+    func test_subscriptFirstSecond_get_shouldBeCalled() {
+        // Given
 
-    // When
-    _ = custom[1, "a"]
-    _ = custom[1, "b"]
+        // When
+        _ = custom[1, "a"]
+        _ = custom[1, "b"]
 
-    // Then
-    then(custom)[==1, .match { $0 == "a" || $0 == "b" }].get.called(times: 2)
-  }
+        // Then
+        then(custom)[==1, .match { $0 == "a" || $0 == "b" }].get.called(times: 2)
+    }
 
-  func test_subscriptXY_get_shouldBeCalled() {
-    // Given
+    func test_subscriptXY_get_shouldBeCalled() {
+        // Given
 
-    // When
-    _ = custom[x: 1, y: 2]
+        // When
+        _ = custom[x: 1, y: 2]
 
-    // Then
-    then(custom)[x: 1, y: 2].get.called(times: 1)
-  }
+        // Then
+        then(custom)[x: 1, y: 2].get.called(times: 1)
+    }
 
-  func test_subscriptXY_set_shouldBeCalledWhenParametersMatched() {
-    // Given
-    let custom = Mock<Custom>()
+    func test_subscriptXY_set_shouldBeCalledWhenParametersMatched() {
+        // Given
+        let custom = Mock<DummyProtocol>()
 
-    // When
-    custom[x: 1, y: 2] = "value"
+        // When
+        custom[x: 1, y: 2] = "value"
 
-    // Then
-    then(custom)[x: 1, y: 2].set(.not(.match(\.isEmpty))).called()
-    then(custom)[x: 1, y: 2].set("value").called()
-  }
+        // Then
+        then(custom)[x: 1, y: 2].set(.not(.match(\.isEmpty))).called()
+        then(custom)[x: 1, y: 2].set("value").called()
+    }
 
-  func test_subscriptXY_set_shouldNotBeCalledWhenParametersDontMatch() {
-    // Given
-    let custom = Mock<Custom>()
+    func test_subscriptXY_set_shouldNotBeCalledWhenParametersDontMatch() {
+        // Given
+        let custom = Mock<DummyProtocol>()
 
-    // When
-    custom[x: 1, y: 2] = "value"
+        // When
+        custom[x: 1, y: 2] = "value"
 
-    // Then
-    then(custom)[x: 1, y: 2].set(.match(\.isEmpty)).called(times: 0)
-  }
+        // Then
+        then(custom)[x: 1, y: 2].set(.match(\.isEmpty)).called(times: 0)
+    }
 }

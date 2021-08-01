@@ -100,7 +100,6 @@ extension GivenIntegrationTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__GivenIntegrationTests = [
-        ("test_computed_get_shouldReturnFromWillReturn", test_computed_get_shouldReturnFromWillReturn),
         ("test_function_shouldReturnDefaultValueIfNoMatch", test_function_shouldReturnDefaultValueIfNoMatch),
         ("test_function_shouldReturnValueFromWillCompletion", test_function_shouldReturnValueFromWillCompletion),
         ("test_function_shouldReturnValueFromWillReturnValue", test_function_shouldReturnValueFromWillReturnValue),
@@ -109,13 +108,14 @@ extension GivenIntegrationTests {
         ("test_function_shouldThrowFromWillThrowError", test_function_shouldThrowFromWillThrowError),
         ("test_function_shouldThrowFromWillThrowErrors", test_function_shouldThrowFromWillThrowErrors),
         ("test_given_shouldCallCompletionWithGivenCustom", test_given_shouldCallCompletionWithGivenCustom),
-        ("test_identifier_get_shouldReturnFromWillReturn", test_identifier_get_shouldReturnFromWillReturn),
-        ("test_identifier_set_shouldNotReturnFromWillCompletion", test_identifier_set_shouldNotReturnFromWillCompletion),
-        ("test_identifier_set_shouldReturnFromWillCompletion", test_identifier_set_shouldReturnFromWillCompletion),
+        ("test_read_get_shouldReturnFromWillReturn", test_read_get_shouldReturnFromWillReturn),
         ("test_subscriptFirstSecond_get_shouldReturnFromWillReturn", test_subscriptFirstSecond_get_shouldReturnFromWillReturn),
         ("test_subscriptXY_get_shouldReturnFromWillReturn", test_subscriptXY_get_shouldReturnFromWillReturn),
         ("test_subscriptXY_set_shouldNotReturnFromWillCompletion", test_subscriptXY_set_shouldNotReturnFromWillCompletion),
         ("test_subscriptXY_set_shouldReturnFromWillCompletion", test_subscriptXY_set_shouldReturnFromWillCompletion),
+        ("test_write_get_shouldReturnFromWillReturn", test_write_get_shouldReturnFromWillReturn),
+        ("test_write_set_shouldNotReturnFromWillCompletion", test_write_set_shouldNotReturnFromWillCompletion),
+        ("test_write_set_shouldReturnFromWillCompletion", test_write_set_shouldReturnFromWillCompletion),
     ]
 }
 
@@ -222,11 +222,11 @@ extension InteractionIntegrationTests {
     // to regenerate.
     static let __allTests__InteractionIntegrationTests = [
         ("test_interaction_ended_shouldPass", test_interaction_ended_shouldPass),
-        ("test_interaction_ended_whenAllMethodsCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllMethodsCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifuedShouldPass),
+        ("test_interaction_ended_whenAllMethodsCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllMethodsCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass),
     ]
 }
 
