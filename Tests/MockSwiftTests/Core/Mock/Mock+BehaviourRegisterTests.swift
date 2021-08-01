@@ -28,60 +28,52 @@ import XCTest
 
 private protocol AnyProtocol {}
 
-private struct DummyBehaviour: Behaviour, Equatable {
-  let uuid = UUID()
-
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? { nil }
-
-  func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? { nil }
-}
-
 final class MockBehaviourRegisterTests: XCTestCase {
-  private var mock: Mock<AnyProtocol>!
-  private var behaviourRegister: BehaviourRegisterMock!
+    private var mock: Mock<AnyProtocol>!
+    private var behaviourRegister: BehaviourRegisterMock!
 
-  override func setUp() {
-    behaviourRegister = BehaviourRegisterMock()
-    mock = Mock(callRegister: CallRegisterMock(),
-                behaviourRegister: behaviourRegister,
-                stubRegister: StubRegisterMock(),
-                strategy: StrategyMock(),
-                errorHandler: ErrorHandlerMock())
-  }
+    override func setUp() {
+        behaviourRegister = BehaviourRegisterMock()
+        mock = Mock(callRegister: CallRegisterMock(),
+                    behaviourRegister: behaviourRegister,
+                    stubRegister: StubRegisterMock(),
+                    strategy: StrategyMock(),
+                    errorHandler: ErrorHandlerMock())
+    }
 
-  func test_record_shouldCallBehaviourRegister() {
-    // Given
-    let expectedBehaviour = DummyBehaviour()
-    let expectedIdenfitier = FunctionIdentifier.stub()
+    func test_record_shouldCallBehaviourRegister() {
+        // Given
+        let expectedBehaviour = FunctionBehaviour(handler: { _ in })
+        let expectedIdenfitier = FunctionIdentifier.stub()
 
-    // When
-    mock.record(expectedBehaviour, for: expectedIdenfitier, when: ["1", 2])
+        // When
+        mock.record(expectedBehaviour, for: expectedIdenfitier, when: ["1", 2])
 
-    // Then
-    XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
-    let (behaviour, identifier, predicates) = behaviourRegister.recordReceived[0]
-    XCTAssertEqual(behaviour as? DummyBehaviour, expectedBehaviour)
-    XCTAssertEqual(identifier, expectedIdenfitier)
-    XCTAssertEqual(predicates[0] as? String, "1")
-    XCTAssertEqual(predicates[1] as? Int, 2)
-  }
+        // Then
+        XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
+        let (behaviour, identifier, predicates) = behaviourRegister.recordReceived[0]
+        XCTAssertEqual(behaviour.identifier, expectedBehaviour.identifier)
+        XCTAssertEqual(identifier, expectedIdenfitier)
+        XCTAssertEqual(predicates[0] as? String, "1")
+        XCTAssertEqual(predicates[1] as? Int, 2)
+    }
 
-  func test_recordedCall_shouldReturnFromBehaviourRegister() {
-    // Given
-    let expectedBehaviour = DummyBehaviour()
-    let expectedIdenfitier = FunctionIdentifier.stub()
-    behaviourRegister.recordedBehavioursReturn = [expectedBehaviour]
+    func test_recordedCall_shouldReturnFromBehaviourRegister() {
+        // Given
+        let expectedBehaviour = FunctionBehaviour(handler: { _ in })
+        let expectedIdenfitier = FunctionIdentifier.stub()
+        behaviourRegister.recordedBehavioursReturn = [expectedBehaviour]
 
-    // When
-    let result = mock.recordedBehaviours(for: expectedIdenfitier, concernedBy: ["1", 2])
+        // When
+        let result = mock.recordedBehaviours(for: expectedIdenfitier, concernedBy: ["1", 2])
 
-    // Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, predicates) = behaviourRegister.recordedBehavioursReceived[0]
-    XCTAssertEqual(identifier, expectedIdenfitier)
-    XCTAssertEqual(predicates[0] as? String, "1")
-    XCTAssertEqual(predicates[1] as? Int, 2)
-    XCTAssertEqual(result.count, 1)
-    XCTAssertEqual(result[0] as? DummyBehaviour, expectedBehaviour)
-  }
+        // Then
+        XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
+        let (identifier, predicates) = behaviourRegister.recordedBehavioursReceived[0]
+        XCTAssertEqual(identifier, expectedIdenfitier)
+        XCTAssertEqual(predicates[0] as? String, "1")
+        XCTAssertEqual(predicates[1] as? Int, 2)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result[0].identifier, expectedBehaviour.identifier)
+    }
 }

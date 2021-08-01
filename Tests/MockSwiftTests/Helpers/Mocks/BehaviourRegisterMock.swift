@@ -28,16 +28,20 @@ import Foundation
 
 // swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
-  var recordedBehavioursReturn: [Behaviour]!
-  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    recordedBehavioursReceived.append((identifier, parameters))
-    return recordedBehavioursReturn
-  }
+    var recordedBehavioursReturn: [FunctionBehaviour]!
+    var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
 
-  var recordReceived: [(behaviour: Behaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
-  func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
-    recordReceived.append((behaviour, identifier, matchs))
-  }
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
+        recordedBehavioursReceived.append((identifier, parameters))
+        return recordedBehavioursReturn
+    }
+
+    var recordReceived: [(behaviour: FunctionBehaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+
+    func record(_ behaviour: FunctionBehaviour,
+                for identifier: FunctionIdentifier,
+                when matchs: [AnyPredicate]) {
+        recordReceived.append((behaviour, identifier, matchs))
+    }
 }

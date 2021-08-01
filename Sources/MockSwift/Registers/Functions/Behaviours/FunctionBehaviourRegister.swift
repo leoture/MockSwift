@@ -26,22 +26,22 @@
 import Foundation
 
 class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
+    var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]]
 
-  init() {
-    functionBehaviour = [:]
-  }
+    init() {
+        functionBehaviour = [:]
+    }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
-  }
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
+        functionBehaviour[identifier, default: []]
+            .filter { $0.predicates.satisfy(by: parameters) }
+            .map { $0.behaviour }
+    }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
-  }
+    func record(_ behaviour: FunctionBehaviour,
+                for identifier: FunctionIdentifier,
+                when matchs: [AnyPredicate]) {
+        functionBehaviour[identifier, default: []].append((matchs, behaviour))
+    }
 }

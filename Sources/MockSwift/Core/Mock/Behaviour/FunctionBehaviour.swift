@@ -25,20 +25,15 @@
 
 import Foundation
 
-class FunctionBehaviour {
-  private let handler: ([ParameterType]) throws -> Any
+struct FunctionBehaviour {
+    let identifier = UUID()
+    let handler: ([ParameterType]) throws -> Any
 
-  init(handler: @escaping ([ParameterType]) throws -> Any) {
-    self.handler = handler
-  }
-}
+    func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
+        try? handler(parameters) as? ReturnType
+    }
 
-extension FunctionBehaviour: Behaviour {
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
-    try? handler(parameters) as? ReturnType
-  }
-
-  func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? {
-    try handler(parameters) as? ReturnType
-  }
+    func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? {
+        try handler(parameters) as? ReturnType
+    }
 }

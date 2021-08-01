@@ -26,10 +26,10 @@
 import Foundation
 
 protocol BehaviourRegister {
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour]
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour]
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate])
+    func record(_ behaviour: FunctionBehaviour,
+                for identifier: FunctionIdentifier,
+                when matchs: [AnyPredicate])
 }
