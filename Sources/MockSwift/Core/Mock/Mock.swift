@@ -270,6 +270,10 @@ extension Mock: BehaviourRegister {
                 when matchs: [AnyPredicate]) {
         behaviourRegister.record(behaviour, for: identifier, when: matchs)
     }
+
+    func makeBehaviourUsed(for identifier: UUID) {
+        behaviourRegister.makeBehaviourUsed(for: identifier)
+    }
 }
 
 // MARK: - StubRegister

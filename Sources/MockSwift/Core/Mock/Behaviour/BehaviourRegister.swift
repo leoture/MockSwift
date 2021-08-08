@@ -34,4 +34,6 @@ protocol BehaviourRegister {
     func record(_ behaviour: FunctionBehaviour,
                 for identifier: FunctionIdentifier,
                 when matchs: [AnyPredicate])
+
+    func makeBehaviourUsed(for identifier: UUID)
 }

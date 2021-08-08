@@ -24,40 +24,56 @@
  */
 
 class GivenStrategy: StrategyDecorate {
-  let behaviourRegister: BehaviourRegister
-  let errorHandler: ErrorHandler
+    let behaviourRegister: BehaviourRegister
+    let errorHandler: ErrorHandler
 
-  init(next stategy: Strategy,
-       behaviourRegister: BehaviourRegister,
-       errorHandler: ErrorHandler) {
-    self.behaviourRegister = behaviourRegister
-    self.errorHandler = errorHandler
-    super.init(stategy)
-  }
-
-  override func resolve<ReturnType>(for identifier: FunctionIdentifier,
-                                    concernedBy parameters: [ParameterType]) -> ReturnType {
-    let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
-
-    switch behaviours.count {
-    case 1:
-      return behaviours[0].handle(with: parameters) ??
-        super.resolve(for: identifier, concernedBy: parameters)
-    case 0: return super.resolve(for: identifier, concernedBy: parameters)
-    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
+    init(next stategy: Strategy,
+         behaviourRegister: BehaviourRegister,
+         errorHandler: ErrorHandler) {
+        self.behaviourRegister = behaviourRegister
+        self.errorHandler = errorHandler
+        super.init(stategy)
     }
-  }
 
-  override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
-                                             concernedBy parameters: [ParameterType]) throws -> ReturnType {
-    let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
+    override func resolve<ReturnType>(for identifier: FunctionIdentifier,
+                                      concernedBy parameters: [ParameterType]) -> ReturnType {
+        let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
 
-    switch behaviours.count {
-    case 1:
-      return try behaviours[0].handleThrowable(with: parameters) ??
-        super.resolveThrowable(for: identifier, concernedBy: parameters)
-    case 0: return try super.resolveThrowable(for: identifier, concernedBy: parameters)
-    default: return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
+        guard behaviours.count < 2 else {
+            return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
+        }
+
+        guard let behaviour = behaviours.first,
+              let result: ReturnType = behaviour.handle(with: parameters) else {
+                  return super.resolve(for: identifier, concernedBy: parameters)
+              }
+
+        behaviourRegister.makeBehaviourUsed(for: behaviour.identifier)
+        return result
     }
-  }
+
+    override func resolveThrowable<ReturnType>(for identifier: FunctionIdentifier,
+                                               concernedBy parameters: [ParameterType]) throws -> ReturnType {
+        let behaviours = behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
+
+        guard behaviours.count < 2 else {
+            return errorHandler.handle(.tooManyDefinedBehaviour(for: identifier, with: parameters))
+        }
+
+        guard let behaviour = behaviours.first else {
+            return try super.resolveThrowable(for: identifier, concernedBy: parameters)
+        }
+
+        do {
+            if let result: ReturnType = try behaviour.handleThrowable(with: parameters) {
+                behaviourRegister.makeBehaviourUsed(for: behaviour.identifier)
+                return result
+            }
+        } catch {
+            behaviourRegister.makeBehaviourUsed(for: behaviour.identifier)
+            throw error
+        }
+
+        return try super.resolveThrowable(for: identifier, concernedBy: parameters)
+    }
 }

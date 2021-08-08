@@ -51,4 +51,12 @@ class BehaviourRegisterMock: BehaviourRegister {
                 when matchs: [AnyPredicate]) {
         recordReceived.append((behaviour, identifier, matchs))
     }
+
+    var makeBehaviourUsedReceived: [UUID] = []
+    var makeBehaviourUsedCalled: Bool {
+        makeBehaviourUsedReceived.count > 0
+    }
+    func makeBehaviourUsed(for identifier: UUID) {
+        makeBehaviourUsedReceived.append(identifier)
+    }
 }

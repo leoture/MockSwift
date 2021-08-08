@@ -88,4 +88,15 @@ final class MockBehaviourRegisterTests: XCTestCase {
         XCTAssertEqual(behaviourRegister.allBehavioursHaveBeenUsedCount, 1)
         XCTAssertTrue(result)
     }
+
+    func test_makeBehaviourUsed_shouldReturnFromBehaviourRegister() {
+        // Given
+        let identifier = UUID()
+
+        // When
+        mock.makeBehaviourUsed(for: identifier)
+
+        // Then
+        XCTAssertEqual(behaviourRegister.makeBehaviourUsedReceived, [identifier])
+    }
 }
