@@ -49,7 +49,9 @@ public class Mockable<ReturnType> {
   /// - Parameter value: Value to register.
     public func willReturn(file: StaticString = #file, line: UInt = #line, _ value: ReturnType) {
         let behaviour = FunctionBehaviour(source: (file, line)) { _ in value }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers return values.
@@ -59,7 +61,9 @@ public class Mockable<ReturnType> {
     let behaviour = FunctionBehaviour(source: (file, line)) { _ in
       returns.count == 1 ? returns[0] : returns.removeFirst()
     }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Used to disambiguate the `ReturnType`.
@@ -73,14 +77,18 @@ public class Mockable<ReturnType> {
                    line: UInt = #line,
                    _ completion: @escaping ([Any]) throws -> ReturnType) {
     let behaviour = FunctionBehaviour(source: (file, line), handler: completion)
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers an error.
   /// - Parameter error: Error to register.
   public func willThrow(file: StaticString = #file, line: UInt = #line, _ error: Error) {
     let behaviour = FunctionBehaviour(source: (file, line)) { _ in throw error }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers errors.
@@ -90,7 +98,9 @@ public class Mockable<ReturnType> {
     let behaviour = FunctionBehaviour(source: (file, line)) { _ in
       throw throwables.count == 1 ? throwables[0] : throwables.removeFirst()
     }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 }
 

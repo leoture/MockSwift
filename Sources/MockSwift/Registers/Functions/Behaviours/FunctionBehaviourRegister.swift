@@ -26,14 +26,14 @@
 import Foundation
 
 class FunctionBehaviourRegister: BehaviourRegister {
-    private var functionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]]
+    private var functionBehaviours: [FunctionIdentifier: [BehaviourTrigger]]
     private var unusedBehaviours: [UUID]
 
-    var unusedFunctionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] {
         functionBehaviours.filter { element in
-            !element.value.filter { value in
+            element.value.contains { value in
                 unusedBehaviours.contains(value.behaviour.identifier)
-            }.isEmpty
+            }
         }
     }
 
@@ -49,11 +49,10 @@ class FunctionBehaviourRegister: BehaviourRegister {
             .map { $0.behaviour }
     }
 
-    func record(_ behaviour: FunctionBehaviour,
-                for identifier: FunctionIdentifier,
-                when matchs: [AnyPredicate]) {
-        functionBehaviours[identifier, default: []].append((matchs, behaviour))
-        unusedBehaviours.append(behaviour.identifier)
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier) {
+        functionBehaviours[identifier, default: []].append(trigger)
+        unusedBehaviours.append(trigger.behaviour.identifier)
     }
 
     func makeBehaviourUsed(for identifier: UUID) {

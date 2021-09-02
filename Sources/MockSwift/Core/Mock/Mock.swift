@@ -256,7 +256,7 @@ extension Mock: CallRegister {
 // MARK: - BehaviourRegister
 
 extension Mock: BehaviourRegister {
-    var unusedFunctionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] {
         behaviourRegister.unusedFunctionBehaviours
     }
     func recordedBehaviours(for identifier: FunctionIdentifier,
@@ -264,10 +264,9 @@ extension Mock: BehaviourRegister {
         behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)
     }
 
-    func record(_ behaviour: FunctionBehaviour,
-                for identifier: FunctionIdentifier,
-                when matchs: [AnyPredicate]) {
-        behaviourRegister.record(behaviour, for: identifier, when: matchs)
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier) {
+        behaviourRegister.record(trigger, for: identifier)
     }
 
     func makeBehaviourUsed(for identifier: UUID) {

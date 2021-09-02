@@ -26,19 +26,10 @@
 import Foundation
 @testable import MockSwift
 
-// swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
-    var allBehavioursHaveBeenUsedReturn: Bool!
-    var allBehavioursHaveBeenUsedCount = 0
-    var allBehavioursHaveBeenUsed: Bool {
-        allBehavioursHaveBeenUsedCount += 1
-        return allBehavioursHaveBeenUsedReturn
-    }
-
-    var unusedFunctionBehavioursReturn: [FunctionIdentifier : [(predicates: [AnyPredicate],
-                                                                behaviour: FunctionBehaviour)]]!
+    var unusedFunctionBehavioursReturn: [FunctionIdentifier: [BehaviourTrigger]]!
     var unusedFunctionBehavioursCount = 0
-    var unusedFunctionBehaviours: [FunctionIdentifier : [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] {
         unusedFunctionBehavioursCount += 1
         return unusedFunctionBehavioursReturn
     }
@@ -52,12 +43,11 @@ class BehaviourRegisterMock: BehaviourRegister {
         return recordedBehavioursReturn
     }
 
-    var recordReceived: [(behaviour: FunctionBehaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+    var recordReceived: [(trigger: BehaviourTrigger, identifier: FunctionIdentifier)] = []
 
-    func record(_ behaviour: FunctionBehaviour,
-                for identifier: FunctionIdentifier,
-                when matchs: [AnyPredicate]) {
-        recordReceived.append((behaviour, identifier, matchs))
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier) {
+        recordReceived.append((trigger, identifier))
     }
 
     var makeBehaviourUsedReceived: [UUID] = []

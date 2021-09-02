@@ -37,9 +37,9 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     // Given
     let predicate = AnyPredicateMock()
     predicate.satisfyReturn = false
-    functionBehaviourRegister.record(FunctionBehaviour(),
-                                     for: .stub(),
-                                     when: [predicate])
+    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicate],
+                                                      behaviour: FunctionBehaviour()),
+                                     for: .stub())
 
     // When
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
@@ -59,17 +59,21 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     let firstHandlerReturn = UUID()
     let secondHandlerReturn = UUID()
 
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in firstHandlerReturn }),
-                                     for: .stub(),
-                                     when: [predicateTrue])
+    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                      behaviour: FunctionBehaviour(handler: { _ in
+        firstHandlerReturn
+    })),
+                                     for: .stub())
 
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in secondHandlerReturn }),
-                                     for: .stub(),
-                                     when: [predicateTrue])
+    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                      behaviour: FunctionBehaviour(handler: { _ in
+        secondHandlerReturn
+    })),
+                                     for: .stub())
 
-    functionBehaviourRegister.record(FunctionBehaviour(),
-                                     for: .stub(),
-                                     when: [predicateFalse])
+    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateFalse],
+                                                      behaviour: FunctionBehaviour()),
+                                     for: .stub())
 
     // When
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
@@ -85,8 +89,12 @@ class FunctionBehaviourRegisterTests: XCTestCase {
         let usedBehaviour = FunctionBehaviour()
         let unusedBehaviour = FunctionBehaviour()
         let unusedBehaviourIdentifier = FunctionIdentifier(function: "unused", return: Int.self)
-        functionBehaviourRegister.record(unusedBehaviour, for: unusedBehaviourIdentifier, when: [])
-        functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: unusedBehaviour),
+                                         for: unusedBehaviourIdentifier)
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: usedBehaviour),
+                                         for: .stub())
         functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
 
         // When
@@ -103,7 +111,9 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     func test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed() {
         // Given
         let usedBehaviour = FunctionBehaviour()
-        functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: usedBehaviour),
+                                         for: .stub())
         functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
 
         // When

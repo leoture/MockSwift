@@ -41,10 +41,10 @@ class MockableTests: XCTestCase {
     // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
-    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedBehaviourReturn)
+      XCTAssertEqual(parameters.trigger.behaviour.handle(with: []), expectedBehaviourReturn)
     XCTAssertEqual(parameters.identifier, identifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+      XCTAssertEqual(parameters.trigger.predicates.count, 1)
+      XCTAssertTrue((parameters.trigger.predicates[0] as? AnyPredicateMock) === predicate)
   }
 
   func test_willReturn_withListShouldCorrectlyRegisterBahaviour() {
@@ -62,12 +62,12 @@ class MockableTests: XCTestCase {
     // Then
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
-    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedFirstBehaviourReturn)
-    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
-    XCTAssertEqual(parameters.behaviour.handle(with: []), expectedSecondBehaviourReturn)
+      XCTAssertEqual(parameters.trigger.behaviour.handle(with: []), expectedFirstBehaviourReturn)
+      XCTAssertEqual(parameters.trigger.behaviour.handle(with: []), expectedSecondBehaviourReturn)
+      XCTAssertEqual(parameters.trigger.behaviour.handle(with: []), expectedSecondBehaviourReturn)
     XCTAssertEqual(parameters.identifier, identifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+      XCTAssertEqual(parameters.trigger.predicates.count, 1)
+      XCTAssertTrue((parameters.trigger.predicates[0] as? AnyPredicateMock) === predicate)
   }
 
   func test_will_shouldCorrectlyRegisterBahaviour() {
@@ -89,12 +89,12 @@ class MockableTests: XCTestCase {
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     let expectedBehaviourReceived = [UUID()]
-    let behaviourResult: UUID? = parameters.behaviour.handle(with: expectedBehaviourReceived)
+      let behaviourResult: UUID? = parameters.trigger.behaviour.handle(with: expectedBehaviourReceived)
     XCTAssertEqual(behaviourReceived, expectedBehaviourReceived)
     XCTAssertEqual(behaviourResult, expectedBehaviourReturn)
     XCTAssertEqual(parameters.identifier, identifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+      XCTAssertEqual(parameters.trigger.predicates.count, 1)
+      XCTAssertTrue((parameters.trigger.predicates[0] as? AnyPredicateMock) === predicate)
   }
 
   func test_willDoNothing_shouldCorrectlyRegisterBahaviour() {
@@ -111,11 +111,11 @@ class MockableTests: XCTestCase {
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     let expectedBehaviourReceived = [UUID()]
-    let behaviourResult: Void? = parameters.behaviour.handle(with: expectedBehaviourReceived)
+      let behaviourResult: Void? = parameters.trigger.behaviour.handle(with: expectedBehaviourReceived)
     XCTAssertNotNil(behaviourResult)
     XCTAssertEqual(parameters.identifier, identifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+      XCTAssertEqual(parameters.trigger.predicates.count, 1)
+      XCTAssertTrue((parameters.trigger.predicates[0] as? AnyPredicateMock) === predicate)
   }
 
   func test_disambiguate_shouldReturnSameMockableWithDisambiguatedReturnType() {
@@ -144,12 +144,12 @@ class MockableTests: XCTestCase {
     XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
     let parameters = behaviourRegister.recordReceived[0]
     XCTAssertEqual(parameters.identifier, identifier)
-    XCTAssertEqual(parameters.matchs.count, 1)
-    XCTAssertTrue((parameters.matchs[0] as? AnyPredicateMock) === predicate)
+      XCTAssertEqual(parameters.trigger.predicates.count, 1)
+      XCTAssertTrue((parameters.trigger.predicates[0] as? AnyPredicateMock) === predicate)
 
     var catchedError: NSError?
     do {
-      let _: UUID? = try parameters.behaviour.handleThrowable(with: [])
+        let _: UUID? = try parameters.trigger.behaviour.handleThrowable(with: [])
     } catch {
       catchedError = error as NSError
     }

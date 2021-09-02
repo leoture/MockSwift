@@ -47,15 +47,17 @@ final class MockBehaviourRegisterTests: XCTestCase {
         let expectedIdenfitier = FunctionIdentifier.stub()
 
         // When
-        mock.record(expectedBehaviour, for: expectedIdenfitier, when: ["1", 2])
+        mock.record(BehaviourTrigger(predicates: ["1", 2],
+                                     behaviour: expectedBehaviour),
+                    for: expectedIdenfitier)
 
         // Then
         XCTAssertEqual(behaviourRegister.recordReceived.count, 1)
-        let (behaviour, identifier, predicates) = behaviourRegister.recordReceived[0]
-        XCTAssertEqual(behaviour.identifier, expectedBehaviour.identifier)
+        let (trigger, identifier) = behaviourRegister.recordReceived[0]
+        XCTAssertEqual(trigger.behaviour.identifier, expectedBehaviour.identifier)
         XCTAssertEqual(identifier, expectedIdenfitier)
-        XCTAssertEqual(predicates[0] as? String, "1")
-        XCTAssertEqual(predicates[1] as? Int, 2)
+        XCTAssertEqual(trigger.predicates[0] as? String, "1")
+        XCTAssertEqual(trigger.predicates[1] as? Int, 2)
     }
 
     func test_recordedCall_shouldReturnFromBehaviourRegister() {
@@ -79,7 +81,7 @@ final class MockBehaviourRegisterTests: XCTestCase {
 
     func test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister() {
         // Given
-        behaviourRegister.unusedFunctionBehavioursReturn = [.stub(): [([], FunctionBehaviour())]]
+        behaviourRegister.unusedFunctionBehavioursReturn = [.stub(): [BehaviourTrigger()]]
 
         // When
         let result = mock.unusedFunctionBehaviours
