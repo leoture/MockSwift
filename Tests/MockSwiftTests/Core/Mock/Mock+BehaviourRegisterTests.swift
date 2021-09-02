@@ -77,16 +77,16 @@ final class MockBehaviourRegisterTests: XCTestCase {
         XCTAssertEqual(result[0].identifier, expectedBehaviour.identifier)
     }
 
-    func test_allBehavioursHaveBeenUsed_shouldReturnFromBehaviourRegister() {
+    func test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister() {
         // Given
-        behaviourRegister.allBehavioursHaveBeenUsedReturn = true
+        behaviourRegister.unusedFunctionBehavioursReturn = [.stub(): [([], FunctionBehaviour())]]
 
         // When
-        let result = mock.allBehavioursHaveBeenUsed
+        let result = mock.unusedFunctionBehaviours
 
         // Then
-        XCTAssertEqual(behaviourRegister.allBehavioursHaveBeenUsedCount, 1)
-        XCTAssertTrue(result)
+        XCTAssertEqual(behaviourRegister.unusedFunctionBehavioursCount, 1)
+        XCTAssertEqual(result.count, 1)
     }
 
     func test_makeBehaviourUsed_shouldReturnFromBehaviourRegister() {

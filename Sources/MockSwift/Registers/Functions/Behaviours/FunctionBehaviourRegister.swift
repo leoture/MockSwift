@@ -29,8 +29,12 @@ class FunctionBehaviourRegister: BehaviourRegister {
     private var functionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]]
     private var unusedBehaviours: [UUID]
 
-    var allBehavioursHaveBeenUsed: Bool {
-        unusedBehaviours.isEmpty
+    var unusedFunctionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+        functionBehaviours.filter { element in
+            !element.value.filter { value in
+                unusedBehaviours.contains(value.behaviour.identifier)
+            }.isEmpty
+        }
     }
 
     init() {

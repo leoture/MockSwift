@@ -97,7 +97,8 @@ final class GivenStrategyThrowableTests: XCTestCase {
         let result: String? = try? givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: parameters)
 
         // Then
-        XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
+        XCTAssertEqual(errorHandler.handleReceived[0],
+                       .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
         XCTAssertEqual(result, "error")
         XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
     }
@@ -134,7 +135,8 @@ final class GivenStrategyThrowableTests: XCTestCase {
         // When
         var catchedError: NSError?
         do {
-            _ = try givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: ["parameter1", 2, true]) as String
+            _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
+                                                      concernedBy: ["parameter1", 2, true]) as String
         } catch {
             catchedError = error as NSError
         }
@@ -232,7 +234,8 @@ final class GivenStrategyThrowableTests: XCTestCase {
         try? givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: parameters) as Void
 
         // Then
-        XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
+        XCTAssertEqual(errorHandler.handleReceived[0],
+                        .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
         XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
     }
 
@@ -246,7 +249,8 @@ final class GivenStrategyThrowableTests: XCTestCase {
         // When
         var catchedError: NSError?
         do {
-            _ = try givenStrategy.resolveThrowable(for: functionIdentifier, concernedBy: ["parameter1", 2, true]) as Void
+            _ = try givenStrategy.resolveThrowable(for: functionIdentifier,
+                                                      concernedBy: ["parameter1", 2, true]) as Void
         } catch {
             catchedError = error as NSError
         }

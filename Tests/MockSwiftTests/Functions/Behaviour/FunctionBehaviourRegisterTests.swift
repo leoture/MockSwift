@@ -37,7 +37,9 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     // Given
     let predicate = AnyPredicateMock()
     predicate.satisfyReturn = false
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }), for: .stub(), when: [predicate])
+    functionBehaviourRegister.record(FunctionBehaviour(),
+                                     for: .stub(),
+                                     when: [predicate])
 
     // When
     let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
@@ -50,17 +52,22 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     // Given
     let predicateTrue = AnyPredicateMock()
     predicateTrue.satisfyReturn = true
+
     let predicateFalse = AnyPredicateMock()
     predicateFalse.satisfyReturn = false
+
     let firstHandlerReturn = UUID()
     let secondHandlerReturn = UUID()
+
     functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in firstHandlerReturn }),
                                      for: .stub(),
                                      when: [predicateTrue])
+
     functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in secondHandlerReturn }),
                                      for: .stub(),
                                      when: [predicateTrue])
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }),
+
+    functionBehaviourRegister.record(FunctionBehaviour(),
                                      for: .stub(),
                                      when: [predicateFalse])
 
@@ -73,40 +80,36 @@ class FunctionBehaviourRegisterTests: XCTestCase {
     XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
   }
 
-    func test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour() {
+    func test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed() {
         // Given
-
-        // When
-        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
-
-        // Then
-        XCTAssertTrue(result)
-    }
-
-    func test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed() {
-        // Given
-        let usedBehaviour = FunctionBehaviour(handler: { _ in })
-        functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }), for: .stub(), when: [])
+        let usedBehaviour = FunctionBehaviour()
+        let unusedBehaviour = FunctionBehaviour()
+        let unusedBehaviourIdentifier = FunctionIdentifier(function: "unused", return: Int.self)
+        functionBehaviourRegister.record(unusedBehaviour, for: unusedBehaviourIdentifier, when: [])
         functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
         functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
 
         // When
-        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
+        let result = functionBehaviourRegister.unusedFunctionBehaviours
 
         // Then
-        XCTAssertFalse(result)
+        XCTAssertEqual(result.count, 1)
+        let value = result[unusedBehaviourIdentifier]!
+        XCTAssertEqual(value.count, 1)
+        let recorded = value[0]
+        XCTAssertEqual(unusedBehaviour.identifier, recorded.behaviour.identifier)
     }
 
-    func test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed() {
+    func test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed() {
         // Given
-        let usedBehaviour = FunctionBehaviour(handler: { _ in })
+        let usedBehaviour = FunctionBehaviour()
         functionBehaviourRegister.record(usedBehaviour, for: .stub(), when: [])
         functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
 
         // When
-        let result = functionBehaviourRegister.allBehavioursHaveBeenUsed
+        let result = functionBehaviourRegister.unusedFunctionBehaviours
 
         // Then
-        XCTAssertTrue(result)
+        XCTAssertTrue(result.isEmpty, "unusedFunctionBehaviours should be empty when all behaviours have been used")
     }
 }

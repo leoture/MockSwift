@@ -256,10 +256,9 @@ extension Mock: CallRegister {
 // MARK: - BehaviourRegister
 
 extension Mock: BehaviourRegister {
-    var allBehavioursHaveBeenUsed: Bool {
-        behaviourRegister.allBehavioursHaveBeenUsed
+    var unusedFunctionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+        behaviourRegister.unusedFunctionBehaviours
     }
-
     func recordedBehaviours(for identifier: FunctionIdentifier,
                             concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
         behaviourRegister.recordedBehaviours(for: identifier, concernedBy: parameters)

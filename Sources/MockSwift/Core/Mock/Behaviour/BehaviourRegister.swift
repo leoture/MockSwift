@@ -26,8 +26,8 @@
 import Foundation
 
 protocol BehaviourRegister {
-    var allBehavioursHaveBeenUsed: Bool { get }
-
+    var unusedFunctionBehaviours: [FunctionIdentifier: [(predicates: [AnyPredicate],
+                                                         behaviour: FunctionBehaviour)]] { get }
     func recordedBehaviours(for identifier: FunctionIdentifier,
                             concernedBy parameters: [ParameterType]) -> [FunctionBehaviour]
 

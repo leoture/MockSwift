@@ -79,10 +79,21 @@ public class Interaction<WrappedType> {
     ///   - file: The file name where the method is called.
     ///   - line: The line where the method is called.
     public func failOnUnusedBehaviours(file: StaticString = #file, line: UInt = #line) {
-        if !behaviourRegister.allBehavioursHaveBeenUsed {
+        let values = behaviourRegister.unusedFunctionBehaviours
+        if  !values.isEmpty {
             failureRecorder.recordFailure(message: "\(WrappedType.self) has unused behaviours.",
                                           file: file,
                                           line: line)
+
+            for value in values {
+                for value1 in value.value {
+                    failureRecorder.recordFailure(
+                        message: "Unused given behaviour: \(value.key.callDescription(with: value1.predicates)).",
+                        file: value1.behaviour.source.file,
+                        line: value1.behaviour.source.line
+                    )
+                }
+            }
         }
     }
 }

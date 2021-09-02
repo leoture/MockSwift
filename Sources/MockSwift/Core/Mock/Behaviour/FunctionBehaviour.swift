@@ -26,8 +26,19 @@
 import Foundation
 
 struct FunctionBehaviour {
-    let identifier = UUID()
-    let handler: ([ParameterType]) throws -> Any
+    typealias Handler = ([ParameterType]) throws -> Any
+
+    let identifier: UUID
+    let source: (file: StaticString, line: UInt)
+    let handler: Handler
+
+    init(identifier: UUID = UUID(),
+         source: (file: StaticString, line: UInt) = ("", 0),
+         handler: @escaping Handler = { _ in () }) {
+        self.identifier = identifier
+        self.source = source
+        self.handler = handler
+    }
 
     func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
         try? handler(parameters) as? ReturnType

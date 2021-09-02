@@ -35,6 +35,14 @@ class BehaviourRegisterMock: BehaviourRegister {
         return allBehavioursHaveBeenUsedReturn
     }
 
+    var unusedFunctionBehavioursReturn: [FunctionIdentifier : [(predicates: [AnyPredicate],
+                                                                behaviour: FunctionBehaviour)]]!
+    var unusedFunctionBehavioursCount = 0
+    var unusedFunctionBehaviours: [FunctionIdentifier : [(predicates: [AnyPredicate], behaviour: FunctionBehaviour)]] {
+        unusedFunctionBehavioursCount += 1
+        return unusedFunctionBehavioursReturn
+    }
+
     var recordedBehavioursReturn: [FunctionBehaviour]!
     var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
 

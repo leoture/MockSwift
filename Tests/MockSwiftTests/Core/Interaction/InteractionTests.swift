@@ -107,7 +107,7 @@ class InteractionTests: XCTestCase {
 
     func test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder() {
         // Given
-        behaviourRegister.allBehavioursHaveBeenUsedReturn = false
+        behaviourRegister.unusedFunctionBehavioursReturn = [.stub(): [([], FunctionBehaviour(source: ("file2", 21)))]]
 
         // When
         Interaction<Custom>(callRegister: callRegister,
@@ -116,16 +116,19 @@ class InteractionTests: XCTestCase {
             .failOnUnusedBehaviours(file: "file", line: 42)
 
         // Then
-        XCTAssertEqual(behaviourRegister.allBehavioursHaveBeenUsedCount, 1)
-        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
+        XCTAssertEqual(behaviourRegister.unusedFunctionBehavioursCount, 1)
+        XCTAssertEqual(failureRecorder.recordFailureReceived.count, 2)
         let (message, file, line) = failureRecorder.recordFailureReceived[0]
         XCTAssertEqual(message, "Custom has unused behaviours.")
         XCTAssertEqual("\(file) \(line)", "file 42")
+        let (message2, file2, line2) = failureRecorder.recordFailureReceived[1]
+        XCTAssertEqual(message2, "Unused given behaviour: function() -> ().")
+        XCTAssertEqual("\(file2) \(line2)", "file2 21")
     }
 
     func test_failOnUnusedBehaviours_whenAllBehavioursHaveBeenUsedShouldNotCallFailureRecorder() {
         // Given
-        behaviourRegister.allBehavioursHaveBeenUsedReturn = true
+        behaviourRegister.unusedFunctionBehavioursReturn = [:]
 
         // When
         Interaction<Custom>(callRegister: callRegister,
@@ -134,7 +137,7 @@ class InteractionTests: XCTestCase {
             .failOnUnusedBehaviours(file: "file", line: 42)
 
         // Then
-        XCTAssertEqual(behaviourRegister.allBehavioursHaveBeenUsedCount, 1)
+        XCTAssertEqual(behaviourRegister.unusedFunctionBehavioursCount, 1)
         XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
     }
 }
