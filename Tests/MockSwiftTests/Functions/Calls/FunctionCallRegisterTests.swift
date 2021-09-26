@@ -27,132 +27,185 @@
 import XCTest
 
 class FunctionCallRegisterTests: XCTestCase {
-  private var functionCallRegister: FunctionCallRegister!
-  private var clock: ClockMock!
+    private var functionCallRegister: FunctionCallRegister!
+    private var clock: ClockMock!
 
-  override func setUp() {
-    clock = ClockMock()
-    clock.currentTimeReturn = -1
-    functionCallRegister = FunctionCallRegister(clock: clock)
-  }
+    override func setUp() {
+        clock = ClockMock()
+        clock.currentTimeReturn = -1
+        functionCallRegister = FunctionCallRegister(clock: clock)
+    }
 
-  // MARK: - recordCall
+    // MARK: - recordCall
 
-  func test_recordCall_should_addCorrectFunctionCalls() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub()
+    func test_recordCall_should_addCorrectFunctionCalls() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub()
+        let call1 = FunctionCall(identifier: UUID(),
+                                 parameters: [1],
+                                 time: 1)
+        let call2 = FunctionCall(identifier: UUID(),
+                                 parameters: ["2"],
+                                 time: 2)
+        // When
+        clock.currentTimeReturn = 0
+        functionCallRegister.recordCall(call1, for: functionIdentifier)
+        clock.currentTimeReturn = 1
+        functionCallRegister.recordCall(call2, for: functionIdentifier)
 
-    // When
-    clock.currentTimeReturn = 0
-    functionCallRegister.recordCall(for: functionIdentifier, with: [1])
-    clock.currentTimeReturn = 1
-    functionCallRegister.recordCall(for: functionIdentifier, with: ["2"])
+        // Then
+        XCTAssertEqual(functionCallRegister.unverifiedCalls.count, 2)
 
-    // Then
-    XCTAssertEqual(functionCallRegister.unverifiedCalls.count, 2)
-    let uuid1 = functionCallRegister.unverifiedCalls[0]
-    let uuid2 = functionCallRegister.unverifiedCalls[1]
+        XCTAssertEqual(functionCallRegister.calls.count, 1)
+        let calls = functionCallRegister.calls[functionIdentifier]
+        XCTAssertEqual(calls?.count, 2)
+        XCTAssertEqual(calls?[0], call1)
+        XCTAssertEqual(calls?[1], call2)
 
-    XCTAssertEqual(functionCallRegister.calls.count, 1)
-    let calls = functionCallRegister.calls[functionIdentifier]
-    XCTAssertEqual(calls?.count, 2)
-    let call1 = calls?[0]
-    XCTAssertEqual(call1?.identifier, uuid1)
-    XCTAssertEqual(call1?.parameters as? [Int], [1])
-    XCTAssertEqual(call1?.time, 0)
-    let call2 = calls?[1]
-    XCTAssertEqual(call2?.identifier, uuid2)
-    XCTAssertEqual(call2?.parameters as? [String], ["2"])
-    XCTAssertEqual(call2?.time, 1)
-  }
+        XCTAssertEqual(functionCallRegister.unverifiedCalls[0], call1.identifier)
+        XCTAssertEqual(functionCallRegister.unverifiedCalls[1], call2.identifier)
+    }
 
-  // MARK: - recordedCalls
+    // MARK: - recordedCalls
 
-  func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall() {
-    // Given
-    let predicate = AnyPredicateMock()
+    func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall() {
+        // Given
+        let predicate = AnyPredicateMock()
 
-    // When
-    let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
+        // When
+        let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
 
-    // Then
-    XCTAssertTrue(calls.isEmpty)
-  }
+        // Then
+        XCTAssertTrue(calls.isEmpty)
+    }
 
-  func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched() {
-    // Given
-    let predicate = AnyPredicateMock()
-    predicate.satisfyReturn = false
-    functionCallRegister.recordCall(for: .stub(), with: [0])
+    func test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched() {
+        // Given
+        let predicate = AnyPredicateMock()
+        predicate.satisfyReturn = false
+        functionCallRegister.recordCall(FunctionCall(identifier: UUID(),
+                                                     parameters: [0],
+                                                     time: 1),
+                                        for: .stub())
 
-    // When
-    let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
+        // When
+        let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
 
-    // Then
-    XCTAssertTrue(calls.isEmpty)
-  }
+        // Then
+        XCTAssertTrue(calls.isEmpty)
+    }
 
-  func test_recordedCalls_shouldReturnFunctionCallsMatched() {
-    // Given
-    let predicateTrue = AnyPredicateMock()
-    predicateTrue.satisfyReturn = true
-    let predicateFalse = AnyPredicateMock()
-    predicateFalse.satisfyReturn = false
+    func test_recordedCalls_shouldReturnFunctionCallsMatched() {
+        // Given
+        let predicateTrue = AnyPredicateMock()
+        predicateTrue.satisfyReturn = true
+        let predicateFalse = AnyPredicateMock()
+        predicateFalse.satisfyReturn = false
 
-    let firstParameter = UUID()
-    let secondParameter = UUID()
-    functionCallRegister.recordCall(for: .stub(), with: [firstParameter])
-    functionCallRegister.recordCall(for: .stub(), with: [secondParameter])
-    functionCallRegister.recordCall(for: .stub(), with: [UUID()])
+        let call1 = FunctionCall(identifier: UUID(),
+                                 parameters: [1],
+                                 time: 1)
+        let call2 = FunctionCall(identifier: UUID(),
+                                 parameters: [2],
+                                 time: 2)
+        functionCallRegister.recordCall(call1, for: .stub())
+        functionCallRegister.recordCall(call2, for: .stub())
+        functionCallRegister.recordCall(FunctionCall(identifier: UUID(),
+                                                     parameters: [3],
+                                                     time: 3),
+                                        for: .stub())
 
-    let predicate = Predicate<UUID>.match { $0 == firstParameter || $0 == secondParameter }
+        let predicate = Predicate<Int>.match { $0 == 1 || $0 == 2 }
 
-    // When
-    let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
+        // When
+        let calls = functionCallRegister.recordedCalls(for: .stub(), when: [predicate])
 
-    // Then
-    XCTAssertEqual(calls.count, 2)
-    XCTAssertEqual(calls[0].parameters[0] as? UUID, firstParameter)
-    XCTAssertEqual(calls[1].parameters[0] as? UUID, secondParameter)
-  }
+        // Then
+        XCTAssertEqual(calls.count, 2)
+        XCTAssertEqual(calls[0], call1)
+        XCTAssertEqual(calls[1], call2)
+    }
 
-  // MARK: - allCallHaveBeenVerified
+    // MARK: - allCallHaveBeenVerified
 
-  func test_allCallHaveBeenVerified_whenCallHasNotBeenRecordedShouldReturnTrue() {
-    // Given
+    func test_allCallHaveBeenVerified_whenCallHasNotBeenRecordedShouldReturnTrue() {
+        // Given
 
-    // When
-    let result = functionCallRegister.allCallHaveBeenVerified
+        // When
+        let result = functionCallRegister.allCallHaveBeenVerified
 
-    // Then
-    XCTAssertTrue(result)
-  }
+        // Then
+        XCTAssertTrue(result)
+    }
 
-  func test_allCallHaveBeenVerified_whenNotAllCallsHasBeenVerifiedShouldReturnFalse() {
-    // Given
-    functionCallRegister.recordCall(for: .stub(), with: [0])
-    functionCallRegister.recordCall(for: .stub(), with: [1])
-    let calls = functionCallRegister.recordedCalls(for: .stub(), when: [0])
-    calls.forEach { self.functionCallRegister.makeCallVerified(for: $0.identifier) }
+    func test_allCallHaveBeenVerified_whenNotAllCallsHasBeenVerifiedShouldReturnFalse() {
+        // Given
+        let call = FunctionCall()
+        functionCallRegister.recordCall(call, for: .stub())
+        functionCallRegister.recordCall(FunctionCall(), for: .stub())
+        functionCallRegister.makeCallVerified(for: call.identifier)
 
-    // When
-    let result = functionCallRegister.allCallHaveBeenVerified
+        // When
+        let result = functionCallRegister.allCallHaveBeenVerified
 
-    // Then
-    XCTAssertFalse(result)
-  }
+        // Then
+        XCTAssertFalse(result)
+    }
 
-  func test_allCallHaveBeenVerified_whenAllCallsHasBeenVerifiedShouldReturnFalse() {
-    // Given
-    functionCallRegister.recordCall(for: .stub(), with: [0])
-    functionCallRegister.recordCall(for: .stub(), with: [1])
-    let calls = functionCallRegister.recordedCalls(for: .stub(), when: [Predicate<Any>.any()])
-    calls.forEach { self.functionCallRegister.makeCallVerified(for: $0.identifier) }
+    func test_allCallHaveBeenVerified_whenAllCallsHasBeenVerifiedShouldReturnFalse() {
+        // Given
+        let call1 = FunctionCall()
+        let call2 = FunctionCall()
+        functionCallRegister.recordCall(call1, for: .stub())
+        functionCallRegister.recordCall(call2, for: .stub())
+        [call1, call2].forEach { self.functionCallRegister.makeCallVerified(for: $0.identifier) }
 
-    // When
-    let result = functionCallRegister.allCallHaveBeenVerified
+        // When
+        let result = functionCallRegister.allCallHaveBeenVerified
 
-    // Then
-    XCTAssertTrue(result)
-  }
+        // Then
+        XCTAssertTrue(result)
+    }
+
+    // MARK: - unverifiedCalls
+
+    func test_unverifiedCalls_whenCallHasNotBeenRecordedShouldReturnEmpty() {
+        // Given
+
+        // When
+        let result = functionCallRegister.unverifiedCalls
+
+        // Then
+        XCTAssertTrue(result.isEmpty)
+    }
+
+    func test_unverifiedCalls_whenNotAllCallsHasBeenVerifiedShouldReturnCorrectIdentifiers() {
+        // Given
+        let call1 = FunctionCall(parameters: [0])
+        let call2 = FunctionCall(parameters: [1])
+        functionCallRegister.recordCall(call1, for: .stub())
+        functionCallRegister.recordCall(call2, for: .stub())
+        functionCallRegister.makeCallVerified(for: call1.identifier)
+
+        // When
+        let result = functionCallRegister.unverifiedCalls
+
+        // Then
+        XCTAssertEqual(result, [call2.identifier])
+    }
+
+        func test_unverifiedCalls_whenAllCallsHasBeenVerifiedShouldReturnEmpty() {
+          // Given
+            let call1 = FunctionCall(parameters: [0])
+            let call2 = FunctionCall(parameters: [1])
+            functionCallRegister.recordCall(call1, for: .stub())
+            functionCallRegister.recordCall(call2, for: .stub())
+            [call1, call2].forEach { functionCallRegister.makeCallVerified(for: $0.identifier) }
+
+          // When
+          let result = functionCallRegister.unverifiedCalls
+
+          // Then
+            XCTAssertTrue(result.isEmpty)
+        }
 }

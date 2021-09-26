@@ -41,21 +41,21 @@ final class MockCallRegisterTests: XCTestCase {
                 errorHandler: ErrorHandlerMock())
   }
 
-  func test_recordCall_shouldCallRegister() {
-    // Given
-    let expectedIdentifier = FunctionIdentifier.stub()
+    func test_recordCall_shouldCallRegister() {
+        // Given
+        let expectedIdentifier = FunctionIdentifier.stub()
+        let expectedCall = FunctionCall(identifier: UUID(),
+                                        parameters: ["1", 2],
+                                        time: 1)
+        // When
+        mock.recordCall(expectedCall, for: expectedIdentifier)
 
-    // When
-    mock.recordCall(for: expectedIdentifier, with: ["1", 2])
-
-    // Then
-    XCTAssertEqual(callRegister.recordCallReceived.count, 1)
-    let (identifier, parameters) = callRegister.recordCallReceived[0]
-    XCTAssertEqual(identifier, expectedIdentifier)
-    XCTAssertEqual(parameters.count, 2)
-    XCTAssertEqual(parameters[0] as? String, "1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-  }
+        // Then
+        XCTAssertEqual(callRegister.recordCallReceived.count, 1)
+        let (call, identifier) = callRegister.recordCallReceived[0]
+        XCTAssertEqual(identifier, expectedIdentifier)
+        XCTAssertEqual(call, expectedCall)
+    }
 
   func test_recordedCall_shouldReturnFromCallRegister() {
     // Given

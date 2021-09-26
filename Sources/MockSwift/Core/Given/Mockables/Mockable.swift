@@ -48,7 +48,8 @@ public class Mockable<ReturnType> {
   /// Registers a return value.
   /// - Parameter value: Value to register.
     public func willReturn(file: StaticString = #file, line: UInt = #line, _ value: ReturnType) {
-        let behaviour = FunctionBehaviour(source: (file, line)) { _ in value }
+        let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                             line: line)) { _ in value }
     behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
                                               behaviour: behaviour),
                              for: functionIdentifier)
@@ -58,7 +59,8 @@ public class Mockable<ReturnType> {
   /// - Parameter values: Values to register.
   public func willReturn(file: StaticString = #file, line: UInt = #line, _ values: ReturnType...) {
     var returns = values
-    let behaviour = FunctionBehaviour(source: (file, line)) { _ in
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in
       returns.count == 1 ? returns[0] : returns.removeFirst()
     }
     behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
@@ -76,7 +78,8 @@ public class Mockable<ReturnType> {
   public func will(file: StaticString = #file,
                    line: UInt = #line,
                    _ completion: @escaping ([Any]) throws -> ReturnType) {
-    let behaviour = FunctionBehaviour(source: (file, line), handler: completion)
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line), handler: completion)
     behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
                                               behaviour: behaviour),
                              for: functionIdentifier)
@@ -85,7 +88,8 @@ public class Mockable<ReturnType> {
   /// Registers an error.
   /// - Parameter error: Error to register.
   public func willThrow(file: StaticString = #file, line: UInt = #line, _ error: Error) {
-    let behaviour = FunctionBehaviour(source: (file, line)) { _ in throw error }
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in throw error }
     behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
                                               behaviour: behaviour),
                              for: functionIdentifier)
@@ -95,7 +99,8 @@ public class Mockable<ReturnType> {
   /// - Parameter errors: Errors to register.
   public func willThrow(file: StaticString = #file, line: UInt = #line, _ errors: Error...) {
     var throwables = errors
-    let behaviour = FunctionBehaviour(source: (file, line)) { _ in
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in
       throw throwables.count == 1 ? throwables[0] : throwables.removeFirst()
     }
     behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,

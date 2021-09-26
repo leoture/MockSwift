@@ -29,14 +29,14 @@ struct FunctionBehaviour {
     typealias Handler = ([ParameterType]) throws -> Any
 
     let identifier: UUID
-    let source: (file: StaticString, line: UInt)
+    let location: Location
     let handler: Handler
 
     init(identifier: UUID = UUID(),
-         source: (file: StaticString, line: UInt) = ("", 0),
+         location: Location = Location(),
          handler: @escaping Handler = { _ in () }) {
         self.identifier = identifier
-        self.source = source
+        self.location = location
         self.handler = handler
     }
 
@@ -46,5 +46,16 @@ struct FunctionBehaviour {
 
     func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? {
         try handler(parameters) as? ReturnType
+    }
+}
+
+struct Location {
+    let file: StaticString
+    let line: UInt
+
+    init(file: StaticString = "",
+         line: UInt = 0) {
+        self.file = file
+        self.line = line
     }
 }

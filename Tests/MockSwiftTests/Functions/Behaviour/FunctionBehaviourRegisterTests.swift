@@ -27,62 +27,66 @@
 import XCTest
 
 class FunctionBehaviourRegisterTests: XCTestCase {
-  private var functionBehaviourRegister: FunctionBehaviourRegister!
+    private var functionBehaviourRegister: FunctionBehaviourRegister!
 
-  override func setUp() {
-    functionBehaviourRegister = FunctionBehaviourRegister()
-  }
+    override func setUp() {
+        functionBehaviourRegister = FunctionBehaviourRegister()
+    }
 
-  func test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs() {
-    // Given
-    let predicate = AnyPredicateMock()
-    predicate.satisfyReturn = false
-    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicate],
-                                                      behaviour: FunctionBehaviour()),
-                                     for: .stub())
+    // MARK: - recordedBehaviours
 
-    // When
-    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+    func test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs() {
+        // Given
+        let predicate = AnyPredicateMock()
+        predicate.satisfyReturn = false
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicate],
+                                                          behaviour: FunctionBehaviour()),
+                                         for: .stub())
 
-    // Then
-    XCTAssertTrue(behaviours.isEmpty)
-  }
+        // When
+        let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
-  func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {
-    // Given
-    let predicateTrue = AnyPredicateMock()
-    predicateTrue.satisfyReturn = true
+        // Then
+        XCTAssertTrue(behaviours.isEmpty)
+    }
 
-    let predicateFalse = AnyPredicateMock()
-    predicateFalse.satisfyReturn = false
+    func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {
+        // Given
+        let predicateTrue = AnyPredicateMock()
+        predicateTrue.satisfyReturn = true
 
-    let firstHandlerReturn = UUID()
-    let secondHandlerReturn = UUID()
+        let predicateFalse = AnyPredicateMock()
+        predicateFalse.satisfyReturn = false
 
-    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
-                                                      behaviour: FunctionBehaviour(handler: { _ in
-        firstHandlerReturn
-    })),
-                                     for: .stub())
+        let firstHandlerReturn = UUID()
+        let secondHandlerReturn = UUID()
 
-    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
-                                                      behaviour: FunctionBehaviour(handler: { _ in
-        secondHandlerReturn
-    })),
-                                     for: .stub())
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                          behaviour: FunctionBehaviour(handler: { _ in
+            firstHandlerReturn
+        })),
+                                         for: .stub())
 
-    functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateFalse],
-                                                      behaviour: FunctionBehaviour()),
-                                     for: .stub())
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                          behaviour: FunctionBehaviour(handler: { _ in
+            secondHandlerReturn
+        })),
+                                         for: .stub())
 
-    // When
-    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateFalse],
+                                                          behaviour: FunctionBehaviour()),
+                                         for: .stub())
 
-    // Then
-    XCTAssertEqual(behaviours.count, 2)
-    XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
-    XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
-  }
+        // When
+        let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+
+        // Then
+        XCTAssertEqual(behaviours.count, 2)
+        XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
+        XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
+    }
+
+    // MARK: - unusedFunctionBehaviours
 
     func test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed() {
         // Given

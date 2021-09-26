@@ -46,26 +46,27 @@ final class MockThrowableTests: XCTestCase {
                 errorHandler: errorHandler)
   }
 
-  func test_mockedThrowable_shouldRecordCallIntoCallRegister() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> String {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
+    func test_mockedThrowable_shouldRecordCallIntoCallRegister() {
+        // Given
+        let functionName = "function(parameter1:parameter2:parameter3:)"
+        func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws -> String {
+            try mock.mockedThrowable(parameter1, parameter2, parameter3)
+        }
+        strategy.resolveThrowableReturn = ""
+
+        // When
+        _ = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
+
+        // Then
+        XCTAssertEqual(callRegister.recordCallReceived.count, 1)
+        let (call, identifier) = callRegister.recordCallReceived.first!
+        XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
+        let parameters = call.parameters
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
     }
-    strategy.resolveThrowableReturn = ""
-
-    // When
-    _ = try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    // Then
-    XCTAssertEqual(callRegister.recordCallReceived.count, 1)
-    let (identifier, parameters) = callRegister.recordCallReceived.first!
-    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
 
   func test_mockedThrowable_shouldReturnValueFromStrategy() {
     // Given
@@ -116,26 +117,27 @@ final class MockThrowableTests: XCTestCase {
     XCTAssertTrue(catchedError === expectedError)
   }
 
-  func test_mockedThrowableVoid_shouldRecordCallIntoCallRegister() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
-      try mock.mockedThrowable(parameter1, parameter2, parameter3)
+    func test_mockedThrowableVoid_shouldRecordCallIntoCallRegister() {
+        // Given
+        let functionName = "function(parameter1:parameter2:parameter3:)"
+        func function(parameter1: String, parameter2: Int, parameter3: Bool?) throws {
+            try mock.mockedThrowable(parameter1, parameter2, parameter3)
+        }
+        strategy.resolveThrowableReturn = ()
+
+        // When
+        try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
+
+        // Then
+        XCTAssertEqual(callRegister.recordCallReceived.count, 1)
+        let (call, identifier) = callRegister.recordCallReceived.first!
+        XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
+        let parameters = call.parameters
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
     }
-    strategy.resolveThrowableReturn = ()
-
-    // When
-    try? function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    // Then
-    XCTAssertEqual(callRegister.recordCallReceived.count, 1)
-    let (identifier, parameters) = callRegister.recordCallReceived.first!
-    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
 
   func test_mockedThrowableVoid_shouldCallBehaviour() {
     // Given

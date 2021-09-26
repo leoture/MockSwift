@@ -89,8 +89,8 @@ public class Interaction<WrappedType> {
                 for value1 in value.value {
                     failureRecorder.recordFailure(
                         message: "Unused given behaviour: \(value.key.callDescription(with: value1.predicates)).",
-                        file: value1.behaviour.source.file,
-                        line: value1.behaviour.source.line
+                        file: value1.behaviour.location.file,
+                        line: value1.behaviour.location.line
                     )
                 }
             }

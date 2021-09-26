@@ -217,7 +217,9 @@ public class Mock<WrappedType> {
 
     private func willCall(function: FunctionIdentifier,
                           with parameters: [ParameterType]) {
-        callRegister.recordCall(for: function, with: parameters)
+        callRegister.recordCall(FunctionCall(parameters: parameters,
+                                             time: ClockSystem().currentTime),
+                                for: function)
     }
 
     private func call<ReturnType>(function: FunctionIdentifier,
@@ -242,9 +244,9 @@ extension Mock: CallRegister {
         callRegister.makeCallVerified(for: identifier)
     }
 
-    func recordCall(for identifier: FunctionIdentifier,
-                    with parameters: [ParameterType]) {
-        callRegister.recordCall(for: identifier, with: parameters)
+    func recordCall(_ call: FunctionCall,
+                    for identifier: FunctionIdentifier) {
+        callRegister.recordCall(call, for: identifier)
     }
 
     func recordedCalls(for identifier: FunctionIdentifier,

@@ -26,13 +26,21 @@
 import Foundation
 
 struct FunctionCall {
-  let identifier: UUID
-  let parameters: [ParameterType]
-  let time: TimeInterval
+    let identifier: UUID
+    let parameters: [ParameterType]
+    let time: TimeInterval
+
+    init(identifier: UUID = UUID(),
+         parameters: [ParameterType] = [],
+         time: TimeInterval = ClockSystem().currentTime) {
+        self.identifier = identifier
+        self.parameters = parameters
+        self.time = time
+    }
 }
 
 extension FunctionCall: Equatable {
-  static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
-    lhs.identifier == rhs.identifier
-  }
+    static func == (lhs: FunctionCall, rhs: FunctionCall) -> Bool {
+        lhs.identifier == rhs.identifier
+    }
 }

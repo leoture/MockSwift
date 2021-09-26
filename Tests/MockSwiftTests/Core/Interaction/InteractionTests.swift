@@ -107,7 +107,7 @@ class InteractionTests: XCTestCase {
 
     func test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder() {
         // Given
-        let behaviour = FunctionBehaviour(source: ("file2", 21))
+        let behaviour = FunctionBehaviour(location: Location(file: "file2", line: 21))
         behaviourRegister.unusedFunctionBehavioursReturn = [.stub(): [BehaviourTrigger(predicates: [],
                                                                                        behaviour: behaviour)]]
 
