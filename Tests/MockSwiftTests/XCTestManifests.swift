@@ -45,11 +45,10 @@ extension FunctionBehaviourRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__FunctionBehaviourRegisterTests = [
-        ("test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed", test_allBehavioursHaveBeenUsed_shouldReturnFalse_whenSomeBehavioursHaveNotBeenUsed),
-        ("test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed", test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenAllBehavioursHaveBeenUsed),
-        ("test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour", test_allBehavioursHaveBeenUsed_shouldReturnTrue_whenNoRecordedBehaviour),
         ("test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs", test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs),
         ("test_recordedBehaviours_shouldReturnFunctionBehaviourMatched", test_recordedBehaviours_shouldReturnFunctionBehaviourMatched),
+        ("test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed", test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed),
+        ("test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed", test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed),
     ]
 }
 
@@ -81,6 +80,9 @@ extension FunctionCallRegisterTests {
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall),
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched),
         ("test_recordedCalls_shouldReturnFunctionCallsMatched", test_recordedCalls_shouldReturnFunctionCallsMatched),
+        ("test_unverifiedCalls_whenAllCallsHasBeenVerifiedShouldReturnEmpty", test_unverifiedCalls_whenAllCallsHasBeenVerifiedShouldReturnEmpty),
+        ("test_unverifiedCalls_whenCallHasNotBeenRecordedShouldReturnEmpty", test_unverifiedCalls_whenCallHasNotBeenRecordedShouldReturnEmpty),
+        ("test_unverifiedCalls_whenNotAllCallsHasBeenVerifiedShouldReturnCorrectIdentifiers", test_unverifiedCalls_whenNotAllCallsHasBeenVerifiedShouldReturnCorrectIdentifiers),
     ]
 }
 
@@ -134,6 +136,7 @@ extension GivenStrategyTests {
         ("test_resolveVoid_shouldFailWithNoDefinedBehaviour", test_resolveVoid_shouldFailWithNoDefinedBehaviour),
         ("test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO", test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO),
         ("test_resolveVoid_shouldFailWithTooManyDefinedBehaviour", test_resolveVoid_shouldFailWithTooManyDefinedBehaviour),
+        ("test_resolveVoid_shouldReturnFromBehaviour", test_resolveVoid_shouldReturnFromBehaviour),
     ]
 }
 
@@ -270,9 +273,10 @@ extension MockBehaviourRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockBehaviourRegisterTests = [
-        ("test_allBehavioursHaveBeenUsed_shouldReturnFromBehaviourRegister", test_allBehavioursHaveBeenUsed_shouldReturnFromBehaviourRegister),
+        ("test_makeBehaviourUsed_shouldReturnFromBehaviourRegister", test_makeBehaviourUsed_shouldReturnFromBehaviourRegister),
         ("test_record_shouldCallBehaviourRegister", test_record_shouldCallBehaviourRegister),
         ("test_recordedCall_shouldReturnFromBehaviourRegister", test_recordedCall_shouldReturnFromBehaviourRegister),
+        ("test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister", test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister),
     ]
 }
 
