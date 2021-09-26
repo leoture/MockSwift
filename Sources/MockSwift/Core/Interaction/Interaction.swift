@@ -28,43 +28,72 @@ import Foundation
 func interaction<WrappedType>(_ value: WrappedType,
                               errorHandler: ErrorHandler,
                               failureRecorder: FailureRecorder) -> Interaction<WrappedType> {
-  guard let mock = value as? Mock<WrappedType> else {
-    return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
-  }
-  return Interaction(callRegister: mock, failureRecorder: failureRecorder)
+    guard let mock = value as? Mock<WrappedType> else {
+        return errorHandler.handle(InternalError.cast(source: value, target: Mock<WrappedType>.self))
+    }
+    return Interaction(callRegister: mock,
+                       behaviourRegister: mock,
+                       failureRecorder: failureRecorder)
 }
 
 // MARK: - Public Global Methods
 
 /// Creates an `Interaction` based on `value`.
 public func interaction<WrappedType>(with value: WrappedType) -> Interaction<WrappedType> {
-  interaction(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder())
+    interaction(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder())
 }
 
 /// `Interaction` is used to verify method calls.
 /// - SeeAlso: `Then`
 public class Interaction<WrappedType> {
-  // MARK: - Properties
+    // MARK: - Properties
 
-  private let callRegister: CallRegister
-  private let failureRecorder: FailureRecorder
+    private let callRegister: CallRegister
+    private let behaviourRegister: BehaviourRegister
+    private let failureRecorder: FailureRecorder
 
-  // MARK: - Init
+    // MARK: - Init
 
-  init(callRegister: CallRegister, failureRecorder: FailureRecorder) {
-    self.callRegister = callRegister
-    self.failureRecorder = failureRecorder
-  }
-
-  /// Checks that the `WrappedType` value has no calls to check anymore.
-  /// - Parameters:
-  ///   - file: The file name where the method is called.
-  ///   - line: The line where the method is called.
-  public func ended(file: StaticString = #file, line: UInt = #line) {
-    if !callRegister.allCallHaveBeenVerified {
-      failureRecorder.recordFailure(message: "\(WrappedType.self) expects to have no more interactions to check.",
-                                    file: file,
-                                    line: line)
+    init(callRegister: CallRegister,
+         behaviourRegister: BehaviourRegister,
+         failureRecorder: FailureRecorder) {
+        self.callRegister = callRegister
+        self.behaviourRegister = behaviourRegister
+        self.failureRecorder = failureRecorder
     }
-  }
+
+    /// Checks that the `WrappedType` value has no calls to check anymore.
+    /// - Parameters:
+    ///   - file: The file name where the method is called.
+    ///   - line: The line where the method is called.
+    public func ended(file: StaticString = #file, line: UInt = #line) {
+        if !callRegister.allCallHaveBeenVerified {
+            failureRecorder.recordFailure(message: "\(WrappedType.self) expects to have no more interactions to check.",
+                                          file: file,
+                                          line: line)
+        }
+    }
+
+    /// Checks that the `WrappedType` value has no used Behaviours.
+    /// - Parameters:
+    ///   - file: The file name where the method is called.
+    ///   - line: The line where the method is called.
+    public func failOnUnusedBehaviours(file: StaticString = #file, line: UInt = #line) {
+        let values = behaviourRegister.unusedFunctionBehaviours
+        if  !values.isEmpty {
+            failureRecorder.recordFailure(message: "\(WrappedType.self) has unused behaviours.",
+                                          file: file,
+                                          line: line)
+
+            for value in values {
+                for value1 in value.value {
+                    failureRecorder.recordFailure(
+                        message: "Unused given behaviour: \(value.key.callDescription(with: value1.predicates)).",
+                        file: value1.behaviour.location.file,
+                        line: value1.behaviour.location.line
+                    )
+                }
+            }
+        }
+    }
 }

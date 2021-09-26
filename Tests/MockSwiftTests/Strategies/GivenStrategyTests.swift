@@ -27,149 +27,179 @@
 import XCTest
 
 final class GivenStrategyTests: XCTestCase {
-  private var givenStrategy: GivenStrategy!
-  private var nextStrategy: StrategyMock!
-  private var behaviourRegister: BehaviourRegisterMock!
-  private var errorHandler: ErrorHandlerMock!
+    private var givenStrategy: GivenStrategy!
+    private var nextStrategy: StrategyMock!
+    private var behaviourRegister: BehaviourRegisterMock!
+    private var errorHandler: ErrorHandlerMock!
 
-  override func setUp() {
-    behaviourRegister = BehaviourRegisterMock()
-    errorHandler = ErrorHandlerMock()
-    nextStrategy = StrategyMock()
-    givenStrategy = GivenStrategy(next: nextStrategy,
-                                  behaviourRegister: behaviourRegister,
-                                  errorHandler: errorHandler)
-  }
+    override func setUp() {
+        behaviourRegister = BehaviourRegisterMock()
+        errorHandler = ErrorHandlerMock()
+        nextStrategy = StrategyMock()
+        givenStrategy = GivenStrategy(next: nextStrategy,
+                                      behaviourRegister: behaviourRegister,
+                                      errorHandler: errorHandler)
+    }
 
-  func test_resolve_shouldReturnFromNextStrategyWhenNoBehaviourFound() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
-    behaviourRegister.recordedBehavioursReturn = []
-    nextStrategy.resolveReturn = "next"
+    func test_resolve_shouldReturnFromNextStrategyWhenNoBehaviourFound() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
+        behaviourRegister.recordedBehavioursReturn = []
+        nextStrategy.resolveReturn = "next"
 
-    // When
-    let result: String = givenStrategy.resolve(for: functionIdentifier,
-                                               concernedBy: ["parameter1", 2, true])
+        // When
+        let result: String = givenStrategy.resolve(for: functionIdentifier,
+                                                      concernedBy: ["parameter1", 2, true])
 
-    // Then
-    XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
-    let (identifier, parameters) = nextStrategy.resolveReceived[0]
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-    XCTAssertEqual(result, "next")
-  }
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
+        let (identifier, parameters) = nextStrategy.resolveReceived[0]
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertEqual(result, "next")
+        XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
 
-  func test_resolve_shouldReturnFromNextStrategyWhenReturnTypeKO() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    nextStrategy.resolveReturn = "next"
+    }
 
-    // When
-    let result: String = givenStrategy.resolve(for: functionIdentifier,
-                                               concernedBy: ["parameter1", 2, true])
+    func test_resolve_shouldReturnFromNextStrategyWhenReturnTypeKO() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
+        behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
+        nextStrategy.resolveReturn = "next"
 
-    // Then
-    XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
-    let (identifier, parameters) = nextStrategy.resolveReceived[0]
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-    XCTAssertEqual(result, "next")
-  }
+        // When
+        let result: String = givenStrategy.resolve(for: functionIdentifier,
+                                                      concernedBy: ["parameter1", 2, true])
 
-  func test_resolve_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" },
-                                                  FunctionBehaviour { _ in "" }]
-    errorHandler.handleReturn = "error"
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
+        let (identifier, parameters) = nextStrategy.resolveReceived[0]
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertEqual(result, "next")
+        XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
+    }
 
-    // When
-    let result: String = givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters)
+    func test_resolve_shouldFailWithTooManyDefinedBehaviour() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: String.self)
+        let parameters: [ParameterType] = ["parameter1", 2, true]
+        behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in "" },
+                                                      FunctionBehaviour { _ in "" }]
+        errorHandler.handleReturn = "error"
 
-    // Then
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
-    XCTAssertEqual(result, "error")
-  }
+        // When
+        let result: String = givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters)
 
-  func test_resolve_shouldReturnValueFromBehaviour() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
-    let uuid = UUID()
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in uuid }]
+        // Then
+        XCTAssertEqual(errorHandler.handleReceived[0],
+                       .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
+        XCTAssertEqual(result, "error")
+    }
 
-    // When
-    let result: UUID = givenStrategy.resolve(for: functionIdentifier, concernedBy: ["parameter1", 2, true])
+    func test_resolve_shouldReturnValueFromBehaviour() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: UUID.self)
+        let uuid = UUID()
+        let behaviour = FunctionBehaviour { _ in uuid }
+        behaviourRegister.recordedBehavioursReturn = [behaviour]
 
-    // Then
-    XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
-    let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-    XCTAssertEqual(result, uuid)
-  }
+        // When
+        let result: UUID = givenStrategy.resolve(for: functionIdentifier, concernedBy: ["parameter1", 2, true])
 
-  func test_resolveVoid_shouldFailWithNoDefinedBehaviour() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
-    behaviourRegister.recordedBehavioursReturn = []
-    nextStrategy.resolveReturn = ()
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 0)
+        XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
+        let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertEqual(result, uuid)
+        XCTAssertEqual(behaviourRegister.makeBehaviourUsedReceived, [behaviour.identifier])
+    }
 
-    // When
-    givenStrategy.resolve(for: functionIdentifier,
-                          concernedBy: ["parameter1", 2, true]) as Void
+    func test_resolveVoid_shouldFailWithNoDefinedBehaviour() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
+        behaviourRegister.recordedBehavioursReturn = []
+        nextStrategy.resolveReturn = ()
 
-    // Then
-    XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
-    let (identifier, parameters) = nextStrategy.resolveReceived[0]
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
+        // When
+        givenStrategy.resolve(for: functionIdentifier,
+                                 concernedBy: ["parameter1", 2, true]) as Void
 
-  func test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
-    nextStrategy.resolveReturn = ()
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
+        let (identifier, parameters) = nextStrategy.resolveReceived[0]
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
+    }
 
-    // When
-    givenStrategy.resolve(for: functionIdentifier,
-                          concernedBy: ["parameter1", 2, true]) as Void
+    func test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
+        behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in 0 }]
+        nextStrategy.resolveReturn = ()
 
-    // Then
-    XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
-    let (identifier, parameters) = nextStrategy.resolveReceived[0]
-    XCTAssertEqual(identifier, functionIdentifier)
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
+        // When
+        givenStrategy.resolve(for: functionIdentifier,
+                                 concernedBy: ["parameter1", 2, true]) as Void
 
-  func test_resolveVoid_shouldFailWithTooManyDefinedBehaviour() {
-    // Given
-    let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
-    let parameters: [ParameterType] = ["parameter1", 2, true]
-    behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in },
-                                                  FunctionBehaviour { _ in }]
-    errorHandler.handleReturn = ()
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 1)
+        let (identifier, parameters) = nextStrategy.resolveReceived[0]
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertFalse(behaviourRegister.makeBehaviourUsedCalled)
+    }
 
-    // When
-    givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters) as Void
+    func test_resolveVoid_shouldFailWithTooManyDefinedBehaviour() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
+        let parameters: [ParameterType] = ["parameter1", 2, true]
+        behaviourRegister.recordedBehavioursReturn = [FunctionBehaviour { _ in },
+                                                      FunctionBehaviour { _ in }]
+        errorHandler.handleReturn = ()
 
-    // Then
-    XCTAssertEqual(errorHandler.handleReceived[0], .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
-  }
+        // When
+        givenStrategy.resolve(for: functionIdentifier, concernedBy: parameters) as Void
+
+        // Then
+        XCTAssertEqual(errorHandler.handleReceived[0],
+                        .tooManyDefinedBehaviour(for: functionIdentifier, with: parameters))
+    }
+
+    func test_resolveVoid_shouldReturnFromBehaviour() {
+        // Given
+        let functionIdentifier = FunctionIdentifier.stub(returnType: Void.self)
+        let behaviour = FunctionBehaviour { _ in }
+        behaviourRegister.recordedBehavioursReturn = [behaviour]
+
+        // When
+        givenStrategy.resolve(for: functionIdentifier, concernedBy: ["parameter1", 2, true]) as Void
+
+        // Then
+        XCTAssertEqual(nextStrategy.resolveReceived.count, 0)
+        XCTAssertEqual(behaviourRegister.recordedBehavioursReceived.count, 1)
+        let (identifier, parameters) = behaviourRegister.recordedBehavioursReceived.first!
+        XCTAssertEqual(identifier, functionIdentifier)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
+        XCTAssertEqual(behaviourRegister.makeBehaviourUsedReceived, [behaviour.identifier])
+    }
 }

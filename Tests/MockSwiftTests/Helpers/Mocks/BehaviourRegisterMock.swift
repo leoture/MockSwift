@@ -26,18 +26,35 @@
 import Foundation
 @testable import MockSwift
 
-// swiftlint:disable large_tuple
 class BehaviourRegisterMock: BehaviourRegister {
-  var recordedBehavioursReturn: [Behaviour]!
-  var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    recordedBehavioursReceived.append((identifier, parameters))
-    return recordedBehavioursReturn
-  }
+    var unusedFunctionBehavioursReturn: [FunctionIdentifier: [BehaviourTrigger]]!
+    var unusedFunctionBehavioursCount = 0
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] {
+        unusedFunctionBehavioursCount += 1
+        return unusedFunctionBehavioursReturn
+    }
 
-  var recordReceived: [(behaviour: Behaviour, identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
-  func record(_ behaviour: Behaviour, for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) {
-    recordReceived.append((behaviour, identifier, matchs))
-  }
+    var recordedBehavioursReturn: [FunctionBehaviour]!
+    var recordedBehavioursReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
+
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
+        recordedBehavioursReceived.append((identifier, parameters))
+        return recordedBehavioursReturn
+    }
+
+    var recordReceived: [(trigger: BehaviourTrigger, identifier: FunctionIdentifier)] = []
+
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier) {
+        recordReceived.append((trigger, identifier))
+    }
+
+    var makeBehaviourUsedReceived: [UUID] = []
+    var makeBehaviourUsedCalled: Bool {
+        makeBehaviourUsedReceived.count > 0
+    }
+    func makeBehaviourUsed(for identifier: UUID) {
+        makeBehaviourUsedReceived.append(identifier)
+    }
 }

@@ -26,10 +26,23 @@
 import Foundation
 
 protocol BehaviourRegister {
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour]
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] { get }
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour]
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate])
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier)
+
+    func makeBehaviourUsed(for identifier: UUID)
+}
+
+struct BehaviourTrigger {
+    let predicates: [AnyPredicate]
+    let behaviour: FunctionBehaviour
+
+    init(predicates: [AnyPredicate] = [],
+         behaviour: FunctionBehaviour = FunctionBehaviour()) {
+        self.predicates = predicates
+        self.behaviour = behaviour
+    }
 }

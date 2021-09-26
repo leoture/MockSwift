@@ -47,19 +47,25 @@ public class Mockable<ReturnType> {
 
   /// Registers a return value.
   /// - Parameter value: Value to register.
-  public func willReturn(_ value: ReturnType) {
-    let behaviour = FunctionBehaviour { _ in value }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    public func willReturn(file: StaticString = #file, line: UInt = #line, _ value: ReturnType) {
+        let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                             line: line)) { _ in value }
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers return values.
   /// - Parameter values: Values to register.
-  public func willReturn(_ values: ReturnType...) {
+  public func willReturn(file: StaticString = #file, line: UInt = #line, _ values: ReturnType...) {
     var returns = values
-    let behaviour = FunctionBehaviour { _ in
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in
       returns.count == 1 ? returns[0] : returns.removeFirst()
     }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Used to disambiguate the `ReturnType`.
@@ -69,26 +75,37 @@ public class Mockable<ReturnType> {
 
   /// Registers a block to excecute.
   /// - Parameter completion: Block to be excecuted.
-  public func will(_ completion: @escaping ([Any]) throws -> ReturnType) {
-    let behaviour = FunctionBehaviour(handler: completion)
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  public func will(file: StaticString = #file,
+                   line: UInt = #line,
+                   _ completion: @escaping ([Any]) throws -> ReturnType) {
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line), handler: completion)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers an error.
   /// - Parameter error: Error to register.
-  public func willThrow(_ error: Error) {
-    let behaviour = FunctionBehaviour { _ in throw error }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+  public func willThrow(file: StaticString = #file, line: UInt = #line, _ error: Error) {
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in throw error }
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 
   /// Registers errors.
   /// - Parameter errors: Errors to register.
-  public func willThrow(_ errors: Error...) {
+  public func willThrow(file: StaticString = #file, line: UInt = #line, _ errors: Error...) {
     var throwables = errors
-    let behaviour = FunctionBehaviour { _ in
+    let behaviour = FunctionBehaviour(location: Location(file: file,
+                                                         line: line)) { _ in
       throw throwables.count == 1 ? throwables[0] : throwables.removeFirst()
     }
-    behaviourRegister.record(behaviour, for: functionIdentifier, when: parametersPredicates)
+    behaviourRegister.record(BehaviourTrigger(predicates: parametersPredicates,
+                                              behaviour: behaviour),
+                             for: functionIdentifier)
   }
 }
 

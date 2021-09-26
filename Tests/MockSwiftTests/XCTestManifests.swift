@@ -47,6 +47,8 @@ extension FunctionBehaviourRegisterTests {
     static let __allTests__FunctionBehaviourRegisterTests = [
         ("test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs", test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs),
         ("test_recordedBehaviours_shouldReturnFunctionBehaviourMatched", test_recordedBehaviours_shouldReturnFunctionBehaviourMatched),
+        ("test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed", test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed),
+        ("test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed", test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed),
     ]
 }
 
@@ -78,6 +80,9 @@ extension FunctionCallRegisterTests {
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCall),
         ("test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched", test_recordedCalls_shouldReturnEmptyWhenNoFunctionCallMatched),
         ("test_recordedCalls_shouldReturnFunctionCallsMatched", test_recordedCalls_shouldReturnFunctionCallsMatched),
+        ("test_unverifiedCalls_whenAllCallsHasBeenVerifiedShouldReturnEmpty", test_unverifiedCalls_whenAllCallsHasBeenVerifiedShouldReturnEmpty),
+        ("test_unverifiedCalls_whenCallHasNotBeenRecordedShouldReturnEmpty", test_unverifiedCalls_whenCallHasNotBeenRecordedShouldReturnEmpty),
+        ("test_unverifiedCalls_whenNotAllCallsHasBeenVerifiedShouldReturnCorrectIdentifiers", test_unverifiedCalls_whenNotAllCallsHasBeenVerifiedShouldReturnCorrectIdentifiers),
     ]
 }
 
@@ -100,7 +105,6 @@ extension GivenIntegrationTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__GivenIntegrationTests = [
-        ("test_computed_get_shouldReturnFromWillReturn", test_computed_get_shouldReturnFromWillReturn),
         ("test_function_shouldReturnDefaultValueIfNoMatch", test_function_shouldReturnDefaultValueIfNoMatch),
         ("test_function_shouldReturnValueFromWillCompletion", test_function_shouldReturnValueFromWillCompletion),
         ("test_function_shouldReturnValueFromWillReturnValue", test_function_shouldReturnValueFromWillReturnValue),
@@ -109,13 +113,14 @@ extension GivenIntegrationTests {
         ("test_function_shouldThrowFromWillThrowError", test_function_shouldThrowFromWillThrowError),
         ("test_function_shouldThrowFromWillThrowErrors", test_function_shouldThrowFromWillThrowErrors),
         ("test_given_shouldCallCompletionWithGivenCustom", test_given_shouldCallCompletionWithGivenCustom),
-        ("test_identifier_get_shouldReturnFromWillReturn", test_identifier_get_shouldReturnFromWillReturn),
-        ("test_identifier_set_shouldNotReturnFromWillCompletion", test_identifier_set_shouldNotReturnFromWillCompletion),
-        ("test_identifier_set_shouldReturnFromWillCompletion", test_identifier_set_shouldReturnFromWillCompletion),
+        ("test_read_get_shouldReturnFromWillReturn", test_read_get_shouldReturnFromWillReturn),
         ("test_subscriptFirstSecond_get_shouldReturnFromWillReturn", test_subscriptFirstSecond_get_shouldReturnFromWillReturn),
         ("test_subscriptXY_get_shouldReturnFromWillReturn", test_subscriptXY_get_shouldReturnFromWillReturn),
         ("test_subscriptXY_set_shouldNotReturnFromWillCompletion", test_subscriptXY_set_shouldNotReturnFromWillCompletion),
         ("test_subscriptXY_set_shouldReturnFromWillCompletion", test_subscriptXY_set_shouldReturnFromWillCompletion),
+        ("test_write_get_shouldReturnFromWillReturn", test_write_get_shouldReturnFromWillReturn),
+        ("test_write_set_shouldNotReturnFromWillCompletion", test_write_set_shouldNotReturnFromWillCompletion),
+        ("test_write_set_shouldReturnFromWillCompletion", test_write_set_shouldReturnFromWillCompletion),
     ]
 }
 
@@ -131,6 +136,7 @@ extension GivenStrategyTests {
         ("test_resolveVoid_shouldFailWithNoDefinedBehaviour", test_resolveVoid_shouldFailWithNoDefinedBehaviour),
         ("test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO", test_resolveVoid_shouldFailWithNoDefinedBehaviourWhenReturnTypeKO),
         ("test_resolveVoid_shouldFailWithTooManyDefinedBehaviour", test_resolveVoid_shouldFailWithTooManyDefinedBehaviour),
+        ("test_resolveVoid_shouldReturnFromBehaviour", test_resolveVoid_shouldReturnFromBehaviour),
     ]
 }
 
@@ -222,11 +228,17 @@ extension InteractionIntegrationTests {
     // to regenerate.
     static let __allTests__InteractionIntegrationTests = [
         ("test_interaction_ended_shouldPass", test_interaction_ended_shouldPass),
-        ("test_interaction_ended_whenAllMethodsCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllMethodsCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifuedShouldPass),
-        ("test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifuedShouldPass", test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifuedShouldPass),
+        ("test_interaction_ended_whenAllMethodsCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllMethodsCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass", test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_shouldPass", test_interaction_failOnUnusedBehaviours_shouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass),
+        ("test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass", test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass),
     ]
 }
 
@@ -237,8 +249,10 @@ extension InteractionTests {
     static let __allTests__InteractionTests = [
         ("test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder", test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder),
         ("test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder", test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder),
+        ("test_failOnUnusedBehaviours_whenAllBehavioursHaveBeenUsedShouldNotCallFailureRecorder", test_failOnUnusedBehaviours_whenAllBehavioursHaveBeenUsedShouldNotCallFailureRecorder),
+        ("test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder", test_failOnUnusedBehaviours_whenAllBehavioursHaveNotBeenUsedShouldCorrectlyCallFailureRecorder),
         ("test_interaction_whenTypeIsAMockShouldPass", test_interaction_whenTypeIsAMockShouldPass),
-        ("test_Interaction_whenTypeIsNotAMockShouldFailWithCast", test_Interaction_whenTypeIsNotAMockShouldFailWithCast),
+        ("test_interaction_whenTypeIsNotAMockShouldFailWithCast", test_interaction_whenTypeIsNotAMockShouldFailWithCast),
     ]
 }
 
@@ -259,8 +273,10 @@ extension MockBehaviourRegisterTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__MockBehaviourRegisterTests = [
+        ("test_makeBehaviourUsed_shouldReturnFromBehaviourRegister", test_makeBehaviourUsed_shouldReturnFromBehaviourRegister),
         ("test_record_shouldCallBehaviourRegister", test_record_shouldCallBehaviourRegister),
         ("test_recordedCall_shouldReturnFromBehaviourRegister", test_recordedCall_shouldReturnFromBehaviourRegister),
+        ("test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister", test_unusedFunctionBehaviours_shouldReturnFromBehaviourRegister),
     ]
 }
 

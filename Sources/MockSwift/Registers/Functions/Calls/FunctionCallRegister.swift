@@ -26,35 +26,32 @@
 import Foundation
 
 class FunctionCallRegister: CallRegister {
-  private let clock: Clock
-  private(set) var calls: [FunctionIdentifier: [FunctionCall]]
-  private(set) var unverifiedCalls: [UUID]
+    private let clock: Clock
+    private(set) var calls: [FunctionIdentifier: [FunctionCall]]
+    private(set) var unverifiedCalls: [UUID]
 
-  var allCallHaveBeenVerified: Bool {
-    unverifiedCalls.isEmpty
-  }
+    var allCallHaveBeenVerified: Bool {
+        unverifiedCalls.isEmpty
+    }
 
-  init(clock: Clock) {
-    self.clock = clock
-    calls = [:]
-    unverifiedCalls = []
-  }
+    init(clock: Clock) {
+        self.clock = clock
+        calls = [:]
+        unverifiedCalls = []
+    }
 
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
-    let callIdentifier = UUID()
-    calls[identifier, default: []].append(FunctionCall(identifier: callIdentifier,
-                                                       parameters: parameters,
-                                                       time: clock.currentTime))
-    unverifiedCalls.append(callIdentifier)
-  }
+    func recordCall(_ call: FunctionCall, for identifier: FunctionIdentifier) {
+        calls[identifier, default: []].append(call)
+        unverifiedCalls.append(call.identifier)
+    }
 
-  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
-    calls[identifier]?.filter { functionCall in
-      matchs.satisfy(by: functionCall.parameters)
-    } ?? []
-  }
+    func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+        calls[identifier]?.filter { functionCall in
+            matchs.satisfy(by: functionCall.parameters)
+        } ?? []
+    }
 
-  func makeCallVerified(for identifier: UUID) {
-    unverifiedCalls.removeAll { $0 == identifier }
-  }
+    func makeCallVerified(for identifier: UUID) {
+        unverifiedCalls.removeAll { $0 == identifier }
+    }
 }

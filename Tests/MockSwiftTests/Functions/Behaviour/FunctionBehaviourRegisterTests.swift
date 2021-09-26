@@ -27,49 +27,103 @@
 import XCTest
 
 class FunctionBehaviourRegisterTests: XCTestCase {
-  private var functionBehaviourRegister: FunctionBehaviourRegister!
+    private var functionBehaviourRegister: FunctionBehaviourRegister!
 
-  override func setUp() {
-    functionBehaviourRegister = FunctionBehaviourRegister()
-  }
+    override func setUp() {
+        functionBehaviourRegister = FunctionBehaviourRegister()
+    }
 
-  func test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs() {
-    // Given
-    let predicate = AnyPredicateMock()
-    predicate.satisfyReturn = false
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }), for: .stub(), when: [predicate])
+    // MARK: - recordedBehaviours
 
-    // When
-    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+    func test_recordedBehaviours_shouldReturnEmptyWhenNoMatchs() {
+        // Given
+        let predicate = AnyPredicateMock()
+        predicate.satisfyReturn = false
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicate],
+                                                          behaviour: FunctionBehaviour()),
+                                         for: .stub())
 
-    // Then
-    XCTAssertTrue(behaviours.isEmpty)
-  }
+        // When
+        let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
 
-  func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {
-    // Given
-    let predicateTrue = AnyPredicateMock()
-    predicateTrue.satisfyReturn = true
-    let predicateFalse = AnyPredicateMock()
-    predicateFalse.satisfyReturn = false
-    let firstHandlerReturn = UUID()
-    let secondHandlerReturn = UUID()
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in firstHandlerReturn }),
-                                     for: .stub(),
-                                     when: [predicateTrue])
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in secondHandlerReturn }),
-                                     for: .stub(),
-                                     when: [predicateTrue])
-    functionBehaviourRegister.record(FunctionBehaviour(handler: { _ in }),
-                                     for: .stub(),
-                                     when: [predicateFalse])
+        // Then
+        XCTAssertTrue(behaviours.isEmpty)
+    }
 
-    // When
-    let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+    func test_recordedBehaviours_shouldReturnFunctionBehaviourMatched() {
+        // Given
+        let predicateTrue = AnyPredicateMock()
+        predicateTrue.satisfyReturn = true
 
-    // Then
-    XCTAssertEqual(behaviours.count, 2)
-    XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
-    XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
-  }
+        let predicateFalse = AnyPredicateMock()
+        predicateFalse.satisfyReturn = false
+
+        let firstHandlerReturn = UUID()
+        let secondHandlerReturn = UUID()
+
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                          behaviour: FunctionBehaviour(handler: { _ in
+            firstHandlerReturn
+        })),
+                                         for: .stub())
+
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateTrue],
+                                                          behaviour: FunctionBehaviour(handler: { _ in
+            secondHandlerReturn
+        })),
+                                         for: .stub())
+
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [predicateFalse],
+                                                          behaviour: FunctionBehaviour()),
+                                         for: .stub())
+
+        // When
+        let behaviours = functionBehaviourRegister.recordedBehaviours(for: .stub(), concernedBy: [true])
+
+        // Then
+        XCTAssertEqual(behaviours.count, 2)
+        XCTAssertEqual(behaviours[0].handle(with: []), firstHandlerReturn)
+        XCTAssertEqual(behaviours[1].handle(with: []), secondHandlerReturn)
+    }
+
+    // MARK: - unusedFunctionBehaviours
+
+    func test_unusedFunctionBehaviours_whenSomeBehavioursHaveNotBeenUsed() {
+        // Given
+        let usedBehaviour = FunctionBehaviour()
+        let unusedBehaviour = FunctionBehaviour()
+        let unusedBehaviourIdentifier = FunctionIdentifier(function: "unused", return: Int.self)
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: unusedBehaviour),
+                                         for: unusedBehaviourIdentifier)
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: usedBehaviour),
+                                         for: .stub())
+        functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
+
+        // When
+        let result = functionBehaviourRegister.unusedFunctionBehaviours
+
+        // Then
+        XCTAssertEqual(result.count, 1)
+        let value = result[unusedBehaviourIdentifier]!
+        XCTAssertEqual(value.count, 1)
+        let recorded = value[0]
+        XCTAssertEqual(unusedBehaviour.identifier, recorded.behaviour.identifier)
+    }
+
+    func test_unusedFunctionBehaviours_whenAllBehavioursHaveBeenUsed() {
+        // Given
+        let usedBehaviour = FunctionBehaviour()
+        functionBehaviourRegister.record(BehaviourTrigger(predicates: [],
+                                                          behaviour: usedBehaviour),
+                                         for: .stub())
+        functionBehaviourRegister.makeBehaviourUsed(for: usedBehaviour.identifier)
+
+        // When
+        let result = functionBehaviourRegister.unusedFunctionBehaviours
+
+        // Then
+        XCTAssertTrue(result.isEmpty, "unusedFunctionBehaviours should be empty when all behaviours have been used")
+    }
 }

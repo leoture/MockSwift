@@ -26,123 +26,128 @@
 import MockSwift
 import XCTest
 
-private protocol Custom {
-  func doSomething()
-  var read: String { get }
-  var write: String { get set }
-  subscript(first: Int, second: String) -> String { get }
-  subscript(x first: Int, y second: Int) -> String { get set }
-}
-
-extension Mock: Custom where WrappedType == Custom {
-  func doSomething() {
-    mocked()
-  }
-
-  var write: String {
-    get { mocked() }
-    set { mocked(newValue) }
-  }
-
-  var read: String {
-    mocked()
-  }
-
-  subscript(first: Int, second: String) -> String {
-    mocked(first, second)
-  }
-
-  subscript(x first: Int, y second: Int) -> String {
-    get {
-      mocked(first, second)
-    }
-    set {
-      mocked(first, second, newValue)
-    }
-  }
-}
-
-extension Then where WrappedType == Custom {
-  func doSomething() -> Verifiable<Void> {
-    verifiable()
-  }
-
-  var write: VerifiableProperty.Writable<String> {
-    verifiable()
-  }
-
-  var read: VerifiableProperty.Readable<String> {
-    verifiable()
-  }
-
-  subscript(first: Int, second: String) -> VerifiableSubscript.Readable<String> {
-    verifiable(first, second)
-  }
-
-  subscript(x first: Int, y second: Int) -> VerifiableSubscript.Writable<String> {
-    verifiable(first, second)
-  }
-}
-
 class InteractionIntegrationTests: XCTestCase {
-  @Mock private var custom: Custom
+    @Mock private var custom: DummyProtocol
 
-  func test_interaction_ended_shouldPass() {
-    interaction(with: custom).ended()
-  }
+    // MARK: - Ended
 
-  func test_interaction_ended_whenAllMethodsCallsHaveBeenVerifuedShouldPass() {
-    // Given
-    custom.doSomething()
+    func test_interaction_ended_shouldPass() {
+        interaction(with: custom).ended()
+    }
 
-    // When
-    then(custom).doSomething().called()
+    func test_interaction_ended_whenAllMethodsCallsHaveBeenVerifiedShouldPass() {
+        // Given
+        let _: Int = custom.function(identifier: "id")
 
-    // Then
-    interaction(with: custom).ended()
-  }
+        // When
+        then(custom).function(identifier: "id").disambiguate(with: Int.self).called()
 
-  func test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifuedShouldPass() {
-    // Given
-    _ = custom.read
+        // Then
+        interaction(with: custom).ended()
+    }
 
-    // When
-    then(custom).read.get.called()
+    func test_interaction_ended_whenAllReadPropertyCallsHaveBeenVerifiedShouldPass() {
+        // Given
+        _ = custom.read
 
-    // Then
-    interaction(with: custom).ended()
-  }
+        // When
+        then(custom).read.get.called()
 
-  func test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifuedShouldPass() {
-    // Given
-    _ = custom.write
+        // Then
+        interaction(with: custom).ended()
+    }
 
-    // When
-    then(custom).write.get.called()
+    func test_interaction_ended_whenAllWritePropertyCallsHaveBeenVerifiedShouldPass() {
+        // Given
+        _ = custom.write
 
-    // Then
-    interaction(with: custom).ended()
-  }
+        // When
+        then(custom).write.get.called()
 
-  func test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifuedShouldPass() {
-    // Given
-    _ = custom[0, ""]
+        // Then
+        interaction(with: custom).ended()
+    }
 
-    // When
-    then(custom)[0, ""].get.called()
+    func test_interaction_ended_whenAllReadSubscriptCallsHaveBeenVerifiedShouldPass() {
+        // Given
+        _ = custom[0, ""]
 
-    // Then
-    interaction(with: custom).ended()
-  }
+        // When
+        then(custom)[0, ""].get.called()
 
-  func test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifuedShouldPass() {
-    // Given
-    _ = custom[x: 0, y: 0]
+        // Then
+        interaction(with: custom).ended()
+    }
 
-    // When
-    then(custom)[x: 0, y: 0].get.called()
+    func test_interaction_ended_whenAllWriteSubscriptCallsHaveBeenVerifiedShouldPass() {
+        // Given
+        _ = custom[x: 0, y: 0]
 
-    // Then
-    interaction(with: custom).ended()
-  }
+        // When
+        then(custom)[x: 0, y: 0].get.called()
+
+        // Then
+        interaction(with: custom).ended()
+    }
+
+    // MARK: - failOnUnusedBehaviours
+
+    func test_interaction_failOnUnusedBehaviours_shouldPass() {
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllMethodsBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        let _: Int = custom.function(identifier: "id")
+
+        // When
+        then(custom).function(identifier: "id").disambiguate(with: Int.self).called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllReadPropertyBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom.read
+
+        // When
+        then(custom).read.get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllWritePropertyBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom.write
+
+        // When
+        then(custom).write.get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllReadSubscriptBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom[0, ""]
+
+        // When
+        then(custom)[0, ""].get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
+
+    func test_interaction_failOnUnusedBehaviours_whenAllWriteSubscriptBehavioursHaveBeenUsedShouldPass() {
+        // Given
+        _ = custom[x: 0, y: 0]
+
+        // When
+        then(custom)[x: 0, y: 0].get.called()
+
+        // Then
+        interaction(with: custom).failOnUnusedBehaviours()
+    }
 }

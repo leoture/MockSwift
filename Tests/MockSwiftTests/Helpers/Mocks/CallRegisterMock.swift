@@ -27,27 +27,27 @@ import Foundation
 @testable import MockSwift
 
 class CallRegisterMock: CallRegister {
-  var allCallHaveBeenVerifiedReturn: Bool!
-  private(set) var allCallHaveBeenVerifiedCallCount = 0
-  var allCallHaveBeenVerified: Bool {
-    allCallHaveBeenVerifiedCallCount += 1
-    return allCallHaveBeenVerifiedReturn
-  }
+    var allCallHaveBeenVerifiedReturn: Bool!
+    private(set) var allCallHaveBeenVerifiedCallCount = 0
+    var allCallHaveBeenVerified: Bool {
+        allCallHaveBeenVerifiedCallCount += 1
+        return allCallHaveBeenVerifiedReturn
+    }
 
-  var makeCallVerifiedReceived: [UUID] = []
-  func makeCallVerified(for identifier: UUID) {
-    makeCallVerifiedReceived.append(identifier)
-  }
+    var makeCallVerifiedReceived: [UUID] = []
+    func makeCallVerified(for identifier: UUID) {
+        makeCallVerifiedReceived.append(identifier)
+    }
 
-  var recordCallReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
-  func recordCall(for identifier: FunctionIdentifier, with parameters: [ParameterType]) {
-    recordCallReceived.append((identifier, parameters))
-  }
+    var recordCallReceived: [(call: FunctionCall, identifier: FunctionIdentifier)] = []
+    func recordCall(_ call: FunctionCall, for identifier: FunctionIdentifier) {
+        recordCallReceived.append((call, identifier))
+    }
 
-  var recordedCallsReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
-  var recordedCallsReturn: [FunctionCall]!
-  func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
-    recordedCallsReceived.append((identifier, matchs))
-    return recordedCallsReturn
-  }
+    var recordedCallsReceived: [(identifier: FunctionIdentifier, matchs: [AnyPredicate])] = []
+    var recordedCallsReturn: [FunctionCall]!
+    func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall] {
+        recordedCallsReceived.append((identifier, matchs))
+        return recordedCallsReturn
+    }
 }

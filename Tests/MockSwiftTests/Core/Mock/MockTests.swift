@@ -62,26 +62,27 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(result, 0)
   }
 
-  func test_mocked_shouldRecordCallIntoCallRegister() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
-      mock.mocked(parameter1, parameter2, parameter3)
+    func test_mocked_shouldRecordCallIntoCallRegister() {
+        // Given
+        let functionName = "function(parameter1:parameter2:parameter3:)"
+        func function(parameter1: String, parameter2: Int, parameter3: Bool?) -> String {
+            mock.mocked(parameter1, parameter2, parameter3)
+        }
+        strategy.resolveReturn = ""
+
+        // When
+        _ = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
+
+        // Then
+        XCTAssertEqual(callRegister.recordCallReceived.count, 1)
+        let (call, identifier) = callRegister.recordCallReceived.first!
+        XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
+        let parameters = call.parameters
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
     }
-    strategy.resolveReturn = ""
-
-    // When
-    _ = function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    // Then
-    XCTAssertEqual(callRegister.recordCallReceived.count, 1)
-    let (identifier, parameters) = callRegister.recordCallReceived.first!
-    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: String.self))
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
 
   func test_mocked_shouldReturnValueFromStrategy() {
     // Given
@@ -105,26 +106,27 @@ final class MockTests: XCTestCase {
     XCTAssertEqual(result, uuid)
   }
 
-  func test_mockedVoid_shouldRecordCallIntoCallRegister() {
-    // Given
-    let functionName = "function(parameter1:parameter2:parameter3:)"
-    func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
-      mock.mocked(parameter1, parameter2, parameter3)
+    func test_mockedVoid_shouldRecordCallIntoCallRegister() {
+        // Given
+        let functionName = "function(parameter1:parameter2:parameter3:)"
+        func function(parameter1: String, parameter2: Int, parameter3: Bool?) {
+            mock.mocked(parameter1, parameter2, parameter3)
+        }
+        strategy.resolveReturn = ()
+
+        // When
+        function(parameter1: "parameter1", parameter2: 2, parameter3: true)
+
+        // Then
+        XCTAssertEqual(callRegister.recordCallReceived.count, 1)
+        let (call, identifier) = callRegister.recordCallReceived.first!
+        XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
+        let parameters = call.parameters
+        XCTAssertEqual(parameters.count, 3)
+        XCTAssertEqual(parameters[0] as? String, "parameter1")
+        XCTAssertEqual(parameters[1] as? Int, 2)
+        XCTAssertEqual(parameters[2] as? Bool, true)
     }
-    strategy.resolveReturn = ()
-
-    // When
-    function(parameter1: "parameter1", parameter2: 2, parameter3: true)
-
-    // Then
-    XCTAssertEqual(callRegister.recordCallReceived.count, 1)
-    let (identifier, parameters) = callRegister.recordCallReceived.first!
-    XCTAssertEqual(identifier, FunctionIdentifier(function: functionName, return: Void.self))
-    XCTAssertEqual(parameters.count, 3)
-    XCTAssertEqual(parameters[0] as? String, "parameter1")
-    XCTAssertEqual(parameters[1] as? Int, 2)
-    XCTAssertEqual(parameters[2] as? Bool, true)
-  }
 
   func test_mockedVoid_shouldCallStrategy() {
     // Given

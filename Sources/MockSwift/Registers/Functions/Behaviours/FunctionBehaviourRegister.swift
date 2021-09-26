@@ -26,22 +26,36 @@
 import Foundation
 
 class FunctionBehaviourRegister: BehaviourRegister {
-  var functionBehaviour: [FunctionIdentifier: [(predicates: [AnyPredicate], behaviour: Behaviour)]]
+    private var functionBehaviours: [FunctionIdentifier: [BehaviourTrigger]]
+    private var unusedBehaviours: [UUID]
 
-  init() {
-    functionBehaviour = [:]
-  }
+    var unusedFunctionBehaviours: [FunctionIdentifier: [BehaviourTrigger]] {
+        functionBehaviours.filter { element in
+            element.value.contains { value in
+                unusedBehaviours.contains(value.behaviour.identifier)
+            }
+        }
+    }
 
-  func recordedBehaviours(for identifier: FunctionIdentifier,
-                          concernedBy parameters: [ParameterType]) -> [Behaviour] {
-    functionBehaviour[identifier, default: []]
-      .filter { $0.predicates.satisfy(by: parameters) }
-      .map { $0.behaviour }
-  }
+    init() {
+        functionBehaviours = [:]
+        unusedBehaviours = []
+    }
 
-  func record(_ behaviour: Behaviour,
-              for identifier: FunctionIdentifier,
-              when matchs: [AnyPredicate]) {
-    functionBehaviour[identifier, default: []].append((matchs, behaviour))
-  }
+    func recordedBehaviours(for identifier: FunctionIdentifier,
+                            concernedBy parameters: [ParameterType]) -> [FunctionBehaviour] {
+        functionBehaviours[identifier, default: []]
+            .filter { $0.predicates.satisfy(by: parameters) }
+            .map { $0.behaviour }
+    }
+
+    func record(_ trigger: BehaviourTrigger,
+                for identifier: FunctionIdentifier) {
+        functionBehaviours[identifier, default: []].append(trigger)
+        unusedBehaviours.append(trigger.behaviour.identifier)
+    }
+
+    func makeBehaviourUsed(for identifier: UUID) {
+        unusedBehaviours.removeAll { $0 == identifier }
+    }
 }

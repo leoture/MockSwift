@@ -25,20 +25,37 @@
 
 import Foundation
 
-class FunctionBehaviour {
-  private let handler: ([ParameterType]) throws -> Any
+struct FunctionBehaviour {
+    typealias Handler = ([ParameterType]) throws -> Any
 
-  init(handler: @escaping ([ParameterType]) throws -> Any) {
-    self.handler = handler
-  }
+    let identifier: UUID
+    let location: Location
+    let handler: Handler
+
+    init(identifier: UUID = UUID(),
+         location: Location = Location(),
+         handler: @escaping Handler = { _ in () }) {
+        self.identifier = identifier
+        self.location = location
+        self.handler = handler
+    }
+
+    func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
+        try? handler(parameters) as? ReturnType
+    }
+
+    func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? {
+        try handler(parameters) as? ReturnType
+    }
 }
 
-extension FunctionBehaviour: Behaviour {
-  func handle<ReturnType>(with parameters: [ParameterType]) -> ReturnType? {
-    try? handler(parameters) as? ReturnType
-  }
+struct Location {
+    let file: StaticString
+    let line: UInt
 
-  func handleThrowable<ReturnType>(with parameters: [ParameterType]) throws -> ReturnType? {
-    try handler(parameters) as? ReturnType
-  }
+    init(file: StaticString = "",
+         line: UInt = 0) {
+        self.file = file
+        self.line = line
+    }
 }
