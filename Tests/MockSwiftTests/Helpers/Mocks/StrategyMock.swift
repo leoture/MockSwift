@@ -25,7 +25,6 @@
 
 @testable import MockSwift
 
-// swiftlint:disable force_cast
 class StrategyMock: Strategy {
   var resolveReturn: Any!
   var resolveReceived: [(identifier: FunctionIdentifier, parameters: [ParameterType])] = []
