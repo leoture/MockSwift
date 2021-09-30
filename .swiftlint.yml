@@ -1,8 +1,0 @@
-included:
-  - Sources
-  - Tests
-excluded:
-  - Tests/LinuxMain.swift
-  - Tests/MockSwiftTests/XCTestManifests.swift
-disabled_rules:
-  - implicit_getter

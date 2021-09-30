@@ -94,14 +94,6 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (>= 1, < 4)
-    danger-plugin-api (1.0.0)
-      danger (> 2.0)
-    danger-swiftformat (0.8.1)
-      danger-plugin-api (~> 1.0)
-    danger-swiftlint (0.26.0)
-      danger
-      rake (> 10)
-      thor (~> 0.19)
     declarative (0.0.20)
     digest-crc (0.6.3)
       rake (>= 12.0.0, < 14.0.0)
@@ -302,7 +294,6 @@ GEM
     terminal-notifier (2.0.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    thor (0.20.3)
     thread_safe (0.3.6)
     trailblazer-option (0.1.1)
     tty-cursor (0.7.1)
@@ -338,8 +329,6 @@ PLATFORMS
 
 DEPENDENCIES
   danger (~> 8.1)
-  danger-swiftformat (~> 0.7)
-  danger-swiftlint (~> 0.24)
   fastlane (~> 2.146)
   jazzy (~> 0.13)
   slather (~> 2.5)

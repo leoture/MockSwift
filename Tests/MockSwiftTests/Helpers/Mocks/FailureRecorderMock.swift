@@ -27,7 +27,6 @@ import Foundation
 @testable import MockSwift
 
 class FailureRecorderMock: FailureRecorder {
-  // swiftlint:disable large_tuple
   var recordFailureReceived: [(message: String, file: StaticString, line: UInt)] = []
   func recordFailure(message: String, file: StaticString, line: UInt) {
     recordFailureReceived.append((message: message, file: file, line: line))

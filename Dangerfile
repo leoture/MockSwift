@@ -37,6 +37,3 @@ has_linuxmain_changes = previous_size == current_size
 if !has_linuxmain_changes
   fail("XCTestManifests.swift has not been updated. Please run `swift test --generate-linuxmain` to include all tests in linux CI.")
 end
-
-swiftlint.verbose = true
-swiftlint.lint_files(inline_mode: true)

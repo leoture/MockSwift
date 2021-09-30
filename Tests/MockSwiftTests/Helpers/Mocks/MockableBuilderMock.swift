@@ -26,8 +26,6 @@
 import Foundation
 @testable import MockSwift
 
-// swiftlint:disable large_tuple
-// swiftlint:disable force_cast
 class MockableBuilderMock: MockableBuilder {
   var mockableReturn: Any!
   var mockableReceived: [(parameters: [ParameterType], function: String, file: String, line: UInt)] = []

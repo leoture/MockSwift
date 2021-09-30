@@ -26,7 +26,6 @@
 import Foundation
 @testable import MockSwift
 
-// swiftlint:disable force_cast
 class ErrorHandlerMock: ErrorHandler {
   var handleReturn: Any!
   var handleReceived: [InternalError] = []
