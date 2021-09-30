@@ -30,11 +30,9 @@ jobs:
         restore-keys: ${{ runner.os }}-gem-
     - name: Prepare
       run: |
-        brew install sourcery
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
         swift --version
-        sourcery --version
     - name: Run fastlane
       run: bundle exec fastlane mac_tests
     - name: Codacy
