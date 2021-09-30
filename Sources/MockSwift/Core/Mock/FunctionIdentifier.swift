@@ -26,65 +26,142 @@
 import Foundation
 
 struct FunctionIdentifier: Equatable, Hashable {
-  // MARK: - Properties
+    enum Kind {
+        case function
+        case property
+        case `subscript`
 
-  private let identifier: String!
-
-  // MARK: - Initializers
-
-  init<ReturnType>(function: String, return: ReturnType.Type) {
-    var normalizedFunction = function
-
-    if let normalized = normalizedAsProperty(function: function, return: ReturnType.self) {
-      normalizedFunction = normalized
+        var normalizer: Normalizer {
+            switch self {
+            case .function:
+                return FunctionNormalizer()
+            case .property:
+                return PropertyNormalizer()
+            case .subscript:
+                return SubscriptNormalizer()
+            }
+        }
     }
 
-    if let normalized = normalizedAsSubscript(function: function, return: ReturnType.self) {
-      normalizedFunction = normalized
+    // MARK: - Properties
+
+    private let identifier: String!
+    private let kind: Kind
+
+    // MARK: - Initializers
+
+    init<ReturnType>(function: String, return: ReturnType.Type) {
+        if function.starts(with: "subscript") {
+            kind = .subscript
+        } else if function.contains("(") {
+            kind = .function
+        } else {
+            kind = .property
+        }
+
+        self.identifier = kind.normalizer.normalize(function: function, returning: "\(ReturnType.self)".voidEscaped)
     }
 
-    identifier = "\(normalizedFunction) -> \(ReturnType.self)"
-  }
+    // MARK: - Methods
 
-  // MARK: - Methods
-
-  func callDescription(with parameters: [ParameterType]) -> String {
-    var callDescription: String = ""
-    var currentIndex = 0
-    let separator = ", "
-    var needSeparator = false
-
-    for character in identifier {
-      if needSeparator, character != ")" {
-        callDescription.append(separator)
-      }
-      needSeparator = false
-
-      callDescription.append(character)
-
-      if character == ":" {
-        callDescription.append(" \(parameters[currentIndex] ?? "nil")")
-        currentIndex += 1
-        needSeparator = true
-      }
+    func callDescription(with parameters: [ParameterType]) -> String {
+        kind.normalizer.callDescription(of: identifier, with: parameters)
     }
-
-    return callDescription
-  }
 }
 
-// MARK: - Private methods
+// MARK: - Privates
 
-private func normalizedAsProperty<ReturnType>(function: String, return: ReturnType.Type) -> String? {
-  guard !function.contains("(") else {
-    return nil
-  }
-  return ReturnType.self == Void.self ? function + "(newValue:)" : function + "()"
+protocol Normalizer {
+    func normalize(function: String, returning: String) -> String
+    func callDescription(of function: String, with parameters: [ParameterType]) -> String
 }
 
-private func normalizedAsSubscript<ReturnType>(function: String, return: ReturnType.Type) -> String? {
-  guard function.starts(with: "subscript(") else {
-    return nil
-  }
-  return ReturnType.self == Void.self ? function + "(newValue:)" : function
+private struct FunctionNormalizer: Normalizer {
+    func normalize(function: String, returning: String) -> String {
+        "\(function) -> \(returning)"
+    }
+
+    func callDescription(of function: String, with parameters: [ParameterType]) -> String {
+        var callDescription = ""
+        var currentParameterIndex = 0
+        let separator = ", "
+        var needSeparator = false
+
+        for character in function {
+            if needSeparator, character != ")" {
+                callDescription.append(separator)
+            }
+            needSeparator = false
+
+            callDescription.append(character)
+
+            if character == ":" {
+                callDescription.append(" \(parameters[currentParameterIndex] ?? "nil")")
+                currentParameterIndex += 1
+                needSeparator = true
+            }
+        }
+
+        return callDescription
+    }
+}
+
+private struct PropertyNormalizer: Normalizer {
+    func normalize(function: String, returning: String) -> String {
+        "\(function): \(returning)"
+    }
+
+    func callDescription(of function: String, with parameters: [ParameterType]) -> String {
+        if parameters.isEmpty {
+            return function
+        }
+
+        guard let index = function.firstIndex(of: ":") else { return "" }
+        return function.replacingCharacters(in: index..<function.endIndex,
+                                            with: " = \(parameters[0] ?? "nil")")
+    }
+
+}
+
+private struct SubscriptNormalizer: Normalizer {
+    func normalize(function: String, returning: String) -> String {
+        "\(function) -> \(returning)"
+    }
+
+    func callDescription(of function: String, with parameters: [ParameterType]) -> String {
+        let writing = function.filter { $0 == ":" }.count < parameters.count
+
+        var callDescription: String = ""
+        var currentParameterIndex = 0
+        let separator = ", "
+        var needSeparator = false
+
+        for character in function {
+            if writing && character == "-" {
+                break
+            }
+            if needSeparator, character != ")" {
+                callDescription.append(separator)
+            }
+            needSeparator = false
+
+            callDescription.append(character)
+
+            if character == ":" {
+                callDescription.append(" \(parameters[currentParameterIndex] ?? "nil")")
+                currentParameterIndex += 1
+                needSeparator = true
+            }
+        }
+        if writing {
+            callDescription.append("= \(parameters[currentParameterIndex] ?? "nil")")
+        }
+        return callDescription
+    }
+}
+
+private extension String {
+    var voidEscaped: String {
+        self == "()" ? "Void" : self
+    }
 }
