@@ -29,6 +29,7 @@
 - Remove example project [#118](https://github.com/leoture/MockSwift/pull/118) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Fixed
+- Function identifier collision [#116](https://github.com/leoture/MockSwift/pull/116) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Security
 
