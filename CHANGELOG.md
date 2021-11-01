@@ -26,6 +26,7 @@
 #### Deprecated
 
 #### Removed
+- Remove example project [#118](https://github.com/leoture/MockSwift/pull/118) by [Jordhan Leoture](https://github.com/leoture)
 
 #### Fixed
 
