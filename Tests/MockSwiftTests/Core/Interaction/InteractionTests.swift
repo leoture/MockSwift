@@ -124,7 +124,7 @@ class InteractionTests: XCTestCase {
         XCTAssertEqual(message, "Custom has unused behaviours.")
         XCTAssertEqual("\(file) \(line)", "file 42")
         let (message2, file2, line2) = failureRecorder.recordFailureReceived[1]
-        XCTAssertEqual(message2, "Unused given behaviour: function() -> ().")
+        XCTAssertEqual(message2, "Unused given behaviour: function() -> Void.")
         XCTAssertEqual("\(file2) \(line2)", "file2 21")
     }
 

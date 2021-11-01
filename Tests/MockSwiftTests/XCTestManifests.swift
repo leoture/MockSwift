@@ -91,12 +91,24 @@ extension FunctionIdentifierTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__FunctionIdentifierTests = [
-        ("test_callDescription_withGetProperty", test_callDescription_withGetProperty),
-        ("test_callDescription_withGetSubscript", test_callDescription_withGetSubscript),
-        ("test_callDescription_withNoParametersWhenFunction", test_callDescription_withNoParametersWhenFunction),
-        ("test_callDescription_withParametersWhenFuntion", test_callDescription_withParametersWhenFuntion),
-        ("test_callDescription_withSetProperty", test_callDescription_withSetProperty),
-        ("test_callDescription_withSetSubscript", test_callDescription_withSetSubscript),
+        ("test_callDescription_whenGetVoidProperty", test_callDescription_whenGetVoidProperty),
+        ("test_callDescription_whenhGetFunctionProperty", test_callDescription_whenhGetFunctionProperty),
+        ("test_callDescription_whenhGetIntProperty", test_callDescription_whenhGetIntProperty),
+        ("test_callDescription_whenSetFunctionProperty", test_callDescription_whenSetFunctionProperty),
+        ("test_callDescription_whenSetIntProperty", test_callDescription_whenSetIntProperty),
+        ("test_callDescription_whenSetVoidProperty", test_callDescription_whenSetVoidProperty),
+        ("test_callDescription_withGetFunctionSubscript", test_callDescription_withGetFunctionSubscript),
+        ("test_callDescription_withGetIntSubscript", test_callDescription_withGetIntSubscript),
+        ("test_callDescription_withGetVoidSubscript", test_callDescription_withGetVoidSubscript),
+        ("test_callDescription_withNoParametersWhenFunctionReturnsFunction", test_callDescription_withNoParametersWhenFunctionReturnsFunction),
+        ("test_callDescription_withNoParametersWhenFunctionReturnsInt", test_callDescription_withNoParametersWhenFunctionReturnsInt),
+        ("test_callDescription_withNoParametersWhenFunctionReturnsVoid", test_callDescription_withNoParametersWhenFunctionReturnsVoid),
+        ("test_callDescription_withParametersWhenFuntionReturnsFunction", test_callDescription_withParametersWhenFuntionReturnsFunction),
+        ("test_callDescription_withParametersWhenFuntionReturnsInt", test_callDescription_withParametersWhenFuntionReturnsInt),
+        ("test_callDescription_withParametersWhenFuntionReturnsVoid", test_callDescription_withParametersWhenFuntionReturnsVoid),
+        ("test_callDescription_withSetFunctionSubscript", test_callDescription_withSetFunctionSubscript),
+        ("test_callDescription_withSetIntSubscript", test_callDescription_withSetIntSubscript),
+        ("test_callDescription_withSetVoidSubscript", test_callDescription_withSetVoidSubscript),
     ]
 }
 
