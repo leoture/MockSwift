@@ -43,7 +43,9 @@ class GlobalStubExtensionTests: XCTestCase {
 
     func test_stub_Double() { XCTAssertEqual(Double.stub(), 0.0) }
     func test_stub_Float() { XCTAssertEqual(Float.stub(), 0.0) }
+    #if !os(Windows) && (arch(i386) || arch(x86_64))
     func test_stub_Float80() { XCTAssertEqual(Float80.stub(), 0.0) }
+    #endif
     func test_stub_Decimal() { XCTAssertEqual(Decimal.stub(), 0.0) }
     func test_stub_NSNumber() { XCTAssertEqual(NSNumber.stub(), 0.0) }
 
