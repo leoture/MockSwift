@@ -67,9 +67,11 @@ extension Double: GlobalStub {
 extension Float: GlobalStub {
     public static func stub() -> Self { 0.0 }
 }
+#if !os(Windows) && (arch(i386) || arch(x86_64))
 extension Float80: GlobalStub {
     public static func stub() -> Self { 0.0 }
 }
+#endif
 extension Decimal: GlobalStub {
     public static func stub() -> Self { 0.0 }
 }
