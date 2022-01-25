@@ -18,39 +18,11 @@ Initially MockSwift is inspired by [Mockito](https://site.mockito.org).
 
 ###### Table of Contents
 
-- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Contribution](#contribution)
 - [License](#license)
-
-# Features
-
-Actually MockSwift supports:
-
-- **Stub**
-  - [x] Protocol methods
-  - [x] Protocol properties
-  - [x] Protocol subscripts
-  - [ ] Class
-  - [ ] Struct
-  - [ ] Enum
-  - [x] Default values for types
-- **Verify interactions**
-  - [x] Protocol methods
-  - [x] Protocol properties
-  - [x] Protocol subscripts
-  - [ ] Class
-  - [ ] Struct
-  - [ ] Enum
-_ **Parameter matching**
-  - [x] Predicates
-  - [x] Generics
-
-#### CHANGELOG
-
-You can see all changes and new features [here](https://github.com/leoture/MockSwift/blob/master/CHANGELOG.md).
 
 # Installation
 ## Swift Package Manager
@@ -333,7 +305,7 @@ extension Then where WrappedType == UserService {
 ```
 
 # Documentation
-If you need more details about the API, you can check out our [API documentation](https://leoture.github.io/MockSwift/) or our [GitBook](https://mockswift.gitbook.io/mockswift/).
+If you need more details about the API, you can check out our [API documentation](https://leoture.github.io/MockSwift/).
 
 # Contribution
 Would you like to contribute to MockSwift? Please read our [contributing guidelines](https://github.com/leoture/MockSwift/blob/master/CONTRIBUTING.md) and [code of conduct](https://github.com/leoture/MockSwift/blob/master/CODE_OF_CONDUCT.md).
