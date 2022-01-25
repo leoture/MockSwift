@@ -1,5 +1,5 @@
 [build]
-publish = "VaporDocC.doccarchive/"
+publish = "MockSwift.doccarchive/"
 
 [[redirects]]
 from = "/documentation/*"
