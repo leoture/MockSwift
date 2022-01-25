@@ -14,7 +14,7 @@ to = "/index.html"
 [[redirects]]
 from = "/data/documentation.json"
 status = 200
-to = "/data/documentation/vapordocc.json"
+to = "/data/documentation/mockswift.json"
 
 [[redirects]]
 force = true
