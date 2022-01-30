@@ -7,8 +7,7 @@ Welcome to MockSwift
 
 [![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master)](https://github.com/leoture/MockSwift/actions)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d857788324854dc989d76a18a9d48f7e)](https://www.codacy.com/gh/leoture/MockSwift/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leoture/MockSwift&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/d857788324854dc989d76a18a9d48f7e)](https://www.codacy.com/gh/leoture/MockSwift/dashboard?utm_source=github.com&utm_medium=referral&utm_content=leoture/MockSwift&utm_campaign=Badge_Coverage)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=leoture_MockSwift&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=leoture_MockSwift)
 [![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen)](https://github.com/apple/swift-package-manager)
 [![Swift](https://img.shields.io/badge/Swift-5.3-important)](https://swift.org)
