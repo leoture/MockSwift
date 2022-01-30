@@ -13,7 +13,8 @@ let package = Package(
     targets: [
         .target(
             name: "MockSwift",
-            dependencies: []),
+            dependencies: [],
+            linkerSettings: [.linkedFramework("XCTest")]),
         .testTarget(
             name: "MockSwiftTests",
             dependencies: ["MockSwift"])

@@ -34,7 +34,7 @@ jobs:
         bundle install --jobs 4 --retry 3
         swift --version
     - name: Run fastlane
-      run: bundle exec fastlane mac_tests
+      run: swift test --enable-code-coverage
     - name: Codacy
       run: sh <(curl -Ls https://coverage.codacy.com/get.sh) report -l Swift --force-language -r cobertura.xml
       env:

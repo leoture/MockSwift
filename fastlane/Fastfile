@@ -20,7 +20,8 @@ platform :mac do
   lane :spm_tests do
     spm(
       command: "test",
-      xcpretty_output: "simple"
+      xcpretty_output: "simple",
+      enable_code_coverage: true
     )
   end
 
@@ -29,33 +30,9 @@ platform :mac do
     sh("docker-compose","up")
   end
 
-  desc "Run MockSwift-Package tests"
-  lane :mockswift_package_tests do
-    run_tests(
-      scheme: "MockSwift-Package",
-      clean: true,
-      skip_detect_devices: true,
-      code_coverage: true,
-      result_bundle: true
-    )
-    slather(
-      cobertura_xml: true,
-      output_directory: ".",
-      scheme: "MockSwift-Package",
-      proj: "MockSwift.xcodeproj"
-    )
-  end
-
-  desc "Run mac tests"
-  lane :mac_tests do
-    spm_tests
-    mockswift_package_tests
-  end
-
   desc "Run mac & linux tests"
   lane :all_tests do
-    sh("swift test --generate-linuxmain")
-    mac_tests
+    spm_tests
     spm_linux_tests
   end
 end
