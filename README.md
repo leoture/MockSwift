@@ -8,9 +8,9 @@ Welcome to MockSwift
 [![Release](https://img.shields.io/github/v/release/leoture/MockSwift?color=red)](https://github.com/leoture/MockSwift/releases)
 [![Build Status](https://github.com/leoture/MockSwift/workflows/Master/badge.svg?branch=master)](https://github.com/leoture/MockSwift/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=leoture_MockSwift&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=leoture_MockSwift)
-[![documentation](https://raw.githubusercontent.com/leoture/MockSwift/master/docs/badge.svg?sanitize=true)](https://leoture.github.io/MockSwift)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/08a89377-0a44-4f0e-a17c-9ee7d18e07bd/deploy-status)](https://app.netlify.com/sites/adoring-varahamihira-bbe99d/deploys)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-Compatible-brightgreen)](https://github.com/apple/swift-package-manager)
-[![Swift](https://img.shields.io/badge/Swift-5.3-important)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-5.5-important)](https://swift.org)
 [![license MIT](https://img.shields.io/badge/license-MIT-informational)](https://github.com/leoture/MockSwift/blob/master/LICENSE)  
 
 **MockSwift** allows you to [**write mocks**](#write-mocks) and [**make better tests**](#make-better-tests). Because **MockSwift** is an **open source** library **100%** written in **Swift**, it is **AVAILABLE ON ALL PLATFORMS**.  
@@ -18,39 +18,11 @@ Initially MockSwift is inspired by [Mockito](https://site.mockito.org).
 
 ###### Table of Contents
 
-- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Contribution](#contribution)
 - [License](#license)
-
-# Features
-
-Actually MockSwift supports:
-
-- **Stub**
-  - [x] Protocol methods
-  - [x] Protocol properties
-  - [x] Protocol subscripts
-  - [ ] Class
-  - [ ] Struct
-  - [ ] Enum
-  - [x] Default values for types
-- **Verify interactions**
-  - [x] Protocol methods
-  - [x] Protocol properties
-  - [x] Protocol subscripts
-  - [ ] Class
-  - [ ] Struct
-  - [ ] Enum
-_ **Parameter matching**
-  - [x] Predicates
-  - [x] Generics
-
-#### CHANGELOG
-
-You can see all changes and new features [here](https://github.com/leoture/MockSwift/blob/master/CHANGELOG.md).
 
 # Installation
 ## Swift Package Manager
@@ -333,7 +305,7 @@ extension Then where WrappedType == UserService {
 ```
 
 # Documentation
-If you need more details about the API, you can check out our [API documentation](https://leoture.github.io/MockSwift/) or our [GitBook](https://mockswift.gitbook.io/mockswift/).
+If you need more details about the API, you can check out our [API documentation](https://adoring-varahamihira-bbe99d.netlify.app).
 
 # Contribution
 Would you like to contribute to MockSwift? Please read our [contributing guidelines](https://github.com/leoture/MockSwift/blob/master/CONTRIBUTING.md) and [code of conduct](https://github.com/leoture/MockSwift/blob/master/CODE_OF_CONDUCT.md).
