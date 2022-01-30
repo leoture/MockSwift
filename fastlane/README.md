@@ -31,22 +31,6 @@ Run Swift Package Manager tests
 
 Run Swift Package Manager tests on linux
 
-### mac mockswift_package_tests
-
-```sh
-[bundle exec] fastlane mac mockswift_package_tests
-```
-
-Run MockSwift-Package tests
-
-### mac mac_tests
-
-```sh
-[bundle exec] fastlane mac mac_tests
-```
-
-Run mac tests
-
 ### mac all_tests
 
 ```sh
