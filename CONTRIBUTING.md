@@ -19,11 +19,6 @@ We will make our best to answer you as quickly as possible!
 
 ## 🛠 Work on MockSwift
 
-#### With Xcode
-- Open `MockSwift.xcworkspace`.
-- To build or test the project: choose `MockSwift-Package` scheme on `My Mac`.
-
-#### With Swift Package Manager
 - To build or test the project: use the respective commands `swift build` and `swift test`.
 >⚠️ To run tests on a Linux environment:
   - Install [Docker](https://docs.docker.com/compose/install/).

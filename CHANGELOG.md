@@ -16,7 +16,12 @@
 
 ---
 ## Unrelease
-[Compare](https://github.com/leoture/MockSwift/compare/v1.0.0...HEAD)
+[Compare](https://github.com/leoture/MockSwift/compare/v1.1.0...HEAD)
+
+---
+## [1.1.0](https://github.com/leoture/MockSwift/releases/tag/v1.1.0) - 2022-02-02
+[Compare](https://github.com/leoture/MockSwift/compare/v1.0.0...v1.1.0)
+
 #### Added
 - Make UUID conform to AnyPredicate [#114](https://github.com/leoture/MockSwift/pull/114) by [Jordhan Leoture](https://github.com/leoture)
 - Add failOnUnusedBehaviours [#115](https://github.com/leoture/MockSwift/pull/115) by [Jordhan Leoture](https://github.com/leoture)
@@ -30,6 +35,7 @@
 
 #### Fixed
 - Function identifier collision [#116](https://github.com/leoture/MockSwift/pull/116) by [Jordhan Leoture](https://github.com/leoture)
+- Float80 compatibility in ARM architecture [#120](https://github.com/leoture/MockSwift/pull/120) by [Ailton Vieira Pinto Filho](https://github.com/ailtonvivaz)
 
 #### Security
 
