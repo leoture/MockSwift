@@ -16,6 +16,9 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "MockSwiftTests",
+            dependencies: ["MockSwift"]),
+        .testTarget(
+            name: "MockSwiftIntegrationTests",
             dependencies: ["MockSwift"])
     ]
 )
