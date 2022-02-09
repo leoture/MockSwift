@@ -9,12 +9,12 @@ class PropertyTests: XCTestCase {
         property = Property(dependency: dependency)
     }
 
-    func test_read_get() {
+    func test_getOnly() {
         // Given
         given(dependency).read.get.willReturn("test")
 
         // When
-        let result = property.read
+        let result = try? property.read
 
         // Then
         XCTAssertEqual(result, "test")
@@ -23,7 +23,22 @@ class PropertyTests: XCTestCase {
         interaction(with: dependency).failOnUnusedBehaviours()
     }
 
-    func test_write_get() {
+    func test_getOnly_throws() {
+        // Given
+        given(dependency).read.get.willThrow(DummyError.test)
+
+        // When
+        XCTAssertThrowsError(try property.read, "") { error in
+            XCTAssertEqual(error as! DummyError, .test)
+        }
+
+        // Then
+        then(dependency).read.get.calledOnce()
+        interaction(with: dependency).ended()
+        interaction(with: dependency).failOnUnusedBehaviours()
+    }
+
+    func test_get() {
         // Given
         given(dependency).write.get.willReturn("test")
 
@@ -37,7 +52,7 @@ class PropertyTests: XCTestCase {
         interaction(with: dependency).failOnUnusedBehaviours()
     }
 
-    func test_write_set() {
+    func test_set() {
         // Given
         let expected = expectation(description: "waiting dependency.write.set call")
         given(dependency).write.set("test").will { _ in

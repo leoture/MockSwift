@@ -1,15 +1,24 @@
 import MockSwift
 
 protocol PropertyDependency {
-    var read: String { get }
+    var read: String { get throws }
     var write: String { get set }
 }
 
 extension Mock: PropertyDependency where WrappedType == PropertyDependency {
-    var read: String { mocked() }
+    var read: String {
+        get throws {
+            try mockedThrowable()
+        }
+    }
+
     var write: String {
-        get { mocked() }
-        set { mocked(newValue) }
+        get {
+            mocked()
+        }
+        set {
+            mocked(newValue)
+        }
     }
 }
 
@@ -31,7 +40,9 @@ struct Property: PropertyDependency {
     }
 
     var read: String {
-        dependency.read
+        get throws {
+            try dependency.read
+        }
     }
 
     var write: String {
