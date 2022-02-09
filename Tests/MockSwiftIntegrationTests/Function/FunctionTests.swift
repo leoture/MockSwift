@@ -39,11 +39,11 @@ class FunctionTests: XCTestCase {
 
     func test_fail() {
         // Given
-        given(dependency).fail().willThrow(FailError.test)
+        given(dependency).fail().willThrow(DummyError.test)
 
         // When
         XCTAssertThrowsError(try function.fail(), "") { error in
-            XCTAssertEqual(error as! FailError, .test)
+            XCTAssertEqual(error as! DummyError, .test)
         }
 
         // Then

@@ -1,9 +1,5 @@
 import MockSwift
 
-enum FailError: Error, Equatable {
-    case test
-}
-
 protocol FunctionDependency {
     func echo(_ value: String) -> String
     func exec(with value: String, _ completion: @escaping (String) -> Int) -> Int
