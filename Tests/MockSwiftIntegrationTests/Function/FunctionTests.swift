@@ -37,12 +37,15 @@ class FunctionTests: XCTestCase {
         interaction(with: dependency).failOnUnusedBehaviours()
     }
 
-    func test_fail() {
+    func test_fail() async {
         // Given
         given(dependency).fail().willThrow(DummyError.test)
 
         // When
-        XCTAssertThrowsError(try function.fail(), "") { error in
+        do {
+            try await function.fail()
+            XCTFail("function.fail() should throws")
+        } catch {
             XCTAssertEqual(error as! DummyError, .test)
         }
 

@@ -1,13 +1,13 @@
 import MockSwift
 
 protocol SubscriptDependency {
-    subscript(x: Int, y: Int) -> Int { get throws }
+    subscript(x: Int, y: Int) -> Int { get async throws }
     subscript(key: String) -> Int { get set }
 }
 
 extension Mock: SubscriptDependency where WrappedType == SubscriptDependency {
     subscript(x: Int, y: Int) -> Int {
-        get throws {
+        get async throws {
             try mockedThrowable(x, y)
         }
     }
@@ -50,8 +50,8 @@ struct Subscript: SubscriptDependency {
     }
 
     subscript(x: Int, y: Int) -> Int {
-        get throws {
-            try dependency[x, y]
+        get async throws {
+            try await dependency[x, y]
         }
     }
 

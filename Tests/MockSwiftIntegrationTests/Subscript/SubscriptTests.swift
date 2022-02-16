@@ -9,12 +9,12 @@ class SubscriptTests: XCTestCase {
         subject = Subscript(dependency: dependency)
     }
 
-    func test_getOnly() {
+    func test_getOnly() async {
         // Given
         given(dependency)[1, 2].get.willReturn(3)
 
         // When
-        let result = try? subject[1, 2]
+        let result = try? await subject[1, 2]
 
         // Then
         XCTAssertEqual(result, 3)
@@ -23,15 +23,17 @@ class SubscriptTests: XCTestCase {
         interaction(with: dependency).failOnUnusedBehaviours()
     }
 
-    func test_getOnly_throws() {
+    func test_getOnly_throws() async {
         // Given
         given(dependency)[1, 2].get.willThrow(DummyError.test)
 
         // When
-        XCTAssertThrowsError(try subject[1, 2], "") { error in
+        do {
+            _ = try await subject[1, 2]
+            XCTFail("subject[1, 2] should throws")
+        } catch {
             XCTAssertEqual(error as! DummyError, .test)
         }
-
 
         // Then
         then(dependency)[1, 2].get.calledOnce()

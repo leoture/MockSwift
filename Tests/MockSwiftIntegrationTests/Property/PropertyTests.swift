@@ -9,12 +9,12 @@ class PropertyTests: XCTestCase {
         property = Property(dependency: dependency)
     }
 
-    func test_getOnly() {
+    func test_getOnly() async {
         // Given
         given(dependency).read.get.willReturn("test")
 
         // When
-        let result = try? property.read
+        let result = try? await property.read
 
         // Then
         XCTAssertEqual(result, "test")
@@ -23,19 +23,22 @@ class PropertyTests: XCTestCase {
         interaction(with: dependency).failOnUnusedBehaviours()
     }
 
-    func test_getOnly_throws() {
+    func test_getOnly_throws() async {
         // Given
         given(dependency).read.get.willThrow(DummyError.test)
 
         // When
-        XCTAssertThrowsError(try property.read, "") { error in
-            XCTAssertEqual(error as! DummyError, .test)
-        }
+        do {
+            _ = try await property.read
 
-        // Then
-        then(dependency).read.get.calledOnce()
-        interaction(with: dependency).ended()
-        interaction(with: dependency).failOnUnusedBehaviours()
+            // Then
+            XCTFail("property.read should throw")
+        } catch {
+            XCTAssertEqual(error as! DummyError, .test)
+            then(dependency).read.get.calledOnce()
+            interaction(with: dependency).ended()
+            interaction(with: dependency).failOnUnusedBehaviours()
+        }
     }
 
     func test_get() {

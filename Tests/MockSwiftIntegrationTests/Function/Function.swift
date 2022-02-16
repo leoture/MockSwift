@@ -3,7 +3,7 @@ import MockSwift
 protocol FunctionDependency {
     func echo(_ value: String) -> String
     func exec(with value: String, _ completion: @escaping (String) -> Int) -> Int
-    func fail() throws
+    func fail() async throws
 }
 
 extension Mock: FunctionDependency where WrappedType == FunctionDependency {
@@ -15,7 +15,7 @@ extension Mock: FunctionDependency where WrappedType == FunctionDependency {
         mocked(value, completion)
     }
 
-    func fail() throws {
+    func fail() async throws {
         try mockedThrowable()
     }
 
@@ -64,7 +64,7 @@ struct Function: FunctionDependency {
         dependency.exec(with: value, completion)
     }
 
-    func fail() throws {
-        try dependency.fail()
+    func fail() async throws {
+        try await dependency.fail()
     }
 }
