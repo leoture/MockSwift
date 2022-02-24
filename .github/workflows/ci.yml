@@ -6,17 +6,18 @@ on:
       - '*'
 
 jobs:
-  name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
-  runs-on: ${{ matrix.os }}
-  strategy:
-    matrix:
-      os: [ubuntu-latest, macos-latest]
-      swift: ["5.5", "5.5"]
-  steps:
-  - uses: fwal/setup-swift@v1
-    with:
-      swift-version: ${{ matrix.swift }}
-  - name: Get swift version
+  build_and_test:
+    name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        swift: ["5.5", "5.5"]
+    steps:
+    - uses: fwal/setup-swift@v1
+      with:
+        swift-version: ${{ matrix.swift }}
+    - name: Get swift version
       run: swift --version
-  - name: Build and test
+    - name: Build and test
       run: swift test
