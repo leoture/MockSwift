@@ -6,22 +6,17 @@ on:
       - '*'
 
 jobs:
-
-  linux-tests:
-    name: Ubuntu Tests
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: YOCKOW/Action-setup-swift@main
-      with:
-        swift-version: '5.5'
-    - name: Build and test
+  name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
+  runs-on: ${{ matrix.os }}
+  strategy:
+    matrix:
+      os: [ubuntu-latest, macos-latest]
+      swift: ["5.5", "5.5"]
+  steps:
+  - uses: fwal/setup-swift@v1
+    with:
+      swift-version: ${{ matrix.swift }}
+  - name: Get swift version
+    run: swift --version
+  - name: Build and test
       run: swift test
-
-  macos-tests:
-    name: macOS Tests
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run fastlane
-      run: swift test --enable-code-coverage
