@@ -26,7 +26,7 @@
 import Foundation
 
 protocol CallRegister {
-    var allCallHaveBeenVerified: Bool { get }
+    var unverifiedCallsCount: Int { get }
     func makeCallVerified(for identifier: UUID)
     func recordCall(_ call: FunctionCall, for identifier: FunctionIdentifier)
     func recordedCalls(for identifier: FunctionIdentifier, when matchs: [AnyPredicate]) -> [FunctionCall]

@@ -236,10 +236,11 @@ public class Mock<WrappedType> {
 // MARK: - CallRegister
 
 extension Mock: CallRegister {
-    var allCallHaveBeenVerified: Bool {
-        callRegister.allCallHaveBeenVerified
-    }
 
+    var unverifiedCallsCount: Int {
+        callRegister.unverifiedCallsCount
+    }
+    
     func makeCallVerified(for identifier: UUID) {
         callRegister.makeCallVerified(for: identifier)
     }

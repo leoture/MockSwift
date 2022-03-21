@@ -126,19 +126,19 @@ class FunctionCallRegisterTests: XCTestCase {
         XCTAssertEqual(calls[1], call2)
     }
 
-    // MARK: - allCallHaveBeenVerified
+    // MARK: - unverifiedCallsCount
 
-    func test_allCallHaveBeenVerified_whenCallHasNotBeenRecordedShouldReturnTrue() {
+    func test_unverifiedCallsCount_should_return0_when_noCallHasBeenRecorded() {
         // Given
 
         // When
-        let result = functionCallRegister.allCallHaveBeenVerified
+        let result = functionCallRegister.unverifiedCallsCount
 
         // Then
-        XCTAssertTrue(result)
+        XCTAssertEqual(result, 0)
     }
 
-    func test_allCallHaveBeenVerified_whenNotAllCallsHasBeenVerifiedShouldReturnFalse() {
+    func test_unverifiedCallsCount_should_returnNumberOfUnverifiedCalls() {
         // Given
         let call = FunctionCall()
         functionCallRegister.recordCall(call, for: .stub())
@@ -146,13 +146,13 @@ class FunctionCallRegisterTests: XCTestCase {
         functionCallRegister.makeCallVerified(for: call.identifier)
 
         // When
-        let result = functionCallRegister.allCallHaveBeenVerified
+        let result = functionCallRegister.unverifiedCallsCount
 
         // Then
-        XCTAssertFalse(result)
+        XCTAssertEqual(result, 1)
     }
 
-    func test_allCallHaveBeenVerified_whenAllCallsHasBeenVerifiedShouldReturnFalse() {
+    func test_unverifiedCallsCount_should_return0_when_allCallsHasBeenVerified() {
         // Given
         let call1 = FunctionCall()
         let call2 = FunctionCall()
@@ -161,10 +161,10 @@ class FunctionCallRegisterTests: XCTestCase {
         [call1, call2].forEach { self.functionCallRegister.makeCallVerified(for: $0.identifier) }
 
         // When
-        let result = functionCallRegister.allCallHaveBeenVerified
+        let result = functionCallRegister.unverifiedCallsCount
 
         // Then
-        XCTAssertTrue(result)
+        XCTAssertEqual(result, 0)
     }
 
     // MARK: - unverifiedCalls

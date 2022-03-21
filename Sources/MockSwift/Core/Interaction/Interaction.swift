@@ -67,8 +67,9 @@ public class Interaction<WrappedType> {
     ///   - file: The file name where the method is called.
     ///   - line: The line where the method is called.
     public func ended(file: StaticString = #file, line: UInt = #line) {
-        if !callRegister.allCallHaveBeenVerified {
-            failureRecorder.recordFailure(message: "\(WrappedType.self) expects to have no more interactions to check.",
+        let count = callRegister.unverifiedCallsCount
+        if count > 0 {
+            failureRecorder.recordFailure(message: "\(WrappedType.self) has \(count) unverified interactions.",
                                           file: file,
                                           line: line)
         }

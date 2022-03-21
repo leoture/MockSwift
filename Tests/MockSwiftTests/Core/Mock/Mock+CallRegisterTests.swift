@@ -78,18 +78,6 @@ final class MockCallRegisterTests: XCTestCase {
     XCTAssertEqual(result[0].parameters as? [Int], [1, 2])
   }
 
-  func test_allCallHaveBeenVerified_shouldReturnFromCallRegister() {
-    // Given
-    callRegister.allCallHaveBeenVerifiedReturn = true
-
-    // When
-    let result = mock.allCallHaveBeenVerified
-
-    // Then
-    XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
-    XCTAssertTrue(result)
-  }
-
   func test_makeCallVerified_shouldReturnFromCallRegister() {
     // Given
     let expectedUUID = UUID()

@@ -27,13 +27,13 @@ import Foundation
 @testable import MockSwift
 
 class CallRegisterMock: CallRegister {
-    var allCallHaveBeenVerifiedReturn: Bool!
-    private(set) var allCallHaveBeenVerifiedCallCount = 0
-    var allCallHaveBeenVerified: Bool {
-        allCallHaveBeenVerifiedCallCount += 1
-        return allCallHaveBeenVerifiedReturn
-    }
 
+    var unverifiedCallsCountReturn: Int!
+    private(set) var unverifiedCallsCountCallCount = 0
+    var unverifiedCallsCount: Int {
+        unverifiedCallsCountCallCount += 1
+        return unverifiedCallsCountReturn
+    }
     var makeCallVerifiedReceived: [UUID] = []
     func makeCallVerified(for identifier: UUID) {
         makeCallVerifiedReceived.append(identifier)

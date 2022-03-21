@@ -30,8 +30,8 @@ class FunctionCallRegister: CallRegister {
     private(set) var calls: [FunctionIdentifier: [FunctionCall]]
     private(set) var unverifiedCalls: [UUID]
 
-    var allCallHaveBeenVerified: Bool {
-        unverifiedCalls.isEmpty
+    var unverifiedCallsCount: Int {
+        unverifiedCalls.count
     }
 
     init(clock: Clock) {

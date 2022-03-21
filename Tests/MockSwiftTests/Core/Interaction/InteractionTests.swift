@@ -72,9 +72,9 @@ class InteractionTests: XCTestCase {
         XCTAssertEqual(errorHandler.handleReceived[0], .cast(source: customImpl, target: Mock<Custom>.self))
     }
 
-    func test_ended_whenAllCallHaveNotBeenVerifiedShouldCorrectlyCallFailureRecorder() {
+    func test_ended_should_callFailureRecorder_when_someCallsHaveNotBeenVerified() {
         // Given
-        callRegister.allCallHaveBeenVerifiedReturn = false
+        callRegister.unverifiedCallsCountReturn = 2
 
         // When
         Interaction<Custom>(callRegister: callRegister,
@@ -83,16 +83,16 @@ class InteractionTests: XCTestCase {
             .ended(file: "file", line: 42)
 
         // Then
-        XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
+        XCTAssertEqual(callRegister.unverifiedCallsCountCallCount, 1)
         XCTAssertEqual(failureRecorder.recordFailureReceived.count, 1)
         let (message, file, line) = failureRecorder.recordFailureReceived[0]
-        XCTAssertEqual(message, "Custom expects to have no more interactions to check.")
+        XCTAssertEqual(message, "Custom has 2 unverified interactions.")
         XCTAssertEqual("\(file) \(line)", "file 42")
     }
 
-    func test_ended_whenAllCallHaveBeenVerifiedShouldNotCallFailureRecorder() {
+    func test_ended_should_notCallFailureRecorder_when_allCallsHaveBeenVerified() {
         // Given
-        callRegister.allCallHaveBeenVerifiedReturn = true
+        callRegister.unverifiedCallsCountReturn = 0
 
         // When
         Interaction<Custom>(callRegister: callRegister,
@@ -101,7 +101,7 @@ class InteractionTests: XCTestCase {
             .ended(file: "file", line: 42)
 
         // Then
-        XCTAssertEqual(callRegister.allCallHaveBeenVerifiedCallCount, 1)
+        XCTAssertEqual(callRegister.unverifiedCallsCountCallCount, 1)
         XCTAssertEqual(failureRecorder.recordFailureReceived.count, 0)
     }
 
