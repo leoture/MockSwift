@@ -20,6 +20,7 @@ import MockSwift
 {% endmacro %}
 
 {% macro mockMethod method %}
+{% ifnot method.isInitializer %}
   public func {{ method.name }}{{ ' throws' if method.throws }}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName.name }}{% endif %} {
   {% if method.throws %}
     try mockedThrowable({% call parametersOnInvoke method %})
@@ -27,6 +28,7 @@ import MockSwift
     mocked({% call parametersOnInvoke method %})
   {% endif %}
   }
+{% endif %}
 {% endmacro %}
 
 {% macro mockSubscript subscript %}
@@ -65,6 +67,7 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro givenMockMethod method %}
+{% ifnot method.isInitializer %}
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Mockable{% call normalizeReturnType method.returnTypeName %} {
     mockable({% call parametersOnInvoke method %})
   }
@@ -73,6 +76,7 @@ extension Mock: {{ type.name }} where WrappedType == {{ type.name }} {
     mockable({% call parametersOnInvoke method %})
   }
   {% endif %}
+{% endif %}
 {% endmacro %}
 
 {% macro givenMockSubscript subscript %}
@@ -107,6 +111,7 @@ extension Given where WrappedType == {{ type.name }} {
 {% endmacro %}
 
 {% macro thenMockMethod method %}
+{% ifnot method.isInitializer %}
   public func {{ method.shortName }}({% call predicatesParameter method %}) -> Verifiable{% call normalizeReturnType method.returnTypeName %} {
     verifiable({% call parametersOnInvoke method %})
   }
@@ -115,6 +120,7 @@ extension Given where WrappedType == {{ type.name }} {
     verifiable({% call parametersOnInvoke method %})
   }
   {% endif %}
+{% endif %}
 {% endmacro %}
 
 {% macro thenMockSubscript subscript %}
