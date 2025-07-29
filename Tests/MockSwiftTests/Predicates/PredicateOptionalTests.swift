@@ -29,17 +29,17 @@ import XCTest
 
 class PredicateOptionalTests: XCTestCase {
   func test_isNil_shouldReturnTrue() {
-    let predicate: Predicate<Int?> = .isNil()
+    let predicate: MockSwift.Predicate<Int?> = .isNil()
     XCTAssertTrue(predicate.satisfy(by: nil))
   }
 
   func test_isNil_shouldReturnFalse() {
-    let predicate: Predicate<Int?> = .isNil()
+    let predicate: MockSwift.Predicate<Int?> = .isNil()
     XCTAssertFalse(predicate.satisfy(by: 0))
   }
 
   func test_isNil_description() {
-    let predicate: Predicate<Int?> = .isNil()
+    let predicate: MockSwift.Predicate<Int?> = .isNil()
     XCTAssertEqual(predicate.description, "nil")
   }
 }

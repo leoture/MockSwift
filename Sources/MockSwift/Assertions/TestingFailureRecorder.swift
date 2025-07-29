@@ -23,10 +23,43 @@
  SOFTWARE.
  */
 
+#if canImport(XCTest)
+
 import XCTest
 
 class XCTestFailureRecorder: FailureRecorder {
   func recordFailure(message: String, file: StaticString, line: UInt) {
     XCTFail(message, file: file, line: line)
+  }
+}
+#endif
+
+#if canImport(Testing)
+
+import Testing
+
+class SwiftTestingFailureRecorder: FailureRecorder {
+  func recordFailure(message: String, file: StaticString, line: UInt) {
+    Issue.record(
+      Comment(rawValue: message),
+      sourceLocation: Testing.SourceLocation(
+        fileID: #fileID, // TODO: pass #fileID from then()
+        filePath: file.withUTF8Buffer { String(decoding: $0, as: UTF8.self) },
+        line: Int(line),
+        column: 1 // TODO: pass #column from then()
+      )
+    )
+  }
+}
+#endif
+
+class TestingFailureRecorder: FailureRecorder {
+  func recordFailure(message: String, file: StaticString, line: UInt) {
+#if canImport(XCTest)
+    XCTestFailureRecorder().recordFailure(message: message, file: file, line: line)
+#endif
+#if canImport(Testing)
+    SwiftTestingFailureRecorder().recordFailure(message: message, file: file, line: line)
+#endif
   }
 }

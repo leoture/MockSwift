@@ -29,32 +29,32 @@ import XCTest
 
 class PredicatBoolTests: XCTestCase {
   func test_isTrue_shouldReturnTrue() {
-    let predicate: Predicate<Bool> = .isTrue()
+    let predicate: MockSwift.Predicate<Bool> = .isTrue()
     XCTAssertTrue(predicate.satisfy(by: true))
   }
 
   func test_isTrue_shouldReturnFalse() {
-    let predicate: Predicate<Bool> = .isTrue()
+    let predicate: MockSwift.Predicate<Bool> = .isTrue()
     XCTAssertFalse(predicate.satisfy(by: false))
   }
 
   func test_isTrue_description() {
-    let predicate: Predicate<Bool> = .isTrue()
+    let predicate: MockSwift.Predicate<Bool> = .isTrue()
     XCTAssertEqual(predicate.description, "True")
   }
 
   func test_isFalse_shouldReturnTrue() {
-    let predicate: Predicate<Bool> = .isFalse()
+    let predicate: MockSwift.Predicate<Bool> = .isFalse()
     XCTAssertTrue(predicate.satisfy(by: false))
   }
 
   func test_isFalse_shouldReturnFalse() {
-    let predicate: Predicate<Bool> = .isFalse()
+    let predicate: MockSwift.Predicate<Bool> = .isFalse()
     XCTAssertFalse(predicate.satisfy(by: true))
   }
 
   func test_isFalse_description() {
-    let predicate: Predicate<Bool> = .isFalse()
+    let predicate: MockSwift.Predicate<Bool> = .isFalse()
     XCTAssertEqual(predicate.description, "False")
   }
 }
