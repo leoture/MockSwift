@@ -32,7 +32,7 @@ class PredicateTests: XCTestCase {
   // MARK: - match(description:any type:_ predicate:)
 
   func test_match_withMatchShouldReturnFalseIfInputIsNotTheSameType() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertFalse(predicate.satisfy(by: 1))
     }
 
@@ -40,7 +40,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_match_shouldReturnFalseIfInputNotMatched() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertFalse(predicate.satisfy(by: "not Empty"))
     }
 
@@ -48,7 +48,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_match_shouldReturnTrueIfInputMatched() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
@@ -56,7 +56,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_match_description() {
-    let predicate: Predicate<String> = .match { _ in
+    let predicate: MockSwift.Predicate<String> = .match { _ in
       true
     }
     XCTAssertEqual("\(predicate)", "a String")
@@ -65,7 +65,7 @@ class PredicateTests: XCTestCase {
   // MARK: - match(_ value:file:line:)
 
   func test_match_shouldReturnTrueIfInputMatchedByAnyPredicate() {
-    let anyPredicate: AnyPredicate = Predicate<String>.match { value in
+    let anyPredicate: AnyPredicate = MockSwift.Predicate<String>.match { value in
       value.isEmpty
     }
     let predicate: AnyPredicate = Predicate<AnyPredicate>.match(anyPredicate)
@@ -99,7 +99,7 @@ class PredicateTests: XCTestCase {
   // MARK: - match(description:any type:when keyPath:)
 
   func test_match_shouldReturnTrueIfKeyPathReturnTrue() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
@@ -107,7 +107,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_match_shouldReturnFalseIfKeyPathReturnFalse() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertFalse(predicate.satisfy(by: "not Empty"))
     }
 
@@ -115,7 +115,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_match_KeyPathDescription() {
-    let predicate: Predicate<String> = .match(\.isEmpty)
+    let predicate: MockSwift.Predicate<String> = .match(\.isEmpty)
 
     XCTAssertEqual("\(predicate)", "a String")
   }
@@ -123,7 +123,7 @@ class PredicateTests: XCTestCase {
   // MARK: - any(_ type:)
 
   func test_any_shouldReturnFalse() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertFalse(predicate.satisfy(by: 1))
     }
 
@@ -131,7 +131,7 @@ class PredicateTests: XCTestCase {
   }
 
   func test_any_shouldReturnTrue() {
-    func assertion<T>(_ predicate: Predicate<T>) {
+    func assertion<T>(_ predicate: MockSwift.Predicate<T>) {
       XCTAssertTrue(predicate.satisfy(by: ""))
     }
 
@@ -139,23 +139,23 @@ class PredicateTests: XCTestCase {
   }
 
   func test_any_description() {
-    let predicate: Predicate<String> = .any()
+    let predicate: MockSwift.Predicate<String> = .any()
 
     XCTAssertEqual("\(predicate)", "any String")
   }
 
   func test_not_shouldReturnFalse() {
-    let predicate: Predicate<String> = .not(.match { _ in true })
+    let predicate: MockSwift.Predicate<String> = .not(.match { _ in true })
     XCTAssertFalse(predicate.satisfy(by: ""))
   }
 
   func test_not_shouldReturnTrue() {
-    let predicate: Predicate<String> = .not(.match { _ in false })
+    let predicate: MockSwift.Predicate<String> = .not(.match { _ in false })
     XCTAssertTrue(predicate.satisfy(by: ""))
   }
 
   func test_not_description() {
-    let predicate: Predicate<String> = .not(.match(description: "description") { _ in true })
+    let predicate: MockSwift.Predicate<String> = .not(.match(description: "description") { _ in true })
     XCTAssertEqual("\(predicate)", "not description")
   }
 }

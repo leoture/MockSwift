@@ -71,7 +71,7 @@ extension Given where WrappedType == DummyProtocol {
         mockable(first, second)
     }
 
-    subscript(first: Predicate<Int>, second: Predicate<String>) -> MockableSubscript.Readable<String> {
+    subscript(first: MockSwift.Predicate<Int>, second: MockSwift.Predicate<String>) -> MockableSubscript.Readable<String> {
         mockable(first, second)
     }
 
@@ -79,15 +79,15 @@ extension Given where WrappedType == DummyProtocol {
         mockable(first, second)
     }
 
-    subscript(x first: Predicate<Int>, y second: Predicate<Int>) -> MockableSubscript.Writable<String> {
+    subscript(x first: MockSwift.Predicate<Int>, y second: MockSwift.Predicate<Int>) -> MockableSubscript.Writable<String> {
         mockable(first, second)
     }
 
     func function(identifier: String) -> Mockable<Int> { mockable(identifier) }
-    func function(identifier: Predicate<String>) -> Mockable<Int> { mockable(identifier) }
+    func function(identifier: MockSwift.Predicate<String>) -> Mockable<Int> { mockable(identifier) }
 
     func function(identifier: String) -> Mockable<String> { mockable(identifier) }
-    func function(identifier: Predicate<String>) -> Mockable<String> { mockable(identifier) }
+    func function(identifier: MockSwift.Predicate<String>) -> Mockable<String> { mockable(identifier) }
 }
 
 extension Then where WrappedType == DummyProtocol {
@@ -99,7 +99,7 @@ extension Then where WrappedType == DummyProtocol {
         verifiable(first, second)
     }
 
-    subscript(first: Predicate<Int>, second: Predicate<String>) -> VerifiableSubscript.Readable<String> {
+    subscript(first: MockSwift.Predicate<Int>, second: MockSwift.Predicate<String>) -> VerifiableSubscript.Readable<String> {
         verifiable(first, second)
     }
 
@@ -107,13 +107,13 @@ extension Then where WrappedType == DummyProtocol {
         verifiable(first, second)
     }
 
-    subscript(x first: Predicate<Int>, y second: Predicate<Int>) -> VerifiableSubscript.Writable<String> {
+    subscript(x first: MockSwift.Predicate<Int>, y second: MockSwift.Predicate<Int>) -> VerifiableSubscript.Writable<String> {
         verifiable(first, second)
     }
 
     func function(identifier: String) -> Verifiable<Int> { verifiable(identifier) }
-    func function(identifier: Predicate<String>) -> Verifiable<Int> { verifiable(identifier) }
+    func function(identifier: MockSwift.Predicate<String>) -> Verifiable<Int> { verifiable(identifier) }
 
     func function(identifier: String) -> Verifiable<String> { verifiable(identifier) }
-    func function(identifier: Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
+    func function(identifier: MockSwift.Predicate<String>) -> Verifiable<String> { verifiable(identifier) }
 }
