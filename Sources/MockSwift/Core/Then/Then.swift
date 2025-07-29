@@ -49,7 +49,7 @@ func then<WrappedType>(_ value: WrappedType,
 public func then<WrappedType>(_ value: WrappedType,
                               file: StaticString = #file,
                               line: UInt = #line) -> Then<WrappedType> {
-  then(value, errorHandler: ErrorHandler(), failureRecorder: XCTestFailureRecorder(), file: file, line: line)
+  then(value, errorHandler: ErrorHandler(), failureRecorder: TestingFailureRecorder(), file: file, line: line)
 }
 
 /// Call `completion` with a `Then` based on `value`.
